@@ -1,0 +1,16 @@
+services:
+  app:
+    build: .
+    environment:
+      # DB file path inside the container:
+      SQLITE_PATH: /data/pad.db
+      # Required: existing SQLite table to read (see README):
+      SOURCE_TABLE: "pads"
+      # Optional: map categories from a column on the source table:
+      # CATEGORY_FROM_COLUMN: "type"
+      # SUBCATEGORY_FROM_COLUMN: "subtype"
+      # Uncomment to fetch the DB when the container starts:
+      # DB_DOWNLOAD_URL: https://example.com/your-database.sqlite
+    volumes:
+      # Mount your SQLite file (or rely on DB_DOWNLOAD_URL):
+      # - ./pad.db:/data/pad.db:rw

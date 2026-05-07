@@ -1,0 +1,32 @@
+{
+  "name": "pad-searching-tool",
+  "version": "1.0.0",
+  "private": true,
+  "description": "PAD SQLite transforms with NestJS + TypeORM",
+  "scripts": {
+    "build": "nest build",
+    "start": "node dist/main.js",
+    "start:dev": "nest start --watch",
+    "transform": "npm run build && node dist/main.js",
+    "import:db": "npm run build && node dist/import-external-db.js",
+    "db:update": "npm run build && node dist/import-external-db.js && node dist/main.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@nestjs/common": "^11.0.0",
+    "@nestjs/core": "^11.0.0",
+    "@nestjs/typeorm": "^11.0.0",
+    "better-sqlite3": "^11.7.0",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.1",
+    "typeorm": "^0.3.20"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^11.0.0",
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.0"
+  }
+}
