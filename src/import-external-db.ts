@@ -181,6 +181,31 @@ async function main(): Promise<void> {
   assertSqliteFile(staging);
   console.log(`Download OK → ${staging}`);
 
+  if (mode === "download") {
+    const snap =
+      process.env.SNAPSHOT_OUTPUT_PATH?.trim() ||
+      process.env.SQLITE_SNAPSHOT_PATH?.trim();
+    if (!snap) {
+      throw new Error(
+        "IMPORT_MODE=download requires SNAPSHOT_OUTPUT_PATH (or SQLITE_SNAPSHOT_PATH) — the immutable local/cloud path for the SQLite file."
+      );
+    }
+    const dir = dirname(snap);
+    if (!existsSync(dir)) {
+      mkdirSync(dir, { recursive: true });
+    }
+    backupIfNeeded(snap);
+    replaceFile(snap, staging);
+    unlinkSync(staging);
+    console.log(
+      `Saved immutable snapshot only (no merge into working DB): ${snap}`
+    );
+    console.log(
+      "Docker: mount this read-only as SQLITE_SNAPSHOT_PATH, or copy it to object storage."
+    );
+    return;
+  }
+
   const keepLocal = defaultKeepLocal();
   const skipFromExt = parseSkip();
 
@@ -191,7 +216,9 @@ async function main(): Promise<void> {
     backupIfNeeded(sqlitePath);
     mergeStagingIntoMain(sqlitePath, staging, keepLocal, skipFromExt);
   } else {
-    throw new Error(`Invalid IMPORT_MODE="${mode}" (use merge or replace)`);
+    throw new Error(
+      `Invalid IMPORT_MODE="${mode}" (use merge, replace, or download)`
+    );
   }
 
   unlinkSync(staging);

@@ -53,11 +53,15 @@ function pickSummary(row: Record<string, unknown>): Record<string, unknown> {
   const keys = Object.keys(row).filter(
     (k) => !k.startsWith("__") && k !== "__source_pk"
   );
-  const max = Number(process.env.SUMMARY_MAX_FIELDS ?? "8");
+  const max = Number(process.env.SUMMARY_MAX_FIELDS ?? "32");
   const out: Record<string, unknown> = {};
   for (const k of keys.slice(0, max)) {
     const v = row[k];
-    if (v != null && (typeof v === "string" || typeof v === "number")) {
+    if (v === null) {
+      out[k] = null;
+      continue;
+    }
+    if (typeof v === "string" || typeof v === "number") {
       out[k] = v;
     }
   }

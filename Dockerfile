@@ -19,12 +19,19 @@ COPY package.json package-lock.json* ./
 RUN npm ci --omit=dev
 COPY --from=builder /app/dist ./dist
 COPY docker-entrypoint.sh /docker-entrypoint.sh
-RUN chmod +x /docker-entrypoint.sh
+# Windows CRLF → Linux "exec /docker-entrypoint.sh: no such file or directory"
+RUN sed -i 's/\r$//' /docker-entrypoint.sh && chmod +x /docker-entrypoint.sh
 
 ENV NODE_ENV=production
 ENV DATA_DIR=/data
 ENV SQLITE_PATH=/data/pad.db
 # Create pad_categorized via TypeORM synchronize unless you set TYPEORM_SYNC=false
 ENV TYPEORM_SYNC=true
+# One container: seed copy → transform → HTTP (override for job-only)
+ENV RUN_TRANSFORM=true
+ENV START_HTTP=true
+ENV HTTP_PORT=3000
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
+EXPOSE 3000
+
+ENTRYPOINT ["/bin/sh", "/docker-entrypoint.sh"]

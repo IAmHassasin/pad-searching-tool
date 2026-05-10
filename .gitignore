@@ -1,6 +1,11 @@
 node_modules/
 .env
-.env.*
+.env.local
 npm-debug.log
 test.db
 dist/
+
+# SQLite làm việc cục bộ (không commit)
+pad.db
+pad.working.sqlite
+seed/*.sqlite

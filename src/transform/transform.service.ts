@@ -3,6 +3,10 @@ import { InjectDataSource, InjectRepository } from "@nestjs/typeorm";
 import { DataSource, Repository } from "typeorm";
 import { PadCategorized } from "../entities/pad-categorized.entity";
 import { categorizePadRow } from "./categorize-row";
+import {
+  getSourceColumnWhitelistFromEnv,
+  projectSourceRows,
+} from "./source-row-projection";
 
 const IDENT = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
 
@@ -18,17 +22,42 @@ export class TransformService {
   ) {}
 
   async run(): Promise<void> {
-    const sourceTable = process.env.SOURCE_TABLE?.trim();
-    if (!sourceTable || !IDENT.test(sourceTable)) {
+    const sourceQuery = process.env.SOURCE_QUERY?.trim();
+    const sourceTableEnv = process.env.SOURCE_TABLE?.trim();
+    const sourceTable = sourceTableEnv || "source_query";
+    if (!IDENT.test(sourceTable)) {
       throw new Error(
-        'Set SOURCE_TABLE to your SQLite table name (letters, digits, underscore). Example: SOURCE_TABLE="pads"'
+        `Invalid SOURCE_TABLE label: "${sourceTable}". Use letters, digits, underscore only.`
       );
     }
 
-    await this.assertTableExists(sourceTable);
-
     const idColumn = process.env.SOURCE_ID_COLUMN?.trim();
-    const rows = await this.loadSourceRows(sourceTable, idColumn);
+    let rows: Record<string, unknown>[];
+    try {
+      if (sourceQuery) {
+        rows = await this.loadSourceRowsFromQuery(sourceQuery, idColumn);
+      } else {
+        if (!sourceTableEnv) {
+          throw new Error(
+            'Set SOURCE_TABLE to your SQLite table name (letters, digits, underscore). Example: SOURCE_TABLE="pads"'
+          );
+        }
+        await this.assertTableExists(sourceTable);
+        rows = await this.loadSourceRows(sourceTable, idColumn);
+      }
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : String(e);
+      const dbPath = process.env.SQLITE_PATH ?? "./pad.db";
+      if (/no such table/i.test(msg)) {
+        throw new Error(
+          `${msg} — SQLITE_PATH (${dbPath}) must be a full PAD DB (e.g. dadguide.sqlite), not an empty pad.db.`
+        );
+      }
+      throw e;
+    }
+
+    const columnWhitelist = getSourceColumnWhitelistFromEnv();
+    rows = projectSourceRows(rows, columnWhitelist);
 
     await this.dataSource.transaction(async (mgr) => {
       const repo = mgr.getRepository(PadCategorized);
@@ -74,7 +103,11 @@ export class TransformService {
       [table]
     );
     if (!rows.length) {
-      throw new Error(`Source table not found: ${table}`);
+      const dbPath = process.env.SQLITE_PATH ?? "./pad.db";
+      throw new Error(
+        `Source table not found: ${table}. ` +
+          `Check SQLITE_PATH (${dbPath}) — use a full community DB (e.g. dadguide.sqlite), not an empty or schema-only file.`
+      );
     }
   }
 
@@ -106,12 +139,36 @@ export class TransformService {
     });
   }
 
+  /**
+   * Loads rows from SOURCE_QUERY without creating any table/view in SQLite.
+   * SOURCE_ID_COLUMN is required in this mode.
+   */
+  private async loadSourceRowsFromQuery(
+    query: string,
+    idColumn?: string
+  ): Promise<Record<string, unknown>[]> {
+    if (!idColumn || !IDENT.test(idColumn)) {
+      throw new Error(
+        "When SOURCE_QUERY is set, SOURCE_ID_COLUMN must be set to a valid numeric id column in the query result."
+      );
+    }
+
+    const idSelect = `"${idColumn.replace(/"/g, '""')}" AS __source_pk`;
+    const sql = `SELECT ${idSelect}, q.* FROM (${query}) AS q`;
+    return this.dataSource.query(sql);
+  }
+
   private resolveSourceRowId(
     row: Record<string, unknown>,
     idColumn?: string
   ): number {
     if (idColumn) {
       const v = row["__source_pk"] ?? row[idColumn];
+      if (v === null || v === undefined || v === "") {
+        throw new Error(
+          `SOURCE_ID_COLUMN "${idColumn}" is null or missing for a row. Use a non-null key (e.g. monster_id on dadguide "monsters"; monster_no_na is often NULL for many rows).`
+        );
+      }
       const n = Number(v);
       if (!Number.isFinite(n)) {
         throw new Error(

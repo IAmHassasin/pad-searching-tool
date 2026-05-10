@@ -1,5 +1,6 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { ApiModule } from "./api/api.module";
 import { PadCategorized } from "./entities/pad-categorized.entity";
 import { TransformModule } from "./transform/transform.module";
 
@@ -15,6 +16,7 @@ const sqlitePath = process.env.SQLITE_PATH ?? "./pad.db";
       logging: process.env.TYPEORM_LOGGING === "true",
     }),
     TransformModule,
+    ApiModule,
   ],
 })
 export class AppModule {}

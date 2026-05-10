@@ -1,16 +1,22 @@
 services:
   app:
     build: .
+    env_file:
+      - .env
+    ports:
+      - "${HTTP_PUBLISH_PORT:-3000}:${HTTP_PORT:-3000}"
     environment:
-      # DB file path inside the container:
+      # Ghi đè .env máy host (thường START_HTTP=false cho npm local).
       SQLITE_PATH: /data/pad.db
-      # Required: existing SQLite table to read (see README):
-      SOURCE_TABLE: "pads"
-      # Optional: map categories from a column on the source table:
-      # CATEGORY_FROM_COLUMN: "type"
-      # SUBCATEGORY_FROM_COLUMN: "subtype"
-      # Uncomment to fetch the DB when the container starts:
-      # DB_DOWNLOAD_URL: https://example.com/your-database.sqlite
+      DATA_DIR: /data
+      START_HTTP: "true"
+      RUN_TRANSFORM: "true"
+      HTTP_HOST: "0.0.0.0"
+      HTTP_PORT: "3000"
     volumes:
-      # Mount your SQLite file (or rely on DB_DOWNLOAD_URL):
-      # - ./pad.db:/data/pad.db:rw
+      - dadguide_working_sqlite:/data
+      # File thật trên máy host (đường dẫn trái) phải tồn tại là FILE .sqlite — khớp với SQLITE_SNAPSHOT_PATH trong .env.
+      - ./seed/dadguide.sqlite:/seed/dadguide.sqlite:ro
+
+volumes:
+  dadguide_working_sqlite:
