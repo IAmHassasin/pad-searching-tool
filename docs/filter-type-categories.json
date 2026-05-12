@@ -1,0 +1,272 @@
+{
+  "categories": [
+    {
+      "group": "general",
+      "label": "Type (all included)"
+    },
+    {
+      "group": "general",
+      "label": "Assistable"
+    },
+    {
+      "group": "general",
+      "label": "Limit Breakable"
+    },
+    {
+      "group": "general",
+      "label": "Latent Extendable"
+    },
+    {
+      "group": "general",
+      "label": "Pixel"
+    },
+    {
+      "group": "general",
+      "label": "Trial Evolution"
+    },
+    {
+      "group": "general",
+      "label": "Skill Name"
+    },
+    {
+      "group": "general",
+      "label": "Effective Skill Boosts"
+    },
+    {
+      "group": "active_skill",
+      "label": "AS - Skill Cooldown"
+    },
+    {
+      "group": "active_skill",
+      "label": "AS - Unmatchable Recovery"
+    },
+    {
+      "group": "active_skill",
+      "label": "AS - Damage Reduction Loop"
+    },
+    {
+      "group": "active_skill",
+      "label": "AS - Skill Unusable"
+    },
+    {
+      "group": "active_skill",
+      "label": "AS - Move Time Loop"
+    },
+    {
+      "group": "active_skill",
+      "label": "AS - RCV+ Loop"
+    },
+    {
+      "group": "active_skill",
+      "label": "AS - ATK+ Loop"
+    },
+    {
+      "group": "active_skill",
+      "label": "AS - Delay Enemy Move"
+    },
+    {
+      "group": "active_skill",
+      "label": "AS - Switch Leader"
+    },
+    {
+      "group": "active_skill",
+      "label": "AS - Move Orbs Freely"
+    },
+    {
+      "group": "active_skill",
+      "label": "AS - Skill Charge"
+    },
+    {
+      "group": "active_skill",
+      "label": "AS - Reduce Skill Charge"
+    },
+    {
+      "group": "active_skill",
+      "label": "AS - Random Skill"
+    },
+    {
+      "group": "active_skill",
+      "label": "AS - Skill Evolve"
+    },
+    {
+      "group": "active_skill",
+      "label": "AS - Delayed Skill"
+    },
+    {
+      "group": "active_skill",
+      "label": "AS - Battle Condition"
+    },
+    {
+      "group": "active_skill",
+      "label": "AS - Instant Heal"
+    },
+    {
+      "group": "active_skill",
+      "label": "AS - Persistent Heal"
+    },
+    {
+      "group": "active_skill",
+      "label": "AS - Persistent Heal Loop"
+    },
+    {
+      "group": "active_skill",
+      "label": "AS - Skyfall Foresight"
+    },
+    {
+      "group": "active_skill",
+      "label": "AS - Unmovable"
+    },
+    {
+      "group": "active_skill",
+      "label": "AS - Cloud"
+    },
+    {
+      "group": "active_skill",
+      "label": "AS - Nail Orb Create"
+    },
+    {
+      "group": "active_skill",
+      "label": "AS - Nail Orb Appears"
+    },
+    {
+      "group": "active_skill",
+      "label": "AS - Unmatchable"
+    },
+    {
+      "group": "active_skill",
+      "label": "AS - Roulette"
+    },
+    {
+      "group": "active_skill",
+      "label": "AS - Roulette Loop"
+    },
+    {
+      "group": "active_skill",
+      "label": "AS - Locked Skyfall"
+    },
+    {
+      "group": "active_skill",
+      "label": "AS - No Skyfall"
+    },
+    {
+      "group": "active_skill",
+      "label": "AS - Unlock Orb"
+    },
+    {
+      "group": "active_skill",
+      "label": "AS - Lock Orb"
+    },
+    {
+      "group": "active_skill",
+      "label": "AS - Enhanced Skyfall"
+    },
+    {
+      "group": "active_skill",
+      "label": "AS - Change All Orbs (Exact)"
+    },
+    {
+      "group": "active_skill",
+      "label": "AS - Change All Orbs (Include)"
+    },
+    {
+      "group": "active_skill",
+      "label": "AS - Change All Orbs (Count)"
+    },
+    {
+      "group": "active_skill",
+      "label": "AS - Orb Skyfall"
+    },
+    {
+      "group": "active_skill",
+      "label": "AS - Fixed Skyfall"
+    },
+    {
+      "group": "active_skill",
+      "label": "AS - Create Shape"
+    },
+    {
+      "group": "active_skill",
+      "label": "AS - Break Shield"
+    },
+    {
+      "group": "active_skill",
+      "label": "AS - Usage Limit"
+    },
+    {
+      "group": "leader_skill",
+      "label": "LS - Skyfall Foresight"
+    },
+    {
+      "group": "leader_skill",
+      "label": "LS - No Skyfall"
+    },
+    {
+      "group": "leader_skill",
+      "label": "LS - 7x6 Board"
+    },
+    {
+      "group": "leader_skill",
+      "label": "LS - Unable to erase N or less"
+    },
+    {
+      "group": "leader_skill",
+      "label": "LS - Fixed Move Time"
+    },
+    {
+      "group": "leader_skill",
+      "label": "LS - Extended Move Time"
+    },
+    {
+      "group": "leader_skill",
+      "label": "LS - Rank EXP"
+    },
+    {
+      "group": "leader_skill",
+      "label": "LS - Coin"
+    },
+    {
+      "group": "leader_skill",
+      "label": "LS - Egg Drop Rate"
+    },
+    {
+      "group": "leader_skill",
+      "label": "LS - Part Break Bonus Drop Rate"
+    },
+    {
+      "group": "leader_skill",
+      "label": "LS - Plus Point"
+    },
+    {
+      "group": "leader_skill",
+      "label": "LS - Void Poison Damage"
+    },
+    {
+      "group": "leader_skill",
+      "label": "LS - Resolve"
+    },
+    {
+      "group": "leader_skill",
+      "label": "LS - Auto Heal"
+    },
+    {
+      "group": "leader_skill",
+      "label": "LS - Auto Attack"
+    },
+    {
+      "group": "leader_skill",
+      "label": "LS - Counterattack"
+    },
+    {
+      "group": "leader_skill",
+      "label": "LS - Awoken Bind Recovery"
+    },
+    {
+      "group": "leader_skill",
+      "label": "LS - Add Combo"
+    },
+    {
+      "group": "leader_skill",
+      "label": "LS - Inflict Damage"
+    }
+  ]
+}
