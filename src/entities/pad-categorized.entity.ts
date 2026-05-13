@@ -29,6 +29,13 @@ export class PadCategorized {
   @Column({ type: "text", nullable: true })
   summaryJson!: string | null;
 
+  /**
+   * Structured sub-filters from rule `facets` extractors (e.g. { "turns": 3 }).
+   * Lets the UI filter by numbers beyond a single keyword match.
+   */
+  @Column({ type: "text", nullable: true })
+  facetJson!: string | null;
+
   @Column({ type: "datetime", default: () => "CURRENT_TIMESTAMP" })
   indexedAt!: Date;
 }

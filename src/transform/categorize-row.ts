@@ -15,6 +15,8 @@ export type CategorizeInput = {
 export type CategorizeOutput = {
   category: string;
   subcategory: string | null;
+  /** Parsed filter facets (turn counts, multipliers, …) → pad_categorized.facet_json. */
+  facets?: Record<string, unknown> | null;
   /** Stored in pad_categorized.summary_json — keep small. */
   summary?: Record<string, unknown>;
 };
@@ -34,6 +36,7 @@ export function categorizePadRows(input: CategorizeInput): CategorizeOutput[] {
       {
         category,
         subcategory,
+        facets: null,
         summary: pickSummary(row),
       },
     ];
@@ -43,9 +46,10 @@ export function categorizePadRows(input: CategorizeInput): CategorizeOutput[] {
   if (filterFile) {
     const hits = matchFilterRules(row, filterFile);
     if (hits.length) {
-      return hits.map(({ category, subcategory }) => ({
+      return hits.map(({ category, subcategory, facets }) => ({
         category,
         subcategory,
+        facets,
         summary: pickSummary(row),
       }));
     }
@@ -53,6 +57,7 @@ export function categorizePadRows(input: CategorizeInput): CategorizeOutput[] {
       {
         category: "default",
         subcategory: null,
+        facets: null,
         summary: pickSummary(row),
       },
     ];
@@ -64,6 +69,7 @@ export function categorizePadRows(input: CategorizeInput): CategorizeOutput[] {
       {
         category: "issue",
         subcategory: "likely_error_token",
+        facets: null,
         summary: pickSummary(row),
       },
     ];
@@ -73,6 +79,7 @@ export function categorizePadRows(input: CategorizeInput): CategorizeOutput[] {
     {
       category: "default",
       subcategory: null,
+      facets: null,
       summary: pickSummary(row),
     },
   ];

@@ -3,6 +3,7 @@ import { InjectDataSource, InjectRepository } from "@nestjs/typeorm";
 import { DataSource, Repository } from "typeorm";
 import { PadCategorized } from "../entities/pad-categorized.entity";
 import { categorizePadRows } from "./categorize-row";
+import { writeCategoryJsonBundles } from "./category-json-export";
 import {
   getSourceColumnWhitelistFromEnv,
   projectSourceRows,
@@ -71,7 +72,7 @@ export class TransformService {
           row,
         });
 
-        for (const { category, subcategory, summary } of outputs) {
+        for (const { category, subcategory, summary, facets } of outputs) {
           batch.push(
             repo.create({
               sourceTable,
@@ -79,6 +80,10 @@ export class TransformService {
               category,
               subcategory,
               summaryJson: summary ? JSON.stringify(summary) : null,
+              facetJson:
+                facets && Object.keys(facets).length
+                  ? JSON.stringify(facets)
+                  : null,
             })
           );
         }
@@ -97,6 +102,18 @@ export class TransformService {
     this.logger.log(
       `Wrote ${total} rows into pad_categorized for source "${sourceTable}".`
     );
+
+    const exportDir = process.env.CATEGORY_JSON_EXPORT_DIR?.trim();
+    if (exportDir) {
+      await writeCategoryJsonBundles(
+        this.categorized,
+        sourceTable,
+        exportDir
+      );
+      this.logger.log(
+        `Wrote category JSON bundles under "${exportDir}" (see index.json).`
+      );
+    }
   }
 
   private async assertTableExists(table: string): Promise<void> {
