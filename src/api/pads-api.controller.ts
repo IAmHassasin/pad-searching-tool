@@ -92,21 +92,22 @@ export class PadsApiController {
   async findBySourceRow(
     @Query("sourceTable") sourceTable: string,
     @Query("sourceRowId", ParseIntPipe) sourceRowId: number
-  ): Promise<PadCategorized> {
+  ): Promise<PadCategorized[]> {
     if (!sourceTable?.trim()) {
       throw new BadRequestException('Query param "sourceTable" is required');
     }
-    const row = await this.categorized.findOne({
+    const rows = await this.categorized.find({
       where: {
         sourceTable: sourceTable.trim(),
         sourceRowId,
       },
+      order: { id: "ASC" },
     });
-    if (!row) {
+    if (!rows.length) {
       throw new NotFoundException(
         `No pad_categorized row for source_table=${sourceTable.trim()} source_row_id=${sourceRowId}`
       );
     }
-    return row;
+    return rows;
   }
 }

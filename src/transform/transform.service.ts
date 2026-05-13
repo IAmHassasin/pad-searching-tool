@@ -2,7 +2,7 @@ import { Injectable, Logger } from "@nestjs/common";
 import { InjectDataSource, InjectRepository } from "@nestjs/typeorm";
 import { DataSource, Repository } from "typeorm";
 import { PadCategorized } from "../entities/pad-categorized.entity";
-import { categorizePadRow } from "./categorize-row";
+import { categorizePadRows } from "./categorize-row";
 import {
   getSourceColumnWhitelistFromEnv,
   projectSourceRows,
@@ -66,20 +66,22 @@ export class TransformService {
       const batch: PadCategorized[] = [];
       for (const row of rows) {
         const sourceRowId = this.resolveSourceRowId(row, idColumn);
-        const { category, subcategory, summary } = categorizePadRow({
+        const outputs = categorizePadRows({
           sourceTable,
           row,
         });
 
-        batch.push(
-          repo.create({
-            sourceTable,
-            sourceRowId,
-            category,
-            subcategory,
-            summaryJson: summary ? JSON.stringify(summary) : null,
-          })
-        );
+        for (const { category, subcategory, summary } of outputs) {
+          batch.push(
+            repo.create({
+              sourceTable,
+              sourceRowId,
+              category,
+              subcategory,
+              summaryJson: summary ? JSON.stringify(summary) : null,
+            })
+          );
+        }
 
         if (batch.length >= Number(process.env.INSERT_BATCH ?? "500")) {
           await repo.save(batch);

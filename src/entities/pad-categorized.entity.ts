@@ -2,7 +2,11 @@ import { Column, Entity, Index, PrimaryGeneratedColumn, Unique } from "typeorm";
 
 /** Derived index table for faster filtering — extend columns as your rules evolve. */
 @Entity({ name: "pad_categorized" })
-@Unique("uq_pad_categorized_source_row", ["sourceTable", "sourceRowId"])
+@Unique("uq_pad_categorized_source_row_category", [
+  "sourceTable",
+  "sourceRowId",
+  "category",
+])
 @Index("idx_pad_categorized_category", ["category"])
 export class PadCategorized {
   @PrimaryGeneratedColumn()

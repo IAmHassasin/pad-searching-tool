@@ -1,6 +1,10 @@
+import {
+  loadFilterTypeCategories,
+  matchFilterRules,
+} from "./filter-type-categories";
+
 /**
- * Map one source row to category labels. Replace this logic with your PAD rules
- * (regex bands, lookups, multi-field logic, etc.).
+ * Map one source row to one or more category labels (multiple pad_categorized rows).
  */
 export type CategorizeInput = {
   sourceTable: string;
@@ -15,7 +19,7 @@ export type CategorizeOutput = {
   summary?: Record<string, unknown>;
 };
 
-export function categorizePadRow(input: CategorizeInput): CategorizeOutput {
+export function categorizePadRows(input: CategorizeInput): CategorizeOutput[] {
   const { row } = input;
 
   const columnCategory = process.env.CATEGORY_FROM_COLUMN;
@@ -26,27 +30,52 @@ export function categorizePadRow(input: CategorizeInput): CategorizeOutput {
       subCol && subCol in row && row[subCol] != null
         ? String(row[subCol])
         : null;
-    return {
-      category,
-      subcategory,
-      summary: pickSummary(row),
-    };
+    return [
+      {
+        category,
+        subcategory,
+        summary: pickSummary(row),
+      },
+    ];
+  }
+
+  const filterFile = loadFilterTypeCategories();
+  if (filterFile) {
+    const hits = matchFilterRules(row, filterFile);
+    if (hits.length) {
+      return hits.map(({ category, subcategory }) => ({
+        category,
+        subcategory,
+        summary: pickSummary(row),
+      }));
+    }
+    return [
+      {
+        category: "default",
+        subcategory: null,
+        summary: pickSummary(row),
+      },
+    ];
   }
 
   const textBlob = JSON.stringify(row).toLowerCase();
   if (textBlob.includes("error") || textBlob.includes("fail")) {
-    return {
-      category: "issue",
-      subcategory: "likely_error_token",
-      summary: pickSummary(row),
-    };
+    return [
+      {
+        category: "issue",
+        subcategory: "likely_error_token",
+        summary: pickSummary(row),
+      },
+    ];
   }
 
-  return {
-    category: "default",
-    subcategory: null,
-    summary: pickSummary(row),
-  };
+  return [
+    {
+      category: "default",
+      subcategory: null,
+      summary: pickSummary(row),
+    },
+  ];
 }
 
 function pickSummary(row: Record<string, unknown>): Record<string, unknown> {
