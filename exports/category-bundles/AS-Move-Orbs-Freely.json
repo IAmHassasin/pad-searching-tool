@@ -1,0 +1,243 @@
+{
+  "sourceTable": "monsters_join_skills",
+  "category": "AS - Move Orbs Freely",
+  "subcategory": "active_skill",
+  "monsters": [
+    {
+      "sourceRowId": 128,
+      "facets": null
+    },
+    {
+      "sourceRowId": 129,
+      "facets": null
+    },
+    {
+      "sourceRowId": 140,
+      "facets": null
+    },
+    {
+      "sourceRowId": 141,
+      "facets": null
+    },
+    {
+      "sourceRowId": 348,
+      "facets": null
+    },
+    {
+      "sourceRowId": 349,
+      "facets": null
+    },
+    {
+      "sourceRowId": 394,
+      "facets": null
+    },
+    {
+      "sourceRowId": 395,
+      "facets": null
+    },
+    {
+      "sourceRowId": 470,
+      "facets": null
+    },
+    {
+      "sourceRowId": 488,
+      "facets": null
+    },
+    {
+      "sourceRowId": 489,
+      "facets": null
+    },
+    {
+      "sourceRowId": 528,
+      "facets": null
+    },
+    {
+      "sourceRowId": 529,
+      "facets": null
+    },
+    {
+      "sourceRowId": 534,
+      "facets": null
+    },
+    {
+      "sourceRowId": 535,
+      "facets": null
+    },
+    {
+      "sourceRowId": 666,
+      "facets": null
+    },
+    {
+      "sourceRowId": 695,
+      "facets": null
+    },
+    {
+      "sourceRowId": 696,
+      "facets": null
+    },
+    {
+      "sourceRowId": 924,
+      "facets": null
+    },
+    {
+      "sourceRowId": 925,
+      "facets": null
+    },
+    {
+      "sourceRowId": 989,
+      "facets": null
+    },
+    {
+      "sourceRowId": 990,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1019,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1020,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1200,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1318,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1389,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1442,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1443,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1468,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1791,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1905,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1924,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1974,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1996,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2047,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2048,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2122,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2330,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2977,
+      "facets": null
+    },
+    {
+      "sourceRowId": 3112,
+      "facets": null
+    },
+    {
+      "sourceRowId": 3122,
+      "facets": null
+    },
+    {
+      "sourceRowId": 3866,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4050,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4665,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4934,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5169,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5301,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5302,
+      "facets": null
+    },
+    {
+      "sourceRowId": 7462,
+      "facets": null
+    },
+    {
+      "sourceRowId": 7463,
+      "facets": null
+    },
+    {
+      "sourceRowId": 7604,
+      "facets": null
+    },
+    {
+      "sourceRowId": 7822,
+      "facets": null
+    },
+    {
+      "sourceRowId": 7853,
+      "facets": null
+    },
+    {
+      "sourceRowId": 8540,
+      "facets": null
+    },
+    {
+      "sourceRowId": 8548,
+      "facets": null
+    },
+    {
+      "sourceRowId": 8550,
+      "facets": null
+    },
+    {
+      "sourceRowId": 11663,
+      "facets": null
+    },
+    {
+      "sourceRowId": 13572,
+      "facets": null
+    }
+  ]
+}

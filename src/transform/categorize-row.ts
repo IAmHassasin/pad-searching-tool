@@ -53,14 +53,7 @@ export function categorizePadRows(input: CategorizeInput): CategorizeOutput[] {
         summary: pickSummary(row),
       }));
     }
-    return [
-      {
-        category: "default",
-        subcategory: null,
-        facets: null,
-        summary: pickSummary(row),
-      },
-    ];
+    return [];
   }
 
   const textBlob = JSON.stringify(row).toLowerCase();

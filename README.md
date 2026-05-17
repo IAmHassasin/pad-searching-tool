@@ -90,7 +90,7 @@ When your DB is read-only and you cannot create a merged table, use `SOURCE_QUER
 ```bash
 $env:SOURCE_TABLE = "monsters_active_joined"
 $env:SOURCE_ID_COLUMN = "monster_id"
-$env:SOURCE_QUERY = "SELECT m.*, a.desc_en AS active_skill_desc_en, l.desc_en AS leader_skill_desc_en FROM monsters m LEFT JOIN active_skills a ON m.active_skill_id = a.active_skill_id LEFT JOIN leader_skills l ON m.leader_skill_id = l.leader_skill_id"
+$env:SOURCE_QUERY = "SELECT m.*, a.desc_en AS active_skill_desc_en, a.tags AS active_skill_tags, l.desc_en AS leader_skill_desc_en, l.tags AS leader_skill_tags FROM monsters m LEFT JOIN active_skills a ON m.active_skill_id = a.active_skill_id LEFT JOIN leader_skills l ON m.leader_skill_id = l.leader_skill_id"
 npm run pad -- transform
 ```
 

@@ -1,0 +1,403 @@
+{
+  "sourceTable": "monsters_join_skills",
+  "category": "LS - Resolve",
+  "subcategory": "leader_skill",
+  "monsters": [
+    {
+      "sourceRowId": 62,
+      "facets": null
+    },
+    {
+      "sourceRowId": 63,
+      "facets": null
+    },
+    {
+      "sourceRowId": 64,
+      "facets": null
+    },
+    {
+      "sourceRowId": 65,
+      "facets": null
+    },
+    {
+      "sourceRowId": 66,
+      "facets": null
+    },
+    {
+      "sourceRowId": 67,
+      "facets": null
+    },
+    {
+      "sourceRowId": 106,
+      "facets": null
+    },
+    {
+      "sourceRowId": 107,
+      "facets": null
+    },
+    {
+      "sourceRowId": 134,
+      "facets": null
+    },
+    {
+      "sourceRowId": 135,
+      "facets": null
+    },
+    {
+      "sourceRowId": 310,
+      "facets": null
+    },
+    {
+      "sourceRowId": 311,
+      "facets": null
+    },
+    {
+      "sourceRowId": 312,
+      "facets": null
+    },
+    {
+      "sourceRowId": 313,
+      "facets": null
+    },
+    {
+      "sourceRowId": 314,
+      "facets": null
+    },
+    {
+      "sourceRowId": 315,
+      "facets": null
+    },
+    {
+      "sourceRowId": 447,
+      "facets": null
+    },
+    {
+      "sourceRowId": 448,
+      "facets": null
+    },
+    {
+      "sourceRowId": 512,
+      "facets": null
+    },
+    {
+      "sourceRowId": 730,
+      "facets": null
+    },
+    {
+      "sourceRowId": 731,
+      "facets": null
+    },
+    {
+      "sourceRowId": 777,
+      "facets": null
+    },
+    {
+      "sourceRowId": 778,
+      "facets": null
+    },
+    {
+      "sourceRowId": 827,
+      "facets": null
+    },
+    {
+      "sourceRowId": 828,
+      "facets": null
+    },
+    {
+      "sourceRowId": 829,
+      "facets": null
+    },
+    {
+      "sourceRowId": 830,
+      "facets": null
+    },
+    {
+      "sourceRowId": 839,
+      "facets": null
+    },
+    {
+      "sourceRowId": 984,
+      "facets": null
+    },
+    {
+      "sourceRowId": 986,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1051,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1052,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1424,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1425,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1484,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1638,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1639,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1795,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1796,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1871,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1892,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1893,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1957,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1958,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1959,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1960,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1961,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2019,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2129,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2241,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2242,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2243,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2322,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2346,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2362,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2450,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2451,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2540,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2550,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2551,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2606,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2625,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2626,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2788,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2799,
+      "facets": null
+    },
+    {
+      "sourceRowId": 3182,
+      "facets": null
+    },
+    {
+      "sourceRowId": 3183,
+      "facets": null
+    },
+    {
+      "sourceRowId": 3184,
+      "facets": null
+    },
+    {
+      "sourceRowId": 3185,
+      "facets": null
+    },
+    {
+      "sourceRowId": 3186,
+      "facets": null
+    },
+    {
+      "sourceRowId": 3187,
+      "facets": null
+    },
+    {
+      "sourceRowId": 3386,
+      "facets": null
+    },
+    {
+      "sourceRowId": 3464,
+      "facets": null
+    },
+    {
+      "sourceRowId": 3465,
+      "facets": null
+    },
+    {
+      "sourceRowId": 3648,
+      "facets": null
+    },
+    {
+      "sourceRowId": 3731,
+      "facets": null
+    },
+    {
+      "sourceRowId": 3732,
+      "facets": null
+    },
+    {
+      "sourceRowId": 3948,
+      "facets": null
+    },
+    {
+      "sourceRowId": 3949,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4347,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4416,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4417,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4608,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4782,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4967,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5014,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5215,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5548,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5900,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5901,
+      "facets": null
+    },
+    {
+      "sourceRowId": 8389,
+      "facets": null
+    },
+    {
+      "sourceRowId": 8390,
+      "facets": null
+    },
+    {
+      "sourceRowId": 11538,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12952,
+      "facets": null
+    },
+    {
+      "sourceRowId": 52609,
+      "facets": null
+    },
+    {
+      "sourceRowId": 52610,
+      "facets": null
+    },
+    {
+      "sourceRowId": 52623,
+      "facets": null
+    },
+    {
+      "sourceRowId": 52624,
+      "facets": null
+    },
+    {
+      "sourceRowId": 54976,
+      "facets": null
+    }
+  ]
+}

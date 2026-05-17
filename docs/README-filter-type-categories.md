@@ -32,6 +32,8 @@ The column you match against is **not** a separate DB column; it is whatever str
 |----------|---------|
 | **`FILTER_TYPE_CATEGORIES_PATH`** | Path to the JSON file. Relative paths are resolved from the process **current working directory** (usually the repo root). Default: **`docs/filter-type-categories.json`**. |
 | **`FILTER_DESC_COLUMN`** | Default column name on each row to read for matching when a rule does not set **`sourceColumn`**. Default: **`active_skill_desc_en`**. |
+| **`FILTER_TAGS_COLUMN`** | Default column for dadguide **`active_skills.tags`** (alias e.g. **`active_skill_tags`**). Default: **`active_skill_tags`**. |
+| **`FILTER_LEADER_TAGS_COLUMN`** | Default column for **`leader_skills.tags`** (alias **`leader_skill_tags`**). Used when a rule’s **`label`** starts with **`LS -`**. Default: **`leader_skill_tags`**. |
 | **`CATEGORY_JSON_EXPORT_DIR`** | If set (non-empty), after each successful transform the app writes **static JSON bundles** under this directory (relative to CWD unless absolute): one file per **`category`**, plus **`index.json`** listing all files and row counts. FE can import these instead of paging everything through the API. |
 
 ## JSON shape
@@ -52,12 +54,57 @@ Each rule object:
 | **`label`** | Yes | Human-readable name; used as **`category`** when **`key`** is omitted. |
 | **`key`** | No | Stable value stored in **`category`** if you do not want to use **`label`** in the DB or API. |
 | **`sourceColumn`** | No | Which row field to scan for this rule. Defaults to **`FILTER_DESC_COLUMN`** / **`active_skill_desc_en`**. Use e.g. **`leader_skill_desc_en`** for leader-skill-only rules. |
-| **`patterns`** | No | Array of substrings. If **any** pattern appears in the cell text (**case-insensitive**), the rule matches. Not regular expressions. |
+| **`tagsColumn`** | No | Which row field holds dadguide tag ids (e.g. **`(9),(80),(240)`**). If omitted: labels starting with **`LS -`** → **`FILTER_LEADER_TAGS_COLUMN`**; otherwise **`FILTER_TAGS_COLUMN`**. |
+| **`tagIds`** | No | Array of numeric tag ids. If **any** id appears in the row’s tags column, the rule matches. Active rules use **`active_skill_tags`**; **`LS - …`** rules use **`leader_skill_tags`**. |
+| **`patterns`** | No | Array of substrings. If **any** pattern appears in the cell text (**case-sensitive**), the rule matches. Not regular expressions. |
 | **`regex`** | No | A **JavaScript** regular expression **source** string (as in `new RegExp(regex, "i")`). Matching is **case-insensitive**. Invalid strings are ignored (no crash). |
 | **`matchAll`** | No | If **`true`**, the rule always matches every row. Use sparingly (e.g. a global “all types” bucket). |
 | **`facets`** | No | Array of **extractors** run on the **same** column text (original casing) **after** the rule matches. Each extractor uses a **`regex`** with a capture group; the captured value is stored under **`key`** in **`facet_json`**. See below. |
 
-A rule matches if **`matchAll`** is true, **or** any **`patterns`** entry matches, **or** **`regex`** matches. If a rule has **none** of these, it **never** matches until you add at least one.
+A rule is **skipped** (never evaluated) if it has **none** of: **`tagIds`**, **`patterns`**, **`regex`**, **`matchAll`**. Placeholder entries (label only) stay in the JSON until you add matchers.
+
+Otherwise a rule matches if **`matchAll`** is true, **or** any **`tagIds`** entry is present on the row, **or** any **`patterns`** entry matches, **or** **`regex`** matches.
+
+### Dadguide skill tags (active + leader)
+
+Community DBs expose:
+
+- **`active_skills.tags`** / **`active_skill_tags`** — active skill tag ids, e.g. **`(9),(80),(240)`**
+- **`leader_skills.tags`** / **`leader_skill_tags`** — leader skill tag ids (same format)
+
+Include both in **`SOURCE_QUERY`**:
+
+```sql
+a.tags AS active_skill_tags,
+l.tags AS leader_skill_tags
+```
+
+Map with **`tagIds`** only (no description substring needed):
+
+```json
+{
+  "group": "active_skill",
+  "label": "Gravity",
+  "tagIds": [9]
+}
+```
+
+Rules whose **`label`** starts with **`LS -`** automatically read **`leader_skill_tags`** (ids from **`leader_skill_tags`** lookup table):
+
+```json
+{
+  "group": "leader_skill",
+  "label": "LS - Skyfall Foresight",
+  "tagIds": [210]
+}
+```
+
+Look up ids:
+
+```sql
+SELECT tag_id, name_en FROM active_skill_tags ORDER BY name_en;
+SELECT tag_id, name_en FROM leader_skill_tags ORDER BY name_en;
+```
 
 ### Facets (sub-filters: turns, multipliers, …)
 
@@ -114,6 +161,16 @@ When **`CATEGORY_JSON_EXPORT_DIR`** is set (e.g. **`exports/category-bundles`**)
 
 ## Examples
 
+Tag-based (dadguide `active_skill_tags`):
+
+```json
+{
+  "group": "active_skill",
+  "label": "Heal",
+  "tagIds": [42]
+}
+```
+
 Substring rules:
 
 ```json
@@ -156,9 +213,9 @@ Stable DB key with a long UI label:
 }
 ```
 
-## Default row when nothing matches
+## When nothing matches
 
-If the JSON is loaded and **no** rule matches a row, the transform still writes **one** row with **`category`** = **`default`** and **`subcategory`** = **`null`**, so every source row continues to have at least one categorization record unless you change that logic in code.
+If the JSON is loaded and **no** rule matches a source row, that row is **not** written to **`pad_categorized`** (no **`default`** bucket).
 
 ## Caching
 

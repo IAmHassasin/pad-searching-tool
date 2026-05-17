@@ -38,55 +38,82 @@
     },
     {
       "group": "active_skill",
-      "label": "AS - Unmatchable Recovery"
+      "label": "AS - Unmatchable Recovery",
+      "tagIds": [281]
     },
     {
       "group": "active_skill",
-      "label": "AS - Damage Reduction Loop"
+      "label": "AS - Damage Reduction Loop",
+      "tagIds": [11]
     },
     {
       "group": "active_skill",
-      "label": "AS - Skill Unusable"
+      "label": "AS - Skill Unusable",
+      "patterns": ["disable team active skills"],
+      "facets": [
+        {
+          "key": "turns",
+          "regex": "for \\s+(\\d+)\\s+turns?",
+          "type": "int"
+        }
+      ]
     },
     {
       "group": "active_skill",
-      "label": "AS - Move Time Loop"
+      "label": "AS - Move Time Loop",
+      "tagIds": [80]
     },
     {
       "group": "active_skill",
-      "label": "AS - RCV+ Loop"
+      "label": "AS - RCV+ Loop",
+      "tagIds": [21]
     },
     {
       "group": "active_skill",
-      "label": "AS - ATK+ Loop"
+      "label": "AS - ATK+ Loop",
+      "tagIds": [3]
     },
     {
       "group": "active_skill",
-      "label": "AS - Delay Enemy Move"
+      "label": "AS - Delay Enemy Move",
+      "tagIds": [9]
     },
     {
       "group": "active_skill",
-      "label": "AS - Switch Leader"
+      "label": "AS - Switch Leader",
+      "tagIds": [22]
     },
     {
       "group": "active_skill",
-      "label": "AS - Move Orbs Freely"
+      "label": "AS - Move Orbs Freely",
+      "tagIds": [10]
     },
     {
       "group": "active_skill",
-      "label": "AS - Skill Charge"
+      "label": "AS - Skill Charge",
+      "tagIds": [110]
     },
     {
       "group": "active_skill",
-      "label": "AS - Reduce Skill Charge"
+      "label": "AS - Reduce Skill Charge",
+      "patterns": ["self-delay active skills"],
+      "facets": [
+        {
+          "key": "turns",
+          "regex": "by \\s+(\\d+)\\s+turns?",
+          "type": "int"
+        }
+      ]
     },
     {
       "group": "active_skill",
-      "label": "AS - Random Skill"
+      "label": "AS - Random Skill",
+      "patterns": ["activate a random skill"]
     },
     {
       "group": "active_skill",
-      "label": "AS - Skill Evolve"
+      "label": "AS - Skill Evolve",
+      "patterns": ["evolve to the next"]
     },
     {
       "group": "active_skill",
@@ -98,11 +125,25 @@
     },
     {
       "group": "active_skill",
-      "label": "AS - Instant Heal"
+      "label": "AS - Instant Heal",
+      "tagIds": [18]
     },
     {
       "group": "active_skill",
-      "label": "AS - Persistent Heal"
+      "label": "AS - Persistent Heal",
+      "patterns": ["for \\s+(\\d+)\\s+turns, recover \\s+(\\d+\\.?\\d*)\\s+% of max HP"],
+      "facets": [
+        {
+          "key": "turns",
+          "regex": "for \\s+(\\d+)\\s+turns?",
+          "type": "int"
+        },
+        {
+          "key": "hp",
+          "regex": "recover \\s+(\\d+\\.?\\d*)\\s+% of max HP?",
+          "type": "float"
+        }
+      ]
     },
     {
       "group": "active_skill",
@@ -110,7 +151,8 @@
     },
     {
       "group": "active_skill",
-      "label": "AS - Skyfall Foresight"
+      "label": "AS - Skyfall Foresight",
+      "patterns": ["skyfall foresight"]
     },
     {
       "group": "active_skill",
@@ -122,7 +164,8 @@
     },
     {
       "group": "active_skill",
-      "label": "AS - Nail Orb Create"
+      "label": "AS - Nail Orb Create",
+      "patterns": ["nail orbs"]
     },
     {
       "group": "active_skill",
@@ -130,11 +173,13 @@
     },
     {
       "group": "active_skill",
-      "label": "AS - Unmatchable"
+      "label": "AS - Unmatchable",
+      "tagIds": [281]
     },
     {
       "group": "active_skill",
-      "label": "AS - Roulette"
+      "label": "AS - Roulette",
+      "patterns": ["spinner"]
     },
     {
       "group": "active_skill",
@@ -142,23 +187,28 @@
     },
     {
       "group": "active_skill",
-      "label": "AS - Locked Skyfall"
+      "label": "AS - Locked Skyfall",
+      "patterns": ["appear locked"]
     },
     {
       "group": "active_skill",
-      "label": "AS - No Skyfall"
+      "label": "AS - No Skyfall",
+      "tagIds": [260]
     },
     {
       "group": "active_skill",
-      "label": "AS - Unlock Orb"
+      "label": "AS - Unlock Orb",
+      "tagIds": [230]
     },
     {
       "group": "active_skill",
-      "label": "AS - Lock Orb"
+      "label": "AS - Lock Orb",
+      "tagIds": [270]
     },
     {
       "group": "active_skill",
-      "label": "AS - Enhanced Skyfall"
+      "label": "AS - Enhanced Skyfall",
+      "patterns": ["enhanced orbs are more likely to appear"]
     },
     {
       "group": "active_skill",
@@ -174,11 +224,13 @@
     },
     {
       "group": "active_skill",
-      "label": "AS - Orb Skyfall"
+      "label": "AS - Orb Skyfall",
+      "tagIds": [50]
     },
     {
       "group": "active_skill",
-      "label": "AS - Fixed Skyfall"
+      "label": "AS - Fixed Skyfall",
+      "patterns": ["only \\w+ orbs will appear"]
     },
     {
       "group": "active_skill",
@@ -186,11 +238,15 @@
     },
     {
       "group": "active_skill",
-      "label": "AS - Break Shield"
-    },
-    {
-      "group": "active_skill",
-      "label": "AS - Usage Limit"
+      "label": "AS - Break Shield",
+      "patterns": ["remove \\s+(\\d+)\\s+enemy's barrier"],
+      "facets": [
+        {
+          "key": "enemies",
+          "regex": "remove \\s+(\\d+)\\s+enemy\\s+barrier?",
+          "type": "int"
+        }
+      ]
     },
     {
       "group": "leader_skill",
@@ -198,55 +254,75 @@
     },
     {
       "group": "leader_skill",
-      "label": "LS - No Skyfall"
+      "label": "LS - No Skyfall",
+      "tagIds": [210]
     },
     {
       "group": "leader_skill",
-      "label": "LS - 7x6 Board"
+      "label": "LS - 7x6 Board",
+      "tagIds": [200]
     },
     {
       "group": "leader_skill",
-      "label": "LS - Unable to erase N or less"
+      "label": "LS - Unable to erase N or less",
+      "patterns": ["unable to erase \\s+(\\d+)\\s+or less"]
     },
     {
       "group": "leader_skill",
-      "label": "LS - Fixed Move Time"
+      "label": "LS - Fixed Move Time",
+      "patterns": ["Fixed \\s+(\\d+)\\s+second movetime"],
+      "facets": [
+        {
+          "key": "seconds",
+          "regex": "Fixed \\s+(\\d+)\\s+second movetime?",
+          "type": "int"
+        }
+      ]
     },
     {
       "group": "leader_skill",
-      "label": "LS - Extended Move Time"
+      "label": "LS - Extended Move Time",
+      "tagIds": [37]
     },
     {
       "group": "leader_skill",
-      "label": "LS - Rank EXP"
+      "label": "LS - Rank EXP",
+      "tagIds": [170]
     },
     {
       "group": "leader_skill",
-      "label": "LS - Coin"
+      "label": "LS - Coin",
+      "tagIds": [150]
     },
     {
       "group": "leader_skill",
-      "label": "LS - Egg Drop Rate"
+      "label": "LS - Egg Drop Rate",
+      "tagIds": [160]
     },
     {
       "group": "leader_skill",
-      "label": "LS - Part Break Bonus Drop Rate"
+      "label": "LS - Part Break Bonus Drop Rate",
+      "patterns": ["part drop rate"]
     },
     {
       "group": "leader_skill",
-      "label": "LS - Plus Point"
+      "label": "LS - Plus Point",
+      "patterns": ["plus egg drop amounts"]
     },
     {
       "group": "leader_skill",
-      "label": "LS - Void Poison Damage"
+      "label": "LS - Void Poison Damage",
+      "patterns": ["Disable Poison & Mortal Poison orb effects"]
     },
     {
       "group": "leader_skill",
-      "label": "LS - Resolve"
+      "label": "LS - Resolve",
+      "tagIds": [36]
     },
     {
       "group": "leader_skill",
-      "label": "LS - Auto Heal"
+      "label": "LS - Auto Heal",
+      "tagIds": [1]
     },
     {
       "group": "leader_skill",
@@ -254,19 +330,23 @@
     },
     {
       "group": "leader_skill",
-      "label": "LS - Counterattack"
+      "label": "LS - Counterattack",
+      "tagIds": [35]
     },
     {
       "group": "leader_skill",
-      "label": "LS - Awoken Bind Recovery"
+      "label": "LS - Awoken Bind Recovery",
+      "patterns": ["reduce awoken skill"]
     },
     {
       "group": "leader_skill",
-      "label": "LS - Add Combo"
+      "label": "LS - Add Combo",
+      "tagIds": [211]
     },
     {
       "group": "leader_skill",
-      "label": "LS - Inflict Damage"
+      "label": "LS - Inflict Damage",
+      "tagIds": [34]
     }
   ]
 }

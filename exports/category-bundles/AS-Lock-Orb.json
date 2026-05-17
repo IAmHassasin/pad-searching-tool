@@ -1,0 +1,719 @@
+{
+  "sourceTable": "monsters_join_skills",
+  "category": "AS - Lock Orb",
+  "subcategory": "active_skill",
+  "monsters": [
+    {
+      "sourceRowId": 2262,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2263,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2276,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2277,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2319,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2320,
+      "facets": null
+    },
+    {
+      "sourceRowId": 3795,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4033,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4034,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4393,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4394,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4439,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4440,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4447,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4491,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4610,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4627,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4673,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4674,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4698,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4746,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4763,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4764,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4782,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4783,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4812,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4813,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4831,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4832,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4833,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4845,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4846,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4851,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4852,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4876,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4903,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4904,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4923,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4924,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4955,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4968,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5012,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5022,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5104,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5105,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5179,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5180,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5256,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5306,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5398,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5499,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5521,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5531,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5532,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5534,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5535,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5540,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5604,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5607,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5646,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5647,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5726,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5820,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5832,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5851,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5879,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5928,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5944,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5953,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5956,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5957,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5961,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5962,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5963,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5969,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5971,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5975,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5993,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6010,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6060,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6061,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6078,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6130,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6223,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6236,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6237,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6242,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6243,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6305,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6319,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6397,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6401,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6479,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6480,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6481,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6492,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6493,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6548,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6561,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6566,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6590,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6635,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6666,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6794,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6917,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6966,
+      "facets": null
+    },
+    {
+      "sourceRowId": 7070,
+      "facets": null
+    },
+    {
+      "sourceRowId": 7089,
+      "facets": null
+    },
+    {
+      "sourceRowId": 7092,
+      "facets": null
+    },
+    {
+      "sourceRowId": 7208,
+      "facets": null
+    },
+    {
+      "sourceRowId": 7218,
+      "facets": null
+    },
+    {
+      "sourceRowId": 7356,
+      "facets": null
+    },
+    {
+      "sourceRowId": 7376,
+      "facets": null
+    },
+    {
+      "sourceRowId": 7380,
+      "facets": null
+    },
+    {
+      "sourceRowId": 7441,
+      "facets": null
+    },
+    {
+      "sourceRowId": 7477,
+      "facets": null
+    },
+    {
+      "sourceRowId": 7526,
+      "facets": null
+    },
+    {
+      "sourceRowId": 7641,
+      "facets": null
+    },
+    {
+      "sourceRowId": 7643,
+      "facets": null
+    },
+    {
+      "sourceRowId": 7644,
+      "facets": null
+    },
+    {
+      "sourceRowId": 7670,
+      "facets": null
+    },
+    {
+      "sourceRowId": 7672,
+      "facets": null
+    },
+    {
+      "sourceRowId": 7673,
+      "facets": null
+    },
+    {
+      "sourceRowId": 7884,
+      "facets": null
+    },
+    {
+      "sourceRowId": 7980,
+      "facets": null
+    },
+    {
+      "sourceRowId": 7993,
+      "facets": null
+    },
+    {
+      "sourceRowId": 8020,
+      "facets": null
+    },
+    {
+      "sourceRowId": 8141,
+      "facets": null
+    },
+    {
+      "sourceRowId": 8266,
+      "facets": null
+    },
+    {
+      "sourceRowId": 8309,
+      "facets": null
+    },
+    {
+      "sourceRowId": 8348,
+      "facets": null
+    },
+    {
+      "sourceRowId": 8527,
+      "facets": null
+    },
+    {
+      "sourceRowId": 8623,
+      "facets": null
+    },
+    {
+      "sourceRowId": 8757,
+      "facets": null
+    },
+    {
+      "sourceRowId": 8803,
+      "facets": null
+    },
+    {
+      "sourceRowId": 8820,
+      "facets": null
+    },
+    {
+      "sourceRowId": 8832,
+      "facets": null
+    },
+    {
+      "sourceRowId": 9022,
+      "facets": null
+    },
+    {
+      "sourceRowId": 9123,
+      "facets": null
+    },
+    {
+      "sourceRowId": 9188,
+      "facets": null
+    },
+    {
+      "sourceRowId": 9251,
+      "facets": null
+    },
+    {
+      "sourceRowId": 9252,
+      "facets": null
+    },
+    {
+      "sourceRowId": 9578,
+      "facets": null
+    },
+    {
+      "sourceRowId": 9600,
+      "facets": null
+    },
+    {
+      "sourceRowId": 9701,
+      "facets": null
+    },
+    {
+      "sourceRowId": 9707,
+      "facets": null
+    },
+    {
+      "sourceRowId": 9738,
+      "facets": null
+    },
+    {
+      "sourceRowId": 9751,
+      "facets": null
+    },
+    {
+      "sourceRowId": 9889,
+      "facets": null
+    },
+    {
+      "sourceRowId": 9890,
+      "facets": null
+    },
+    {
+      "sourceRowId": 9963,
+      "facets": null
+    },
+    {
+      "sourceRowId": 10590,
+      "facets": null
+    },
+    {
+      "sourceRowId": 10739,
+      "facets": null
+    },
+    {
+      "sourceRowId": 10801,
+      "facets": null
+    },
+    {
+      "sourceRowId": 11268,
+      "facets": null
+    },
+    {
+      "sourceRowId": 11269,
+      "facets": null
+    },
+    {
+      "sourceRowId": 11283,
+      "facets": null
+    },
+    {
+      "sourceRowId": 11393,
+      "facets": null
+    },
+    {
+      "sourceRowId": 11688,
+      "facets": null
+    },
+    {
+      "sourceRowId": 11689,
+      "facets": null
+    },
+    {
+      "sourceRowId": 11965,
+      "facets": null
+    },
+    {
+      "sourceRowId": 11998,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12000,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12394,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12929,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12936,
+      "facets": null
+    },
+    {
+      "sourceRowId": 13111,
+      "facets": null
+    },
+    {
+      "sourceRowId": 13145,
+      "facets": null
+    },
+    {
+      "sourceRowId": 13321,
+      "facets": null
+    },
+    {
+      "sourceRowId": 13432,
+      "facets": null
+    },
+    {
+      "sourceRowId": 13489,
+      "facets": null
+    },
+    {
+      "sourceRowId": 54957,
+      "facets": null
+    },
+    {
+      "sourceRowId": 56917,
+      "facets": null
+    },
+    {
+      "sourceRowId": 56966,
+      "facets": null
+    },
+    {
+      "sourceRowId": 59123,
+      "facets": null
+    },
+    {
+      "sourceRowId": 59738,
+      "facets": null
+    },
+    {
+      "sourceRowId": 59751,
+      "facets": null
+    },
+    {
+      "sourceRowId": 60739,
+      "facets": null
+    }
+  ]
+}

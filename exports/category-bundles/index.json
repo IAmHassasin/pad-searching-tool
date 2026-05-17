@@ -1,0 +1,166 @@
+{
+  "sourceTable": "monsters_join_skills",
+  "generatedAt": "2026-05-17T19:38:26.318Z",
+  "files": [
+    {
+      "category": "AS - ATK+ Loop",
+      "file": "AS-ATK+-Loop.json",
+      "count": 2250
+    },
+    {
+      "category": "AS - Damage Reduction Loop",
+      "file": "AS-Damage-Reduction-Loop.json",
+      "count": 1400
+    },
+    {
+      "category": "AS - Delay Enemy Move",
+      "file": "AS-Delay-Enemy-Move.json",
+      "count": 948
+    },
+    {
+      "category": "AS - Enhanced Skyfall",
+      "file": "AS-Enhanced-Skyfall.json",
+      "count": 234
+    },
+    {
+      "category": "AS - Instant Heal",
+      "file": "AS-Instant-Heal.json",
+      "count": 1109
+    },
+    {
+      "category": "AS - Lock Orb",
+      "file": "AS-Lock-Orb.json",
+      "count": 178
+    },
+    {
+      "category": "AS - Locked Skyfall",
+      "file": "AS-Locked-Skyfall.json",
+      "count": 72
+    },
+    {
+      "category": "AS - Move Orbs Freely",
+      "file": "AS-Move-Orbs-Freely.json",
+      "count": 59
+    },
+    {
+      "category": "AS - Move Time Loop",
+      "file": "AS-Move-Time-Loop.json",
+      "count": 1495
+    },
+    {
+      "category": "AS - Nail Orb Create",
+      "file": "AS-Nail-Orb-Create.json",
+      "count": 80
+    },
+    {
+      "category": "AS - No Skyfall",
+      "file": "AS-No-Skyfall.json",
+      "count": 305
+    },
+    {
+      "category": "AS - Orb Skyfall",
+      "file": "AS-Orb-Skyfall.json",
+      "count": 646
+    },
+    {
+      "category": "AS - RCV+ Loop",
+      "file": "AS-RCV+-Loop.json",
+      "count": 1073
+    },
+    {
+      "category": "AS - Roulette",
+      "file": "AS-Roulette.json",
+      "count": 451
+    },
+    {
+      "category": "AS - Skill Charge",
+      "file": "AS-Skill-Charge.json",
+      "count": 1927
+    },
+    {
+      "category": "AS - Skill Evolve",
+      "file": "AS-Skill-Evolve.json",
+      "count": 412
+    },
+    {
+      "category": "AS - Skyfall Foresight",
+      "file": "AS-Skyfall-Foresight.json",
+      "count": 32
+    },
+    {
+      "category": "AS - Switch Leader",
+      "file": "AS-Switch-Leader.json",
+      "count": 94
+    },
+    {
+      "category": "AS - Unlock Orb",
+      "file": "AS-Unlock-Orb.json",
+      "count": 4683
+    },
+    {
+      "category": "AS - Unmatchable",
+      "file": "AS-Unmatchable.json",
+      "count": 1329
+    },
+    {
+      "category": "AS - Unmatchable Recovery",
+      "file": "AS-Unmatchable-Recovery.json",
+      "count": 1329
+    },
+    {
+      "category": "LS - 7x6 Board",
+      "file": "LS-7x6-Board.json",
+      "count": 638
+    },
+    {
+      "category": "LS - Add Combo",
+      "file": "LS-Add-Combo.json",
+      "count": 2631
+    },
+    {
+      "category": "LS - Auto Heal",
+      "file": "LS-Auto-Heal.json",
+      "count": 118
+    },
+    {
+      "category": "LS - Coin",
+      "file": "LS-Coin.json",
+      "count": 46
+    },
+    {
+      "category": "LS - Counterattack",
+      "file": "LS-Counterattack.json",
+      "count": 61
+    },
+    {
+      "category": "LS - Egg Drop Rate",
+      "file": "LS-Egg-Drop-Rate.json",
+      "count": 52
+    },
+    {
+      "category": "LS - Extended Move Time",
+      "file": "LS-Extended-Move-Time.json",
+      "count": 855
+    },
+    {
+      "category": "LS - Inflict Damage",
+      "file": "LS-Inflict-Damage.json",
+      "count": 2222
+    },
+    {
+      "category": "LS - No Skyfall",
+      "file": "LS-No-Skyfall.json",
+      "count": 211
+    },
+    {
+      "category": "LS - Rank EXP",
+      "file": "LS-Rank-EXP.json",
+      "count": 105
+    },
+    {
+      "category": "LS - Resolve",
+      "file": "LS-Resolve.json",
+      "count": 99
+    }
+  ]
+}

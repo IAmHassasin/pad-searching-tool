@@ -1,0 +1,295 @@
+{
+  "sourceTable": "monsters_join_skills",
+  "category": "AS - Locked Skyfall",
+  "subcategory": "active_skill",
+  "monsters": [
+    {
+      "sourceRowId": 5953,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5956,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5957,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5958,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6113,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6120,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6142,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6143,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6144,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6323,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6370,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6393,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6491,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6492,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6493,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6568,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6573,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6574,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6575,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6623,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6832,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6900,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6952,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6973,
+      "facets": null
+    },
+    {
+      "sourceRowId": 7092,
+      "facets": null
+    },
+    {
+      "sourceRowId": 7158,
+      "facets": null
+    },
+    {
+      "sourceRowId": 7179,
+      "facets": null
+    },
+    {
+      "sourceRowId": 7307,
+      "facets": null
+    },
+    {
+      "sourceRowId": 7308,
+      "facets": null
+    },
+    {
+      "sourceRowId": 7322,
+      "facets": null
+    },
+    {
+      "sourceRowId": 7337,
+      "facets": null
+    },
+    {
+      "sourceRowId": 7347,
+      "facets": null
+    },
+    {
+      "sourceRowId": 7377,
+      "facets": null
+    },
+    {
+      "sourceRowId": 7581,
+      "facets": null
+    },
+    {
+      "sourceRowId": 7885,
+      "facets": null
+    },
+    {
+      "sourceRowId": 7915,
+      "facets": null
+    },
+    {
+      "sourceRowId": 8037,
+      "facets": null
+    },
+    {
+      "sourceRowId": 8242,
+      "facets": null
+    },
+    {
+      "sourceRowId": 8334,
+      "facets": null
+    },
+    {
+      "sourceRowId": 8381,
+      "facets": null
+    },
+    {
+      "sourceRowId": 8449,
+      "facets": null
+    },
+    {
+      "sourceRowId": 8451,
+      "facets": null
+    },
+    {
+      "sourceRowId": 8453,
+      "facets": null
+    },
+    {
+      "sourceRowId": 8481,
+      "facets": null
+    },
+    {
+      "sourceRowId": 8530,
+      "facets": null
+    },
+    {
+      "sourceRowId": 8629,
+      "facets": null
+    },
+    {
+      "sourceRowId": 8630,
+      "facets": null
+    },
+    {
+      "sourceRowId": 8761,
+      "facets": null
+    },
+    {
+      "sourceRowId": 9106,
+      "facets": null
+    },
+    {
+      "sourceRowId": 9131,
+      "facets": null
+    },
+    {
+      "sourceRowId": 9601,
+      "facets": null
+    },
+    {
+      "sourceRowId": 9783,
+      "facets": null
+    },
+    {
+      "sourceRowId": 9946,
+      "facets": null
+    },
+    {
+      "sourceRowId": 9976,
+      "facets": null
+    },
+    {
+      "sourceRowId": 9977,
+      "facets": null
+    },
+    {
+      "sourceRowId": 10048,
+      "facets": null
+    },
+    {
+      "sourceRowId": 10430,
+      "facets": null
+    },
+    {
+      "sourceRowId": 10443,
+      "facets": null
+    },
+    {
+      "sourceRowId": 10458,
+      "facets": null
+    },
+    {
+      "sourceRowId": 10665,
+      "facets": null
+    },
+    {
+      "sourceRowId": 10722,
+      "facets": null
+    },
+    {
+      "sourceRowId": 10801,
+      "facets": null
+    },
+    {
+      "sourceRowId": 11157,
+      "facets": null
+    },
+    {
+      "sourceRowId": 11466,
+      "facets": null
+    },
+    {
+      "sourceRowId": 11508,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12082,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12833,
+      "facets": null
+    },
+    {
+      "sourceRowId": 56952,
+      "facets": null
+    },
+    {
+      "sourceRowId": 56973,
+      "facets": null
+    },
+    {
+      "sourceRowId": 59106,
+      "facets": null
+    },
+    {
+      "sourceRowId": 60722,
+      "facets": null
+    },
+    {
+      "sourceRowId": 61157,
+      "facets": null
+    }
+  ]
+}

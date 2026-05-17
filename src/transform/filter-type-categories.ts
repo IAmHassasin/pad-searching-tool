@@ -22,7 +22,17 @@ export type FilterTypeCategoryRule = {
    * Row column to scan (e.g. active_skill_desc_en). If omitted, uses FILTER_DESC_COLUMN env or active_skill_desc_en.
    */
   sourceColumn?: string;
-  /** Case-insensitive substring: match if any pattern is contained in the column text. */
+  /**
+   * Row column with dadguide skill tags, e.g. "(9),(80),(240)".
+   * If omitted: labels starting with "LS -" use FILTER_LEADER_TAGS_COLUMN; others use FILTER_TAGS_COLUMN.
+   */
+  tagsColumn?: string;
+  /**
+   * Match when any listed tag id appears in the row tags column
+   * (active_skill_tags or leader_skill_tags lookup, depending on rule).
+   */
+  tagIds?: number[];
+  /** Case-sensitive substring: match if any pattern is contained in the column text. */
   patterns?: string[];
   /** If set, match when this RegExp matches (after trimming); invalid regex is ignored. */
   regex?: string;
@@ -86,10 +96,61 @@ export function defaultDescColumnForRow(): string {
   );
 }
 
+export function defaultTagsColumnForRow(): string {
+  return process.env.FILTER_TAGS_COLUMN?.trim() || "active_skill_tags";
+}
+
+export function defaultLeaderTagsColumnForRow(): string {
+  return (
+    process.env.FILTER_LEADER_TAGS_COLUMN?.trim() || "leader_skill_tags"
+  );
+}
+
+/** Labels starting with "LS -" use leader_skills.tags / leader_skill_tags. */
+export function isLeaderSkillLabel(label: string): boolean {
+  return label.trimStart().startsWith("LS -");
+}
+
+export function defaultTagsColumnForRule(
+  rule: FilterTypeCategoryRule
+): string {
+  const explicit = rule.tagsColumn?.trim();
+  if (explicit) return explicit;
+  if (isLeaderSkillLabel(rule.label)) {
+    return defaultLeaderTagsColumnForRow();
+  }
+  return defaultTagsColumnForRow();
+}
+
+/** Parse skills.tags values like "(9),(80),(240)". */
+export function parseSkillTagIds(raw: unknown): Set<number> {
+  const out = new Set<number>();
+  if (raw === null || raw === undefined) return out;
+  const s = String(raw).trim();
+  if (!s) return out;
+  for (const m of s.matchAll(/\((\d+)\)/g)) {
+    const n = parseInt(m[1], 10);
+    if (!Number.isNaN(n)) out.add(n);
+  }
+  return out;
+}
+
+/** @deprecated Use parseSkillTagIds */
+export const parseActiveSkillTagIds = parseSkillTagIds;
+
 function cellText(row: Record<string, unknown>, column: string): string {
   const v = row[column];
   if (v === null || v === undefined) return "";
   return String(v);
+}
+
+/** Rules without tagIds, patterns, regex, or matchAll are ignored. */
+export function ruleHasMatchCriteria(rule: FilterTypeCategoryRule): boolean {
+  if (rule.matchAll === true) return true;
+  if (rule.tagIds?.length) return true;
+  if (rule.patterns?.some((p) => p?.trim())) return true;
+  if (rule.regex?.trim()) return true;
+  return false;
 }
 
 function ruleMatches(
@@ -99,13 +160,22 @@ function ruleMatches(
   if (rule.matchAll === true) {
     return true;
   }
+
+  if (rule.tagIds?.length) {
+    const tagsCol = defaultTagsColumnForRule(rule);
+    const rowTags = parseSkillTagIds(row[tagsCol]);
+    for (const id of rule.tagIds) {
+      if (rowTags.has(id)) return true;
+    }
+  }
+
   const col = rule.sourceColumn?.trim() || defaultDescColumnForRow();
-  const text = cellText(row, col).toLowerCase();
+  const text = cellText(row, col);
 
   if (rule.patterns?.length) {
     for (const p of rule.patterns) {
       if (!p) continue;
-      if (text.includes(p.toLowerCase())) {
+      if (text.includes(p)) {
         return true;
       }
     }
@@ -183,6 +253,7 @@ export function matchFilterRules(
   >();
 
   for (const rule of file.categories) {
+    if (!ruleHasMatchCriteria(rule)) continue;
     if (!ruleMatches(rule, row)) continue;
     const cat = categoryKeyForRule(rule);
     const extracted = extractFacetsFromRule(rule, row) ?? {};

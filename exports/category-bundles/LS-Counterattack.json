@@ -1,0 +1,251 @@
+{
+  "sourceTable": "monsters_join_skills",
+  "category": "LS - Counterattack",
+  "subcategory": "leader_skill",
+  "monsters": [
+    {
+      "sourceRowId": 316,
+      "facets": null
+    },
+    {
+      "sourceRowId": 317,
+      "facets": null
+    },
+    {
+      "sourceRowId": 318,
+      "facets": null
+    },
+    {
+      "sourceRowId": 319,
+      "facets": null
+    },
+    {
+      "sourceRowId": 320,
+      "facets": null
+    },
+    {
+      "sourceRowId": 462,
+      "facets": null
+    },
+    {
+      "sourceRowId": 509,
+      "facets": null
+    },
+    {
+      "sourceRowId": 659,
+      "facets": null
+    },
+    {
+      "sourceRowId": 660,
+      "facets": null
+    },
+    {
+      "sourceRowId": 831,
+      "facets": null
+    },
+    {
+      "sourceRowId": 850,
+      "facets": null
+    },
+    {
+      "sourceRowId": 851,
+      "facets": null
+    },
+    {
+      "sourceRowId": 870,
+      "facets": null
+    },
+    {
+      "sourceRowId": 871,
+      "facets": null
+    },
+    {
+      "sourceRowId": 872,
+      "facets": null
+    },
+    {
+      "sourceRowId": 873,
+      "facets": null
+    },
+    {
+      "sourceRowId": 874,
+      "facets": null
+    },
+    {
+      "sourceRowId": 875,
+      "facets": null
+    },
+    {
+      "sourceRowId": 958,
+      "facets": null
+    },
+    {
+      "sourceRowId": 959,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1538,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1540,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1542,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1544,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1546,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1915,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1978,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2039,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2040,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2055,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2345,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2346,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2377,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2378,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2397,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2398,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2575,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2576,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2577,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2578,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2579,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2580,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2787,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2789,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2865,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2866,
+      "facets": null
+    },
+    {
+      "sourceRowId": 3023,
+      "facets": null
+    },
+    {
+      "sourceRowId": 3470,
+      "facets": null
+    },
+    {
+      "sourceRowId": 3471,
+      "facets": null
+    },
+    {
+      "sourceRowId": 3608,
+      "facets": null
+    },
+    {
+      "sourceRowId": 3884,
+      "facets": null
+    },
+    {
+      "sourceRowId": 3885,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4434,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5031,
+      "facets": null
+    },
+    {
+      "sourceRowId": 8401,
+      "facets": null
+    },
+    {
+      "sourceRowId": 8402,
+      "facets": null
+    },
+    {
+      "sourceRowId": 8403,
+      "facets": null
+    },
+    {
+      "sourceRowId": 8404,
+      "facets": null
+    },
+    {
+      "sourceRowId": 8405,
+      "facets": null
+    },
+    {
+      "sourceRowId": 52604,
+      "facets": null
+    },
+    {
+      "sourceRowId": 52605,
+      "facets": null
+    }
+  ]
+}

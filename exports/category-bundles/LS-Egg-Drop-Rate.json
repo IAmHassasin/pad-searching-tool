@@ -1,0 +1,215 @@
+{
+  "sourceTable": "monsters_join_skills",
+  "category": "LS - Egg Drop Rate",
+  "subcategory": "leader_skill",
+  "monsters": [
+    {
+      "sourceRowId": 3775,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4649,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4758,
+      "facets": null
+    },
+    {
+      "sourceRowId": 5518,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6628,
+      "facets": null
+    },
+    {
+      "sourceRowId": 7862,
+      "facets": null
+    },
+    {
+      "sourceRowId": 9290,
+      "facets": null
+    },
+    {
+      "sourceRowId": 9999,
+      "facets": null
+    },
+    {
+      "sourceRowId": 10534,
+      "facets": null
+    },
+    {
+      "sourceRowId": 10894,
+      "facets": null
+    },
+    {
+      "sourceRowId": 11722,
+      "facets": null
+    },
+    {
+      "sourceRowId": 11786,
+      "facets": null
+    },
+    {
+      "sourceRowId": 11792,
+      "facets": null
+    },
+    {
+      "sourceRowId": 11893,
+      "facets": null
+    },
+    {
+      "sourceRowId": 11945,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12012,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12082,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12120,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12158,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12180,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12249,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12284,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12373,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12376,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12385,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12426,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12437,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12461,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12487,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12606,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12615,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12620,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12656,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12712,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12741,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12828,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12831,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12840,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12880,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12922,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12982,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12986,
+      "facets": null
+    },
+    {
+      "sourceRowId": 13092,
+      "facets": null
+    },
+    {
+      "sourceRowId": 13186,
+      "facets": null
+    },
+    {
+      "sourceRowId": 13192,
+      "facets": null
+    },
+    {
+      "sourceRowId": 13252,
+      "facets": null
+    },
+    {
+      "sourceRowId": 13296,
+      "facets": null
+    },
+    {
+      "sourceRowId": 13319,
+      "facets": null
+    },
+    {
+      "sourceRowId": 13333,
+      "facets": null
+    },
+    {
+      "sourceRowId": 13418,
+      "facets": null
+    },
+    {
+      "sourceRowId": 13655,
+      "facets": null
+    },
+    {
+      "sourceRowId": 62180,
+      "facets": null
+    }
+  ]
+}

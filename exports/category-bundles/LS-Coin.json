@@ -1,0 +1,191 @@
+{
+  "sourceTable": "monsters_join_skills",
+  "category": "LS - Coin",
+  "subcategory": "leader_skill",
+  "monsters": [
+    {
+      "sourceRowId": 459,
+      "facets": null
+    },
+    {
+      "sourceRowId": 460,
+      "facets": null
+    },
+    {
+      "sourceRowId": 840,
+      "facets": null
+    },
+    {
+      "sourceRowId": 841,
+      "facets": null
+    },
+    {
+      "sourceRowId": 878,
+      "facets": null
+    },
+    {
+      "sourceRowId": 879,
+      "facets": null
+    },
+    {
+      "sourceRowId": 926,
+      "facets": null
+    },
+    {
+      "sourceRowId": 927,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1323,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1336,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1337,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1583,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1584,
+      "facets": null
+    },
+    {
+      "sourceRowId": 1902,
+      "facets": null
+    },
+    {
+      "sourceRowId": 2082,
+      "facets": null
+    },
+    {
+      "sourceRowId": 3071,
+      "facets": null
+    },
+    {
+      "sourceRowId": 3865,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4125,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4773,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4875,
+      "facets": null
+    },
+    {
+      "sourceRowId": 4999,
+      "facets": null
+    },
+    {
+      "sourceRowId": 6792,
+      "facets": null
+    },
+    {
+      "sourceRowId": 7212,
+      "facets": null
+    },
+    {
+      "sourceRowId": 7860,
+      "facets": null
+    },
+    {
+      "sourceRowId": 8348,
+      "facets": null
+    },
+    {
+      "sourceRowId": 9287,
+      "facets": null
+    },
+    {
+      "sourceRowId": 11433,
+      "facets": null
+    },
+    {
+      "sourceRowId": 11741,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12078,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12615,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12638,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12656,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12702,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12744,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12759,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12840,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12946,
+      "facets": null
+    },
+    {
+      "sourceRowId": 12988,
+      "facets": null
+    },
+    {
+      "sourceRowId": 13022,
+      "facets": null
+    },
+    {
+      "sourceRowId": 13023,
+      "facets": null
+    },
+    {
+      "sourceRowId": 13112,
+      "facets": null
+    },
+    {
+      "sourceRowId": 13201,
+      "facets": null
+    },
+    {
+      "sourceRowId": 13272,
+      "facets": null
+    },
+    {
+      "sourceRowId": 13345,
+      "facets": null
+    },
+    {
+      "sourceRowId": 13421,
+      "facets": null
+    },
+    {
+      "sourceRowId": 13454,
+      "facets": null
+    }
+  ]
+}
