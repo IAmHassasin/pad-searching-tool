@@ -1,4 +1,14 @@
-# Build tools required for better-sqlite3 (native addon).
+# ── Frontend (Vite → /app/public in final image) ─────────────────────────────
+FROM node:20-bookworm-slim AS web-builder
+WORKDIR /app/web
+COPY web/package.json web/package-lock.json ./
+RUN npm ci
+COPY web/ ./
+# Same origin as API in the container (port 3000).
+ENV VITE_API_BASE=
+RUN npm run build
+
+# ── Backend ─────────────────────────────────────────────────────────────────
 FROM node:20-bookworm-slim AS builder
 WORKDIR /app
 RUN apt-get update \
@@ -10,6 +20,7 @@ COPY tsconfig.json nest-cli.json ./
 COPY src ./src
 RUN npm run build
 
+# ── Runtime ───────────────────────────────────────────────────────────────────
 FROM node:20-bookworm-slim
 WORKDIR /app
 RUN apt-get update \
@@ -18,16 +29,18 @@ RUN apt-get update \
 COPY package.json package-lock.json* ./
 RUN npm ci --omit=dev
 COPY --from=builder /app/dist ./dist
+COPY --from=web-builder /app/web/dist ./public
+COPY docs ./docs
 COPY docker-entrypoint.sh /docker-entrypoint.sh
-# Windows CRLF → Linux "exec /docker-entrypoint.sh: no such file or directory"
 RUN sed -i 's/\r$//' /docker-entrypoint.sh && chmod +x /docker-entrypoint.sh
 
 ENV NODE_ENV=production
 ENV DATA_DIR=/data
 ENV SQLITE_PATH=/data/pad.db
-# Create pad_categorized via TypeORM synchronize unless you set TYPEORM_SYNC=false
+ENV WEB_STATIC_PATH=/app/public
+ENV CATEGORY_JSON_EXPORT_DIR=exports/category-bundles
+ENV FILTER_TYPE_CATEGORIES_PATH=docs/filter-type-categories.json
 ENV TYPEORM_SYNC=true
-# One container: seed copy → transform → HTTP (override for job-only)
 ENV RUN_TRANSFORM=true
 ENV START_HTTP=true
 ENV HTTP_PORT=3000

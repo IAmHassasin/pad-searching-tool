@@ -4,6 +4,8 @@ node_modules/
 npm-debug.log
 test.db
 dist/
+web/node_modules/
+web/dist/
 
 # SQLite làm việc cục bộ (không commit)
 pad.db

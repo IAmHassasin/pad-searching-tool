@@ -10,6 +10,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { PadCategorized } from "../entities/pad-categorized.entity";
 import { AwokenSkillsService } from "./awoken-skills.service";
+import { FilterCategoriesService } from "./filter-categories.service";
 import { SourceRowsService } from "./source-rows.service";
 
 @Controller()
@@ -18,12 +19,19 @@ export class PadsApiController {
     @InjectRepository(PadCategorized)
     private readonly categorized: Repository<PadCategorized>,
     private readonly sourceRows: SourceRowsService,
-    private readonly awokenSkillsService: AwokenSkillsService
+    private readonly awokenSkillsService: AwokenSkillsService,
+    private readonly filterCategories: FilterCategoriesService
   ) {}
 
   @Get("health")
   health(): { ok: boolean } {
     return { ok: true };
+  }
+
+  /** Full filter manifest (groups/labels) for building the skill filter panel. */
+  @Get("filter-categories")
+  filterCategoriesManifest() {
+    return this.filterCategories.readManifest();
   }
 
   /**

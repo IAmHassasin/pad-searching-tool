@@ -106,6 +106,25 @@ npm run start           # build → transform → HTTP (RUN_TRANSFORM + START_HT
 npm run pad -- transform
 ```
 
+### Web UI (3-panel)
+
+Vite + React app in **`web/`** — see **`docs/ui-three-panel-design.md`**.
+
+1. Run transform so **`CATEGORY_JSON_EXPORT_DIR`** has bundles (`exports/category-bundles`).
+2. Start API: `npm run pad -- serve` (port **3000**).
+3. In another terminal: `npm install --prefix web` then `npm run dev:web` → **http://localhost:5173**
+
+The UI loads all monsters once (`GET /source-records`), caches **`GET /category-bundles/index`**, and fetches each category JSON on demand (TanStack Query, infinite stale time). Filtering is client-side (left monster filters **AND** right skill/category filters).
+
+| Endpoint | Purpose |
+|----------|---------|
+| `GET /category-bundles/index` | List of category JSON files |
+| `GET /category-bundles/file?name=…` | One category’s `sourceRowId` list |
+| `GET /filter-categories` | Full filter manifest (optional) |
+| `GET /source-records` | Monster rows (paginated; FE loads all pages) |
+
+Production: set **`VITE_API_BASE`** in `web/.env` to your API origin (Cloudflare can cache the bundle URLs).
+
 Download and merge a community database (values in `.env`), then categorize:
 
 ```bash
@@ -129,9 +148,11 @@ node scripts/create-test-db.mjs
 
 Then set **`SQLITE_PATH`** / **`SOURCE_TABLE`** in `.env` to `test.db` / `pads` and **`npm run pad -- transform`**.
 
-## Docker (seed → transform → API)
+## Docker (seed → transform → API + web UI)
 
-The image defaults to **`RUN_TRANSFORM=true`** and **`START_HTTP=true`**: one long-running container that seeds the working DB (if needed), runs categorization, then serves HTTP on **`HTTP_PORT`** (`3000`). For a **cron-style** one-shot (transform only, exit), set **`START_HTTP=false`**.
+The image **builds the Vite frontend** (`web/`) into **`/app/public`** and serves it on the same port as the API (**`HTTP_PORT`**, default `3000`). Open **`http://localhost:3000`** for the 3-panel UI; API paths (`/health`, `/source-records`, `/category-bundles`, …) are unchanged.
+
+Defaults: **`RUN_TRANSFORM=true`** and **`START_HTTP=true`** — seed working DB (if needed), categorize, then serve HTTP. For a **cron-style** one-shot (transform only, exit), set **`START_HTTP=false`**.
 
 ```bash
 docker build -t pad-searching-tool .

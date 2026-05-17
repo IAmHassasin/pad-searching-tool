@@ -5,6 +5,8 @@
   "description": "PAD SQLite transforms with NestJS + TypeORM",
   "scripts": {
     "build": "nest build",
+    "build:web": "npm run build --prefix web",
+    "dev:web": "npm run dev --prefix web",
     "pad": "node scripts/pad.mjs",
     "start": "npm run build && dotenv -e .env -v RUN_TRANSFORM=true -v START_HTTP=true -- node dist/main.js",
     "start:dev": "dotenv -e .env -- nest start --watch"

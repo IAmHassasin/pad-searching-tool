@@ -1,7 +1,10 @@
 .git
 .gitignore
 node_modules
+web/node_modules
+web/dist
 npm-debug.log
 README.md
 .env
 .env.*
+exports
