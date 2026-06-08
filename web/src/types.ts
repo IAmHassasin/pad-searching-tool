@@ -17,29 +17,40 @@ export type MonsterRecord = {
   __source_pk?: number;
 };
 
-export type CategoryBundleIndex = {
-  sourceTable: string;
-  generatedAt: string;
-  files: { category: string; file: string; count: number }[];
-};
-
-export type CategoryBundleFile = {
-  sourceTable: string;
-  category: string;
-  subcategory: string | null;
-  monsters: { sourceRowId: number; facets: Record<string, unknown> | null }[];
-};
-
-export type FilterCategoryRule = {
-  group: string;
+export type PatternFilterTag = {
+  tag_id: number | null;
+  tag_name_en: string;
   label: string;
-  key?: string;
-  tagIds?: number[];
-  patterns?: string[];
+  patternCount?: number;
 };
 
-export type FilterCategoriesManifest = {
-  categories: FilterCategoryRule[];
+export type PatternFilterCategory = {
+  category_id: string;
+  category_name: string;
+  tags: PatternFilterTag[];
+};
+
+export type PatternGroupsManifest = {
+  active_skill_filters: PatternFilterCategory[];
+  leader_skill_filters: PatternFilterCategory[];
+};
+
+export type SelectedPatternTag = {
+  skillType: "active_skill" | "leader_skill";
+  tagKey: string;
+  label: string;
+};
+
+export type MonsterSearchResponse = {
+  sourceLabel: string;
+  mode: "query" | "table";
+  patternMatch: "any" | "all";
+  activeTags: string[];
+  leaderTags: string[];
+  total: number;
+  limit: number;
+  offset: number;
+  rows: MonsterRecord[];
 };
 
 export type MonsterFilters = {
@@ -58,8 +69,8 @@ export type SkillFilters = {
   activeSkillText: string;
   leaderSkillText: string;
   skillTextMode: "both" | "active" | "leader";
-  selectedCategories: { category: string; file: string }[];
-  categoryMatch: "any" | "all";
+  selectedPatterns: SelectedPatternTag[];
+  patternMatch: "any" | "all";
 };
 
 export const EMPTY_MONSTER_FILTERS: MonsterFilters = {
@@ -78,6 +89,6 @@ export const EMPTY_SKILL_FILTERS: SkillFilters = {
   activeSkillText: "",
   leaderSkillText: "",
   skillTextMode: "both",
-  selectedCategories: [],
-  categoryMatch: "any",
+  selectedPatterns: [],
+  patternMatch: "all",
 };

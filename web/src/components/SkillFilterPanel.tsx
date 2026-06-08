@@ -1,44 +1,48 @@
-import type { CategoryBundleIndex, SkillFilters } from "../types";
+import type { PatternGroupsManifest, SkillFilters } from "../types";
 
 type Props = {
   filters: SkillFilters;
   onChange: (next: SkillFilters) => void;
-  bundleIndex: CategoryBundleIndex | undefined;
-  bundleIndexLoading: boolean;
-  loadedBundleCount: number;
+  patternGroups: PatternGroupsManifest | undefined;
+  patternGroupsLoading: boolean;
 };
+
+function tagKey(tag: { tag_id: number | null; tag_name_en: string }): string {
+  return tag.tag_id != null ? String(tag.tag_id) : tag.tag_name_en;
+}
 
 export function SkillFilterPanel({
   filters,
   onChange,
-  bundleIndex,
-  bundleIndexLoading,
-  loadedBundleCount,
+  patternGroups,
+  patternGroupsLoading,
 }: Props) {
-  const files = bundleIndex?.files ?? [];
-  const asFiles = files.filter((f) => f.category.startsWith("AS "));
-  const lsFiles = files.filter((f) => f.category.startsWith("LS "));
-  const otherFiles = files.filter(
-    (f) => !f.category.startsWith("AS ") && !f.category.startsWith("LS ")
-  );
+  const isSelected = (
+    skillType: "active_skill" | "leader_skill",
+    key: string
+  ) =>
+    filters.selectedPatterns.some(
+      (s) => s.skillType === skillType && s.tagKey === key
+    );
 
-  const isSelected = (file: string) =>
-    filters.selectedCategories.some((s) => s.file === file);
-
-  const toggleCategory = (category: string, file: string) => {
-    if (isSelected(file)) {
+  const toggleTag = (
+    skillType: "active_skill" | "leader_skill",
+    key: string,
+    label: string
+  ) => {
+    if (isSelected(skillType, key)) {
       onChange({
         ...filters,
-        selectedCategories: filters.selectedCategories.filter(
-          (s) => s.file !== file
+        selectedPatterns: filters.selectedPatterns.filter(
+          (s) => !(s.skillType === skillType && s.tagKey === key)
         ),
       });
     } else {
       onChange({
         ...filters,
-        selectedCategories: [
-          ...filters.selectedCategories,
-          { category, file },
+        selectedPatterns: [
+          ...filters.selectedPatterns,
+          { skillType, tagKey: key, label },
         ],
       });
     }
@@ -46,31 +50,57 @@ export function SkillFilterPanel({
 
   const renderGroup = (
     title: string,
-    items: CategoryBundleIndex["files"]
+    skillType: "active_skill" | "leader_skill",
+    categories: PatternGroupsManifest["active_skill_filters"]
   ) => {
-    if (!items.length) return null;
+    if (!categories.length) return null;
     return (
       <section>
         <p className="mb-1 text-xs font-medium text-[var(--color-muted)]">
           {title}
         </p>
-        <ul className="max-h-40 space-y-0.5 overflow-y-auto rounded border border-[var(--color-border)] bg-[#0d1117] p-1">
-          {items.map((item) => (
-            <li key={item.file}>
-              <label className="flex cursor-pointer items-center gap-2 rounded px-1 py-0.5 text-xs hover:bg-[#21262d] has-[:checked]:bg-[#1f3a5f]">
-                <input
-                  type="checkbox"
-                  checked={isSelected(item.file)}
-                  onChange={() => toggleCategory(item.category, item.file)}
-                />
-                <span className="min-w-0 flex-1 truncate">{item.category}</span>
-                <span className="shrink-0 text-[var(--color-muted)]">
-                  {item.count}
-                </span>
-              </label>
-            </li>
+        <div className="max-h-56 space-y-2 overflow-y-auto rounded border border-[var(--color-border)] bg-[#0d1117] p-2">
+          {categories.map((cat) => (
+            <div key={cat.category_id}>
+              <p className="mb-0.5 text-[10px] font-semibold uppercase tracking-wide text-[var(--color-muted)]">
+                {cat.category_name}
+              </p>
+              <ul className="space-y-0.5">
+                {cat.tags.map((tag) => {
+                  const key = tagKey(tag);
+                  const count = tag.patternCount ?? 0;
+                  return (
+                    <li key={`${skillType}-${key}`}>
+                      <label
+                        className={`flex cursor-pointer items-center gap-2 rounded px-1 py-0.5 text-xs hover:bg-[#21262d] has-[:checked]:bg-[#1f3a5f] ${count === 0 ? "opacity-50" : ""}`}
+                        title={
+                          count === 0
+                            ? "No regex patterns loaded for this tag"
+                            : `${count} regex pattern(s)`
+                        }
+                      >
+                        <input
+                          type="checkbox"
+                          disabled={count === 0}
+                          checked={isSelected(skillType, key)}
+                          onChange={() =>
+                            toggleTag(skillType, key, tag.label)
+                          }
+                        />
+                        <span className="min-w-0 flex-1 truncate">
+                          {tag.label}
+                        </span>
+                        <span className="shrink-0 text-[var(--color-muted)]">
+                          {count}
+                        </span>
+                      </label>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
           ))}
-        </ul>
+        </div>
       </section>
     );
   };
@@ -78,54 +108,64 @@ export function SkillFilterPanel({
   return (
     <aside className="flex h-full flex-col gap-3 overflow-y-auto border-l border-[var(--color-border)] bg-[var(--color-panel)] p-3">
       <h2 className="text-sm font-semibold tracking-wide text-[var(--color-accent)]">
-        Skill / category
+        Skill patterns
       </h2>
 
       <section>
         <p className="mb-1 text-xs text-[var(--color-muted)]">
-          Category bundles (cached client-side)
+          Regex patterns (queried in SQLite)
         </p>
-        {bundleIndexLoading && (
-          <p className="text-xs text-[var(--color-muted)]">Loading index…</p>
+        {patternGroupsLoading && (
+          <p className="text-xs text-[var(--color-muted)]">Loading groups…</p>
         )}
-        {filters.selectedCategories.length > 0 && (
-          <p className="text-xs text-[var(--color-muted)]">
-            {loadedBundleCount}/{filters.selectedCategories.length} bundles
-            loaded
+        {filters.selectedPatterns.length > 0 && (
+          <p className="mb-2 text-xs text-[var(--color-muted)]">
+            {filters.selectedPatterns.length} pattern tag(s) selected
           </p>
         )}
         <div className="mb-2 flex gap-2 text-xs">
           <label className="flex items-center gap-1">
             <input
               type="radio"
-              name="catMode"
-              checked={filters.categoryMatch === "any"}
+              name="patternMode"
+              checked={filters.patternMatch === "any"}
               onChange={() =>
-                onChange({ ...filters, categoryMatch: "any" })
+                onChange({ ...filters, patternMatch: "any" })
               }
             />
-            Any category
+            Match any tag
           </label>
           <label className="flex items-center gap-1">
             <input
               type="radio"
-              name="catMode"
-              checked={filters.categoryMatch === "all"}
+              name="patternMode"
+              checked={filters.patternMatch === "all"}
               onChange={() =>
-                onChange({ ...filters, categoryMatch: "all" })
+                onChange({ ...filters, patternMatch: "all" })
               }
             />
-            All categories
+            Match all tags
           </label>
         </div>
-        {renderGroup("Active skill", asFiles)}
-        {renderGroup("Leader skill", lsFiles)}
-        {renderGroup("Other", otherFiles)}
+        {patternGroups && (
+          <>
+            {renderGroup(
+              "Active skill",
+              "active_skill",
+              patternGroups.active_skill_filters
+            )}
+            {renderGroup(
+              "Leader skill",
+              "leader_skill",
+              patternGroups.leader_skill_filters
+            )}
+          </>
+        )}
       </section>
 
       <section>
         <p className="mb-1 text-xs font-medium text-[var(--color-muted)]">
-          Skill text search
+          Skill text search (additional)
         </p>
         <select
           className="mb-2 w-full rounded border border-[var(--color-border)] bg-[#0d1117] px-2 py-1 text-xs"
@@ -150,7 +190,7 @@ export function SkillFilterPanel({
             onChange={(e) =>
               onChange({ ...filters, activeSkillText: e.target.value })
             }
-            placeholder="Substring search…"
+            placeholder="Substring filter (AND with patterns)…"
           />
         </label>
         <label className="flex flex-col gap-0.5 text-xs text-[var(--color-muted)]">
@@ -162,7 +202,7 @@ export function SkillFilterPanel({
             onChange={(e) =>
               onChange({ ...filters, leaderSkillText: e.target.value })
             }
-            placeholder="Substring search…"
+            placeholder="Substring filter (AND with patterns)…"
           />
         </label>
       </section>

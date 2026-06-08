@@ -7,4 +7,4 @@ npm-debug.log
 README.md
 .env
 .env.*
-exports
+exports/category-bundles

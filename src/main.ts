@@ -31,6 +31,7 @@ async function bootstrap() {
   });
 
   app.enableCors({ origin: true });
+  setupWebStatic(app, logger);
 
   if (runTransform) {
     await app.get(TransformService).run();
@@ -38,7 +39,6 @@ async function bootstrap() {
   }
 
   await app.init();
-  setupWebStatic(app, logger);
 
   const port = Number(process.env.HTTP_PORT ?? "3000");
   const host = process.env.HTTP_HOST ?? "0.0.0.0";

@@ -2,58 +2,28 @@ import { Logger } from "@nestjs/common";
 import { NestExpressApplication } from "@nestjs/platform-express";
 import { existsSync } from "node:fs";
 import { join } from "node:path";
+import { SpaNotFoundFilter } from "./spa-not-found.filter";
 
-const API_PREFIXES = [
-  "/health",
-  "/source-records",
-  "/category-bundles",
-  "/filter-categories",
-  "/pad-categorized",
-  "/awoken-skills",
-];
-
-function isApiPath(path: string): boolean {
-  return API_PREFIXES.some(
-    (p) => path === p || path.startsWith(`${p}/`)
-  );
+/** Resolve Vite build dir (Docker: /app/public). Returns null if UI not bundled. */
+export function resolveWebPublicRoot(): string | null {
+  const root =
+    process.env.WEB_STATIC_PATH?.trim() ||
+    join(__dirname, "..", "public");
+  return existsSync(join(root, "index.html")) ? root : null;
 }
 
-/** Serves Vite build output (Docker: /app/public). API routes keep priority. */
+/** Static assets + SPA fallback via NotFound filter (Express 5 safe). */
 export function setupWebStatic(
   app: NestExpressApplication,
   logger: Logger
 ): void {
-  const root =
-    process.env.WEB_STATIC_PATH?.trim() ||
-    join(__dirname, "..", "public");
-
-  if (!existsSync(join(root, "index.html"))) {
-    logger.log(`Web UI not bundled (${root}); API only.`);
+  const root = resolveWebPublicRoot();
+  if (!root) {
+    logger.log("Web UI not bundled; API only.");
     return;
   }
 
   app.useStaticAssets(root, { index: false });
-  const http = app.getHttpAdapter().getInstance();
-  http.get(
-    "*",
-    (
-      req: { method: string; path: string },
-      res: { sendFile: (p: string, cb: (err?: Error) => void) => void },
-      next: (err?: Error) => void
-    ) => {
-      if (req.method !== "GET" && req.method !== "HEAD") {
-        next();
-        return;
-      }
-      if (isApiPath(req.path)) {
-        next();
-        return;
-      }
-      res.sendFile(join(root, "index.html"), (err) => {
-        if (err) next(err);
-      });
-    }
-  );
-
+  app.useGlobalFilters(new SpaNotFoundFilter(root));
   logger.log(`Serving web UI from ${root}`);
 }

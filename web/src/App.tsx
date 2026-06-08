@@ -1,19 +1,12 @@
-import { useQueries, useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
-import {
-  fetchAllSourceRecords,
-  fetchCategoryBundle,
-  fetchCategoryBundleIndex,
-  fetchHealth,
-} from "./api";
+import { fetchHealth, fetchPatternGroups, searchAllMonsters } from "./api";
+import { AdminPanel } from "./components/AdminPanel";
 import { MonsterFilterPanel } from "./components/MonsterFilterPanel";
 import { ResultsPanel } from "./components/ResultsPanel";
 import { SkillFilterPanel } from "./components/SkillFilterPanel";
+import { useAdminSession } from "./hooks/useAdminSession";
 import { useDebouncedValue } from "./hooks/useDebouncedValue";
-import {
-  buildCategoryIdSet,
-  filterMonsters,
-} from "./lib/filters";
 import {
   EMPTY_MONSTER_FILTERS,
   EMPTY_SKILL_FILTERS,
@@ -29,8 +22,15 @@ export default function App() {
   const [selected, setSelected] = useState<
     import("./types").MonsterRecord | null
   >(null);
-  const [loadProgress, setLoadProgress] = useState<number | null>(null);
+  const [loadProgress, setLoadProgress] = useState<{
+    loaded: number;
+    total: number;
+  } | null>(null);
+  const [adminOpen, setAdminOpen] = useState(false);
+  const queryClient = useQueryClient();
+  const admin = useAdminSession();
 
+  const debouncedMonster = useDebouncedValue(monsterFilters, 300);
   const debouncedSkill = useDebouncedValue(skillFilters, 400);
 
   const health = useQuery({
@@ -39,68 +39,49 @@ export default function App() {
     retry: 1,
   });
 
-  const bundleIndex = useQuery({
-    queryKey: ["category-bundles", "index"],
-    queryFn: fetchCategoryBundleIndex,
+  const patternGroups = useQuery({
+    queryKey: ["patterns", "groups"],
+    queryFn: fetchPatternGroups,
     staleTime: Infinity,
     gcTime: Infinity,
   });
 
-  const monsters = useQuery({
-    queryKey: ["source-records", "all"],
-    queryFn: () => fetchAllSourceRecords(setLoadProgress),
-    staleTime: Infinity,
-    gcTime: Infinity,
+  const searchKey = useMemo(
+    () => ({
+      rarity: [...debouncedMonster.rarity].sort(),
+      attributes: [...debouncedMonster.attributes].sort(),
+      hpMin: debouncedMonster.hpMin,
+      hpMax: debouncedMonster.hpMax,
+      atkMin: debouncedMonster.atkMin,
+      atkMax: debouncedMonster.atkMax,
+      rcvMin: debouncedMonster.rcvMin,
+      rcvMax: debouncedMonster.rcvMax,
+      idQuery: debouncedMonster.idQuery,
+      activeSkillText: debouncedSkill.activeSkillText,
+      leaderSkillText: debouncedSkill.leaderSkillText,
+      skillTextMode: debouncedSkill.skillTextMode,
+      patternMatch: debouncedSkill.patternMatch,
+      selectedPatterns: debouncedSkill.selectedPatterns.map((p) => ({
+        skillType: p.skillType,
+        tagKey: p.tagKey,
+      })),
+    }),
+    [debouncedMonster, debouncedSkill]
+  );
+
+  const search = useQuery({
+    queryKey: ["monsters", "search", searchKey],
+    queryFn: () =>
+      searchAllMonsters(debouncedMonster, debouncedSkill, (loaded, total) =>
+        setLoadProgress({ loaded, total })
+      ),
     retry: 1,
+    placeholderData: (prev) => prev,
   });
 
-  const bundleQueries = useQueries({
-    queries: debouncedSkill.selectedCategories.map((s) => ({
-      queryKey: ["category-bundles", "file", s.file],
-      queryFn: () => fetchCategoryBundle(s.file),
-      staleTime: Infinity,
-      gcTime: Infinity,
-      enabled: Boolean(s.file),
-    })),
-  });
+  const filtered = useMemo(() => search.data?.rows ?? [], [search.data]);
 
-  const bundleIdMap = useMemo(() => {
-    const map = new Map<string, Set<number>>();
-    debouncedSkill.selectedCategories.forEach((s, i) => {
-      const data = bundleQueries[i]?.data;
-      if (!data) return;
-      map.set(
-        s.file,
-        new Set(data.monsters.map((m) => m.sourceRowId))
-      );
-    });
-    return map;
-  }, [debouncedSkill.selectedCategories, bundleQueries]);
-
-  const loadedBundleCount = bundleQueries.filter((q) => q.isSuccess).length;
-
-  const filtered = useMemo(() => {
-    const rows = monsters.data ?? [];
-    const categoryIds = buildCategoryIdSet(
-      bundleIdMap,
-      debouncedSkill.selectedCategories,
-      debouncedSkill.categoryMatch
-    );
-    const bundlesLoading =
-      debouncedSkill.selectedCategories.length > 0 &&
-      loadedBundleCount < debouncedSkill.selectedCategories.length;
-    if (bundlesLoading) return [];
-    return filterMonsters(rows, monsterFilters, debouncedSkill, categoryIds);
-  }, [
-    monsters.data,
-    monsterFilters,
-    debouncedSkill,
-    bundleIdMap,
-    loadedBundleCount,
-  ]);
-
-  const apiError =
-    health.error ?? bundleIndex.error ?? monsters.error ?? null;
+  const apiError = health.error ?? patternGroups.error ?? search.error ?? null;
 
   return (
     <div className="flex h-full flex-col">
@@ -114,17 +95,53 @@ export default function App() {
           >
             API {health.isLoading ? "…" : health.data?.ok ? "online" : "offline"}
           </span>
-          {bundleIndex.data && (
-            <span>{bundleIndex.data.files.length} categories</span>
+          {search.data && (
+            <span>
+              {search.data.total} match
+              {search.data.total === 1 ? "" : "es"}
+            </span>
+          )}
+          {patternGroups.data && (
+            <span>
+              {patternGroups.data.active_skill_filters.length +
+                patternGroups.data.leader_skill_filters.length}{" "}
+              pattern groups
+            </span>
+          )}
+          {admin.adminEnabled && (
+            <button
+              type="button"
+              className="rounded border border-[var(--color-border)] px-2 py-0.5 text-[var(--color-muted)] hover:border-amber-600 hover:text-amber-300"
+              onClick={() => setAdminOpen(true)}
+            >
+              {admin.isSuperadmin ? "Admin" : "Admin login"}
+            </button>
           )}
         </div>
       </header>
+
+      <AdminPanel
+        open={adminOpen}
+        onClose={() => setAdminOpen(false)}
+        adminEnabled={admin.adminEnabled}
+        isSuperadmin={admin.isSuperadmin}
+        checking={admin.checking}
+        username={admin.username}
+        token={admin.token}
+        onLogin={async (u, p) => {
+          await admin.login(u, p);
+        }}
+        onLogout={admin.logout}
+        onRefreshComplete={() => {
+          void queryClient.invalidateQueries({ queryKey: ["monsters", "search"] });
+        }}
+      />
 
       {apiError && (
         <p className="shrink-0 bg-red-950/80 px-4 py-2 text-sm text-red-200">
           {apiError instanceof Error ? apiError.message : String(apiError)}
           <span className="block text-xs opacity-80">
-            Start backend: npm run pad -- serve (or transform + serve)
+            Start backend: npm run pad -- serve
           </span>
         </p>
       )}
@@ -136,18 +153,19 @@ export default function App() {
         />
         <ResultsPanel
           rows={filtered}
-          totalLoaded={monsters.data?.length ?? 0}
+          totalLoaded={search.data?.total ?? 0}
           selected={selected}
           onSelect={setSelected}
-          loading={monsters.isLoading}
-          loadProgress={loadProgress}
+          loading={search.isFetching}
+          loadProgress={
+            loadProgress && search.isFetching ? loadProgress.loaded : null
+          }
         />
         <SkillFilterPanel
           filters={skillFilters}
           onChange={setSkillFilters}
-          bundleIndex={bundleIndex.data}
-          bundleIndexLoading={bundleIndex.isLoading}
-          loadedBundleCount={loadedBundleCount}
+          patternGroups={patternGroups.data}
+          patternGroupsLoading={patternGroups.isLoading}
         />
       </div>
     </div>

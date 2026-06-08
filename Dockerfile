@@ -31,6 +31,7 @@ RUN npm ci --omit=dev
 COPY --from=builder /app/dist ./dist
 COPY --from=web-builder /app/web/dist ./public
 COPY docs ./docs
+COPY exports/patterns ./exports/patterns
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 RUN sed -i 's/\r$//' /docker-entrypoint.sh && chmod +x /docker-entrypoint.sh
 
@@ -40,6 +41,8 @@ ENV SQLITE_PATH=/data/pad.db
 ENV WEB_STATIC_PATH=/app/public
 ENV CATEGORY_JSON_EXPORT_DIR=exports/category-bundles
 ENV FILTER_TYPE_CATEGORIES_PATH=docs/filter-type-categories.json
+ENV PATTERNS_GROUP_PATH=exports/patterns/patterns_group.json
+ENV PATTERNS_CATALOG_PATH=exports/patterns/pad_generated_patterns.json
 ENV TYPEORM_SYNC=true
 ENV RUN_TRANSFORM=true
 ENV START_HTTP=true
