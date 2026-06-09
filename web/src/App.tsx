@@ -27,6 +27,7 @@ export default function App() {
     total: number;
   } | null>(null);
   const [adminOpen, setAdminOpen] = useState(false);
+  const [skillPanelOpen, setSkillPanelOpen] = useState(true);
   const queryClient = useQueryClient();
   const admin = useAdminSession();
 
@@ -146,7 +147,13 @@ export default function App() {
         </p>
       )}
 
-      <div className="grid min-h-0 flex-1 grid-cols-1 xl:grid-cols-[minmax(220px,280px)_1fr_minmax(300px,420px)]">
+      <div
+        className={`grid min-h-0 flex-1 grid-cols-1 ${
+          skillPanelOpen
+            ? "xl:grid-cols-[minmax(220px,280px)_1fr_minmax(300px,420px)]"
+            : "xl:grid-cols-[minmax(220px,280px)_1fr_auto]"
+        }`}
+      >
         <MonsterFilterPanel
           filters={monsterFilters}
           onChange={setMonsterFilters}
@@ -166,6 +173,8 @@ export default function App() {
           onChange={setSkillFilters}
           patternGroups={patternGroups.data}
           patternGroupsLoading={patternGroups.isLoading}
+          open={skillPanelOpen}
+          onToggle={() => setSkillPanelOpen((v) => !v)}
         />
       </div>
     </div>

@@ -5,6 +5,8 @@ type Props = {
   onChange: (next: SkillFilters) => void;
   patternGroups: PatternGroupsManifest | undefined;
   patternGroupsLoading: boolean;
+  open: boolean;
+  onToggle: () => void;
 };
 
 function tagKey(tag: { tag_id: number | null; tag_name_en: string }): string {
@@ -120,11 +122,38 @@ function PatternMatchToggle({
   );
 }
 
+function PanelToggleButton({
+  open,
+  onToggle,
+  className = "",
+}: {
+  open: boolean;
+  onToggle: () => void;
+  className?: string;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      title={open ? "Collapse skill filters" : "Expand skill filters"}
+      aria-expanded={open}
+      aria-label={open ? "Collapse skill filters" : "Expand skill filters"}
+      className={`flex shrink-0 items-center justify-center rounded border border-[var(--color-border)] bg-[#0d1117] text-[var(--color-muted)] transition-colors hover:border-[var(--color-accent)] hover:text-white ${className}`}
+    >
+      <span aria-hidden className="text-sm leading-none">
+        {open ? "›" : "‹"}
+      </span>
+    </button>
+  );
+}
+
 export function SkillFilterPanel({
   filters,
   onChange,
   patternGroups,
   patternGroupsLoading,
+  open,
+  onToggle,
 }: Props) {
   const isSelected = (
     skillType: "active_skill" | "leader_skill",
@@ -226,11 +255,35 @@ export function SkillFilterPanel({
     );
   };
 
+  if (!open) {
+    return (
+      <aside className="flex h-full w-10 shrink-0 flex-col items-center border-l border-[var(--color-border)] bg-[var(--color-panel)] py-3">
+        <PanelToggleButton
+          open={open}
+          onToggle={onToggle}
+          className="h-8 w-8"
+        />
+        <span
+          className="mt-3 text-[10px] font-semibold tracking-wide text-[var(--color-muted)] [writing-mode:vertical-rl]"
+        >
+          Skills
+        </span>
+      </aside>
+    );
+  }
+
   return (
-    <aside className="flex h-full flex-col gap-4 overflow-y-auto border-l border-[var(--color-border)] bg-[var(--color-panel)] p-3">
-      <h2 className="text-sm font-semibold tracking-wide text-[var(--color-accent)]">
-        Skill patterns
-      </h2>
+    <aside className="flex h-full min-w-0 flex-col gap-4 overflow-y-auto border-l border-[var(--color-border)] bg-[var(--color-panel)] p-3">
+      <div className="flex items-center justify-between gap-2">
+        <h2 className="text-sm font-semibold tracking-wide text-[var(--color-accent)]">
+          Skill patterns
+        </h2>
+        <PanelToggleButton
+          open={open}
+          onToggle={onToggle}
+          className="h-7 w-7"
+        />
+      </div>
 
       <section>
         <div className="mb-2 flex items-start justify-between gap-2">
