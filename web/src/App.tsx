@@ -146,7 +146,7 @@ export default function App() {
         </p>
       )}
 
-      <div className="grid min-h-0 flex-1 grid-cols-1 xl:grid-cols-[minmax(220px,280px)_1fr_minmax(260px,320px)]">
+      <div className="grid min-h-0 flex-1 grid-cols-1 xl:grid-cols-[minmax(220px,280px)_1fr_minmax(300px,420px)]">
         <MonsterFilterPanel
           filters={monsterFilters}
           onChange={setMonsterFilters}
