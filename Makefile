@@ -71,10 +71,14 @@ echo "Remote .env ready."
 endef
 export REMOTE_PATCH_ENV
 
-.PHONY: help deploy update restart logs status ssh sync-env sync-app remote-up remote-restart check-host
+.PHONY: help up down deploy update restart logs status ssh sync-env sync-app remote-up remote-restart check-host
 
 help:
 	@echo "PAD deploy Makefile (Oracle VM)"
+	@echo ""
+	@echo "Local Docker (cloud compose — DB from COMMUNITY_DB_URL):"
+	@echo "  make up       — build + start (docker compose up -d --build)"
+	@echo "  make down     — stop + remove volumes (docker compose down -v)"
 	@echo ""
 	@echo "  make deploy   ORACLE_HOST=... [secrets]  — sync app + .env, build, start"
 	@echo "  make update   ORACLE_HOST=... [secrets]  — same as deploy (pull code + rebuild)"
@@ -94,6 +98,12 @@ check-host:
 	@test -n "$(ORACLE_HOST)" || (echo "ERROR: set ORACLE_HOST=<vm-public-ip>" && exit 1)
 
 # ── Public targets ───────────────────────────────────────────────────────────
+
+up:
+	$(COMPOSE) up -d --build
+
+down:
+	$(COMPOSE) down -v
 
 deploy: check-host sync-app sync-env remote-up
 	@echo "Deploy finished → http://$(ORACLE_HOST):3000"

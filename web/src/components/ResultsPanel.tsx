@@ -1,5 +1,6 @@
 import { monsterRowId } from "../lib/filters";
 import type { MonsterRecord } from "../types";
+import { MonsterDetailCard } from "./MonsterDetailCard";
 
 type Props = {
   rows: MonsterRecord[];
@@ -81,9 +82,9 @@ export function ResultsPanel({
           )}
         </div>
 
-        <div className="min-h-0 overflow-auto p-3">
+        <div className="flex min-h-0 items-start justify-center overflow-auto bg-[#0a0e12] p-3">
           {selected ? (
-            <MonsterDetail row={selected} />
+            <MonsterDetailCard row={selected} />
           ) : (
             <p className="text-sm text-[var(--color-muted)]">
               Select a row to view details.
@@ -92,56 +93,5 @@ export function ResultsPanel({
         </div>
       </div>
     </main>
-  );
-}
-
-function MonsterDetail({ row }: { row: MonsterRecord }) {
-  const fields: [string, unknown][] = [
-    ["monster_id", row.monster_id ?? row.__source_pk],
-    ["monster_no_na", row.monster_no_na],
-    ["name_en", row.name_en],
-    ["name_jp", row.name_jp],
-    ["rarity", row.rarity],
-    ["hp_max", row.hp_max],
-    ["atk_max", row.atk_max],
-    ["rcv_max", row.rcv_max],
-    ["attribute_1_id", row.attribute_1_id],
-    ["attribute_2_id", row.attribute_2_id],
-    ["attribute_3_id", row.attribute_3_id],
-  ];
-
-  return (
-    <article className="space-y-3">
-      <h3 className="text-base font-semibold">
-        {row.name_en ?? "Unknown"}{" "}
-        <span className="font-mono text-sm text-[var(--color-muted)]">
-          #{monsterRowId(row)}
-        </span>
-      </h3>
-      <dl className="grid grid-cols-2 gap-x-3 gap-y-1 text-xs">
-        {fields.map(([k, v]) => (
-          <div key={k} className="contents">
-            <dt className="text-[var(--color-muted)]">{k}</dt>
-            <dd className="font-mono">{String(v ?? "—")}</dd>
-          </div>
-        ))}
-      </dl>
-      <section>
-        <h4 className="mb-1 text-xs font-medium text-[var(--color-accent)]">
-          Active skill
-        </h4>
-        <p className="whitespace-pre-wrap rounded border border-[var(--color-border)] bg-[#0d1117] p-2 text-xs leading-relaxed">
-          {row.active_skill_desc_en?.trim() || "—"}
-        </p>
-      </section>
-      <section>
-        <h4 className="mb-1 text-xs font-medium text-[var(--color-accent)]">
-          Leader skill
-        </h4>
-        <p className="whitespace-pre-wrap rounded border border-[var(--color-border)] bg-[#0d1117] p-2 text-xs leading-relaxed">
-          {row.leader_skill_desc_en?.trim() || "—"}
-        </p>
-      </section>
-    </article>
   );
 }
