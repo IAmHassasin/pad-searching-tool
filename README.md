@@ -7,7 +7,7 @@ Search PAD monsters from a **community SQLite** database (dadguide) using **rege
 ## Quick start (Docker)
 
 ```bash
-cp .env.example .env   # edit COMMUNITY_DB_URL, SOURCE_QUERY, ADMIN_*, …
+cp .env.example .env   # optional: edit ADMIN_* before exposing the app
 docker compose -f docker-compose.yml -f docker-compose.cloud.yml up -d --build
 ```
 
