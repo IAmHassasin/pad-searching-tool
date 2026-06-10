@@ -71,7 +71,10 @@ echo "Remote .env ready."
 endef
 export REMOTE_PATCH_ENV
 
-.PHONY: help up down deploy update restart logs status ssh sync-env sync-app remote-up remote-restart check-host
+AWAKENING_ROWS          ?= 15
+AWAKENING_LAST_ROW_ICONS ?= 4
+
+.PHONY: help up down awakenings-manifest deploy update restart logs status ssh sync-env sync-app remote-up remote-restart check-host
 
 help:
 	@echo "PAD deploy Makefile (Oracle VM)"
@@ -79,6 +82,10 @@ help:
 	@echo "Local Docker (cloud compose — DB from COMMUNITY_DB_URL):"
 	@echo "  make up       — build + start (docker compose up -d --build)"
 	@echo "  make down     — stop + remove volumes (docker compose down -v)"
+	@echo ""
+	@echo "Assets:"
+	@echo "  make awakenings-manifest  — regen web/src/assets/pad/awakenings/manifest.json"
+	@echo "      override: AWAKENING_ROWS=16 AWAKENING_LAST_ROW_ICONS=7"
 	@echo ""
 	@echo "  make deploy   ORACLE_HOST=... [secrets]  — sync app + .env, build, start"
 	@echo "  make update   ORACLE_HOST=... [secrets]  — same as deploy (pull code + rebuild)"
@@ -104,6 +111,12 @@ up:
 
 down:
 	$(COMPOSE) down -v
+
+awakenings-manifest:
+	node scripts/generate-awakening-manifest.mjs \
+		--sprite-width 1000 --sprite-height 1000 \
+		--tile-width 31 --tile-height 32 --gap 1 \
+		--columns 10 --rows $(AWAKENING_ROWS) --last-row-icons $(AWAKENING_LAST_ROW_ICONS)
 
 deploy: check-host sync-app sync-env remote-up
 	@echo "Deploy finished → http://$(ORACLE_HOST):3000"

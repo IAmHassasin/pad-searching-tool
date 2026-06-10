@@ -1,8 +1,11 @@
+import cardBackground from "../assets/pad/background.png";
 import mockedMonsterArt from "../assets/pad/13573.png";
-import awakeningPlaceholder from "../assets/pad/awakenings/0.png";
 import { monsterRowId } from "../lib/filters";
 import { parseAwakenings } from "../lib/awakenings";
+import { PAD_AWAKENING, PAD_CARD_VISUAL } from "../lib/pad-constants";
 import type { MonsterRecord } from "../types";
+import { AwakeningIconList } from "./AwakeningIconList";
+import { AwakeningSpriteIcon } from "./AwakeningSpriteIcon";
 
 const ATTRIBUTE_LABELS: Record<number, string> = {
   0: "Fire",
@@ -26,17 +29,6 @@ function StarRow({ count }: { count: number }) {
         </span>
       ))}
     </div>
-  );
-}
-
-function AwakeningIcon({ title }: { title?: string }) {
-  return (
-    <img
-      src={awakeningPlaceholder}
-      alt=""
-      title={title}
-      className="h-7 w-7 shrink-0 rounded-sm border border-[#6b8f3c]/80 bg-[#2a3d18] object-cover shadow-[inset_0_0_0_1px_rgba(255,255,255,0.12)]"
-    />
   );
 }
 
@@ -86,14 +78,6 @@ function SkillBlock({
   );
 }
 
-function skillTitle(desc?: string | null, fallback = "—"): string {
-  const text = desc?.trim();
-  if (!text) return fallback;
-  const firstLine = text.split(/\n/)[0]?.trim();
-  if (!firstLine) return fallback;
-  return firstLine.length > 48 ? `${firstLine.slice(0, 45)}…` : firstLine;
-}
-
 export function MonsterDetailCard({ row }: Props) {
   const id = monsterRowId(row);
   const { regular, super: superAwks } = parseAwakenings(row.awakenings);
@@ -106,8 +90,27 @@ export function MonsterDetailCard({ row }: Props) {
   const leaderDesc = row.leader_skill_desc_en?.trim() || "—";
 
   return (
-    <article className="mx-auto w-full max-w-[360px] overflow-hidden rounded-xl border-2 border-[#a8842f] bg-[linear-gradient(180deg,#4a3526_0%,#3a281c_100%)] shadow-[0_8px_24px_rgba(0,0,0,0.45)]">
-      <header className="border-b border-[#6b4f2a]/80 bg-[#2f2118]/90 px-3 py-2">
+    <article className="relative mx-auto w-full max-w-[360px] overflow-hidden rounded-xl border-2 border-[#a8842f] bg-black shadow-[0_8px_24px_rgba(0,0,0,0.45)]">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{
+          backgroundImage: `url(${cardBackground})`,
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: `center ${PAD_CARD_VISUAL.bgAnchorY}%`,
+          backgroundSize: "contain",
+        }}
+      />
+      <img
+        src={mockedMonsterArt}
+        alt={row.name_en ?? "Monster artwork"}
+        className="pointer-events-none absolute left-1/2 z-[1] max-w-none -translate-x-1/2 -translate-y-1/2 object-contain"
+        style={{
+          top: `${PAD_CARD_VISUAL.artAnchorY}%`,
+          width: `${PAD_CARD_VISUAL.artWidthPct}%`,
+        }}
+      />
+      <header className="relative z-10 border-b border-[#6b4f2a]/80 bg-[#2f2118]/90 px-3 py-2">
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0">
             <p className="text-[10px] font-medium text-[#c9b08a]">No.{id}</p>
@@ -122,33 +125,31 @@ export function MonsterDetailCard({ row }: Props) {
         </div>
       </header>
 
-      <div className="relative bg-black">
-        <div className="flex min-h-[200px]">
-          <div className="relative min-w-0 flex-1">
-            <img
-              src={mockedMonsterArt}
-              alt={row.name_en ?? "Monster artwork"}
-              className="h-full w-full object-contain object-center"
-            />
-          </div>
-          <div className="flex w-9 shrink-0 flex-col items-center gap-0.5 bg-[#1a120c]/60 py-1.5 pr-1">
+      <div className="relative z-10">
+        <div
+          className="flex"
+          style={{ minHeight: PAD_AWAKENING.artAreaMinHeightPx }}
+        >
+          <div className="min-w-0 flex-1" aria-hidden />
+          <div
+            className="flex shrink-0 flex-col items-center bg-black/40 py-1.5 pr-1"
+            style={{
+              width: PAD_AWAKENING.columnWidthPx,
+              gap: PAD_AWAKENING.iconGapPx,
+            }}
+          >
             {superAwks.length > 0 && (
-              <AwakeningIcon title={`Super awakening (${superAwks.length})`} />
+              <AwakeningSpriteIcon
+                awokenSkillId={superAwks[0]}
+                title={`Super awakening: #${superAwks.join(", #")}`}
+              />
             )}
-            {regular.length > 0 ? (
-              regular.map((awkId, i) => (
-                <AwakeningIcon key={`${awkId}-${i}`} title={`Awakening #${awkId}`} />
-              ))
-            ) : (
-              Array.from({ length: 3 }, (_, i) => (
-                <AwakeningIcon key={`placeholder-${i}`} title="Awakening" />
-              ))
-            )}
+            <AwakeningIconList ids={regular} layout="column" />
           </div>
         </div>
       </div>
 
-      <div className="mx-2 -mt-1 rounded-md border border-[#8b6914]/80 bg-[#241a12]/95 px-2 py-2 shadow-inner">
+      <div className="relative z-10 mx-2 -mt-1 rounded-md border border-[#8b6914]/80 bg-[#241a12]/95 px-2 py-2 shadow-inner">
         <div className="flex items-center gap-2">
           <img
             src={mockedMonsterArt}
@@ -171,15 +172,15 @@ export function MonsterDetailCard({ row }: Props) {
         </div>
       </div>
 
-      <div className="space-y-0 px-2 pb-3 pt-1">
+      <div className="relative z-10 space-y-0 px-2 pb-3 pt-1">
         <SkillBlock
           kind="active"
-          title={skillTitle(activeDesc, "Active Skill")}
+          title={row.active_skill_name_en?.trim() || "—"}
           body={activeDesc}
         />
         <SkillBlock
           kind="leader"
-          title={skillTitle(leaderDesc, "Leader Skill")}
+          title={row.leader_skill_name_en?.trim() || "—"}
           body={leaderDesc}
         />
       </div>

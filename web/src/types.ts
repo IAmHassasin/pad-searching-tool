@@ -12,6 +12,8 @@ export type MonsterRecord = {
   attribute_3_id?: number | null;
   awakenings?: string | null;
   super_awakenings?: string | null;
+  active_skill_name_en?: string | null;
+  leader_skill_name_en?: string | null;
   active_skill_desc_en?: string | null;
   leader_skill_desc_en?: string | null;
   active_skill_tags?: string | null;

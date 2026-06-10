@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "tileWidth": 31,
+  "tileHeight": 32,
+  "gapX": 1,
+  "gapY": 1,
+  "columns": 10,
+  "rows": 15,
+  "lastRowIcons": 4,
+  "regionX": 0,
+  "regionY": 0,
+  "spriteWidth": 1000,
+  "spriteHeight": 1000,
+  "idBase": 0,
+  "fallbackId": null,
+  "overrides": {}
+}
