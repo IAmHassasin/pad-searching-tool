@@ -1,0 +1,34 @@
+#cloud-config
+package_update: true
+package_upgrade: false
+
+write_files:
+  - path: /etc/caddy/Caddyfile
+    permissions: "0644"
+    content: |
+${caddy_site_block}
+
+  - path: /etc/sysconfig/pad-searching-tool
+    permissions: "0644"
+    content: |
+      REMOTE_APP_DIR=${remote_app_dir}
+
+runcmd:
+  - dnf install -y dnf-plugins-core
+  - dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+  - dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+  - systemctl enable --now docker
+  - usermod -aG docker opc
+  - systemctl enable --now firewalld
+  - firewall-cmd --permanent --add-service=ssh
+  - firewall-cmd --permanent --add-service=http
+  - firewall-cmd --permanent --add-service=https
+  - firewall-cmd --reload
+  - dnf install -y dnf-plugins-core
+  - dnf copr enable -y @caddy/caddy
+  - dnf install -y caddy
+  - systemctl enable --now caddy
+  - mkdir -p ${remote_app_dir}
+  - chown -R opc:opc ${remote_app_dir}
+
+final_message: "PAD VM bootstrap complete. Run: cd iac && make -f deploy.mk deploy"

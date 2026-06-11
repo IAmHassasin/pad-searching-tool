@@ -35,8 +35,7 @@ export function ResultsPanel({
           <table className="w-full text-left text-xs">
             <thead className="sticky top-0 bg-[#21262d] text-[var(--color-muted)]">
               <tr>
-                <th className="px-2 py-1.5">ID</th>
-                <th className="px-2 py-1.5">NA#</th>
+                <th className="px-2 py-1.5">NA ID</th>
                 <th className="px-2 py-1.5">Name</th>
                 <th className="px-2 py-1.5">★</th>
                 <th className="px-2 py-1.5">HP</th>
@@ -54,7 +53,6 @@ export function ResultsPanel({
                     onClick={() => onSelect(row)}
                     className={`cursor-pointer border-t border-[var(--color-border)] hover:bg-[#21262d] ${active ? "bg-[#1f3a5f]" : ""}`}
                   >
-                    <td className="px-2 py-1 font-mono">{id}</td>
                     <td className="px-2 py-1 font-mono">
                       {row.monster_no_na ?? "—"}
                     </td>
