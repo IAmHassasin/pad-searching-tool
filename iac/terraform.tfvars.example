@@ -1,0 +1,27 @@
+# Copy → terraform.tfvars (gitignored). Fill OCIDs from Oracle Cloud Console.
+
+tenancy_ocid     = "ocid1.tenancy.oc1..aaaaaaaa..."
+user_ocid        = "ocid1.user.oc1..aaaaaaaa..."
+fingerprint      = "aa:bb:cc:dd:ee:ff:00:11:22:33:44:55:66:77:88:99"
+private_key_path = "../key/api_key_name.pem"
+private_key      = ""
+region           = "ap-tokyo-1"
+
+# Optional: reuse an existing compartment / subnet instead of creating new VCN
+# compartment_ocid     = "ocid1.compartment.oc1..aaaaaaaa..."
+# use_existing_network = true
+# existing_subnet_id   = "ocid1.subnet.oc1..aaaaaaaa..."
+
+project_name = "pad-search"
+app_domain   = "pad.example.com"
+
+# Always Free ARM (recommended for SQLite workload)
+instance_shape           = "VM.Standard.A1.Flex"
+instance_ocpus           = 1
+instance_memory_in_gbs   = 6
+
+# AMD Always Free alternative:
+# instance_shape = "VM.Standard.E2.1.Micro"
+
+# Restrict SSH to your IP in production
+# ssh_allowed_cidrs = ["203.0.113.10/32"]

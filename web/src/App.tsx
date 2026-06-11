@@ -80,7 +80,17 @@ export default function App() {
     placeholderData: (prev) => prev,
   });
 
-  const filtered = useMemo(() => search.data?.rows ?? [], [search.data]);
+  const filtered = useMemo(() => {
+    const rows = search.data?.rows ?? [];
+    return [...rows].sort((a, b) => {
+      const naA = a.monster_no_na;
+      const naB = b.monster_no_na;
+      if (naA == null && naB == null) return 0;
+      if (naA == null) return 1;
+      if (naB == null) return -1;
+      return naB - naA;
+    });
+  }, [search.data]);
 
   const apiError = health.error ?? patternGroups.error ?? search.error ?? null;
 

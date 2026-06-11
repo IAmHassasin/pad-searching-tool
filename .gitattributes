@@ -1,3 +1,6 @@
 # Shell scripts must use LF or Docker/Linux fails with "no such file or directory"
 *.sh text eol=lf
 docker-entrypoint.sh text eol=lf
+
+# Terraform HCL rejects CRLF on Windows
+iac/** text eol=lf

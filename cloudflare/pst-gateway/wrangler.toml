@@ -1,0 +1,14 @@
+name = "pst-gateway"
+main = "src/index.js"
+compatibility_date = "2024-11-01"
+
+# Route: public subdomain → this worker (orange cloud DNS on pst)
+routes = [
+  { pattern = "pst.hassasin.com/*", zone_name = "hassasin.com" }
+]
+
+[vars]
+PUBLIC_HOST = "pst.hassasin.com"
+
+# Grey-cloud origin hostname (DNS only A → Oracle VM). Never fetch PUBLIC_HOST from worker.
+ORIGIN_PAD = "http://origin-pst.hassasin.com"

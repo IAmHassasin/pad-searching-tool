@@ -1,6 +1,15 @@
 node_modules/
 .env
 .env.local
+
+# Secrets & keys (OCI API key, Terraform SSH key)
+key/
+!key/.gitkeep
+
+# Terraform (also see iac/.gitignore)
+iac/.terraform/
+iac/*.tfstate*
+iac/terraform.tfvars
 npm-debug.log
 test.db
 dist/
@@ -11,3 +20,6 @@ web/dist/
 pad.db
 pad.working.sqlite
 seed/*.sqlite
+
+cloudflare/**/node_modules/
+cloudflare/**/.wrangler/

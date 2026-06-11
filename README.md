@@ -54,31 +54,51 @@ COMMUNITY_DB_URL=https://...
 
 In the UI header: **Admin login** → **Refresh community DB**. Same logic as `npm run pad -- merge`, without SSH.
 
-## Deploy to Oracle Cloud (Makefile)
+## Deploy to Oracle Cloud (Terraform + Makefile)
 
-From your machine (Git Bash / WSL / Linux), with SSH access to the VM:
+Infrastructure is defined in **`iac/`** (Terraform). OCI API key: **`key/api_key_name.pem`**. VM SSH key is generated to **`key/vm_ssh.pem`** on first `terraform apply`.
+
+Makefiles live in **`iac/`**: `Makefile` (Terraform) and `deploy.mk` (sync app to VM).
+
+### 1. Provision Oracle VM
 
 ```bash
-make deploy ORACLE_HOST=<vm-ip> \
-  COMMUNITY_DB_URL='https://.../dadguide.sqlite' \
-  ADMIN_PASSWORD='...' \
-  ADMIN_JWT_SECRET='...'
+cd iac
+cp terraform.tfvars.example terraform.tfvars
+# Fill tenancy_ocid, user_ocid, fingerprint, private_key_path, app_domain
+
+make apply
+make output   # public_ip, cloudflare_dns_hint, deploy_command
 ```
 
-| Command | Action |
-|---------|--------|
-| `make deploy` | Sync code + `.env`, build & start container |
-| `make update` | Same as deploy (rebuild) |
-| `make restart` | `docker compose restart` |
-| `make logs` | Follow logs |
-| `make status` | `ps` + `/health` |
-| `make help` | Usage |
+See **`iac/README.md`** for OCIDs, Cloudflare DNS, and variables.
 
-Optional: `SSH_KEY=~/.ssh/key.pem` `ORACLE_USER=opc` `ENV_FILE=.env`
+### 2. Deploy app
 
-The Makefile uploads your local `.env`, patches secrets from CLI args, and uses `docker-compose.cloud.yml` (URL seed, no host `.sqlite` mount).
+```bash
+cp .env.example .env   # set ADMIN_* secrets
 
-**VM prerequisites (once):** Docker + Docker Compose plugin. Open ports **22** (SSH) and **3000** (HTTP).
+cd iac
+make -f deploy.mk deploy-all
+# or: make -f deploy.mk deploy  (ORACLE_HOST auto-read from terraform output)
+```
+
+| Command (`cd iac`) | Action |
+|--------------------|--------|
+| `make apply` | Create/update Oracle VM + network (Terraform) |
+| `make -f deploy.mk deploy-all` | `apply` + sync app + Docker start |
+| `make -f deploy.mk deploy` | Sync code + `.env`, build & start container |
+| `make -f deploy.mk update` | Same as deploy (rebuild) |
+| `make -f deploy.mk restart` | `docker compose restart` |
+| `make -f deploy.mk logs` | Follow logs |
+| `make -f deploy.mk status` | `ps` + `/health` |
+| `make destroy` | Tear down Oracle resources |
+
+Optional: `SSH_KEY=../key/vm_ssh.pem` `ORACLE_USER=opc` `ENV_FILE=../.env`
+
+Cloud-init on the VM installs **Docker**, **Caddy** (reverse proxy → `:3000`), and opens **22/80/443**.
+
+**Cloudflare:** `terraform output cloudflare_dns` → DNS `pst` (proxied) + `origin-pst` (grey) + deploy Worker in **`cloudflare/pst-gateway/`** (path router for multiple services under `pst.hassasin.com`).
 
 ## CLI (`npm run pad`)
 

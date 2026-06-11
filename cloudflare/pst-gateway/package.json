@@ -1,0 +1,14 @@
+{
+  "name": "pst-gateway",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Cloudflare Worker — path router for pst.hassasin.com",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "tail": "wrangler tail"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}

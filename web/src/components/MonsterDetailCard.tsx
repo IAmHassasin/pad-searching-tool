@@ -1,11 +1,11 @@
 import cardBackground from "../assets/pad/background.png";
-import mockedMonsterArt from "../assets/pad/13573.png";
 import { monsterRowId } from "../lib/filters";
 import { parseAwakenings } from "../lib/awakenings";
 import { PAD_AWAKENING, PAD_CARD_VISUAL } from "../lib/pad-constants";
 import type { MonsterRecord } from "../types";
 import { AwakeningIconList } from "./AwakeningIconList";
 import { AwakeningSpriteIcon } from "./AwakeningSpriteIcon";
+import { MonsterPortrait } from "./MonsterPortrait";
 
 const ATTRIBUTE_LABELS: Record<number, string> = {
   0: "Fire",
@@ -101,8 +101,8 @@ export function MonsterDetailCard({ row }: Props) {
           backgroundSize: "contain",
         }}
       />
-      <img
-        src={mockedMonsterArt}
+      <MonsterPortrait
+        monsterId={id}
         alt={row.name_en ?? "Monster artwork"}
         className="pointer-events-none absolute left-1/2 z-[1] max-w-none -translate-x-1/2 -translate-y-1/2 object-contain"
         style={{
@@ -151,10 +151,11 @@ export function MonsterDetailCard({ row }: Props) {
 
       <div className="relative z-10 mx-2 -mt-1 rounded-md border border-[#8b6914]/80 bg-[#241a12]/95 px-2 py-2 shadow-inner">
         <div className="flex items-center gap-2">
-          <img
-            src={mockedMonsterArt}
+          <MonsterPortrait
+            monsterId={id}
             alt=""
-            className="h-11 w-11 shrink-0 rounded border border-[#8b6914]/60 object-cover object-top"
+            variant="icon"
+            className="h-11 w-11 shrink-0 rounded border border-[#8b6914]/60 object-cover"
           />
           <div className="min-w-0 flex-1 space-y-1">
             <StatRow label="HP" value={row.hp_max} />
