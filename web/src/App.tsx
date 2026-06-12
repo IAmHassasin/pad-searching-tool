@@ -2,11 +2,13 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { fetchHealth, fetchPatternGroups, searchAllMonsters } from "./api";
 import { AdminPanel } from "./components/AdminPanel";
+import { MobileWebviewLayout } from "./components/MobileWebviewLayout";
 import { MonsterFilterPanel } from "./components/MonsterFilterPanel";
 import { ResultsPanel } from "./components/ResultsPanel";
 import { SkillFilterPanel } from "./components/SkillFilterPanel";
 import { useAdminSession } from "./hooks/useAdminSession";
 import { useDebouncedValue } from "./hooks/useDebouncedValue";
+import { useMobileWebview } from "./hooks/useMobileWebview";
 import {
   EMPTY_MONSTER_FILTERS,
   EMPTY_SKILL_FILTERS,
@@ -30,6 +32,7 @@ export default function App() {
   const [skillPanelOpen, setSkillPanelOpen] = useState(true);
   const queryClient = useQueryClient();
   const admin = useAdminSession();
+  const isMobileWebview = useMobileWebview();
 
   const debouncedMonster = useDebouncedValue(monsterFilters, 300);
   const debouncedSkill = useDebouncedValue(skillFilters, 400);
@@ -157,18 +160,14 @@ export default function App() {
         </p>
       )}
 
-      <div
-        className={`grid min-h-0 flex-1 grid-cols-1 ${
-          skillPanelOpen
-            ? "xl:grid-cols-[minmax(220px,280px)_1fr_minmax(300px,420px)]"
-            : "xl:grid-cols-[minmax(220px,280px)_1fr_auto]"
-        }`}
-      >
-        <MonsterFilterPanel
-          filters={monsterFilters}
-          onChange={setMonsterFilters}
-        />
-        <ResultsPanel
+      {isMobileWebview ? (
+        <MobileWebviewLayout
+          monsterFilters={monsterFilters}
+          onMonsterFiltersChange={setMonsterFilters}
+          skillFilters={skillFilters}
+          onSkillFiltersChange={setSkillFilters}
+          patternGroups={patternGroups.data}
+          patternGroupsLoading={patternGroups.isLoading}
           rows={filtered}
           totalLoaded={search.data?.total ?? 0}
           selected={selected}
@@ -178,15 +177,38 @@ export default function App() {
             loadProgress && search.isFetching ? loadProgress.loaded : null
           }
         />
-        <SkillFilterPanel
-          filters={skillFilters}
-          onChange={setSkillFilters}
-          patternGroups={patternGroups.data}
-          patternGroupsLoading={patternGroups.isLoading}
-          open={skillPanelOpen}
-          onToggle={() => setSkillPanelOpen((v) => !v)}
-        />
-      </div>
+      ) : (
+        <div
+          className={`grid min-h-0 flex-1 grid-cols-1 ${
+            skillPanelOpen
+              ? "xl:grid-cols-[minmax(220px,280px)_1fr_minmax(300px,420px)]"
+              : "xl:grid-cols-[minmax(220px,280px)_1fr_auto]"
+          }`}
+        >
+          <MonsterFilterPanel
+            filters={monsterFilters}
+            onChange={setMonsterFilters}
+          />
+          <ResultsPanel
+            rows={filtered}
+            totalLoaded={search.data?.total ?? 0}
+            selected={selected}
+            onSelect={setSelected}
+            loading={search.isFetching}
+            loadProgress={
+              loadProgress && search.isFetching ? loadProgress.loaded : null
+            }
+          />
+          <SkillFilterPanel
+            filters={skillFilters}
+            onChange={setSkillFilters}
+            patternGroups={patternGroups.data}
+            patternGroupsLoading={patternGroups.isLoading}
+            open={skillPanelOpen}
+            onToggle={() => setSkillPanelOpen((v) => !v)}
+          />
+        </div>
+      )}
     </div>
   );
 }
