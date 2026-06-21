@@ -68,6 +68,7 @@ Loads .env from the project root, then runs a command.
 
   build       TypeScript compile only (nest build).
   snapshot    Forces IMPORT_MODE=download — immutable file at SNAPSHOT_OUTPUT_PATH.
+  seed-db     Download community SQLite → seed/dadguide.sqlite (DB_DOWNLOAD_URL in .env).
   merge       import-external-db (IMPORT_MODE from .env: merge | replace).
   transform   categorize only (START_HTTP=false, RUN_TRANSFORM=true).
   serve       HTTP server (forces START_HTTP=true; other vars from .env).
@@ -75,6 +76,7 @@ Loads .env from the project root, then runs a command.
   compose     docker compose <args…> — e.g. compose up --build
 
 Examples:
+  npm run pad -- seed-db
   npm run pad -- snapshot
   npm run pad -- update
   npm run pad -- compose up --build
@@ -99,6 +101,11 @@ loadEnvFile();
 switch (cmd) {
   case "build":
     npmBuild();
+    break;
+
+  case "seed-db":
+  case "seed":
+    run(process.execPath, [path.join(root, "scripts", "download-seed-db.mjs")]);
     break;
 
   case "snapshot":

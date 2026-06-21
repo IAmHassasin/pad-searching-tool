@@ -29,7 +29,8 @@ export function hasActiveMonsterFilters(filters: MonsterFilters): boolean {
     filters.atkMax != null ||
     filters.rcvMin != null ||
     filters.rcvMax != null ||
-    filters.idQuery.trim().length > 0
+    filters.idQuery.trim().length > 0 ||
+    filters.awakeningIds.length > 0
   );
 }
 

@@ -61,6 +61,8 @@ export default function App() {
       rcvMin: debouncedMonster.rcvMin,
       rcvMax: debouncedMonster.rcvMax,
       idQuery: debouncedMonster.idQuery,
+      awakeningIds: debouncedMonster.awakeningIds,
+      awakeningMatch: debouncedMonster.awakeningMatch,
       activeSkillText: debouncedSkill.activeSkillText,
       leaderSkillText: debouncedSkill.leaderSkillText,
       skillTextMode: debouncedSkill.skillTextMode,
@@ -181,8 +183,8 @@ export default function App() {
         <div
           className={`grid min-h-0 flex-1 grid-cols-1 ${
             skillPanelOpen
-              ? "xl:grid-cols-[minmax(220px,280px)_1fr_minmax(300px,420px)]"
-              : "xl:grid-cols-[minmax(220px,280px)_1fr_auto]"
+              ? "xl:grid-cols-[25%_minmax(0,1fr)_25%]"
+              : "xl:grid-cols-[25%_minmax(0,1fr)_auto]"
           }`}
         >
           <MonsterFilterPanel

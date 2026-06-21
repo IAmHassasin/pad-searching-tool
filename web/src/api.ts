@@ -105,6 +105,8 @@ function monsterParams(q: URLSearchParams, f: MonsterFilters) {
   if (f.rcvMin != null) q.set("rcvMin", String(f.rcvMin));
   if (f.rcvMax != null) q.set("rcvMax", String(f.rcvMax));
   if (f.idQuery.trim()) q.set("idQuery", f.idQuery.trim());
+  setCsv(q, "awakeningIds", f.awakeningIds);
+  if (f.awakeningIds.length > 0) q.set("awakeningMatch", f.awakeningMatch);
 }
 
 function skillParams(q: URLSearchParams, f: SkillFilters) {

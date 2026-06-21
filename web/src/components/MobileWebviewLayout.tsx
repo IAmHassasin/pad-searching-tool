@@ -16,13 +16,14 @@ import {
   MonsterStatsFilter,
   hasActiveMonsterFilters,
 } from "./filters/monster-filter-shared";
+import { MonsterAwakeningFilter } from "./filters/awakening-filter-shared";
 import {
   PatternMatchToggle,
   SkillPatternGroup,
   SkillSelectedPatternChips,
 } from "./filters/skill-pattern-shared";
 
-type SkillPanelMode = "leader_skill" | "active_skill" | null;
+type BottomPanelMode = "leader_skill" | "active_skill" | "awakening" | null;
 
 type Props = {
   monsterFilters: MonsterFilters;
@@ -175,21 +176,25 @@ function MobileDetailPanel({
   );
 }
 
-function MobileSkillPatternBar({
+function MobileBottomFilterBar({
+  monsterFilters,
+  onMonsterFiltersChange,
   skillFilters,
   onSkillFiltersChange,
   patternGroups,
   patternGroupsLoading,
 }: {
+  monsterFilters: MonsterFilters;
+  onMonsterFiltersChange: (next: MonsterFilters) => void;
   skillFilters: SkillFilters;
   onSkillFiltersChange: (next: SkillFilters) => void;
   patternGroups: PatternGroupsManifest | undefined;
   patternGroupsLoading: boolean;
 }) {
-  const [openMode, setOpenMode] = useState<SkillPanelMode>(null);
+  const [openMode, setOpenMode] = useState<BottomPanelMode>(null);
   const [panelExpanded, setPanelExpanded] = useState(true);
 
-  const toggleMode = (mode: SkillPanelMode) => {
+  const toggleMode = (mode: BottomPanelMode) => {
     setOpenMode((current) => (current === mode ? null : mode));
     setPanelExpanded(true);
   };
@@ -200,6 +205,16 @@ function MobileSkillPatternBar({
   const selectedActive = skillFilters.selectedPatterns.filter(
     (p) => p.skillType === "active_skill"
   ).length;
+  const selectedAwk = monsterFilters.awakeningIds.length;
+
+  const panelTitle =
+    openMode === "leader_skill"
+      ? "Leader skill"
+      : openMode === "active_skill"
+        ? "Active skill"
+        : openMode === "awakening"
+          ? "Awakenings"
+          : "";
 
   return (
     <section className="flex shrink-0 flex-col border-t border-[var(--color-border)] bg-[var(--color-panel)]">
@@ -209,61 +224,86 @@ function MobileSkillPatternBar({
             <CollapseButton
               expanded={panelExpanded}
               onToggle={() => setPanelExpanded(false)}
-              label="skill patterns"
+              label="filters"
             />
-            <p className="text-xs font-semibold text-white">
-              {openMode === "leader_skill" ? "Leader skill" : "Active skill"}
-            </p>
-            {skillFilters.selectedPatterns.length > 0 && (
-              <button
-                type="button"
-                onClick={() =>
-                  onSkillFiltersChange({
-                    ...skillFilters,
-                    selectedPatterns: [],
-                  })
-                }
-                className="rounded border border-[var(--color-border)] px-2 py-0.5 text-[10px] text-[var(--color-muted)]"
-              >
-                Clear
-              </button>
+            <p className="text-xs font-semibold text-white">{panelTitle}</p>
+            {openMode === "awakening" ? (
+              monsterFilters.awakeningIds.length > 0 && (
+                <button
+                  type="button"
+                  onClick={() =>
+                    onMonsterFiltersChange({
+                      ...monsterFilters,
+                      awakeningIds: [],
+                    })
+                  }
+                  className="rounded border border-[var(--color-border)] px-2 py-0.5 text-[10px] text-[var(--color-muted)]"
+                >
+                  Clear all
+                </button>
+              )
+            ) : (
+              skillFilters.selectedPatterns.length > 0 && (
+                <button
+                  type="button"
+                  onClick={() =>
+                    onSkillFiltersChange({
+                      ...skillFilters,
+                      selectedPatterns: [],
+                    })
+                  }
+                  className="rounded border border-[var(--color-border)] px-2 py-0.5 text-[10px] text-[var(--color-muted)]"
+                >
+                  Clear
+                </button>
+              )
             )}
           </div>
           <div className="min-h-0 flex-1 overflow-y-auto px-2 pb-2">
-            {patternGroupsLoading && (
-              <p className="text-xs text-[var(--color-muted)]">
-                Loading groups…
-              </p>
-            )}
-            <SkillSelectedPatternChips
-              filters={skillFilters}
-              onChange={onSkillFiltersChange}
-            />
-            <PatternMatchToggle
-              value={skillFilters.patternMatch}
-              onChange={(patternMatch) =>
-                onSkillFiltersChange({ ...skillFilters, patternMatch })
-              }
-            />
-            {patternGroups && openMode === "leader_skill" && (
-              <SkillPatternGroup
-                title="Leader skill"
-                skillType="leader_skill"
-                categories={patternGroups.leader_skill_filters}
-                filters={skillFilters}
-                onChange={onSkillFiltersChange}
+            {openMode === "awakening" ? (
+              <MonsterAwakeningFilter
+                filters={monsterFilters}
+                onChange={onMonsterFiltersChange}
                 compact
               />
-            )}
-            {patternGroups && openMode === "active_skill" && (
-              <SkillPatternGroup
-                title="Active skill"
-                skillType="active_skill"
-                categories={patternGroups.active_skill_filters}
-                filters={skillFilters}
-                onChange={onSkillFiltersChange}
-                compact
-              />
+            ) : (
+              <>
+                {patternGroupsLoading && (
+                  <p className="text-xs text-[var(--color-muted)]">
+                    Loading groups…
+                  </p>
+                )}
+                <SkillSelectedPatternChips
+                  filters={skillFilters}
+                  onChange={onSkillFiltersChange}
+                />
+                <PatternMatchToggle
+                  value={skillFilters.patternMatch}
+                  onChange={(patternMatch) =>
+                    onSkillFiltersChange({ ...skillFilters, patternMatch })
+                  }
+                />
+                {patternGroups && openMode === "leader_skill" && (
+                  <SkillPatternGroup
+                    title="Leader skill"
+                    skillType="leader_skill"
+                    categories={patternGroups.leader_skill_filters}
+                    filters={skillFilters}
+                    onChange={onSkillFiltersChange}
+                    compact
+                  />
+                )}
+                {patternGroups && openMode === "active_skill" && (
+                  <SkillPatternGroup
+                    title="Active skill"
+                    skillType="active_skill"
+                    categories={patternGroups.active_skill_filters}
+                    filters={skillFilters}
+                    onChange={onSkillFiltersChange}
+                    compact
+                  />
+                )}
+              </>
             )}
           </div>
         </div>
@@ -274,20 +314,19 @@ function MobileSkillPatternBar({
           <CollapseButton
             expanded={false}
             onToggle={() => setPanelExpanded(true)}
-            label="skill patterns"
+            label="filters"
           />
           <span className="ml-2 text-[10px] text-[var(--color-muted)]">
-            {openMode === "leader_skill" ? "Leader" : "Active"} patterns
-            collapsed
+            {panelTitle} collapsed
           </span>
         </div>
       )}
 
-      <div className="grid shrink-0 grid-cols-2 gap-1 p-1.5">
+      <div className="grid shrink-0 grid-cols-3 gap-1 p-1.5">
         <button
           type="button"
           onClick={() => toggleMode("leader_skill")}
-          className={`rounded-md border px-2 py-2 text-xs font-semibold transition-colors ${
+          className={`rounded-md border px-1 py-2 text-xs font-semibold transition-colors ${
             openMode === "leader_skill"
               ? "border-[#db6d28] bg-[#3d2814] text-[#f0c090]"
               : "border-[var(--color-border)] bg-[#0d1117] text-[var(--color-muted)]"
@@ -303,7 +342,7 @@ function MobileSkillPatternBar({
         <button
           type="button"
           onClick={() => toggleMode("active_skill")}
-          className={`rounded-md border px-2 py-2 text-xs font-semibold transition-colors ${
+          className={`rounded-md border px-1 py-2 text-xs font-semibold transition-colors ${
             openMode === "active_skill"
               ? "border-[#58a6ff] bg-[#1f3a5f] text-[var(--color-accent)]"
               : "border-[var(--color-border)] bg-[#0d1117] text-[var(--color-muted)]"
@@ -313,6 +352,22 @@ function MobileSkillPatternBar({
           {selectedActive > 0 && (
             <span className="ml-1 rounded bg-[var(--color-accent)]/20 px-1 text-[10px] tabular-nums">
               {selectedActive}
+            </span>
+          )}
+        </button>
+        <button
+          type="button"
+          onClick={() => toggleMode("awakening")}
+          className={`rounded-md border px-1 py-2 text-xs font-semibold transition-colors ${
+            openMode === "awakening"
+              ? "border-[#6b8f3c] bg-[#1a2a12] text-[#a8c878]"
+              : "border-[var(--color-border)] bg-[#0d1117] text-[var(--color-muted)]"
+          }`}
+        >
+          Awk
+          {selectedAwk > 0 && (
+            <span className="ml-1 rounded bg-[#6b8f3c]/20 px-1 text-[10px] tabular-nums">
+              {selectedAwk}
             </span>
           )}
         </button>
@@ -389,7 +444,9 @@ export function MobileWebviewLayout({
         </div>
       </main>
 
-      <MobileSkillPatternBar
+      <MobileBottomFilterBar
+        monsterFilters={monsterFilters}
+        onMonsterFiltersChange={onMonsterFiltersChange}
         skillFilters={skillFilters}
         onSkillFiltersChange={onSkillFiltersChange}
         patternGroups={patternGroups}

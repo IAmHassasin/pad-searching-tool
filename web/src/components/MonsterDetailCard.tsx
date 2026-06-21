@@ -1,11 +1,16 @@
 import cardBackground from "../assets/pad/background.png";
 import { monsterRowId } from "../lib/filters";
-import { parseAwakenings } from "../lib/awakenings";
+import {
+  parseRegularAwakenings,
+  resolvePrefixedAwakeningIds,
+  resolveSuperAwakeningIds,
+} from "../lib/awakenings";
 import { PAD_AWAKENING, PAD_CARD_VISUAL } from "../lib/pad-constants";
 import type { MonsterRecord } from "../types";
 import { AwakeningIconList } from "./AwakeningIconList";
 import { AwakeningSpriteIcon } from "./AwakeningSpriteIcon";
 import { MonsterPortrait } from "./MonsterPortrait";
+import { SuperAwakeningStrip } from "./SuperAwakeningStrip";
 
 const ATTRIBUTE_LABELS: Record<number, string> = {
   0: "Fire",
@@ -80,7 +85,24 @@ function SkillBlock({
 
 export function MonsterDetailCard({ row }: Props) {
   const id = monsterRowId(row);
-  const { regular, super: superAwks } = parseAwakenings(row.awakenings);
+  const regular = parseRegularAwakenings(row.awakenings);
+  const hasSuperAwks =
+    resolveSuperAwakeningIds(row.awakenings, row.super_awakenings).length > 0;
+  const prefixedAwkIds = resolvePrefixedAwakeningIds(
+    row.awakenings,
+    row.super_awakenings,
+    row.sync_awsid
+  );
+  const prefixedAwkStrip =
+    prefixedAwkIds.length > 0 ? (
+      <SuperAwakeningStrip
+        ids={prefixedAwkIds}
+        prefixTitle={hasSuperAwks ? "Super awakening" : "Sync awakening"}
+        iconTitle={(id) =>
+          hasSuperAwks ? `Super awakening #${id}` : `Sync awakening #${id}`
+        }
+      />
+    ) : null;
   const attrLabel =
     row.attribute_1_id != null
       ? ATTRIBUTE_LABELS[row.attribute_1_id] ?? `Attr ${row.attribute_1_id}`
@@ -131,20 +153,35 @@ export function MonsterDetailCard({ row }: Props) {
           style={{ minHeight: PAD_AWAKENING.artAreaMinHeightPx }}
         >
           <div className="min-w-0 flex-1" aria-hidden />
-          <div
-            className="flex shrink-0 flex-col items-center bg-black/40 py-1.5 pr-1"
-            style={{
-              width: PAD_AWAKENING.columnWidthPx,
-              gap: PAD_AWAKENING.iconGapPx,
-            }}
-          >
-            {superAwks.length > 0 && (
-              <AwakeningSpriteIcon
-                awokenSkillId={superAwks[0]}
-                title={`Super awakening: #${superAwks.join(", #")}`}
-              />
-            )}
-            <AwakeningIconList ids={regular} layout="column" />
+          <div className="flex shrink-0 flex-col items-end bg-transparent py-1.5 pr-1">
+            {regular.length > 0 ? (
+              <>
+                <div
+                  className="flex flex-row items-center"
+                  style={{ gap: PAD_AWAKENING.iconGapPx }}
+                >
+                  {prefixedAwkStrip}
+                  <AwakeningSpriteIcon awokenSkillId={regular[0]} />
+                </div>
+                {regular.length > 1 && (
+                  <div
+                    className="flex flex-col items-center"
+                    style={{
+                      width: PAD_AWAKENING.columnWidthPx,
+                      gap: PAD_AWAKENING.iconGapPx,
+                      marginTop: PAD_AWAKENING.iconGapPx,
+                    }}
+                  >
+                    <AwakeningIconList
+                      ids={regular.slice(1)}
+                      layout="column"
+                    />
+                  </div>
+                )}
+              </>
+            ) : prefixedAwkStrip ? (
+              prefixedAwkStrip
+            ) : null}
           </div>
         </div>
       </div>
