@@ -83,18 +83,78 @@ make -f deploy.mk deploy-all
 # or: make -f deploy.mk deploy  (ORACLE_HOST auto-read from terraform output)
 ```
 
-| Command (`cd iac`) | Action |
-|--------------------|--------|
-| `make apply` | Create/update Oracle VM + network (Terraform) |
-| `make -f deploy.mk deploy-all` | `apply` + sync app + Docker start |
-| `make -f deploy.mk deploy` | Sync code + `.env`, build & start container |
-| `make -f deploy.mk update` | Same as deploy (rebuild) |
-| `make -f deploy.mk restart` | `docker compose restart` |
-| `make -f deploy.mk logs` | Follow logs |
-| `make -f deploy.mk status` | `ps` + `/health` |
-| `make destroy` | Tear down Oracle resources |
+### 3. Cloud: cập nhật / deploy / restart Docker
 
-Optional: `SSH_KEY=../key/vm_ssh.pem` `ORACLE_USER=opc` `ENV_FILE=../.env`
+Chạy từ **`iac/`** sau khi đã `make apply`. VM dùng **`docker compose -f docker-compose.yml -f docker-compose.cloud.yml`** (DB từ `COMMUNITY_DB_URL`, volume `dadguide_working_sqlite` giữ `/data/pad.db`).
+
+**Yêu cầu:** `../.env` (secrets), SSH key `key/vm_ssh.pem`, `ORACLE_HOST` lấy tự Terraform output (hoặc override).
+
+| Lệnh (`cd iac`) | Khi nào dùng |
+|-----------------|--------------|
+| `make apply` | Provision / cập nhật VM + network (Terraform) |
+| `make -f deploy.mk deploy-all` | `terraform apply` + deploy (infra + app) |
+| `make -f deploy.mk deploy` | **Deploy đầy đủ:** sync code + `.env` lên VM → `docker compose up -d --build` |
+| `make -f deploy.mk update` | Giống `deploy` (alias) — sau khi sửa code / patterns / UI |
+| `make -f deploy.mk restart` | **Chỉ restart** container, không rebuild image |
+| `make -f deploy.mk logs` | Theo dõi log (`--tail=200 -f`) |
+| `make -f deploy.mk status` | `docker compose ps` + `curl /health` trên VM |
+| `make -f deploy.mk ssh` | Shell SSH vào VM |
+| `make destroy` | Xóa hạ tầng Oracle (VM + IP) |
+
+**Windows (CMD / PowerShell):**
+
+```cmd
+cd iac
+deploy.cmd deploy
+deploy.cmd update
+deploy.cmd restart
+deploy.cmd logs
+deploy.cmd status
+deploy.cmd ssh
+```
+
+**Override (tùy chọn):**
+
+```bash
+make -f deploy.mk deploy ORACLE_HOST=1.2.3.4 SSH_KEY=../key/vm_ssh.pem ORACLE_USER=opc
+make -f deploy.mk deploy \
+  COMMUNITY_DB_URL='https://...' \
+  ADMIN_USERNAME=superadmin \
+  ADMIN_PASSWORD='...' \
+  ADMIN_JWT_SECRET='...'
+```
+
+Secrets trong lệnh `deploy` chỉ **patch** các biến đó trên `.env` VM; file `.env` gốc vẫn được upload từ `../.env`.
+
+**Trên VM (SSH thủ công):**
+
+```bash
+cd ~/pad-searching-tool
+sudo docker compose -f docker-compose.yml -f docker-compose.cloud.yml ps
+sudo docker compose -f docker-compose.yml -f docker-compose.cloud.yml logs -f --tail=200
+sudo docker compose -f docker-compose.yml -f docker-compose.cloud.yml restart
+sudo docker compose -f docker-compose.yml -f docker-compose.cloud.yml up -d --build   # rebuild sau khi đã sync code
+sudo docker compose -f docker-compose.yml -f docker-compose.cloud.yml down            # dừng (giữ volume)
+sudo docker compose -f docker-compose.yml -f docker-compose.cloud.yml down -v       # dừng + xóa volume DB
+```
+
+**Cập nhật community DB (không redeploy code):**
+
+- UI production: **Admin login** → **Refresh community DB** (cần `ADMIN_*` + `COMMUNITY_DB_URL` trong `.env` VM).
+- Hoặc trên máy local: `npm run pad -- merge` rồi deploy lại — thường không cần nếu dùng Admin refresh.
+
+**Ép tải lại DB từ URL (bỏ working DB cũ trên volume):**
+
+```bash
+# Trên VM, một lần:
+cd ~/pad-searching-tool
+sudo docker compose -f docker-compose.yml -f docker-compose.cloud.yml down
+sudo docker volume rm pad-searching-tool_dadguide_working_sqlite   # tên volume có thể khác — xem `docker volume ls`
+sudo docker compose -f docker-compose.yml -f docker-compose.cloud.yml up -d --build
+# Hoặc set FORCE_SQLITE_INIT=true trong .env rồi restart container
+```
+
+Optional overrides: `SSH_KEY=../key/vm_ssh.pem` `ORACLE_USER=opc` `ENV_FILE=../.env`
 
 Cloud-init on the VM installs **Docker**, **Caddy** (reverse proxy → `:3000`), and opens **22/80/443**.
 

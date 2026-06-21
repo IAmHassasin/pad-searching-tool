@@ -24,6 +24,8 @@ export type MonsterSearchFilters = {
   rcvMin?: number | null;
   rcvMax?: number | null;
   idQuery?: string;
+  awakeningIds?: number[];
+  awakeningMatch?: "any" | "all";
 };
 
 export type PatternSearchInput = {
@@ -231,6 +233,42 @@ export class PatternSearchService {
           `LOWER(COALESCE(_src.${this.quotedColumn("name_en")}, '')) LIKE LOWER(?)` +
           `)`
       );
+    }
+
+    if (monster.awakeningIds?.length) {
+      const tokenLen = (id: number) => `(${id})`.length;
+
+      const countClause = (id: number, minCount: number) => {
+        const token = `(${id})`;
+        const len = tokenLen(id);
+        params.push(token, token, id, minCount);
+        const awkCol = this.quotedColumn("awakenings");
+        const superCol = this.quotedColumn("super_awakenings");
+        const syncCol = this.quotedColumn("sync_awsid");
+        return (
+          `(` +
+          `(LENGTH(COALESCE(_src.${awkCol}, '')) - LENGTH(REPLACE(COALESCE(_src.${awkCol}, ''), ?, ''))) / ${len} + ` +
+          `(LENGTH(COALESCE(_src.${superCol}, '')) - LENGTH(REPLACE(COALESCE(_src.${superCol}, ''), ?, ''))) / ${len} + ` +
+          `CASE WHEN _src.${syncCol} = ? THEN 1 ELSE 0 END` +
+          `) >= ?`
+        );
+      };
+
+      if (monster.awakeningMatch === "all") {
+        const required = new Map<number, number>();
+        for (const id of monster.awakeningIds) {
+          required.set(id, (required.get(id) ?? 0) + 1);
+        }
+        const parts: string[] = [];
+        for (const [id, minCount] of required) {
+          parts.push(countClause(id, minCount));
+        }
+        clauses.push(`(${parts.join(" AND ")})`);
+      } else {
+        const unique = [...new Set(monster.awakeningIds)];
+        const parts = unique.map((id) => countClause(id, 1));
+        clauses.push(`(${parts.join(" OR ")})`);
+      }
     }
 
     return clauses;

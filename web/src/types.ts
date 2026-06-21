@@ -12,6 +12,7 @@ export type MonsterRecord = {
   attribute_3_id?: number | null;
   awakenings?: string | null;
   super_awakenings?: string | null;
+  sync_awsid?: number | null;
   active_skill_name_en?: string | null;
   leader_skill_name_en?: string | null;
   active_skill_desc_en?: string | null;
@@ -67,6 +68,9 @@ export type MonsterFilters = {
   rcvMin: number | null;
   rcvMax: number | null;
   idQuery: string;
+  /** Ordered stack — duplicates allowed (e.g. three × HP+). */
+  awakeningIds: number[];
+  awakeningMatch: "any" | "all";
 };
 
 export type SkillFilters = {
@@ -87,6 +91,8 @@ export const EMPTY_MONSTER_FILTERS: MonsterFilters = {
   rcvMin: null,
   rcvMax: null,
   idQuery: "",
+  awakeningIds: [],
+  awakeningMatch: "all",
 };
 
 export const EMPTY_SKILL_FILTERS: SkillFilters = {

@@ -75,6 +75,8 @@ export class PatternsController {
     @Query("rcvMin") rcvMinRaw?: string,
     @Query("rcvMax") rcvMaxRaw?: string,
     @Query("idQuery") idQuery?: string,
+    @Query("awakeningIds") awakeningIdsRaw?: string,
+    @Query("awakeningMatch") awakeningMatchRaw?: string,
     @Query("limit") limitRaw?: string,
     @Query("offset") offsetRaw?: string
   ) {
@@ -93,6 +95,10 @@ export class PatternsController {
     );
     const offset = Math.max(Number(offsetRaw ?? "0") || 0, 0);
 
+    const awakeningMatch =
+      awakeningMatchRaw?.trim() === "any" ? "any" : ("all" as const);
+    const awakeningIds = parseIntCsv(awakeningIdsRaw);
+
     const monster: MonsterSearchFilters = {
       rarity: parseIntCsv(rarityRaw),
       attributes: parseIntCsv(attributesRaw),
@@ -103,6 +109,8 @@ export class PatternsController {
       rcvMin: parseOptionalNumber(rcvMinRaw),
       rcvMax: parseOptionalNumber(rcvMaxRaw),
       idQuery: idQuery?.trim() || undefined,
+      awakeningIds: awakeningIds.length ? awakeningIds : undefined,
+      awakeningMatch: awakeningIds.length ? awakeningMatch : undefined,
     };
 
     const hasMonsterFilters =
@@ -114,7 +122,8 @@ export class PatternsController {
       monster.atkMax != null ||
       monster.rcvMin != null ||
       monster.rcvMax != null ||
-      Boolean(monster.idQuery);
+      Boolean(monster.idQuery) ||
+      (monster.awakeningIds?.length ?? 0) > 0;
 
     const activeTags = parseCsv(activeTagsRaw);
     const leaderTags = parseCsv(leaderTagsRaw);
