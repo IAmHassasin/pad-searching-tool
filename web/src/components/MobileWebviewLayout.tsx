@@ -10,6 +10,7 @@ import { ResultsList } from "./ResultsList";
 import {
   MonsterActiveFilterChips,
   MonsterAttributeFilter,
+  MonsterTypeFilter,
   MonsterFilterClearButton,
   MonsterIdFilter,
   MonsterRarityFilter,
@@ -111,6 +112,7 @@ function MobileMonsterFilterBar({
             onChange={onChange}
             compact
           />
+          <MonsterTypeFilter filters={filters} onChange={onChange} compact />
           <MonsterIdFilter filters={filters} onChange={onChange} compact />
         </div>
         {statsExpanded && (

@@ -97,7 +97,13 @@ function setCsv(q: URLSearchParams, key: string, values: number[] | string[]) {
 
 function monsterParams(q: URLSearchParams, f: MonsterFilters) {
   setCsv(q, "rarity", [...f.rarity]);
-  setCsv(q, "attributes", [...f.attributes]);
+  f.attributeSlots.forEach((slot, index) => {
+    setCsv(q, `attributeSlot${index + 1}`, [...slot]);
+  });
+  if (f.attributeSlots.some((slot) => slot.size > 0)) {
+    q.set("attributeMatch", f.attributeMatch);
+  }
+  setCsv(q, "types", [...f.types]);
   if (f.hpMin != null) q.set("hpMin", String(f.hpMin));
   if (f.hpMax != null) q.set("hpMax", String(f.hpMax));
   if (f.atkMin != null) q.set("atkMin", String(f.atkMin));

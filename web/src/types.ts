@@ -1,3 +1,5 @@
+import { type AttributeSlotFilters } from "./monster-attributes";
+
 export type MonsterRecord = {
   monster_id?: number;
   monster_no_na?: number | null;
@@ -10,6 +12,9 @@ export type MonsterRecord = {
   attribute_1_id?: number | null;
   attribute_2_id?: number | null;
   attribute_3_id?: number | null;
+  type_1_id?: number | null;
+  type_2_id?: number | null;
+  type_3_id?: number | null;
   awakenings?: string | null;
   super_awakenings?: string | null;
   sync_awsid?: number | null;
@@ -60,7 +65,10 @@ export type MonsterSearchResponse = {
 
 export type MonsterFilters = {
   rarity: Set<number>;
-  attributes: Set<number>;
+  /** Per-slot filters: index 0 → attribute_1_id, etc. */
+  attributeSlots: AttributeSlotFilters;
+  attributeMatch: "any" | "all";
+  types: Set<number>;
   hpMin: number | null;
   hpMax: number | null;
   atkMin: number | null;
@@ -83,7 +91,9 @@ export type SkillFilters = {
 
 export const EMPTY_MONSTER_FILTERS: MonsterFilters = {
   rarity: new Set(),
-  attributes: new Set(),
+  attributeSlots: [new Set(), new Set(), new Set()],
+  attributeMatch: "all",
+  types: new Set(),
   hpMin: null,
   hpMax: null,
   atkMin: null,

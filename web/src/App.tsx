@@ -53,7 +53,11 @@ export default function App() {
   const searchKey = useMemo(
     () => ({
       rarity: [...debouncedMonster.rarity].sort(),
-      attributes: [...debouncedMonster.attributes].sort(),
+      attributeSlots: debouncedMonster.attributeSlots.map((slot) =>
+        [...slot].sort()
+      ),
+      attributeMatch: debouncedMonster.attributeMatch,
+      types: [...debouncedMonster.types].sort(),
       hpMin: debouncedMonster.hpMin,
       hpMax: debouncedMonster.hpMax,
       atkMin: debouncedMonster.atkMin,

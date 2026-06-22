@@ -145,3 +145,120 @@ export function awakeningSpriteStyle(
     backgroundPosition: `${coords.x * scale}px ${coords.y * scale}px`,
   };
 }
+
+/** Column index of monster-type icons (11th icon in each row; cols 0–9 are awakenings). */
+export const MONSTER_TYPE_SPRITE_COL = 10;
+
+/** dadguide type_id → sprite row (row 0 = Dragon … row 11 = Redeemable Mats). */
+export const MONSTER_TYPE_SPRITE_ROW: Record<number, number> = {
+  4: 0,
+  5: 1,
+  7: 2,
+  8: 3,
+  1: 4,
+  6: 5,
+  2: 6,
+  3: 7,
+  0: 8,
+  12: 9,
+  14: 10,
+  15: 11,
+};
+
+export function getMonsterTypeSpriteCoords(
+  typeId: number
+): AwakeningSpriteCoords | null {
+  const row = MONSTER_TYPE_SPRITE_ROW[typeId];
+  if (row === undefined) return null;
+
+  const m = awakeningSpriteManifest;
+  const col = MONSTER_TYPE_SPRITE_COL;
+  const x = -(m.regionX + col * strideX(m));
+  const y = -(m.regionY + row * strideY(m));
+
+  return {
+    col,
+    row,
+    x,
+    y,
+    tileWidth: m.tileWidth,
+    tileHeight: m.tileHeight,
+    spriteWidth: m.spriteWidth,
+    spriteHeight: m.spriteHeight,
+  };
+}
+
+export function monsterTypeSpriteStyle(
+  typeId: number,
+  displayWidth?: number
+): CSSProperties | null {
+  const coords = getMonsterTypeSpriteCoords(typeId);
+  if (!coords) return null;
+
+  const scale = (displayWidth ?? coords.tileWidth) / coords.tileWidth;
+
+  return {
+    width: coords.tileWidth * scale,
+    height: coords.tileHeight * scale,
+    backgroundImage: `url(${awakeningSpriteImageUrl})`,
+    backgroundRepeat: "no-repeat",
+    backgroundSize: `${coords.spriteWidth * scale}px ${coords.spriteHeight * scale}px`,
+    backgroundPosition: `${coords.x * scale}px ${coords.y * scale}px`,
+  };
+}
+
+/** Attribute icons: x 576–625, 50×50px each, stacked vertically in sprite.webp. */
+export const ATTRIBUTE_SPRITE_X = 576;
+export const ATTRIBUTE_SPRITE_TILE = 50;
+
+/** attribute_id → sprite row (0 = Fire … 6 = None). */
+export const ATTRIBUTE_SPRITE_ROW: Record<number, number> = {
+  0: 0,
+  1: 1,
+  2: 2,
+  3: 3,
+  4: 4,
+  5: 5,
+  6: 6,
+};
+
+export function getMonsterAttributeSpriteCoords(
+  attributeId: number
+): AwakeningSpriteCoords | null {
+  const row = ATTRIBUTE_SPRITE_ROW[attributeId];
+  if (row === undefined) return null;
+
+  const m = awakeningSpriteManifest;
+  const x = -ATTRIBUTE_SPRITE_X;
+  const y = -(row * ATTRIBUTE_SPRITE_TILE);
+
+  return {
+    col: 0,
+    row,
+    x,
+    y,
+    tileWidth: ATTRIBUTE_SPRITE_TILE,
+    tileHeight: ATTRIBUTE_SPRITE_TILE,
+    spriteWidth: m.spriteWidth,
+    spriteHeight: m.spriteHeight,
+  };
+}
+
+export function monsterAttributeSpriteStyle(
+  attributeId: number,
+  displayWidth?: number
+): CSSProperties | null {
+  const coords = getMonsterAttributeSpriteCoords(attributeId);
+  if (!coords) return null;
+
+  const scale = (displayWidth ?? coords.tileWidth) / coords.tileWidth;
+
+  return {
+    width: coords.tileWidth * scale,
+    height: coords.tileHeight * scale,
+    backgroundImage: `url(${awakeningSpriteImageUrl})`,
+    backgroundRepeat: "no-repeat",
+    backgroundSize: `${coords.spriteWidth * scale}px ${coords.spriteHeight * scale}px`,
+    backgroundPosition: `${coords.x * scale}px ${coords.y * scale}px`,
+  };
+}

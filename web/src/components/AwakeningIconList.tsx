@@ -6,6 +6,7 @@ export type AwakeningIconListProps = {
   size?: number;
   layout?: "column" | "row" | "wrap";
   className?: string;
+  bare?: boolean;
   /** Optional map awoken_skill_id → display name (tooltip / a11y). */
   labels?: Record<number, string>;
   getLabel?: (awokenSkillId: number) => string | undefined;
@@ -23,12 +24,25 @@ export function AwakeningIconList({
   size = PAD_AWAKENING.iconSizePx,
   layout = "column",
   className = "",
+  bare = false,
   labels,
   getLabel,
 }: AwakeningIconListProps) {
   if (!ids.length) return null;
 
   const resolveLabel = (id: number) => getLabel?.(id) ?? labels?.[id];
+
+  const icons = ids.map((id, index) => (
+    <AwakeningSpriteIcon
+      key={`${id}-${index}`}
+      awokenSkillId={id}
+      size={size}
+      label={resolveLabel(id)}
+      title={resolveLabel(id)}
+    />
+  ));
+
+  if (bare) return icons;
 
   const gapStyle =
     layout === "column" ? { gap: PAD_AWAKENING.iconGapPx } : undefined;
@@ -38,15 +52,7 @@ export function AwakeningIconList({
       className={`${layoutClass[layout]} ${className}`}
       style={gapStyle}
     >
-      {ids.map((id, index) => (
-        <AwakeningSpriteIcon
-          key={`${id}-${index}`}
-          awokenSkillId={id}
-          size={size}
-          label={resolveLabel(id)}
-          title={resolveLabel(id)}
-        />
-      ))}
+      {icons}
     </div>
   );
 }

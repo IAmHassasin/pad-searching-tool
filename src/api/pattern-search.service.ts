@@ -16,7 +16,9 @@ const IDENT = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
 
 export type MonsterSearchFilters = {
   rarity?: number[];
-  attributes?: number[];
+  attributeSlots?: [number[], number[], number[]];
+  attributeMatch?: "any" | "all";
+  types?: number[];
   hpMin?: number | null;
   hpMax?: number | null;
   atkMin?: number | null;
@@ -190,17 +192,37 @@ export class PatternSearchService {
       params.push(...monster.rarity);
     }
 
-    if (monster.attributes?.length) {
-      const cols = ["attribute_1_id", "attribute_2_id", "attribute_3_id"].map(
+    if (monster.attributeSlots?.some((slot) => slot.length > 0)) {
+      const cols = ["attribute_1_id", "attribute_2_id", "attribute_3_id"];
+      const match = monster.attributeMatch === "any" ? "any" : "all";
+      const slotClauses: string[] = [];
+
+      for (let i = 0; i < cols.length; i++) {
+        const ids = monster.attributeSlots![i];
+        if (!ids?.length) continue;
+        const col = `_src.${this.quotedColumn(cols[i])}`;
+        const placeholders = ids.map(() => "?").join(", ");
+        slotClauses.push(`${col} IN (${placeholders})`);
+        params.push(...ids);
+      }
+
+      if (slotClauses.length) {
+        const joiner = match === "all" ? " AND " : " OR ";
+        clauses.push(`(${slotClauses.join(joiner)})`);
+      }
+    }
+
+    if (monster.types?.length) {
+      const cols = ["type_1_id", "type_2_id", "type_3_id"].map(
         (c) => `_src.${this.quotedColumn(c)}`
       );
-      const attrParts = cols.map((col) => {
-        const placeholders = monster.attributes!.map(() => "?").join(", ");
+      const typeParts = cols.map((col) => {
+        const placeholders = monster.types!.map(() => "?").join(", ");
         return `${col} IN (${placeholders})`;
       });
-      clauses.push(`(${attrParts.join(" OR ")})`);
+      clauses.push(`(${typeParts.join(" OR ")})`);
       for (const _ of cols) {
-        params.push(...monster.attributes!);
+        params.push(...monster.types!);
       }
     }
 
