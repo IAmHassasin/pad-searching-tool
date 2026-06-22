@@ -1,16 +1,22 @@
 import { EMPTY_MONSTER_FILTERS, type MonsterFilters } from "../../types";
+import {
+  MONSTER_ATTRIBUTES,
+  hasAttributeSlotFilters,
+  toggleAttributeSlot,
+} from "../../lib/monster-attributes";
+import { MONSTER_TYPES } from "../../lib/monster-types";
+import { PAD_AWAKENING } from "../../lib/pad-constants";
+import { MonsterAttributeSpriteIcon } from "../MonsterAttributeSpriteIcon";
+import { MonsterTypeSpriteIcon } from "../MonsterTypeSpriteIcon";
+
+export { MONSTER_TYPES };
 
 export const RARITIES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-export const ATTRIBUTES = [
-  { id: 0, label: "Fire", accent: "#f85149" },
-  { id: 1, label: "Water", accent: "#58a6ff" },
-  { id: 2, label: "Wood", accent: "#3fb950" },
-  { id: 3, label: "Light", accent: "#d29922" },
-  { id: 4, label: "Dark", accent: "#a371f7" },
-] as const;
-
 export const RARITY_ACCENT = "#d29922";
+
+const ATTRIBUTE_SLOT_LABELS = ["Attr 1", "Attr 2", "Attr 3"] as const;
+const ATTRIBUTE_ICON_SIZE = 24;
 
 export function toggleSet(set: Set<number>, n: number): Set<number> {
   const next = new Set(set);
@@ -22,7 +28,8 @@ export function toggleSet(set: Set<number>, n: number): Set<number> {
 export function hasActiveMonsterFilters(filters: MonsterFilters): boolean {
   return (
     filters.rarity.size > 0 ||
-    filters.attributes.size > 0 ||
+    hasAttributeSlotFilters(filters.attributeSlots) ||
+    filters.types.size > 0 ||
     filters.hpMin != null ||
     filters.hpMax != null ||
     filters.atkMin != null ||
@@ -72,6 +79,110 @@ export function FilterChip({
   );
 }
 
+function AttributeFilterIconChip({
+  attributeId,
+  label,
+  selected,
+  onToggle,
+  size = ATTRIBUTE_ICON_SIZE,
+}: {
+  attributeId: number;
+  label: string;
+  selected: boolean;
+  onToggle: () => void;
+  size?: number;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      title={label}
+      aria-label={label}
+      aria-pressed={selected}
+      className={`shrink-0 rounded-md border p-0.5 transition-colors ${
+        selected
+          ? "border-[var(--color-accent)] bg-[#1f3a5f] shadow-[inset_0_0_0_1px_rgba(88,166,255,0.25)]"
+          : "border-[var(--color-border)] bg-[#0d1117] hover:border-[var(--color-accent)]/60 hover:bg-[#21262d]"
+      }`}
+    >
+      <MonsterAttributeSpriteIcon
+        attributeId={attributeId}
+        size={size}
+        title={label}
+      />
+    </button>
+  );
+}
+
+function AttributeMatchToggle({
+  value,
+  onChange,
+}: {
+  value: MonsterFilters["attributeMatch"];
+  onChange: (mode: MonsterFilters["attributeMatch"]) => void;
+}) {
+  return (
+    <div
+      className="mb-2 flex rounded-lg border border-[var(--color-border)] bg-[#0d1117] p-0.5"
+      role="radiogroup"
+      aria-label="Attribute slot match mode"
+    >
+      {(
+        [
+          { id: "any" as const, label: "Match any" },
+          { id: "all" as const, label: "Match all" },
+        ] as const
+      ).map(({ id, label }) => (
+        <button
+          key={id}
+          type="button"
+          role="radio"
+          aria-checked={value === id}
+          onClick={() => onChange(id)}
+          className={`flex-1 rounded-md px-2 py-1 text-xs font-medium transition-colors ${
+            value === id
+              ? "bg-[var(--color-accent)] text-[#0d1117]"
+              : "text-[var(--color-muted)] hover:text-white"
+          }`}
+        >
+          {label}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function TypeFilterIconChip({
+  typeId,
+  label,
+  selected,
+  onToggle,
+  size = PAD_AWAKENING.iconSizePx,
+}: {
+  typeId: number;
+  label: string;
+  selected: boolean;
+  onToggle: () => void;
+  size?: number;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      title={label}
+      aria-label={label}
+      aria-pressed={selected}
+      className={`shrink-0 rounded-md border p-0.5 transition-colors ${
+        selected
+          ? "border-[var(--color-accent)] bg-[#1f3a5f] shadow-[inset_0_0_0_1px_rgba(88,166,255,0.25)]"
+          : "border-[var(--color-border)] bg-[#0d1117] hover:border-[var(--color-accent)]/60 hover:bg-[#21262d]"
+      }`}
+    >
+      <MonsterTypeSpriteIcon typeId={typeId} size={size} title={label} />
+    </button>
+  );
+}
+
 function numInput(
   label: string,
   value: number | null,
@@ -100,7 +211,12 @@ export function MonsterActiveFilterChips({
   filters: MonsterFilters;
   onChange: (next: MonsterFilters) => void;
 }) {
-  if (filters.rarity.size === 0 && filters.attributes.size === 0) return null;
+  if (
+    filters.rarity.size === 0 &&
+    !hasAttributeSlotFilters(filters.attributeSlots) &&
+    filters.types.size === 0
+  )
+    return null;
 
   return (
     <div className="flex flex-wrap gap-1">
@@ -123,22 +239,68 @@ export function MonsterActiveFilterChips({
             <span aria-hidden>×</span>
           </button>
         ))}
-      {ATTRIBUTES.filter(({ id }) => filters.attributes.has(id)).map(
+      {filters.attributeSlots.map((slot, slotIndex) =>
+        [...slot]
+          .sort((a, b) => a - b)
+          .map((id) => {
+            const label =
+              MONSTER_ATTRIBUTES.find((a) => a.id === id)?.label ??
+              `Attr ${id}`;
+            return (
+              <button
+                key={`a${slotIndex}-${id}`}
+                type="button"
+                onClick={() =>
+                  onChange({
+                    ...filters,
+                    attributeSlots: toggleAttributeSlot(
+                      filters.attributeSlots,
+                      slotIndex,
+                      id
+                    ),
+                  })
+                }
+                className="inline-flex items-center gap-0.5 rounded-full border border-[var(--color-accent)]/50 bg-[#1f3a5f] p-0.5 hover:border-red-500/50 hover:bg-red-950/40"
+                title={`${ATTRIBUTE_SLOT_LABELS[slotIndex]}: ${label} — click to remove`}
+                aria-label={`Remove ${ATTRIBUTE_SLOT_LABELS[slotIndex]} ${label} filter`}
+              >
+                <MonsterAttributeSpriteIcon
+                  attributeId={id}
+                  size={16}
+                  title={label}
+                />
+                <span
+                  className="px-0.5 text-[10px] text-[var(--color-accent)]"
+                  aria-hidden
+                >
+                  ×
+                </span>
+              </button>
+            );
+          })
+      )}
+      {MONSTER_TYPES.filter(({ id }) => filters.types.has(id)).map(
         ({ id, label }) => (
           <button
-            key={`a-${id}`}
+            key={`t-${id}`}
             type="button"
             onClick={() =>
               onChange({
                 ...filters,
-                attributes: toggleSet(filters.attributes, id),
+                types: toggleSet(filters.types, id),
               })
             }
-            className="inline-flex items-center gap-1 rounded-full border border-[var(--color-accent)]/50 bg-[#1f3a5f] px-2 py-0.5 text-[10px] text-[var(--color-accent)] hover:border-red-500/50 hover:bg-red-950/40 hover:text-red-300"
-            title="Click to remove"
+            className="inline-flex items-center gap-0.5 rounded-full border border-[var(--color-accent)]/50 bg-[#1f3a5f] p-0.5 hover:border-red-500/50 hover:bg-red-950/40"
+            title={`${label} — click to remove`}
+            aria-label={`Remove ${label} filter`}
           >
-            {label}
-            <span aria-hidden>×</span>
+            <MonsterTypeSpriteIcon typeId={id} size={16} title={label} />
+            <span
+              className="px-0.5 text-[10px] text-[var(--color-accent)]"
+              aria-hidden
+            >
+              ×
+            </span>
           </button>
         )
       )}
@@ -205,14 +367,90 @@ export function MonsterAttributeFilter({
   onChange: (next: MonsterFilters) => void;
   compact?: boolean;
 }) {
+  const activeSlots = filters.attributeSlots.filter((s) => s.size > 0).length;
+
   return (
     <section>
       {!compact && (
         <div className="mb-2 flex items-baseline justify-between gap-2">
           <p className="text-xs font-semibold text-white">Attribute</p>
           <span className="shrink-0 text-[10px] text-[var(--color-muted)]">
-            {filters.attributes.size > 0
-              ? `${filters.attributes.size} / ${ATTRIBUTES.length} selected`
+            {activeSlots > 0
+              ? `${activeSlots} slot${activeSlots === 1 ? "" : "s"} active`
+              : "per slot"}
+          </span>
+        </div>
+      )}
+      <div
+        className={
+          compact
+            ? ""
+            : "rounded-lg border border-[var(--color-border)] bg-[#0d1117]/60 p-2.5"
+        }
+      >
+        {activeSlots > 0 && (
+          <AttributeMatchToggle
+            value={filters.attributeMatch}
+            onChange={(attributeMatch) =>
+              onChange({ ...filters, attributeMatch })
+            }
+          />
+        )}
+        <div className={compact ? "space-y-1" : "space-y-2"}>
+          {ATTRIBUTE_SLOT_LABELS.map((slotLabel, slotIndex) => (
+            <div key={slotLabel}>
+              {!compact && (
+                <p className="mb-1 text-[10px] font-medium text-[var(--color-muted)]">
+                  {slotLabel}
+                </p>
+              )}
+              <div
+                className={`flex flex-nowrap overflow-x-auto pb-0.5 ${compact ? "gap-1" : "gap-1.5"}`}
+              >
+                {MONSTER_ATTRIBUTES.map(({ id, label }) => (
+                  <AttributeFilterIconChip
+                    key={`${slotIndex}-${id}`}
+                    attributeId={id}
+                    label={`${slotLabel}: ${label}`}
+                    selected={filters.attributeSlots[slotIndex].has(id)}
+                    onToggle={() =>
+                      onChange({
+                        ...filters,
+                        attributeSlots: toggleAttributeSlot(
+                          filters.attributeSlots,
+                          slotIndex,
+                          id
+                        ),
+                      })
+                    }
+                  />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function MonsterTypeFilter({
+  filters,
+  onChange,
+  compact = false,
+}: {
+  filters: MonsterFilters;
+  onChange: (next: MonsterFilters) => void;
+  compact?: boolean;
+}) {
+  return (
+    <section>
+      {!compact && (
+        <div className="mb-2 flex items-baseline justify-between gap-2">
+          <p className="text-xs font-semibold text-white">Type</p>
+          <span className="shrink-0 text-[10px] text-[var(--color-muted)]">
+            {filters.types.size > 0
+              ? `${filters.types.size} / ${MONSTER_TYPES.length} selected`
               : "any slot"}
           </span>
         </div>
@@ -224,18 +462,19 @@ export function MonsterAttributeFilter({
             : "rounded-lg border border-[var(--color-border)] bg-[#0d1117]/60 p-2.5"
         }
       >
-        <div className={`flex flex-wrap ${compact ? "gap-1" : "gap-1.5"}`}>
-          {ATTRIBUTES.map(({ id, label, accent }) => (
-            <FilterChip
+        <div
+          className={`flex flex-nowrap overflow-x-auto pb-0.5 ${compact ? "gap-1" : "gap-1.5"}`}
+        >
+          {MONSTER_TYPES.map(({ id, label }) => (
+            <TypeFilterIconChip
               key={id}
+              typeId={id}
               label={label}
-              selected={filters.attributes.has(id)}
-              accent={accent}
-              compact={compact}
+              selected={filters.types.has(id)}
               onToggle={() =>
                 onChange({
                   ...filters,
-                  attributes: toggleSet(filters.attributes, id),
+                  types: toggleSet(filters.types, id),
                 })
               }
             />

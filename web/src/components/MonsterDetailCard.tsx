@@ -5,20 +5,14 @@ import {
   resolvePrefixedAwakeningIds,
   resolveSuperAwakeningIds,
 } from "../lib/awakenings";
+import { parseMonsterTypeIds } from "../lib/monster-types";
 import { PAD_AWAKENING, PAD_CARD_VISUAL } from "../lib/pad-constants";
 import type { MonsterRecord } from "../types";
 import { AwakeningIconList } from "./AwakeningIconList";
-import { AwakeningSpriteIcon } from "./AwakeningSpriteIcon";
+import { MonsterCardIconGroup } from "./MonsterCardIconGroup";
 import { MonsterPortrait } from "./MonsterPortrait";
+import { MonsterTypeStrip } from "./MonsterTypeStrip";
 import { SuperAwakeningStrip } from "./SuperAwakeningStrip";
-
-const ATTRIBUTE_LABELS: Record<number, string> = {
-  0: "Fire",
-  1: "Water",
-  2: "Wood",
-  3: "Light",
-  4: "Dark",
-};
 
 type Props = {
   row: MonsterRecord;
@@ -93,20 +87,11 @@ export function MonsterDetailCard({ row }: Props) {
     row.super_awakenings,
     row.sync_awsid
   );
-  const prefixedAwkStrip =
-    prefixedAwkIds.length > 0 ? (
-      <SuperAwakeningStrip
-        ids={prefixedAwkIds}
-        prefixTitle={hasSuperAwks ? "Super awakening" : "Sync awakening"}
-        iconTitle={(id) =>
-          hasSuperAwks ? `Super awakening #${id}` : `Sync awakening #${id}`
-        }
-      />
-    ) : null;
-  const attrLabel =
-    row.attribute_1_id != null
-      ? ATTRIBUTE_LABELS[row.attribute_1_id] ?? `Attr ${row.attribute_1_id}`
-      : null;
+  const monsterTypeIds = parseMonsterTypeIds(row);
+  const hasTypes = monsterTypeIds.length > 0;
+  const hasSuper = prefixedAwkIds.length > 0;
+  const hasRegular = regular.length > 0;
+  const superLabel = hasSuperAwks ? "Super awakening" : "Sync awakening";
 
   const activeDesc = row.active_skill_desc_en?.trim() || "—";
   const leaderDesc = row.leader_skill_desc_en?.trim() || "—";
@@ -139,9 +124,6 @@ export function MonsterDetailCard({ row }: Props) {
             <h3 className="truncate text-sm font-bold text-white">
               {row.name_en ?? "Unknown"}
             </h3>
-            {attrLabel && (
-              <p className="mt-0.5 text-[10px] text-[#d4c4a8]">{attrLabel}</p>
-            )}
           </div>
           <StarRow count={row.rarity ?? 0} />
         </div>
@@ -152,37 +134,43 @@ export function MonsterDetailCard({ row }: Props) {
           className="flex"
           style={{ minHeight: PAD_AWAKENING.artAreaMinHeightPx }}
         >
-          <div className="min-w-0 flex-1" aria-hidden />
-          <div className="flex shrink-0 flex-col items-end bg-transparent py-1.5 pr-1">
-            {regular.length > 0 ? (
-              <>
-                <div
-                  className="flex flex-row items-center"
-                  style={{ gap: PAD_AWAKENING.iconGapPx }}
-                >
-                  {prefixedAwkStrip}
-                  <AwakeningSpriteIcon awokenSkillId={regular[0]} />
-                </div>
-                {regular.length > 1 && (
-                  <div
-                    className="flex flex-col items-center"
-                    style={{
-                      width: PAD_AWAKENING.columnWidthPx,
-                      gap: PAD_AWAKENING.iconGapPx,
-                      marginTop: PAD_AWAKENING.iconGapPx,
-                    }}
-                  >
-                    <AwakeningIconList
-                      ids={regular.slice(1)}
-                      layout="column"
-                    />
-                  </div>
-                )}
-              </>
-            ) : prefixedAwkStrip ? (
-              prefixedAwkStrip
-            ) : null}
+          <div className="flex min-w-0 flex-1 items-start px-1 pt-1.5">
+            {hasTypes && (
+              <MonsterCardIconGroup
+                variant="type"
+                aria-label={`Types: ${monsterTypeIds.join(", ")}`}
+              >
+                <MonsterTypeStrip typeIds={monsterTypeIds} bare />
+              </MonsterCardIconGroup>
+            )}
           </div>
+          {(hasSuper || hasRegular) && (
+            <div
+              className="flex shrink-0 flex-row items-start py-1.5 pr-1"
+              style={{ gap: PAD_AWAKENING.iconGapPx }}
+            >
+              {hasSuper && (
+                <MonsterCardIconGroup variant="super" aria-label={superLabel}>
+                  <SuperAwakeningStrip
+                    ids={prefixedAwkIds}
+                    bare
+                    prefixTitle={superLabel}
+                    iconTitle={(id) => `${superLabel} #${id}`}
+                  />
+                </MonsterCardIconGroup>
+              )}
+              {hasRegular && (
+                <MonsterCardIconGroup
+                  variant="regular"
+                  layout="column"
+                  style={{ width: PAD_AWAKENING.columnWidthPx }}
+                  aria-label="Awakenings"
+                >
+                  <AwakeningIconList ids={regular} layout="column" bare />
+                </MonsterCardIconGroup>
+              )}
+            </div>
+          )}
         </div>
       </div>
 

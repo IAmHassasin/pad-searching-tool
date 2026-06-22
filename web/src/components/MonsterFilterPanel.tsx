@@ -2,6 +2,7 @@ import type { MonsterFilters } from "../types";
 import {
   MonsterActiveFilterChips,
   MonsterAttributeFilter,
+  MonsterTypeFilter,
   MonsterFilterClearButton,
   MonsterIdFilter,
   MonsterRarityFilter,
@@ -37,6 +38,7 @@ export function MonsterFilterPanel({ filters, onChange }: Props) {
         <MonsterActiveFilterChips filters={filters} onChange={onChange} />
         <MonsterRarityFilter filters={filters} onChange={onChange} />
         <MonsterAttributeFilter filters={filters} onChange={onChange} />
+        <MonsterTypeFilter filters={filters} onChange={onChange} />
         <MonsterStatsFilter filters={filters} onChange={onChange} />
         <MonsterIdFilter filters={filters} onChange={onChange} />
       </div>

@@ -67,7 +67,11 @@ export class PatternsController {
     @Query("leaderSkillText") leaderSkillText?: string,
     @Query("skillTextMode") skillTextMode?: string,
     @Query("rarity") rarityRaw?: string,
-    @Query("attributes") attributesRaw?: string,
+    @Query("attributeSlot1") attributeSlot1Raw?: string,
+    @Query("attributeSlot2") attributeSlot2Raw?: string,
+    @Query("attributeSlot3") attributeSlot3Raw?: string,
+    @Query("attributeMatch") attributeMatchRaw?: string,
+    @Query("types") typesRaw?: string,
     @Query("hpMin") hpMinRaw?: string,
     @Query("hpMax") hpMaxRaw?: string,
     @Query("atkMin") atkMinRaw?: string,
@@ -99,9 +103,21 @@ export class PatternsController {
       awakeningMatchRaw?.trim() === "any" ? "any" : ("all" as const);
     const awakeningIds = parseIntCsv(awakeningIdsRaw);
 
+    const types = parseIntCsv(typesRaw);
+    const attributeSlots: [number[], number[], number[]] = [
+      parseIntCsv(attributeSlot1Raw),
+      parseIntCsv(attributeSlot2Raw),
+      parseIntCsv(attributeSlot3Raw),
+    ];
+    const hasAttributeFilters = attributeSlots.some((slot) => slot.length > 0);
+    const attributeMatch =
+      attributeMatchRaw?.trim() === "any" ? "any" : ("all" as const);
+
     const monster: MonsterSearchFilters = {
       rarity: parseIntCsv(rarityRaw),
-      attributes: parseIntCsv(attributesRaw),
+      attributeSlots: hasAttributeFilters ? attributeSlots : undefined,
+      attributeMatch: hasAttributeFilters ? attributeMatch : undefined,
+      types: types.length ? types : undefined,
       hpMin: parseOptionalNumber(hpMinRaw),
       hpMax: parseOptionalNumber(hpMaxRaw),
       atkMin: parseOptionalNumber(atkMinRaw),
@@ -115,7 +131,8 @@ export class PatternsController {
 
     const hasMonsterFilters =
       (monster.rarity?.length ?? 0) > 0 ||
-      (monster.attributes?.length ?? 0) > 0 ||
+      (monster.attributeSlots?.some((s) => s.length > 0) ?? false) ||
+      (monster.types?.length ?? 0) > 0 ||
       monster.hpMin != null ||
       monster.hpMax != null ||
       monster.atkMin != null ||
