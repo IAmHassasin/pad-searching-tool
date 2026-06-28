@@ -53,7 +53,7 @@ export function DungeonListPage() {
                   href={`/dungeon-details/${d.appmediaPostId}`}
                   className="block rounded-lg border border-[var(--color-border)] bg-[var(--color-panel)] px-4 py-3 hover:border-[var(--color-accent)]"
                 >
-                  <div className="font-medium" title={d.titleJa}>
+                  <div className="font-medium">
                     {title}
                   </div>
                   <div className="mt-1 text-xs text-[var(--color-muted)]">

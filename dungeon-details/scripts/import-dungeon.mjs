@@ -38,6 +38,7 @@ import {
   loadEnglishTranslations,
   recordTitleTranslation,
   saveEnglishTranslations,
+  syncGimmickTranslationsFromMaster,
   translateTitle,
 } from "../lib/translate-en.mjs";
 
@@ -135,6 +136,15 @@ async function importOne(target, options) {
     console.log(`  Created gimmick master from page (${master.entries.length} entries)`);
   }
 
+  if (
+    syncGimmickTranslationsFromMaster(
+      translationsRef.current,
+      masterRef.current.entries
+    )
+  ) {
+    translationsRef.dirty = true;
+  }
+
   const floors = parseDungeonFloorTable(post.html, master.entries);
   const stats = summarizeMatchStats(floors);
 
@@ -196,6 +206,14 @@ async function main() {
     current: loadEnglishTranslations(translationsPath),
     dirty: false,
   };
+  if (
+    syncGimmickTranslationsFromMaster(
+      translationsRef.current,
+      masterRef.current.entries
+    )
+  ) {
+    translationsRef.dirty = true;
+  }
   const imported = [];
 
   for (const target of targets) {
@@ -216,7 +234,7 @@ async function main() {
 
   if (translationsRef.dirty) {
     saveEnglishTranslations(translationsRef.current, translationsPath);
-    console.log(`Updated title translations → ${translationsPath}`);
+    console.log(`Updated translations → ${translationsPath}`);
   }
 
   console.log(`\nDone: ${imported.length}/${targets.length} dungeon(s) imported.`);

@@ -23,6 +23,12 @@ import {
 import { parseGimmickPanel } from "../lib/parse-gimmick-panel.mjs";
 import { writeGimmickMasterSqlite } from "../lib/export-sqlite.mjs";
 import { readDungeonUrlList } from "../lib/read-dungeon-urls.mjs";
+import {
+  DEFAULT_EN_TRANSLATIONS_PATH,
+  loadEnglishTranslations,
+  saveEnglishTranslations,
+  syncGimmickTranslationsFromMaster,
+} from "../lib/translate-en.mjs";
 
 function parseArgs(argv) {
   /** @type {string[]} */
@@ -79,6 +85,12 @@ async function main() {
 
   saveGimmickMaster(master, out);
   console.log(`Wrote ${master.entries.length} master entries → ${out}`);
+
+  const glossary = loadEnglishTranslations();
+  if (syncGimmickTranslationsFromMaster(glossary, master.entries)) {
+    saveEnglishTranslations(glossary);
+    console.log(`Updated gimmick translations → ${DEFAULT_EN_TRANSLATIONS_PATH}`);
+  }
 
   if (sqlite) {
     writeGimmickMasterSqlite(sqlite, master.entries, master.updatedAt);

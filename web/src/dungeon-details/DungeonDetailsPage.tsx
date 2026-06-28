@@ -11,6 +11,7 @@ import {
   translateTitle,
   translateType,
 } from "./translate";
+import { formatPadStatM } from "./utils";
 import { useEnglishGlossary } from "./useEnglishGlossary";
 
 function GimmickSection({
@@ -29,11 +30,15 @@ function GimmickSection({
         {title}
       </h2>
       <div className="flex flex-wrap gap-2">
-        {chips.map((g) => (
+        {chips.map((g) => {
+          const label = glossary
+            ? translateGimmick(g.id, g.labelJa, glossary)
+            : g.labelJa;
+          return (
           <span
             key={g.id}
             className="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-panel)] px-2.5 py-1 text-xs"
-            title={g.labelJa}
+            title={label}
           >
             <img
               src={g.iconUrl}
@@ -41,11 +46,10 @@ function GimmickSection({
               className="h-5 w-5 object-contain"
               loading="lazy"
             />
-            {glossary
-              ? translateGimmick(g.id, g.labelJa, glossary)
-              : g.labelJa}
+            {label}
           </span>
-        ))}
+        );
+        })}
       </div>
     </section>
   );
@@ -60,11 +64,10 @@ function SpawnCell({
 }) {
   const displayName =
     spawn.nameEn?.trim() ||
-    spawn.monsterNameJa ||
-    (spawn.monsterId != null ? `#${spawn.monsterId}` : "Unknown");
-  const nameTitle = [spawn.nameEn, spawn.nameJp ?? spawn.monsterNameJa]
-    .filter(Boolean)
-    .join(" · ");
+    (spawn.monsterId != null ? `#${spawn.monsterId}` : "Unknown monster");
+
+  const hp = spawn.hp ? formatPadStatM(spawn.hp) : null;
+  const def = spawn.defense ? formatPadStatM(spawn.defense) : null;
 
   return (
     <div className="space-y-1 text-sm">
@@ -76,12 +79,9 @@ function SpawnCell({
           className="mx-auto h-12 w-12 object-contain"
         />
       )}
-      <div className="font-medium" title={nameTitle || undefined}>
+      <div className="font-medium" title={displayName}>
         {displayName}
       </div>
-      {spawn.nameJp && spawn.nameEn && spawn.nameJp !== spawn.nameEn && (
-        <div className="text-xs text-[var(--color-muted)]">{spawn.nameJp}</div>
-      )}
       {spawn.monsterId != null && (
         <div className="text-xs text-[var(--color-muted)]">#{spawn.monsterId}</div>
       )}
@@ -92,18 +92,22 @@ function SpawnCell({
             .join(" · ")}
         </div>
       )}
-      {(spawn.hp || spawn.defense) && (
+      {(hp || def) && (
         <div className="text-xs">
-          {spawn.hp && <div>HP: {spawn.hp}</div>}
-          {spawn.defense && <div>DEF: {spawn.defense}</div>}
+          {hp && <div>HP: {hp}</div>}
+          {def && <div>DEF: {def}</div>}
         </div>
       )}
-      {spawn.parts?.map((p) => (
+      {spawn.parts?.map((p) => {
+        const partHp = p.hp ? formatPadStatM(p.hp) : null;
+        const partDef = p.defense ? formatPadStatM(p.defense) : null;
+        return (
         <div key={p.label} className="text-xs text-[var(--color-muted)]">
           [{glossary ? translatePartLabel(p.label, glossary) : p.label}]{" "}
-          {p.hp && `HP:${p.hp}`} {p.defense && `DEF:${p.defense}`}
+          {partHp && `HP: ${partHp}`} {partDef && `DEF: ${partDef}`}
         </div>
-      ))}
+      );
+      })}
     </div>
   );
 }
@@ -123,25 +127,32 @@ function EffectLines({
         const en = glossary ? translateLine(effect.raw, glossary) : effect.raw;
         return (
           <li key={i}>
-            <div title={effect.raw}>{en}</div>
+            <div>{en}</div>
             {(effect.tags.length > 0 || effect.gimmickIds.length > 0) && (
               <div className="mt-0.5 flex flex-wrap gap-1">
-                {effect.tags.map((tag) => (
+                {effect.tags.map((tag) => {
+                  const tagEn = glossary ? translateTag(tag, glossary) : tag;
+                  return (
                   <span
                     key={tag}
                     className="rounded bg-blue-950/60 px-1.5 py-0.5 text-[10px] text-blue-200"
-                    title={tag}
+                    title={tagEn}
                   >
-                    {glossary ? translateTag(tag, glossary) : tag}
+                    {tagEn}
                   </span>
-                ))}
+                );
+                })}
                 {effect.gimmickIds.map((id) => {
                   const g = gimmicks.get(id);
+                  const gimmickLabel =
+                    g && glossary
+                      ? translateGimmick(g.id, g.labelJa, glossary)
+                      : (g?.labelJa ?? id);
                   return (
                     <span
                       key={id}
                       className="inline-flex items-center gap-1.5 rounded bg-amber-950/50 px-2 py-1 text-xs text-amber-100"
-                      title={g?.labelJa ?? id}
+                      title={gimmickLabel}
                     >
                       {g?.iconUrl && (
                         <img
@@ -150,9 +161,7 @@ function EffectLines({
                           className="h-6 w-6 shrink-0 object-contain"
                         />
                       )}
-                      {g && glossary
-                        ? translateGimmick(g.id, g.labelJa, glossary)
-                        : (g?.labelJa ?? id)}
+                      {gimmickLabel}
                     </span>
                   );
                 })}
@@ -172,6 +181,7 @@ export function DungeonDetailsPage({ postId }: { postId: string }) {
   });
   const glossaryQuery = useEnglishGlossary();
   const glossary = glossaryQuery.data;
+  const translationsReady = glossaryQuery.isSuccess && glossary != null;
 
   const allGimmicks = new Map(
     [
@@ -203,7 +213,7 @@ export function DungeonDetailsPage({ postId }: { postId: string }) {
           </div>
           {dungeon.data && (
             <>
-              <h1 className="mt-2 text-lg font-semibold leading-snug" title={dungeon.data.titleJa}>
+              <h1 className="mt-2 text-lg font-semibold leading-snug">
                 {title}
               </h1>
               <p className="mt-1 text-xs text-[var(--color-muted)]">
@@ -227,6 +237,12 @@ export function DungeonDetailsPage({ postId }: { postId: string }) {
         {dungeon.isLoading && (
           <p className="text-[var(--color-muted)]">Loading…</p>
         )}
+        {dungeon.data && glossaryQuery.isLoading && (
+          <p className="text-[var(--color-muted)]">Loading translations…</p>
+        )}
+        {dungeon.data && glossaryQuery.isError && (
+          <p className="text-red-400">Failed to load English translations.</p>
+        )}
         {dungeon.isError && (
           <p className="text-red-400">
             {dungeon.error instanceof Error
@@ -235,7 +251,7 @@ export function DungeonDetailsPage({ postId }: { postId: string }) {
           </p>
         )}
 
-        {dungeon.data && (
+        {dungeon.data && translationsReady && (
           <>
             <GimmickSection
               title="Required mechanics"
@@ -278,10 +294,7 @@ export function DungeonDetailsPage({ postId }: { postId: string }) {
                           >
                             <div>{floor.floor}</div>
                             {floor.spawnNote && (
-                              <div
-                                className="mt-1 text-xs font-normal text-[var(--color-muted)]"
-                                title={floor.spawnNote}
-                              >
+                              <div className="mt-1 text-xs font-normal text-[var(--color-muted)]">
                                 {glossary
                                   ? translateSpawnNote(floor.spawnNote, glossary)
                                   : floor.spawnNote}
