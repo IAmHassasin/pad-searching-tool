@@ -50,7 +50,27 @@
     "お邪魔目覚め": "Hazard awakening",
     "落ちコンなし": "No skyfall",
     "スキルリセット": "Skill reset",
-    "コンボ無効": "Combo void"
+    "コンボ無効": "Combo void",
+    "スキル封印": "Skill Bind",
+    "超根性": "Super Resolve",
+    "お邪魔_爆弾": "Hazard / Bomb",
+    "お邪魔/爆弾": "Hazard / Bomb",
+    "ロック": "Jammer",
+    "トゲ": "Spike",
+    "弱化目覚め": "Weak awakening",
+    "爆弾": "Bomb",
+    "Sチャジ": "Skill Charge",
+    "Sチャージ": "Skill Charge",
+    "猛毒目覚め": "Mortal Poison awakening",
+    "バインド": "Bind",
+    "個別デバフ": "Targeted debuff",
+    "毒": "Poison",
+    "暗闇_超暗闇": "Dark / Super Dark",
+    "暗闇/超暗闇": "Dark / Super Dark",
+    "ドロップ弱化": "Orb weaken",
+    "6x5マス": "6×5 board",
+    "6×5マス": "6×5 board",
+    "指定色目覚め": "Specified color awakening"
   },
   "types": {
     "ドラゴンタイプ": "Dragon",
@@ -69,9 +89,13 @@
   },
   "partLabels": {
     "上部位": "Upper body",
-    "下部位": "Lower body"
+    "下部位": "Lower body",
+    "左部位": "Left part",
+    "右部位": "Right part"
   },
   "tags": {
+    "残り2体以下になると使用": "Used when ≤2 enemies remain",
+    "残り1体以下になると使用": "Used when ≤1 enemy remains",
     "残り2体になると使用": "Used when 2 enemies remain",
     "初回行動": "First turn action",
     "超根性発動時": "When Super Resolve triggers",
@@ -150,27 +174,27 @@
     ],
     [
       "防御力70億増加",
-      "+7B DEF"
+      "+7,000M DEF"
     ],
     [
       "防御力50億増加",
-      "+5B DEF"
+      "+5,000M DEF"
     ],
     [
       "防御力20億増加",
-      "+2B DEF"
+      "+2,000M DEF"
     ],
     [
       "防御力100億増加",
-      "+10B DEF"
+      "+10,000M DEF"
     ],
     [
       "防御力25億増加",
-      "+2.5B DEF"
+      "+2,500M DEF"
     ],
     [
       "防御力30億増加",
-      "+3B DEF"
+      "+3,000M DEF"
     ],
     [
       "50億以上吸収",
@@ -182,7 +206,7 @@
     ],
     [
       "100億以上無効",
-      "Void over 1B"
+      "Void over 10,000M"
     ],
     [
       "20億以上無効",
@@ -337,10 +361,6 @@
       " damage"
     ],
     [
-      "億",
-      "00M"
-    ],
-    [
       "兆",
       "T"
     ],
@@ -403,6 +423,226 @@
     [
       "】",
       "]"
+    ],
+    [
+      "ダメージ吸収",
+      "Damage Absorb"
+    ],
+    [
+      "ダメージ無効",
+      "Damage Void"
+    ],
+    [
+      "消せない状態",
+      "Unmatchable"
+    ],
+    [
+      "属性吸収",
+      "Attribute Absorb"
+    ],
+    [
+      "防御力上昇",
+      "DEF boost"
+    ],
+    [
+      "攻撃力減少",
+      "ATK reduction"
+    ],
+    [
+      "個別攻撃力デバフ",
+      "Targeted ATK debuff"
+    ],
+    [
+      "回復力減少",
+      "RCV reduction"
+    ],
+    [
+      "操作時間短縮",
+      "Time reduction"
+    ],
+    [
+      "ルーレット",
+      "Roulette"
+    ],
+    [
+      "毒/猛毒",
+      "Poison / Mortal Poison"
+    ],
+    [
+      "上限変更",
+      "Damage cap change"
+    ],
+    [
+      "コンボ吸収",
+      "Combo absorb"
+    ],
+    [
+      "コンボ減算",
+      "Combo reduction"
+    ],
+    [
+      "超暗闇",
+      "Super Dark"
+    ],
+    [
+      "操作不可",
+      "Cannot move"
+    ],
+    [
+      "雲",
+      "Cloud"
+    ],
+    [
+      "シールド",
+      "Shield"
+    ],
+    [
+      "最大HP減少",
+      "Max HP reduction"
+    ],
+    [
+      "ロック目覚め",
+      "Jammer awakening"
+    ],
+    [
+      "お邪魔目覚め",
+      "Hazard awakening"
+    ],
+    [
+      "スキルリセット",
+      "Skill reset"
+    ],
+    [
+      "コンボ無効",
+      "Combo void"
+    ],
+    [
+      "お邪魔/爆弾",
+      "Hazard / Bomb"
+    ],
+    [
+      "ロック",
+      "Jammer"
+    ],
+    [
+      "トゲ",
+      "Spike"
+    ],
+    [
+      "爆弾",
+      "Bomb"
+    ],
+    [
+      "Sチャージ",
+      "Skill Charge"
+    ],
+    [
+      "猛毒目覚め",
+      "Mortal Poison awakening"
+    ],
+    [
+      "バインド",
+      "Bind"
+    ],
+    [
+      "個別デバフ",
+      "Targeted debuff"
+    ],
+    [
+      "毒",
+      "Poison"
+    ],
+    [
+      "暗闇/超暗闇",
+      "Dark / Super Dark"
+    ],
+    [
+      "ドロップ弱化",
+      "Orb weaken"
+    ],
+    [
+      "6×5マス",
+      "6×5 board"
+    ],
+    [
+      "指定色目覚め",
+      "Specified color awakening"
+    ],
+    [
+      "【確定出現】",
+      "[Guaranteed spawn]"
+    ],
+    [
+      "【初回行動時】",
+      "[First action]"
+    ],
+    [
+      "【初回行動】",
+      "[First action]"
+    ],
+    [
+      "先制なし",
+      "No preemptive"
+    ],
+    [
+      "マスルーレット",
+      "-tile Roulette"
+    ],
+    [
+      "マス雲",
+      " cloud tiles"
+    ],
+    [
+      "左上",
+      "top-left "
+    ],
+    [
+      "右上",
+      "top-right "
+    ],
+    [
+      "左下",
+      "bottom-left "
+    ],
+    [
+      "右下",
+      "bottom-right "
+    ],
+    [
+      "3~5",
+      "3–5"
+    ],
+    [
+      "出現時行動ターン",
+      "Action cycle on spawn"
+    ],
+    [
+      "全員ダメージ上限値",
+      "All damage cap "
+    ],
+    [
+      "ダメージの連続攻撃",
+      " damage multi-hit attack"
+    ],
+    [
+      "チームの攻撃力激減",
+      "Team ATK greatly reduced"
+    ],
+    [
+      "敵の攻撃力",
+      "Enemy ATK ×"
+    ],
+    [
+      "スキル効果がない場合",
+      "If no skill effect"
+    ],
+    [
+      "左部位",
+      "Left part"
+    ],
+    [
+      "右部位",
+      "Right part"
     ]
   ]
 }
