@@ -2,6 +2,7 @@ import { AWAKENING_FILTER_GROUPS } from "../../lib/awakening-filter-groups";
 import type { MonsterFilters } from "../../types";
 import { AwakeningSpriteIcon } from "../AwakeningSpriteIcon";
 import { CollapsibleFilterSection } from "./collapsible-filter-section";
+import { useState } from "react";
 
 const AWK_ACCENT = "#6b8f3c";
 const AWK_EXCLUDE_ACCENT = "#f85149";
@@ -311,6 +312,7 @@ function AwakeningFilterGroupSection({
   compact,
   pickerMode,
   onAppend,
+  hideLabel = false,
 }: {
   label: string;
   rows: number[][];
@@ -321,16 +323,19 @@ function AwakeningFilterGroupSection({
   compact: boolean;
   pickerMode: MonsterFilters["awakeningPickerMode"];
   onAppend: (id: number) => void;
+  hideLabel?: boolean;
 }) {
   return (
     <section className={compact ? "mb-2 last:mb-0" : "mb-3 last:mb-0"}>
-      <p
-        className={`mb-1 font-semibold uppercase tracking-wide text-[#a8c878] ${
-          compact ? "text-[9px]" : "text-[10px]"
-        }`}
-      >
-        {label}
-      </p>
+      {!hideLabel && (
+        <p
+          className={`mb-1 font-semibold uppercase tracking-wide text-[#a8c878] ${
+            compact ? "text-[9px]" : "text-[10px]"
+          }`}
+        >
+          {label}
+        </p>
+      )}
       <div className="space-y-1">
         {rows.map((row, rowIndex) => (
           <div key={rowIndex} className="flex flex-wrap gap-0.5">
@@ -353,17 +358,66 @@ function AwakeningFilterGroupSection({
   );
 }
 
+const AWAKENING_GROUP_SHORT_LABELS: Record<string, string> = {
+  Basic: "Basic",
+  "Sub att": "Sub",
+  "Add Type": "+Type",
+  Stats: "Stats",
+  "Match style": "Match",
+  Resist: "Res",
+  Killer: "Kill",
+  "Enhance orb": "Enh",
+  Others: "Other",
+};
+
+function AwakeningGroupTabBar({
+  activeIndex,
+  onChange,
+}: {
+  activeIndex: number;
+  onChange: (index: number) => void;
+}) {
+  return (
+    <div
+      className="mb-2 flex shrink-0 flex-wrap gap-0.5"
+      role="tablist"
+      aria-label="Awakening groups"
+    >
+      {AWAKENING_FILTER_GROUPS.map((group, index) => (
+        <button
+          key={group.label}
+          type="button"
+          role="tab"
+          aria-selected={activeIndex === index}
+          onClick={() => onChange(index)}
+          className={`rounded border px-1 py-0.5 text-[9px] font-semibold transition-colors ${
+            activeIndex === index
+              ? "border-[#6b8f3c] bg-[#1a2a12] text-[#a8c878]"
+              : "border-[var(--color-border)] bg-[#0d1117] text-[var(--color-muted)] hover:border-[#6b8f3c]/50 hover:text-white"
+          }`}
+        >
+          {AWAKENING_GROUP_SHORT_LABELS[group.label] ?? group.label}
+        </button>
+      ))}
+    </div>
+  );
+}
+
 export function MonsterAwakeningFilter({
   filters,
   onChange,
   compact = false,
   fillHeight = false,
+  singleGroupMode = false,
 }: {
   filters: MonsterFilters;
   onChange: (next: MonsterFilters) => void;
   compact?: boolean;
   fillHeight?: boolean;
+  /** When true, show one awakening group at a time with tab buttons. */
+  singleGroupMode?: boolean;
 }) {
+  const [activeGroupIndex, setActiveGroupIndex] = useState(0);
   const iconSize = compact ? 18 : fillHeight ? 22 : 20;
   const pickerMode = filters.awakeningPickerMode;
   const totalSelected =
@@ -414,6 +468,11 @@ export function MonsterAwakeningFilter({
     : fillHeight
       ? "min-h-0 flex-1 overflow-y-auto pr-0.5"
       : "pr-0.5";
+
+  const useGroupTabs = singleGroupMode || compact;
+  const visibleGroups = useGroupTabs
+    ? [AWAKENING_FILTER_GROUPS[activeGroupIndex]].filter(Boolean)
+    : AWAKENING_FILTER_GROUPS;
 
   return (
     <CollapsibleFilterSection
@@ -480,8 +539,15 @@ export function MonsterAwakeningFilter({
         </p>
       )}
 
+      {useGroupTabs && (
+        <AwakeningGroupTabBar
+          activeIndex={activeGroupIndex}
+          onChange={setActiveGroupIndex}
+        />
+      )}
+
       <div className={gridClass}>
-        {AWAKENING_FILTER_GROUPS.map((group) => (
+        {visibleGroups.map((group) => (
           <AwakeningFilterGroupSection
             key={group.label}
             label={group.label}
@@ -490,7 +556,8 @@ export function MonsterAwakeningFilter({
             excludedStack={filters.excludedAwakeningIds}
             vanishStack={filters.vanishAwakeningIds}
             iconSize={iconSize}
-            compact={compact}
+            compact={compact || useGroupTabs}
+            hideLabel={useGroupTabs}
             pickerMode={pickerMode}
             onAppend={appendId}
           />

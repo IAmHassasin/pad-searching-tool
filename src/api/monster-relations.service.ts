@@ -86,6 +86,16 @@ export class MonsterRelationsService {
     return { baseId: row.base_id, groupId: row.group_id };
   }
 
+  async lookupMonstersByIds(
+    ids: number[]
+  ): Promise<Record<string, unknown>[]> {
+    const unique = [
+      ...new Set(ids.filter((id) => Number.isFinite(id) && id > 0)),
+    ];
+    if (!unique.length) return [];
+    return this.fetchMonstersByIds(unique);
+  }
+
   async getEvoTree(monsterId: number): Promise<{
     monsterId: number;
     baseId: number;

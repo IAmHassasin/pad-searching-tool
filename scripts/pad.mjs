@@ -71,6 +71,8 @@ Loads .env from the project root, then runs a command.
   seed-db     Download community SQLite → seed/dadguide.sqlite (DB_DOWNLOAD_URL in .env).
   import-vanish-db       Fetch GameWith vanish grants → gamewith-vanish.sqlite.
   generate-vanish-map    Regenerate vanish-awoken-name-map.json from dadguide Untranslated rows.
+  dungeon:gimmick-master  Merge gimmick master from AppMedia URL(s) (--urls dungeon-details/seed/dungeon-urls.txt).
+  dungeon:import          Parse dungeon guide URL(s) → dungeon-details/seed/dungeons/<id>.json.
   merge       import-external-db (IMPORT_MODE from .env: merge | replace).
   transform   categorize only (START_HTTP=false, RUN_TRANSFORM=true).
   serve       HTTP server (forces START_HTTP=true; other vars from .env).
@@ -120,6 +122,20 @@ switch (cmd) {
   case "generate-vanish-map":
     run(process.execPath, [
       path.join(root, "scripts", "generate-vanish-awoken-name-map.mjs"),
+      ...forwarded,
+    ]);
+    break;
+
+  case "dungeon:gimmick-master":
+    run(process.execPath, [
+      path.join(root, "dungeon-details", "scripts", "build-gimmick-master.mjs"),
+      ...forwarded,
+    ]);
+    break;
+
+  case "dungeon:import":
+    run(process.execPath, [
+      path.join(root, "dungeon-details", "scripts", "import-dungeon.mjs"),
       ...forwarded,
     ]);
     break;

@@ -1,0 +1,2356 @@
+{
+  "appmediaPostId": 79620137,
+  "titleJa": "【パズドラ】13億ダンジョンの攻略や対策とおすすめパーティ｜天境チャレンジ",
+  "titleEn": "Heavenly Realm Challenge — counters & recommended teams (1.3B dungeon)",
+  "sourceUrl": "https://appmedia.jp/pazudora/79620137",
+  "modified": "2026-06-25T21:45:00",
+  "importedAt": "2026-06-28T18:05:55.490Z",
+  "requiredGimmicks": [
+    {
+      "id": "ダメジ無効",
+      "labelJa": "ダメージ無効",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/6dd217d2eb879afbc4f87c25f0d706fe.jpg",
+      "category": "required"
+    },
+    {
+      "id": "覚醒無効",
+      "labelJa": "覚醒無効",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/94f35b4f6637877fdd4c08962ea72f6e.jpg",
+      "category": "required"
+    },
+    {
+      "id": "ダメジ吸収",
+      "labelJa": "ダメージ吸収",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/9f33f03e399a645c0e456358077fd72e.jpg",
+      "category": "required"
+    },
+    {
+      "id": "属性吸収",
+      "labelJa": "属性吸収",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/4746bd4875547bda46945a5e543d2566.jpg",
+      "category": "required"
+    },
+    {
+      "id": "アシスト無効",
+      "labelJa": "アシスト無効",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2019/05/d188645e70f02ad877c26ee3d0c8ebe3.jpg",
+      "category": "required"
+    },
+    {
+      "id": "消せない状態",
+      "labelJa": "消せない状態",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2017/05/7dd3136dc732ff6a0aad26f9c21b96b0.jpg",
+      "category": "required"
+    },
+    {
+      "id": "スキル封印",
+      "labelJa": "スキル封印",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/9ea56767eeca2102dc58c51c636431e1.jpg",
+      "category": "required"
+    }
+  ],
+  "cautionGimmicks": [
+    {
+      "id": "盤面縮小",
+      "labelJa": "盤面縮小",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2017/05/59c73ea19fdd88b4fa6195fc9e632c6a.jpg",
+      "category": "caution"
+    },
+    {
+      "id": "スキル遅延",
+      "labelJa": "スキル遅延",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/1cc1e8c018ea83a40f76d55aef4962f9.jpg",
+      "category": "caution"
+    },
+    {
+      "id": "落ちコンなし",
+      "labelJa": "落ちコンなし",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2017/05/51d2cab858d35df70f3a64271d6befb2.jpg",
+      "category": "caution"
+    },
+    {
+      "id": "トゲ",
+      "labelJa": "トゲ",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2022/06/46c59da68b957ab8cad555efc7144de6.webp",
+      "category": "caution"
+    },
+    {
+      "id": "トゲ目覚め",
+      "labelJa": "トゲ目覚め",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2017/05/37705ea3de63828ae5f365be5e013cb5.webp",
+      "category": "caution"
+    },
+    {
+      "id": "個別攻撃力デバフ",
+      "labelJa": "個別攻撃力デバフ",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2022/06/c74d0be86fa6fbe58410f4e061a32038.webp",
+      "category": "caution"
+    },
+    {
+      "id": "上限変更",
+      "labelJa": "上限変更",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2024/05/8de969902e2c9dc79dc082add5ae1093.webp",
+      "category": "caution"
+    },
+    {
+      "id": "操作時間短縮",
+      "labelJa": "操作時間短縮",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/26b05cda1cd7b9b7603ee9be84deee89.jpg",
+      "category": "caution"
+    },
+    {
+      "id": "ルレット",
+      "labelJa": "ルーレット",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2017/05/a9639b827fc3d02a353d7f9fa1657503.jpg",
+      "category": "caution"
+    },
+    {
+      "id": "コンボ無効",
+      "labelJa": "コンボ無効",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2025/12/204957_vgep0.webp",
+      "category": "caution"
+    },
+    {
+      "id": "弱化目覚め",
+      "labelJa": "弱化目覚め",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2022/08/cadb2f410847e38eb93e45a792315b52.webp",
+      "category": "caution"
+    },
+    {
+      "id": "超暗闇目覚め",
+      "labelJa": "超暗闇目覚め",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2020/03/6c93302a2c6acd15ead3fb639967522b.jpg",
+      "category": "caution"
+    },
+    {
+      "id": "シルド",
+      "labelJa": "シールド",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2022/12/91fdcbae458ea809f6ac2a1f95c91610.webp",
+      "category": "caution"
+    },
+    {
+      "id": "回復力減少",
+      "labelJa": "回復力減少",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2017/05/9712a9dc82836ad49b9350e2cd509104.jpg",
+      "category": "caution"
+    },
+    {
+      "id": "爆弾",
+      "labelJa": "爆弾",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/10/fa108cb841d0e8c0341197b60441e82e.jpg",
+      "category": "caution"
+    },
+    {
+      "id": "Sチャジ",
+      "labelJa": "Sチャージ",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2021/11/000fad6c4f7945e90afb36cb37830ae9.png",
+      "category": "caution"
+    },
+    {
+      "id": "スキルリセット",
+      "labelJa": "スキルリセット",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2017/05/f9575343064823f89eeeed3ae0a6efb1.jpg",
+      "category": "caution"
+    },
+    {
+      "id": "猛毒目覚め",
+      "labelJa": "猛毒目覚め",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2017/05/480a4fb7dd2607e0dbad9adb59dc9040.jpg",
+      "category": "caution"
+    },
+    {
+      "id": "雲",
+      "labelJa": "雲",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/5247938759c158ab7a10b96a0182229b.jpg",
+      "category": "caution"
+    }
+  ],
+  "floors": [
+    {
+      "floor": "B1",
+      "spawnNote": "4体出現",
+      "spawns": [
+        {
+          "monsterId": 288,
+          "monsterNameJa": "ドラール",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/288.webp",
+          "types": [
+            "ドラゴンタイプ"
+          ],
+          "hp": "2000億",
+          "defense": "10億",
+          "effects": [
+            {
+              "raw": "【確定出現】",
+              "tags": [
+                "確定出現"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "25,500ダメージ+7ターン：状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": "25,500ダメージ",
+              "turns": "7ターン"
+            },
+            {
+              "raw": "【残り2体以下になると使用】",
+              "tags": [
+                "残り2体以下になると使用"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "999ターン：攻撃力10倍",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "999ターン"
+            }
+          ]
+        },
+        {
+          "monsterId": 291,
+          "monsterNameJa": "シャードラ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/291.webp",
+          "types": [
+            "ドラゴンタイプ"
+          ],
+          "hp": "2000億",
+          "defense": "10億",
+          "effects": [
+            {
+              "raw": "【確定出現】",
+              "tags": [
+                "確定出現"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "25,500ダメージ+7ターン：20億以上無効",
+              "tags": [],
+              "gimmickIds": [
+                "ダメジ無効"
+              ],
+              "damage": "25,500ダメージ",
+              "turns": "7ターン"
+            },
+            {
+              "raw": "【残り2体以下になると使用】",
+              "tags": [
+                "残り2体以下になると使用"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "999ターン：攻撃力10倍",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "999ターン"
+            }
+          ]
+        },
+        {
+          "monsterId": 294,
+          "monsterNameJa": "トイトプス",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/294.webp",
+          "types": [
+            "ドラゴンタイプ"
+          ],
+          "hp": "2000億",
+          "defense": "10億",
+          "effects": [
+            {
+              "raw": "【確定出現】",
+              "tags": [
+                "確定出現"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "25,500ダメージ+3ターン：盤面5×4マス",
+              "tags": [],
+              "gimmickIds": [
+                "5x4マス",
+                "6x5マス"
+              ],
+              "damage": "25,500ダメージ",
+              "turns": "3ターン"
+            },
+            {
+              "raw": "【残り2体以下になると使用】",
+              "tags": [
+                "残り2体以下になると使用"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "999ターン：攻撃力10倍",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "999ターン"
+            }
+          ]
+        },
+        {
+          "monsterId": 297,
+          "monsterNameJa": "フェリオ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/297.webp",
+          "types": [
+            "ドラゴンタイプ"
+          ],
+          "hp": "2000億",
+          "defense": "10億",
+          "effects": [
+            {
+              "raw": "25,500ダメージ+3ターン：3マスルーレット",
+              "tags": [],
+              "gimmickIds": [
+                "ルレット"
+              ],
+              "damage": "25,500ダメージ",
+              "turns": "3ターン"
+            },
+            {
+              "raw": "【残り2体以下になると使用】",
+              "tags": [
+                "残り2体以下になると使用"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "999ターン：攻撃力10倍",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "999ターン"
+            }
+          ]
+        },
+        {
+          "monsterId": 300,
+          "monsterNameJa": "ピエドラ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/300.webp",
+          "types": [
+            "ドラゴンタイプ"
+          ],
+          "hp": "2000億",
+          "defense": "10億",
+          "effects": [
+            {
+              "raw": "25,500ダメージ+全員4ターンスキル遅延",
+              "tags": [],
+              "gimmickIds": [
+                "スキル遅延"
+              ],
+              "damage": "25,500ダメージ",
+              "turns": "4ターン"
+            },
+            {
+              "raw": "【残り2体以下になると使用】",
+              "tags": [
+                "残り2体以下になると使用"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "999ターン：攻撃力10倍",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "999ターン"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B2",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": 10260,
+          "monsterNameJa": "スーリア(変身)",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/10260.webp",
+          "types": [
+            "バランスタイプ",
+            "神タイプ",
+            "ドラゴンタイプ"
+          ],
+          "hp": "3000億",
+          "defense": "10億",
+          "effects": [
+            {
+              "raw": "【超根性：2100万】",
+              "tags": [
+                "超根性：2100万"
+              ],
+              "gimmickIds": [
+                "根性",
+                "超根性"
+              ],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "7ターン：状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "7ターン"
+            },
+            {
+              "raw": "2ターン：覚醒無効",
+              "tags": [],
+              "gimmickIds": [
+                "覚醒無効"
+              ],
+              "damage": null,
+              "turns": "2ターン"
+            },
+            {
+              "raw": "2,194,500ダメージ+1ターン：20億以上吸収",
+              "tags": [],
+              "gimmickIds": [
+                "ダメジ吸収"
+              ],
+              "damage": "2,194,500ダメージ",
+              "turns": "1ターン"
+            },
+            {
+              "raw": "【初回行動】",
+              "tags": [
+                "初回行動"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "1ターン：操作時間激減",
+              "tags": [],
+              "gimmickIds": [
+                "操作時間短縮"
+              ],
+              "damage": null,
+              "turns": "1ターン"
+            },
+            {
+              "raw": "3,850,000ダメージ+1ターン：ランダム1属性吸収",
+              "tags": [],
+              "gimmickIds": [
+                "属性吸収"
+              ],
+              "damage": "3,850,000ダメージ",
+              "turns": "1ターン"
+            },
+            {
+              "raw": "【超根性発動時】",
+              "tags": [
+                "超根性発動時"
+              ],
+              "gimmickIds": [
+                "根性",
+                "超根性"
+              ],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "3,850,000ダメージ+3ターン：3コンボ減算",
+              "tags": [],
+              "gimmickIds": [
+                "コンボ減算"
+              ],
+              "damage": "3,850,000ダメージ",
+              "turns": "3ターン"
+            },
+            {
+              "raw": "3ターン：最大HP半減",
+              "tags": [],
+              "gimmickIds": [
+                "最大HP減少"
+              ],
+              "damage": null,
+              "turns": "3ターン"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B3",
+      "spawnNote": "1体出現",
+      "spawns": [
+        {
+          "monsterId": 10704,
+          "monsterNameJa": "試練ハトホル",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/10704.webp",
+          "types": [
+            "神タイプ",
+            "体力タイプ"
+          ],
+          "hp": "3000億",
+          "defense": "10億",
+          "effects": [
+            {
+              "raw": "シールド1枚生成(HP1500億)",
+              "tags": [],
+              "gimmickIds": [
+                "シルド"
+              ],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "2ターン：スキル封印",
+              "tags": [],
+              "gimmickIds": [
+                "スキル封印"
+              ],
+              "damage": null,
+              "turns": "2ターン"
+            },
+            {
+              "raw": "3,600,000ダメージ+3ターン：回復力半減",
+              "tags": [],
+              "gimmickIds": [
+                "回復力減少"
+              ],
+              "damage": "3,600,000ダメージ",
+              "turns": "3ターン"
+            },
+            {
+              "raw": "【初回行動】",
+              "tags": [
+                "初回行動"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "3ターン：吸収",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "3ターン"
+            },
+            {
+              "raw": "3ターン：被ダメージ半減",
+              "tags": [],
+              "gimmickIds": [
+                "ダメジ無効"
+              ],
+              "damage": null,
+              "turns": "3ターン"
+            }
+          ]
+        },
+        {
+          "monsterId": 10700,
+          "monsterNameJa": "試練ネフティス",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/10700.webp",
+          "types": [
+            "神タイプ",
+            "攻撃タイプ"
+          ],
+          "hp": "3300億",
+          "defense": "10億",
+          "effects": [
+            {
+              "raw": "4ターン：超暗闇目覚め",
+              "tags": [],
+              "gimmickIds": [
+                "超暗闇目覚め",
+                "超暗闇",
+                "指定色目覚め",
+                "暗闇_超暗闇"
+              ],
+              "damage": null,
+              "turns": "4ターン"
+            },
+            {
+              "raw": "3,600,000ダメージ+3ターン：落ちコンなし",
+              "tags": [],
+              "gimmickIds": [
+                "落ちコンなし"
+              ],
+              "damage": "3,600,000ダメージ",
+              "turns": "3ターン"
+            },
+            {
+              "raw": "5ターン：吸収",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "5ターン"
+            },
+            {
+              "raw": "【HP50%以下で1回使用】",
+              "tags": [
+                "HP50%以下で1回使用"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "4,000,000ダメージ+全ドロップ変化",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": "4,000,000ダメージ",
+              "turns": null
+            },
+            {
+              "raw": "ハート型に生成",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B4",
+      "spawnNote": "5体出現",
+      "spawns": [
+        {
+          "monsterId": 9535,
+          "monsterNameJa": "プラリット",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/9535.webp",
+          "types": [
+            "回復タイプ"
+          ],
+          "hp": "800億",
+          "defense": "10億",
+          "effects": [
+            {
+              "raw": "※プラリット・ヒカりん合わせて3体まで先制あり",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "900,000ダメージ+ドロップ2個トゲ",
+              "tags": [],
+              "gimmickIds": [
+                "トゲ"
+              ],
+              "damage": "900,000ダメージ",
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 43,
+          "monsterNameJa": "デカヒカりん",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/43.webp",
+          "types": [
+            "バランスタイプ"
+          ],
+          "hp": "800億",
+          "defense": "10億",
+          "effects": [
+            {
+              "raw": "900,000ダメージ+3ターン：2体攻撃力激減(0.01倍)",
+              "tags": [],
+              "gimmickIds": [
+                "攻撃力減少"
+              ],
+              "damage": "900,000ダメージ",
+              "turns": "3ターン"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B5",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": 10907,
+          "monsterNameJa": "三玩龍(変身)",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/10907.webp",
+          "types": [
+            "ドラゴンタイプ"
+          ],
+          "hp": "3500億",
+          "defense": "10億",
+          "effects": [
+            {
+              "raw": "【超根性：40%】",
+              "tags": [
+                "超根性：40%"
+              ],
+              "gimmickIds": [
+                "根性",
+                "超根性"
+              ],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "7ターン：状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "7ターン"
+            },
+            {
+              "raw": "5,100,000ダメージ+2ターン：アシスト無効",
+              "tags": [],
+              "gimmickIds": [
+                "アシスト無効"
+              ],
+              "damage": "5,100,000ダメージ",
+              "turns": "2ターン"
+            },
+            {
+              "raw": "1ターン：攻撃力5倍",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "1ターン"
+            },
+            {
+              "raw": "【超根性発動時】",
+              "tags": [
+                "超根性発動時"
+              ],
+              "gimmickIds": [
+                "根性",
+                "超根性"
+              ],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "5,049,000ダメージ(5倍時：24,245,000ダメージ)の連続攻撃+全ドロップ変化",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": "5,049,000ダメージ",
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B6",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": 12110,
+          "monsterNameJa": "巴御前",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/12110.webp",
+          "types": [
+            "ドラゴンタイプ",
+            "神タイプ"
+          ],
+          "hp": "3600億",
+          "defense": "10億",
+          "effects": [
+            {
+              "raw": "【部位：HP:5000億、防御:10億】",
+              "tags": [
+                "部位：HP:5000億、防御:10億"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "【超根性：50%】",
+              "tags": [
+                "超根性：50%"
+              ],
+              "gimmickIds": [
+                "根性",
+                "超根性"
+              ],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "999ターン：状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "999ターン"
+            },
+            {
+              "raw": "5ターン：30億以上無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "5ターン"
+            },
+            {
+              "raw": "4,860,000ダメージ+3ターン：全員攻撃力激減(0.25倍)",
+              "tags": [],
+              "gimmickIds": [
+                "攻撃力減少"
+              ],
+              "damage": "4,860,000ダメージ",
+              "turns": "3ターン"
+            },
+            {
+              "raw": "【超根性発動時】",
+              "tags": [
+                "超根性発動時"
+              ],
+              "gimmickIds": [
+                "根性",
+                "超根性"
+              ],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "全ドロップ変化",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "5ターン：被ダメージ半減",
+              "tags": [],
+              "gimmickIds": [
+                "ダメジ無効"
+              ],
+              "damage": null,
+              "turns": "5ターン"
+            },
+            {
+              "raw": "2ターン：落ちコンなし",
+              "tags": [],
+              "gimmickIds": [
+                "落ちコンなし"
+              ],
+              "damage": null,
+              "turns": "2ターン"
+            },
+            {
+              "raw": "【部位破壊時】",
+              "tags": [
+                "部位破壊時"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "999ターン：敵の攻撃力1.5倍",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "999ターン"
+            },
+            {
+              "raw": "5ターン：トゲ目覚め",
+              "tags": [],
+              "gimmickIds": [
+                "トゲ目覚め",
+                "指定色目覚め",
+                "トゲ"
+              ],
+              "damage": null,
+              "turns": "5ターン"
+            },
+            {
+              "raw": "5ターン：チームの攻撃力激減(0.25倍)",
+              "tags": [],
+              "gimmickIds": [
+                "攻撃力減少"
+              ],
+              "damage": null,
+              "turns": "5ターン"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B7",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": 112,
+          "monsterNameJa": "サラマンダー",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/112.webp",
+          "types": [
+            "ドラゴンタイプ"
+          ],
+          "hp": "3000億",
+          "defense": "10億",
+          "effects": [
+            {
+              "raw": "3ターン：LFダメージ上限値20億",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "3ターン"
+            },
+            {
+              "raw": "【残り1体になると使用】",
+              "tags": [
+                "残り1体になると使用"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "3ターン：操作時間激減",
+              "tags": [],
+              "gimmickIds": [
+                "操作時間短縮"
+              ],
+              "damage": null,
+              "turns": "3ターン"
+            },
+            {
+              "raw": "HPが0になる",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 6584,
+          "monsterNameJa": "火ソフィ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/6584.webp",
+          "types": [
+            "悪魔タイプ",
+            "バランスタイプ"
+          ],
+          "hp": "3700億",
+          "defense": "10億",
+          "effects": [
+            {
+              "raw": "【根性】",
+              "tags": [
+                "根性"
+              ],
+              "gimmickIds": [
+                "根性"
+              ],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "2ターン：2マスルーレット",
+              "tags": [],
+              "gimmickIds": [
+                "ルレット"
+              ],
+              "damage": null,
+              "turns": "2ターン"
+            },
+            {
+              "raw": "7ターン：吸収",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "7ターン"
+            },
+            {
+              "raw": "現HP99%割合ダメージ",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "【HP50%以下で1回使用】",
+              "tags": [
+                "HP50%以下で1回使用"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "5ターン：20億以上無効",
+              "tags": [],
+              "gimmickIds": [
+                "ダメジ無効"
+              ],
+              "damage": null,
+              "turns": "5ターン"
+            },
+            {
+              "raw": "5ターン：目覚め",
+              "tags": [],
+              "gimmickIds": [
+                "指定色目覚め"
+              ],
+              "damage": null,
+              "turns": "5ターン"
+            },
+            {
+              "raw": "3,700,000ダメージ+ドロップリフレッシュ",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": "3,700,000ダメージ",
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 114,
+          "monsterNameJa": "シーサーペント",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/114.webp",
+          "types": [
+            "ドラゴンタイプ"
+          ],
+          "hp": "3000億",
+          "defense": "10億",
+          "effects": [
+            {
+              "raw": "3ターン：サブダメージ上限値20億",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "3ターン"
+            },
+            {
+              "raw": "【残り1体になると使用】",
+              "tags": [
+                "残り1体になると使用"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "3ターン：最下段操作不可",
+              "tags": [],
+              "gimmickIds": [
+                "操作不可"
+              ],
+              "damage": null,
+              "turns": "3ターン"
+            },
+            {
+              "raw": "HPが0になる",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 7847,
+          "monsterNameJa": "水ソフィ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/7847.webp",
+          "types": [
+            "悪魔タイプ",
+            "バランスタイプ"
+          ],
+          "hp": "3700億",
+          "defense": "10億",
+          "effects": [
+            {
+              "raw": "【根性】",
+              "tags": [
+                "根性"
+              ],
+              "gimmickIds": [
+                "根性"
+              ],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "2ターン：2マスルーレット",
+              "tags": [],
+              "gimmickIds": [
+                "ルレット"
+              ],
+              "damage": null,
+              "turns": "2ターン"
+            },
+            {
+              "raw": "7ターン：吸収",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "7ターン"
+            },
+            {
+              "raw": "現HP99%割合ダメージ",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "【HP50%以下で1回使用】",
+              "tags": [
+                "HP50%以下で1回使用"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "5ターン：20億以上無効",
+              "tags": [],
+              "gimmickIds": [
+                "ダメジ無効"
+              ],
+              "damage": null,
+              "turns": "5ターン"
+            },
+            {
+              "raw": "5ターン：目覚め",
+              "tags": [],
+              "gimmickIds": [
+                "指定色目覚め"
+              ],
+              "damage": null,
+              "turns": "5ターン"
+            },
+            {
+              "raw": "3,700,000ダメージ+ドロップリフレッシュ",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": "3,700,000ダメージ",
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B8",
+      "spawnNote": "1体出現",
+      "spawns": [
+        {
+          "monsterId": 12265,
+          "monsterNameJa": "試練サクヤ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/12265.webp",
+          "types": [
+            "神タイプ",
+            "ドラゴンタイプ",
+            "バランスタイプ"
+          ],
+          "hp": "3500億",
+          "defense": "10億",
+          "effects": [
+            {
+              "raw": "【根性】",
+              "tags": [
+                "根性"
+              ],
+              "gimmickIds": [
+                "根性"
+              ],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "7ターン：状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "7ターン"
+            },
+            {
+              "raw": "4ターン：弱化目覚め(30%)",
+              "tags": [],
+              "gimmickIds": [
+                "弱化目覚め",
+                "指定色目覚め"
+              ],
+              "damage": null,
+              "turns": "4ターン"
+            },
+            {
+              "raw": "3ターン：20億以上吸収",
+              "tags": [],
+              "gimmickIds": [
+                "ダメジ吸収"
+              ],
+              "damage": null,
+              "turns": "3ターン"
+            }
+          ]
+        },
+        {
+          "monsterId": 12266,
+          "monsterNameJa": "試練ハク",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/12266.webp",
+          "types": [
+            "神タイプ",
+            "攻撃タイプ"
+          ],
+          "hp": "4000億",
+          "defense": "10億",
+          "effects": [
+            {
+              "raw": "【根性】",
+              "tags": [
+                "根性"
+              ],
+              "gimmickIds": [
+                "根性"
+              ],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "7ターン：状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "7ターン"
+            },
+            {
+              "raw": "4ターン：トゲ目覚め",
+              "tags": [],
+              "gimmickIds": [
+                "トゲ目覚め",
+                "指定色目覚め",
+                "トゲ"
+              ],
+              "damage": null,
+              "turns": "4ターン"
+            },
+            {
+              "raw": "1ターン：15コンボ以下無効",
+              "tags": [],
+              "gimmickIds": [
+                "コンボ無効"
+              ],
+              "damage": null,
+              "turns": "1ターン"
+            },
+            {
+              "raw": "【HP50%以上、初回行動】",
+              "tags": [
+                "HP50%以上、初回行動"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "10ターン：超暗闇目覚め",
+              "tags": [],
+              "gimmickIds": [
+                "超暗闇目覚め",
+                "超暗闇",
+                "指定色目覚め",
+                "暗闇_超暗闇"
+              ],
+              "damage": null,
+              "turns": "10ターン"
+            },
+            {
+              "raw": "6,800,000ダメージ+999ターン：攻撃力1.2倍",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": "6,800,000ダメージ",
+              "turns": "999ターン"
+            },
+            {
+              "raw": "【HP50%以下で1回使用】",
+              "tags": [
+                "HP50%以下で1回使用"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "2ターン：回復力半減",
+              "tags": [],
+              "gimmickIds": [
+                "回復力減少"
+              ],
+              "damage": null,
+              "turns": "2ターン"
+            },
+            {
+              "raw": "6,800,000ダメージ+全ドロップ変化",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": "6,800,000ダメージ",
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B9",
+      "spawnNote": "2体出現",
+      "spawns": [
+        {
+          "monsterId": 9536,
+          "monsterNameJa": "ダブプラリット",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/9536.webp",
+          "types": [
+            "回復タイプ"
+          ],
+          "hp": "1000億",
+          "defense": "10億",
+          "effects": [
+            {
+              "raw": "1,800,000ダメージ+ドロップ4個トゲ",
+              "tags": [],
+              "gimmickIds": [
+                "トゲ目覚め",
+                "トゲ"
+              ],
+              "damage": "1,800,000ダメージ",
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 5689,
+          "monsterNameJa": "ファシル",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/5689.webp",
+          "types": [
+            "ドラゴンタイプ",
+            "バランスタイプ"
+          ],
+          "hp": "2000億",
+          "defense": "10億",
+          "effects": [
+            {
+              "raw": "2ターン：被ダメージ75%軽減",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "2ターン"
+            },
+            {
+              "raw": "3ターン：サブ攻撃力激減(0.01倍)",
+              "tags": [],
+              "gimmickIds": [
+                "攻撃力減少"
+              ],
+              "damage": null,
+              "turns": "3ターン"
+            },
+            {
+              "raw": "6,660,000ダメージ+LF15ターンスキルチャージ",
+              "tags": [],
+              "gimmickIds": [
+                "Sチャジ"
+              ],
+              "damage": "6,660,000ダメージ",
+              "turns": "15ターン"
+            },
+            {
+              "raw": "【HP50%以下で1回使用】",
+              "tags": [
+                "HP50%以下で1回使用"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "5ターン：20億以上無効",
+              "tags": [],
+              "gimmickIds": [
+                "ダメジ無効"
+              ],
+              "damage": null,
+              "turns": "5ターン"
+            },
+            {
+              "raw": "7,400,000ダメージ+3ターン：LFダメージ上限値20億",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": "7,400,000ダメージ",
+              "turns": "3ターン"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B10",
+      "spawnNote": "1体出現",
+      "spawns": [
+        {
+          "monsterId": 9995,
+          "monsterNameJa": "アマテラスドラゴン",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/9995.webp",
+          "types": [
+            "ドラゴンタイプ",
+            "神タイプ",
+            "回復タイプ"
+          ],
+          "hp": "4500億",
+          "defense": "10億",
+          "effects": [
+            {
+              "raw": "【根性】",
+              "tags": [
+                "根性"
+              ],
+              "gimmickIds": [
+                "根性"
+              ],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "【半減】",
+              "tags": [
+                "半減"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "7ターン：状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "7ターン"
+            },
+            {
+              "raw": "2ターン：消せない",
+              "tags": [],
+              "gimmickIds": [
+                "消せない状態"
+              ],
+              "damage": null,
+              "turns": "2ターン"
+            },
+            {
+              "raw": "2ターン：覚醒無効",
+              "tags": [],
+              "gimmickIds": [
+                "覚醒無効"
+              ],
+              "damage": null,
+              "turns": "2ターン"
+            },
+            {
+              "raw": "【HP50%以下で1回使用】",
+              "tags": [
+                "HP50%以下で1回使用"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "敵HP30%回復",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "3ターン：目覚め",
+              "tags": [],
+              "gimmickIds": [
+                "指定色目覚め"
+              ],
+              "damage": null,
+              "turns": "3ターン"
+            },
+            {
+              "raw": "7,800,000ダメージ+3ターン：2マスルーレット",
+              "tags": [],
+              "gimmickIds": [
+                "ルレット"
+              ],
+              "damage": "7,800,000ダメージ",
+              "turns": "3ターン"
+            }
+          ]
+        },
+        {
+          "monsterId": 13061,
+          "monsterNameJa": "ロキウィルド",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/13061.webp",
+          "types": [
+            "悪魔タイプ",
+            "神タイプ"
+          ],
+          "hp": "7500億",
+          "defense": "10億",
+          "effects": [
+            {
+              "raw": "【半減】",
+              "tags": [
+                "半減"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "4ターン：状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "4ターン"
+            },
+            {
+              "raw": "4ターン：目覚め",
+              "tags": [],
+              "gimmickIds": [
+                "指定色目覚め"
+              ],
+              "damage": null,
+              "turns": "4ターン"
+            },
+            {
+              "raw": "4ターン：2マスルーレット",
+              "tags": [],
+              "gimmickIds": [
+                "ルレット"
+              ],
+              "damage": null,
+              "turns": "4ターン"
+            },
+            {
+              "raw": "スキル効果リセット",
+              "tags": [],
+              "gimmickIds": [
+                "スキルリセット"
+              ],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "【初回行動】",
+              "tags": [
+                "初回行動"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "ドロップ5個トゲ",
+              "tags": [],
+              "gimmickIds": [
+                "トゲ目覚め",
+                "トゲ"
+              ],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "【2ターン目に使用】",
+              "tags": [
+                "2ターン目に使用"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "2ターン"
+            },
+            {
+              "raw": "ドロップ6個トゲ",
+              "tags": [],
+              "gimmickIds": [
+                "トゲ"
+              ],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "【3ターン目に使用】",
+              "tags": [
+                "3ターン目に使用"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "3ターン"
+            },
+            {
+              "raw": "ドロップ7個トゲ",
+              "tags": [],
+              "gimmickIds": [
+                "トゲ"
+              ],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "【4ターン目に使用】",
+              "tags": [
+                "4ターン目に使用"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "4ターン"
+            },
+            {
+              "raw": "スキル効果リセット",
+              "tags": [],
+              "gimmickIds": [
+                "スキルリセット"
+              ],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "属性変化",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "195,000,000ダメージの連続攻撃",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": "195,000,000ダメージ",
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B11",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": 11583,
+          "monsterNameJa": "試練ラファエル",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/11583.webp",
+          "types": [
+            "神タイプ",
+            "バランスタイプ"
+          ],
+          "hp": "2000億",
+          "defense": "10億",
+          "effects": [
+            {
+              "raw": "1ターン：状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "1ターン"
+            },
+            {
+              "raw": "全ドロップ変化",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "【初回行動】",
+              "tags": [
+                "初回行動"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "属性変化+28,835,000ダメージの連続攻撃",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": "28,835,000ダメージ",
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B12",
+      "spawnNote": "1体出現",
+      "spawns": [
+        {
+          "monsterId": 10110,
+          "monsterNameJa": "試練アテナ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/10110.webp",
+          "types": [
+            "神タイプ",
+            "攻撃タイプ"
+          ],
+          "hp": "4800億",
+          "defense": "10億",
+          "effects": [
+            {
+              "raw": "【超根性：20%】",
+              "tags": [
+                "超根性：20%"
+              ],
+              "gimmickIds": [
+                "根性",
+                "超根性"
+              ],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "7ターン：状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "7ターン"
+            },
+            {
+              "raw": "ドロップ5個トゲ",
+              "tags": [],
+              "gimmickIds": [
+                "トゲ目覚め",
+                "トゲ"
+              ],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "7,200,000ダメージ+2ターン：操作時間激減",
+              "tags": [],
+              "gimmickIds": [
+                "操作時間短縮"
+              ],
+              "damage": "7,200,000ダメージ",
+              "turns": "2ターン"
+            },
+            {
+              "raw": "【超根性発動時】",
+              "tags": [
+                "超根性発動時"
+              ],
+              "gimmickIds": [
+                "根性",
+                "超根性"
+              ],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "5ターン：20億以上無効",
+              "tags": [],
+              "gimmickIds": [
+                "ダメジ無効"
+              ],
+              "damage": null,
+              "turns": "5ターン"
+            },
+            {
+              "raw": "3ターン：目覚め",
+              "tags": [],
+              "gimmickIds": [
+                "指定色目覚め"
+              ],
+              "damage": null,
+              "turns": "3ターン"
+            },
+            {
+              "raw": "8,000,000ダメージ+光属性変化",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": "8,000,000ダメージ",
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 10762,
+          "monsterNameJa": "試練闇メタトロン",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/10762.webp",
+          "types": [
+            "神タイプ",
+            "悪魔タイプ"
+          ],
+          "hp": "4800億",
+          "defense": "10億",
+          "effects": [
+            {
+              "raw": "【超根性：20%】",
+              "tags": [
+                "超根性：20%"
+              ],
+              "gimmickIds": [
+                "根性",
+                "超根性"
+              ],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "7ターン：状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "7ターン"
+            },
+            {
+              "raw": "2ターン：最大HP半減",
+              "tags": [],
+              "gimmickIds": [
+                "最大HP減少"
+              ],
+              "damage": null,
+              "turns": "2ターン"
+            },
+            {
+              "raw": "3,600,000ダメージ+3ターン：サブダメージ上限値20億",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": "3,600,000ダメージ",
+              "turns": "3ターン"
+            },
+            {
+              "raw": "【通常行動】",
+              "tags": [
+                "通常行動"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "全員2ターンスキル遅延",
+              "tags": [],
+              "gimmickIds": [
+                "スキル遅延"
+              ],
+              "damage": null,
+              "turns": "2ターン"
+            },
+            {
+              "raw": "8,160,000ダメージの連続攻撃",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": "8,160,000ダメージ",
+              "turns": null
+            },
+            {
+              "raw": "【超根性発動時】",
+              "tags": [
+                "超根性発動時"
+              ],
+              "gimmickIds": [
+                "根性",
+                "超根性"
+              ],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "5ターン：20億以上無効",
+              "tags": [],
+              "gimmickIds": [
+                "ダメジ無効"
+              ],
+              "damage": null,
+              "turns": "5ターン"
+            },
+            {
+              "raw": "3ターン：2マスルーレット",
+              "tags": [],
+              "gimmickIds": [
+                "ルレット"
+              ],
+              "damage": null,
+              "turns": "3ターン"
+            },
+            {
+              "raw": "8,640,000ダメージの連続攻撃",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": "8,640,000ダメージ",
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B13",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": 8899,
+          "monsterNameJa": "水フェンリルヴィズ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/8899.webp",
+          "types": [
+            "悪魔タイプ",
+            "体力タイプ"
+          ],
+          "hp": "5000億",
+          "defense": "10億",
+          "effects": [
+            {
+              "raw": "【超根性：50%】",
+              "tags": [
+                "超根性：50%"
+              ],
+              "gimmickIds": [
+                "根性",
+                "超根性"
+              ],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "999ターン：状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "999ターン"
+            },
+            {
+              "raw": "1ターン：20億以上吸収",
+              "tags": [],
+              "gimmickIds": [
+                "ダメジ吸収"
+              ],
+              "damage": null,
+              "turns": "1ターン"
+            },
+            {
+              "raw": "7,335,000ダメージ+5ターン：トゲ目覚め",
+              "tags": [],
+              "gimmickIds": [
+                "トゲ目覚め",
+                "指定色目覚め",
+                "トゲ"
+              ],
+              "damage": "7,335,000ダメージ",
+              "turns": "5ターン"
+            },
+            {
+              "raw": "【超根性発動時】",
+              "tags": [
+                "超根性発動時"
+              ],
+              "gimmickIds": [
+                "根性",
+                "超根性"
+              ],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "シールド2枚生成(HP1000億)",
+              "tags": [],
+              "gimmickIds": [
+                "シルド"
+              ],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "全ドロップ変化",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "8,150,000ダメージ+2ターン：アシスト無効",
+              "tags": [],
+              "gimmickIds": [
+                "アシスト無効"
+              ],
+              "damage": "8,150,000ダメージ",
+              "turns": "2ターン"
+            },
+            {
+              "raw": "【HP5%以下で1回使用】",
+              "tags": [
+                "HP5%以下で1回使用"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "1ターン：盤面5×4マス",
+              "tags": [],
+              "gimmickIds": [
+                "5x4マス",
+                "6x5マス"
+              ],
+              "damage": null,
+              "turns": "1ターン"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B14",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": 10300,
+          "monsterNameJa": "ノヴァ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/10300.webp",
+          "types": [
+            "ドラゴンタイプ",
+            "神タイプ"
+          ],
+          "hp": "5800億",
+          "defense": "15億",
+          "effects": [
+            {
+              "raw": "【根性】",
+              "tags": [
+                "根性"
+              ],
+              "gimmickIds": [
+                "根性"
+              ],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "7ターン：状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "7ターン"
+            },
+            {
+              "raw": "5ターン：指定4マスルーレット",
+              "tags": [],
+              "gimmickIds": [
+                "ルレット"
+              ],
+              "damage": null,
+              "turns": "5ターン"
+            },
+            {
+              "raw": "7,380,000ダメージ+全ドロップ変化",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": "7,380,000ダメージ",
+              "turns": null
+            },
+            {
+              "raw": "【HP50%以下で1回使用】",
+              "tags": [
+                "HP50%以下で1回使用"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "5ターン：20億以上無効",
+              "tags": [],
+              "gimmickIds": [
+                "ダメジ無効"
+              ],
+              "damage": null,
+              "turns": "5ターン"
+            },
+            {
+              "raw": "8,200,000ダメージ+全ドロップ変化",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": "8,200,000ダメージ",
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B15",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": 10301,
+          "monsterNameJa": "ノヴァ(変身)",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/10301.webp",
+          "types": [
+            "ドラゴンタイプ",
+            "神タイプ"
+          ],
+          "hp": "1.2兆",
+          "defense": "15億",
+          "effects": [
+            {
+              "raw": "【超根性：50%】",
+              "tags": [
+                "超根性：50%"
+              ],
+              "gimmickIds": [
+                "根性",
+                "超根性"
+              ],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "【半減】",
+              "tags": [
+                "半減"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "20ターン：状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "20ターン"
+            },
+            {
+              "raw": "シールド3枚生成(HP1300億)",
+              "tags": [],
+              "gimmickIds": [
+                "シルド"
+              ],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "8,350,000ダメージ+スキル効果リセット",
+              "tags": [],
+              "gimmickIds": [
+                "スキルリセット"
+              ],
+              "damage": "8,350,000ダメージ",
+              "turns": null
+            },
+            {
+              "raw": "1ターン：攻撃力5倍",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "1ターン"
+            },
+            {
+              "raw": "【初回行動】",
+              "tags": [
+                "初回行動"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "3ターン：盤面5×4マス",
+              "tags": [],
+              "gimmickIds": [
+                "5x4マス",
+                "6x5マス"
+              ],
+              "damage": null,
+              "turns": "3ターン"
+            },
+            {
+              "raw": "30,060,000ダメージ(5倍時)の連続攻撃",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": "30,060,000ダメージ",
+              "turns": null
+            },
+            {
+              "raw": "【通常行動】",
+              "tags": [
+                "通常行動"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "1ターン：ランダム1属性吸収",
+              "tags": [],
+              "gimmickIds": [
+                "属性吸収"
+              ],
+              "damage": null,
+              "turns": "1ターン"
+            },
+            {
+              "raw": "8,517,000ダメージの連続攻撃",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": "8,517,000ダメージ",
+              "turns": null
+            },
+            {
+              "raw": "【通常行動】",
+              "tags": [
+                "通常行動"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "1ターン：20億以上吸収",
+              "tags": [],
+              "gimmickIds": [
+                "ダメジ吸収"
+              ],
+              "damage": null,
+              "turns": "1ターン"
+            },
+            {
+              "raw": "8,350,000ダメージ+上段横2列変化",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": "8,350,000ダメージ",
+              "turns": null
+            },
+            {
+              "raw": "【通常行動】",
+              "tags": [
+                "通常行動"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "1ターン：被ダメージ半減",
+              "tags": [],
+              "gimmickIds": [
+                "ダメジ無効"
+              ],
+              "damage": null,
+              "turns": "1ターン"
+            },
+            {
+              "raw": "8,350,000ダメージ+か属性変化",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": "8,350,000ダメージ",
+              "turns": null
+            },
+            {
+              "raw": "【超根性発動時】",
+              "tags": [
+                "超根性発動時"
+              ],
+              "gimmickIds": [
+                "根性",
+                "超根性"
+              ],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "3ターン：14コンボ以下無効",
+              "tags": [],
+              "gimmickIds": [
+                "コンボ無効"
+              ],
+              "damage": null,
+              "turns": "3ターン"
+            },
+            {
+              "raw": "2ターン：ランダム1色消せない",
+              "tags": [],
+              "gimmickIds": [
+                "消せない状態"
+              ],
+              "damage": null,
+              "turns": "2ターン"
+            },
+            {
+              "raw": "8,767,500ダメージ+全ドロップ変化",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": "8,767,500ダメージ",
+              "turns": null
+            },
+            {
+              "raw": "【HP5%以下で1回使用】",
+              "tags": [
+                "HP5%以下で1回使用"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "1ターン：覚醒無効",
+              "tags": [],
+              "gimmickIds": [
+                "覚醒無効"
+              ],
+              "damage": null,
+              "turns": "1ターン"
+            },
+            {
+              "raw": "【20ターン後に使用】",
+              "tags": [
+                "20ターン後に使用"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "20ターン"
+            },
+            {
+              "raw": "スキル効果リセット",
+              "tags": [],
+              "gimmickIds": [
+                "スキルリセット"
+              ],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "1ターン：覚醒無効",
+              "tags": [],
+              "gimmickIds": [
+                "覚醒無効"
+              ],
+              "damage": null,
+              "turns": "1ターン"
+            },
+            {
+              "raw": "208,750,000ダメージの連続攻撃",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": "208,750,000ダメージ",
+              "turns": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

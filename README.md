@@ -170,8 +170,40 @@ Copy **`.env.example` → `.env`**. Maintenance jobs (optional if you use Docker
 | `npm run pad -- update` | merge + transform (legacy categorize) |
 | `npm run pad -- serve` | Local API on port 3000 (`START_HTTP=true`) |
 | `npm run pad -- compose up --build` | Docker Compose |
+| `npm run pad -- dungeon:gimmick-master <url…>` | Merge AppMedia gimmick master |
+| `npm run pad -- dungeon:import <url\|id>` | Parse one dungeon guide → JSON |
 
 `npm run pad -- help` for full list.
+
+**Shorter Makefile aliases** (same jobs):
+
+```bash
+make dungeon-master                        # batch URLs in dungeon-details/seed/dungeon-urls.txt
+make dungeon-master URL=https://appmedia.jp/pazudora/79970458
+make dungeon-import                        # parse all URLs in dungeon-urls.txt
+make dungeon-import URL=79970458           # parse one dungeon
+```
+
+## Dungeon details (AppMedia)
+
+Offline pipeline under **`dungeon-details/`** — parse dungeon floor tables from [AppMedia](https://appmedia.jp/pazudora) guide pages (no dadguide).
+
+| Step | Command | Output |
+|------|---------|--------|
+| 1. Gimmick master | `make dungeon-master` or `make dungeon-master URL=<url>` | `dungeon-details/seed/gimmick-master.json` |
+| 2. Parse dungeons | `make dungeon-import` or `make dungeon-import URL=<url>` | `dungeon-details/seed/dungeons/<id>.json` (includes `titleEn`) + SQLite |
+
+- Edit **`dungeon-details/seed/dungeon-urls.txt`** — one AppMedia URL/postId per line (used by both `dungeon-master` and `dungeon-import`).
+- Edit **`dungeon-details/seed/gimmick-phrase-aliases.json`** — extra Japanese phrases → gimmick id (improves effect matching).
+- First import on a new page auto-creates master from that page’s 対策必須/要注意 table if master is missing.
+
+**Deploy / URL (local Docker):** after `make dungeon-import` and `make up`:
+
+- **http://localhost:3000/dungeon-details** — UI (dungeon list)
+- **http://localhost:3000/dungeon-details/79970458** — UI (floor table)
+- **http://localhost:3000/api/dungeon-details** — JSON API (not for browser navigation)
+
+English text uses a PAD glossary at `dungeon-details/seed/translations/en.json` (not a generic MT library). Hover / `title` shows Japanese source where useful. Extend `phrases` and `gimmicks` as you parse more dungeons.
 
 ### Local frontend dev (optional)
 

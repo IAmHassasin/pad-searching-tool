@@ -1,0 +1,858 @@
+{
+  "version": 1,
+  "updatedAt": "2026-06-28T17:57:20.734Z",
+  "entries": [
+    {
+      "id": "覚醒無効",
+      "labelJa": "覚醒無効",
+      "iconAlt": "覚醒無効",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/94f35b4f6637877fdd4c08962ea72f6e.jpg",
+      "category": "required",
+      "phrases": [
+        "覚醒無効",
+        "s_覚醒無効"
+      ],
+      "sourcePostIds": [
+        "79970458",
+        "79335344",
+        "79620137",
+        "79768151",
+        "80048764",
+        "79887656"
+      ]
+    },
+    {
+      "id": "ダメジ吸収",
+      "labelJa": "ダメージ吸収",
+      "iconAlt": "ダメージ吸収",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/9f33f03e399a645c0e456358077fd72e.jpg",
+      "category": "required",
+      "phrases": [
+        "ダメージ吸収",
+        "ダメージ吸収",
+        "以上吸収",
+        "コンボ以下吸収",
+        "s_ダメージ吸収"
+      ],
+      "sourcePostIds": [
+        "79970458",
+        "79335344",
+        "79620137",
+        "79768151",
+        "80048764",
+        "79887656"
+      ]
+    },
+    {
+      "id": "ダメジ無効",
+      "labelJa": "ダメージ無効",
+      "iconAlt": "ダメージ無効",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/6dd217d2eb879afbc4f87c25f0d706fe.jpg",
+      "category": "required",
+      "phrases": [
+        "ダメージ無効",
+        "ダメージ無効",
+        "50億以上無効",
+        "100億以上無効",
+        "20億以上無効",
+        "10億以上無効",
+        "被ダメージ半減",
+        "s_ダメージ無効"
+      ],
+      "sourcePostIds": [
+        "79970458",
+        "79335344",
+        "79620137",
+        "79768151",
+        "80048764",
+        "79887656"
+      ]
+    },
+    {
+      "id": "アシスト無効",
+      "labelJa": "アシスト無効",
+      "iconAlt": "アシスト無効",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2019/05/d188645e70f02ad877c26ee3d0c8ebe3.jpg",
+      "category": "required",
+      "phrases": [
+        "アシスト無効",
+        "パズドラ_アシスト無効ギミック"
+      ],
+      "sourcePostIds": [
+        "79970458",
+        "79335344",
+        "79620137",
+        "79768151",
+        "80048764",
+        "79887656"
+      ]
+    },
+    {
+      "id": "消せない状態",
+      "labelJa": "消せない状態",
+      "iconAlt": "消せないドロップ",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2017/05/7dd3136dc732ff6a0aad26f9c21b96b0.jpg",
+      "category": "required",
+      "phrases": [
+        "消せない状態",
+        "消せないドロップ",
+        "消せない",
+        "s_消せないドロップ"
+      ],
+      "sourcePostIds": [
+        "79970458",
+        "79335344",
+        "79620137",
+        "79768151",
+        "80048764",
+        "79887656"
+      ]
+    },
+    {
+      "id": "属性吸収",
+      "labelJa": "属性吸収",
+      "iconAlt": "属性吸収",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/4746bd4875547bda46945a5e543d2566.jpg",
+      "category": "required",
+      "phrases": [
+        "属性吸収",
+        "ランダム1色吸収",
+        "s_属性吸収"
+      ],
+      "sourcePostIds": [
+        "79970458",
+        "79335344",
+        "79620137",
+        "79768151",
+        "80048764",
+        "79887656"
+      ]
+    },
+    {
+      "id": "根性",
+      "labelJa": "根性",
+      "iconAlt": "根性",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/e944d5f979d7c45988a839e173aa2934.jpg",
+      "category": "required",
+      "phrases": [
+        "根性",
+        "超根性",
+        "s_根性マーク"
+      ],
+      "sourcePostIds": [
+        "79970458",
+        "79335344",
+        "79768151",
+        "80048764",
+        "79887656"
+      ]
+    },
+    {
+      "id": "スキル遅延",
+      "labelJa": "スキル遅延",
+      "iconAlt": "スキル遅延",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/1cc1e8c018ea83a40f76d55aef4962f9.jpg",
+      "category": "required",
+      "phrases": [
+        "スキル遅延",
+        "ターンスキル遅延",
+        "s_スキル遅延",
+        "遅延"
+      ],
+      "sourcePostIds": [
+        "79970458",
+        "79335344",
+        "79620137",
+        "79768151",
+        "80048764",
+        "79887656"
+      ]
+    },
+    {
+      "id": "5x4マス",
+      "labelJa": "5×4マス",
+      "iconAlt": "盤面拡大",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2017/05/59c73ea19fdd88b4fa6195fc9e632c6a.jpg",
+      "category": "caution",
+      "phrases": [
+        "5×4マス",
+        "盤面拡大",
+        "盤面5×4マス",
+        "5x4マス",
+        "盤面変化_アイコン_パズドラ",
+        "盤面縮小"
+      ],
+      "sourcePostIds": [
+        "79970458",
+        "79335344",
+        "79620137",
+        "79768151"
+      ]
+    },
+    {
+      "id": "防御力上昇",
+      "labelJa": "防御力上昇",
+      "iconAlt": "防御力上昇_パズドラ",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2026/03/010745_5tu2c.webp",
+      "category": "caution",
+      "phrases": [
+        "防御力上昇",
+        "防御力上昇_パズドラ",
+        "防御力増加"
+      ],
+      "sourcePostIds": [
+        "79970458",
+        "80048764",
+        "79887656"
+      ]
+    },
+    {
+      "id": "超暗闇目覚め",
+      "labelJa": "超暗闇目覚め",
+      "iconAlt": "超暗闇目覚め",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2020/03/6c93302a2c6acd15ead3fb639967522b.jpg",
+      "category": "caution",
+      "phrases": [
+        "超暗闇目覚め",
+        "パズドラ_超暗闇目覚め_ギミック"
+      ],
+      "sourcePostIds": [
+        "79970458",
+        "79335344",
+        "79620137",
+        "80048764",
+        "79887656"
+      ]
+    },
+    {
+      "id": "攻撃力減少",
+      "labelJa": "攻撃力減少",
+      "iconAlt": "攻撃力減少",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2020/03/02928e103fb77d81d382a67763ddc43a.jpg",
+      "category": "caution",
+      "phrases": [
+        "攻撃力減少",
+        "攻撃力激減",
+        "全員攻撃力激減",
+        "パズドラ_攻撃力減少_ギミック"
+      ],
+      "sourcePostIds": [
+        "79970458",
+        "79335344",
+        "79768151",
+        "80048764",
+        "79887656"
+      ]
+    },
+    {
+      "id": "個別攻撃力デバフ",
+      "labelJa": "個別攻撃力デバフ",
+      "iconAlt": "個別攻撃力デバフ",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2022/06/c74d0be86fa6fbe58410f4e061a32038.webp",
+      "category": "caution",
+      "phrases": [
+        "個別攻撃力デバフ",
+        "LF攻撃力激減"
+      ],
+      "sourcePostIds": [
+        "79970458",
+        "79620137"
+      ]
+    },
+    {
+      "id": "回復力減少",
+      "labelJa": "回復力減少",
+      "iconAlt": "回復力減少",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2017/05/9712a9dc82836ad49b9350e2cd509104.jpg",
+      "category": "caution",
+      "phrases": [
+        "回復力減少",
+        "回復力激減",
+        "回復力半減",
+        "s_回復半減"
+      ],
+      "sourcePostIds": [
+        "79970458",
+        "79335344",
+        "79620137",
+        "79887656"
+      ]
+    },
+    {
+      "id": "トゲ目覚め",
+      "labelJa": "トゲ目覚め",
+      "iconAlt": "トゲ目覚め",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2017/05/37705ea3de63828ae5f365be5e013cb5.webp",
+      "category": "caution",
+      "phrases": [
+        "トゲ目覚め",
+        "ドロップ5個トゲ",
+        "ドロップ4個トゲ",
+        "ドロップ3個トゲ",
+        "トゲ目覚め_アイコン_パズドラ"
+      ],
+      "sourcePostIds": [
+        "79970458",
+        "79335344",
+        "79620137",
+        "80048764",
+        "79887656"
+      ]
+    },
+    {
+      "id": "操作時間短縮",
+      "labelJa": "操作時間短縮",
+      "iconAlt": "操作時間短縮",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/26b05cda1cd7b9b7603ee9be84deee89.jpg",
+      "category": "caution",
+      "phrases": [
+        "操作時間短縮",
+        "操作時間激減",
+        "操作時間半減",
+        "s_操作時間短縮",
+        "操作短縮"
+      ],
+      "sourcePostIds": [
+        "79970458",
+        "79335344",
+        "79620137",
+        "79768151",
+        "80048764",
+        "79887656"
+      ]
+    },
+    {
+      "id": "ルレット",
+      "labelJa": "ルーレット",
+      "iconAlt": "ルーレット",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2017/05/a9639b827fc3d02a353d7f9fa1657503.jpg",
+      "category": "caution",
+      "phrases": [
+        "ルーレット",
+        "マスルーレット",
+        "s_指定箇所変化"
+      ],
+      "sourcePostIds": [
+        "79970458",
+        "79335344",
+        "79620137",
+        "79768151",
+        "80048764",
+        "79887656"
+      ]
+    },
+    {
+      "id": "毒_猛毒",
+      "labelJa": "毒/猛毒",
+      "iconAlt": "猛毒ドロップ",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/07/Poison-1.png",
+      "category": "caution",
+      "phrases": [
+        "毒/猛毒",
+        "猛毒ドロップ",
+        "猛毒",
+        "毒ドロップ"
+      ],
+      "sourcePostIds": [
+        "79970458",
+        "79887656"
+      ]
+    },
+    {
+      "id": "上限変更",
+      "labelJa": "上限変更",
+      "iconAlt": "ダメージ上限変更_アイコン_パズドラ",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2024/05/8de969902e2c9dc79dc082add5ae1093.webp",
+      "category": "caution",
+      "phrases": [
+        "上限変更",
+        "ダメージ上限変更_アイコン_パズドラ"
+      ],
+      "sourcePostIds": [
+        "79970458",
+        "79335344",
+        "79620137",
+        "79768151",
+        "80048764",
+        "79887656"
+      ]
+    },
+    {
+      "id": "コンボ吸収",
+      "labelJa": "コンボ吸収",
+      "iconAlt": "コンボ吸収",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/f0ce23fe72f6de2f99d74960e3ed42f5.jpg",
+      "category": "caution",
+      "phrases": [
+        "コンボ吸収",
+        "コンボ吸収",
+        "s_コンボ吸収"
+      ],
+      "sourcePostIds": [
+        "79970458",
+        "79335344",
+        "79768151",
+        "80048764",
+        "79887656"
+      ]
+    },
+    {
+      "id": "コンボ減算",
+      "labelJa": "コンボ減算",
+      "iconAlt": "コンボ数減少",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2022/08/888c127482caef9ac36433b2e0f75fd6.webp",
+      "category": "caution",
+      "phrases": [
+        "コンボ減算",
+        "コンボ数減少",
+        "2コンボ減算",
+        "パズドラ_コンボ数減少_コンボ減算"
+      ],
+      "sourcePostIds": [
+        "79970458",
+        "79335344",
+        "79768151",
+        "80048764",
+        "79887656"
+      ]
+    },
+    {
+      "id": "超暗闇",
+      "labelJa": "超暗闇",
+      "iconAlt": "超暗闇",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/e4395a43ec751369282762d0477ade70.jpg",
+      "category": "caution",
+      "phrases": [
+        "超暗闇",
+        "ドロップ4個超暗闇",
+        "ドロップ6個超暗闇",
+        "ドロップ8個超暗闇"
+      ],
+      "sourcePostIds": [
+        "79970458"
+      ]
+    },
+    {
+      "id": "操作不可",
+      "labelJa": "操作不可",
+      "iconAlt": "操作不可",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/ebdfbd55bd8ecf3e39d7fb4606ca6488.jpg",
+      "category": "caution",
+      "phrases": [
+        "操作不可",
+        "最上段操作不可",
+        "s_操作不能"
+      ],
+      "sourcePostIds": [
+        "79970458",
+        "79768151",
+        "79887656"
+      ]
+    },
+    {
+      "id": "雲",
+      "labelJa": "雲",
+      "iconAlt": "雲",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/5247938759c158ab7a10b96a0182229b.jpg",
+      "category": "caution",
+      "phrases": [
+        "雲",
+        "マス雲",
+        "s_煙幕"
+      ],
+      "sourcePostIds": [
+        "79970458",
+        "79335344",
+        "79620137",
+        "79768151",
+        "80048764",
+        "79887656"
+      ]
+    },
+    {
+      "id": "シルド",
+      "labelJa": "シールド",
+      "iconAlt": "シールドギミック_パズドラ",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2022/12/91fdcbae458ea809f6ac2a1f95c91610.webp",
+      "category": "caution",
+      "phrases": [
+        "シールド",
+        "シールドギミック_パズドラ",
+        "枚生成"
+      ],
+      "sourcePostIds": [
+        "79970458",
+        "79335344",
+        "79620137",
+        "79768151",
+        "80048764",
+        "79887656"
+      ]
+    },
+    {
+      "id": "最大HP減少",
+      "labelJa": "最大HP減少",
+      "iconAlt": "HPロック",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2017/05/60e9e2a1f6d00b82487bc43986cf53ac.jpg",
+      "category": "caution",
+      "phrases": [
+        "最大HP減少",
+        "HPロック",
+        "最大HP半減",
+        "HP減少"
+      ],
+      "sourcePostIds": [
+        "79970458",
+        "79768151",
+        "79887656"
+      ]
+    },
+    {
+      "id": "ロック目覚め",
+      "labelJa": "ロック目覚め",
+      "iconAlt": "ロック目覚め",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/5c8aba745caa7930489892171c1f1b6f.jpg",
+      "category": "caution",
+      "phrases": [
+        "ロック目覚め",
+        "パズドラ_ロック"
+      ],
+      "sourcePostIds": [
+        "79970458",
+        "79335344",
+        "80048764"
+      ]
+    },
+    {
+      "id": "お邪魔目覚め",
+      "labelJa": "お邪魔目覚め",
+      "iconAlt": "お邪魔目覚め",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/5000/12/c5ae2473e51cd5e5ddb9dcdbf38f2672.jpg",
+      "category": "caution",
+      "phrases": [
+        "お邪魔目覚め",
+        "パズドラ_お邪魔目覚め_ギミック"
+      ],
+      "sourcePostIds": [
+        "79970458",
+        "79887656"
+      ]
+    },
+    {
+      "id": "落ちコンなし",
+      "labelJa": "落ちコンなし",
+      "iconAlt": "落ちコンなし",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2017/05/51d2cab858d35df70f3a64271d6befb2.jpg",
+      "category": "caution",
+      "phrases": [
+        "落ちコンなし",
+        "パズドラ_落ちコンなしギミック"
+      ],
+      "sourcePostIds": [
+        "79970458",
+        "79335344",
+        "79620137",
+        "79887656"
+      ]
+    },
+    {
+      "id": "スキルリセット",
+      "labelJa": "スキルリセット",
+      "iconAlt": "s_リターントゥゼロ",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2017/05/f9575343064823f89eeeed3ae0a6efb1.jpg",
+      "category": "caution",
+      "phrases": [
+        "スキルリセット",
+        "s_リターントゥゼロ",
+        "スキル効果リセット"
+      ],
+      "sourcePostIds": [
+        "79970458",
+        "79620137",
+        "79887656"
+      ]
+    },
+    {
+      "id": "コンボ無効",
+      "labelJa": "コンボ無効",
+      "iconAlt": "パズドラ_コンボ無効",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2025/12/204957_vgep0.webp",
+      "category": "caution",
+      "phrases": [
+        "コンボ無効",
+        "パズドラ_コンボ無効",
+        "コンボ以下無効",
+        "コンボ以下吸収",
+        "11コンボ以下",
+        "12コンボ以下",
+        "13コンボ以下",
+        "10コンボ以下"
+      ],
+      "sourcePostIds": [
+        "79970458",
+        "79620137",
+        "79768151",
+        "80048764",
+        "79887656"
+      ]
+    },
+    {
+      "id": "スキル封印",
+      "labelJa": "スキル封印",
+      "iconAlt": "s_スキル封印",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/9ea56767eeca2102dc58c51c636431e1.jpg",
+      "category": "required",
+      "phrases": [
+        "スキル封印",
+        "s_スキル封印"
+      ],
+      "sourcePostIds": [
+        "79335344",
+        "79620137",
+        "79887656"
+      ]
+    },
+    {
+      "id": "超根性",
+      "labelJa": "超根性",
+      "iconAlt": "パズドラ_超根性_ギミック",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2020/03/83cea6cff7a8c4e67af666c5abe8d583-1.jpg",
+      "category": "caution",
+      "phrases": [
+        "超根性",
+        "パズドラ_超根性_ギミック"
+      ],
+      "sourcePostIds": [
+        "79335344",
+        "79768151",
+        "80048764",
+        "79887656"
+      ]
+    },
+    {
+      "id": "お邪魔_爆弾",
+      "labelJa": "お邪魔/爆弾",
+      "iconAlt": "Dead",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/07/Dead.png",
+      "category": "caution",
+      "phrases": [
+        "お邪魔/爆弾",
+        "Dead"
+      ],
+      "sourcePostIds": [
+        "79335344",
+        "80048764",
+        "79887656"
+      ]
+    },
+    {
+      "id": "ロック",
+      "labelJa": "ロック",
+      "iconAlt": "s_ロック",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/03f2c553392ba865cedbd9980cb9415d.jpg",
+      "category": "caution",
+      "phrases": [
+        "ロック",
+        "s_ロック"
+      ],
+      "sourcePostIds": [
+        "79335344",
+        "79768151"
+      ]
+    },
+    {
+      "id": "トゲ",
+      "labelJa": "トゲ",
+      "iconAlt": "トゲドロップ_パズドラ",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2022/06/46c59da68b957ab8cad555efc7144de6.webp",
+      "category": "caution",
+      "phrases": [
+        "トゲ",
+        "トゲドロップ_パズドラ"
+      ],
+      "sourcePostIds": [
+        "79620137",
+        "79768151",
+        "80048764",
+        "79887656"
+      ]
+    },
+    {
+      "id": "弱化目覚め",
+      "labelJa": "弱化目覚め",
+      "iconAlt": "弱化目覚め",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2022/08/cadb2f410847e38eb93e45a792315b52.webp",
+      "category": "caution",
+      "phrases": [
+        "弱化目覚め",
+        "パズドラ_弱化目覚め"
+      ],
+      "sourcePostIds": [
+        "79620137",
+        "79768151",
+        "80048764",
+        "79887656"
+      ]
+    },
+    {
+      "id": "爆弾",
+      "labelJa": "爆弾",
+      "iconAlt": "爆弾ドロップ",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/10/fa108cb841d0e8c0341197b60441e82e.jpg",
+      "category": "caution",
+      "phrases": [
+        "爆弾",
+        "爆弾ドロップ"
+      ],
+      "sourcePostIds": [
+        "79620137"
+      ]
+    },
+    {
+      "id": "Sチャジ",
+      "labelJa": "Sチャージ",
+      "iconAlt": "スキルチャージ",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2021/11/000fad6c4f7945e90afb36cb37830ae9.png",
+      "category": "caution",
+      "phrases": [
+        "Sチャージ",
+        "スキルチャージ",
+        "パズドラ_スキルチャージギミック",
+        "スキルチャージ"
+      ],
+      "sourcePostIds": [
+        "79620137",
+        "79768151",
+        "79887656"
+      ]
+    },
+    {
+      "id": "猛毒目覚め",
+      "labelJa": "猛毒目覚め",
+      "iconAlt": "毒目覚め",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2017/05/480a4fb7dd2607e0dbad9adb59dc9040.jpg",
+      "category": "caution",
+      "phrases": [
+        "猛毒目覚め",
+        "毒目覚め",
+        "パズドラ_毒目覚め",
+        "毒/猛毒目覚め"
+      ],
+      "sourcePostIds": [
+        "79620137",
+        "79768151"
+      ]
+    },
+    {
+      "id": "バインド",
+      "labelJa": "バインド",
+      "iconAlt": "s_バインド",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/ca135b43895b408e8542d36745a59692.jpg",
+      "category": "required",
+      "phrases": [
+        "バインド",
+        "s_バインド"
+      ],
+      "sourcePostIds": [
+        "79768151"
+      ]
+    },
+    {
+      "id": "個別デバフ",
+      "labelJa": "個別デバフ",
+      "iconAlt": "パズドラ_個別攻撃力デバフ",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2022/06/c696e6d406dcc54c362dba5a934c0bf8.webp",
+      "category": "caution",
+      "phrases": [
+        "個別デバフ",
+        "パズドラ_個別攻撃力デバフ"
+      ],
+      "sourcePostIds": [
+        "79768151",
+        "79887656"
+      ]
+    },
+    {
+      "id": "毒",
+      "labelJa": "毒",
+      "iconAlt": "Poison",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/07/Poison.png",
+      "category": "caution",
+      "phrases": [
+        "毒",
+        "Poison"
+      ],
+      "sourcePostIds": [
+        "79768151",
+        "80048764"
+      ]
+    },
+    {
+      "id": "暗闇_超暗闇",
+      "labelJa": "暗闇/超暗闇",
+      "iconAlt": "暗闇",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/038178ecc69073adb8de353ff0064f5c.jpg",
+      "category": "caution",
+      "phrases": [
+        "暗闇/超暗闇",
+        "暗闇"
+      ],
+      "sourcePostIds": [
+        "79768151",
+        "80048764",
+        "79887656"
+      ]
+    },
+    {
+      "id": "ドロップ弱化",
+      "labelJa": "ドロップ弱化",
+      "iconAlt": "パズドラ_弱化ドロップ",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2022/08/a902465a506b93a4c36acae378bb6b9c.webp",
+      "category": "caution",
+      "phrases": [
+        "ドロップ弱化",
+        "パズドラ_弱化ドロップ"
+      ],
+      "sourcePostIds": [
+        "79768151",
+        "80048764",
+        "79887656"
+      ]
+    },
+    {
+      "id": "6x5マス",
+      "labelJa": "6×5マス",
+      "iconAlt": "盤面変化_アイコン_パズドラ",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2022/06/7206459aa7c9352dcba538a788b572ea.webp",
+      "category": "caution",
+      "phrases": [
+        "6×5マス",
+        "盤面変化_アイコン_パズドラ",
+        "6x5マス",
+        "7×6マス",
+        "7x6マス",
+        "5×4マス",
+        "盤面5×4マス",
+        "5x4マス"
+      ],
+      "sourcePostIds": [
+        "80048764",
+        "79887656"
+      ]
+    },
+    {
+      "id": "指定色目覚め",
+      "labelJa": "指定色目覚め",
+      "iconAlt": "目覚め",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/41bc054588f0fffc0217297e04d840b9.jpg",
+      "category": "caution",
+      "phrases": [
+        "指定色目覚め",
+        "目覚め"
+      ],
+      "sourcePostIds": [
+        "79887656"
+      ]
+    }
+  ]
+}

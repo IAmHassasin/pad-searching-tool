@@ -4,6 +4,7 @@ type Props = {
   title: string;
   summary?: string;
   defaultOpen?: boolean;
+  compact?: boolean;
   /** When true, section grows to fill remaining panel height (desktop awk grid). */
   fillHeight?: boolean;
   className?: string;

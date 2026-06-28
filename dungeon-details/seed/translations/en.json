@@ -1,0 +1,408 @@
+{
+  "titles": {
+    "79335344": "Silver Wing Challenge — counters & recommended teams (1.2B dungeon)",
+    "79620137": "Heavenly Realm Challenge — counters & recommended teams (1.3B dungeon)",
+    "79768151": "Wind & Cloud Challenge — counters & recommended teams | Ethereal Sky Realm",
+    "79887656": "Crimson Challenge — counters & recommended teams | Abyssal Heavy Realm",
+    "79970458": "Underworld Challenge — counters & recommended teams (1.4B dungeon)",
+    "80048764": "Misty Rain Challenge — counters & recommended teams | Ethereal Sky Realm",
+    "冥境チャレンジの攻略や対策とおすすめパーティ｜14億ダンジョン": "Underworld Challenge — counters & recommended teams (1.4B dungeon)",
+    "12億ダンジョンの攻略や対策とおすすめパーティ｜銀翼チャレンジ": "Silver Wing Challenge — counters & recommended teams (1.2B dungeon)",
+    "13億ダンジョンの攻略や対策とおすすめパーティ｜天境チャレンジ": "Heavenly Realm Challenge — counters & recommended teams (1.3B dungeon)",
+    "風雲チャレンジの攻略や対策とおすすめパーティ｜天空の儚域": "Wind & Cloud Challenge — counters & recommended teams | Ethereal Sky Realm",
+    "霧雨チャレンジの攻略や対策とおすすめパーティ｜天空の儚域": "Misty Rain Challenge — counters & recommended teams | Ethereal Sky Realm",
+    "紅蓮チャレンジの攻略や対策とおすすめパーティ｜奈落の重界": "Crimson Challenge — counters & recommended teams | Abyssal Heavy Realm"
+  },
+  "gimmicks": {
+    "覚醒無効": "Awoken Skill Bind",
+    "ダメージ吸収": "Damage Absorb",
+    "ダメジ吸収": "Damage Absorb",
+    "ダメージ無効": "Damage Void",
+    "ダメジ無効": "Damage Void",
+    "アシスト無効": "Assist Invalid",
+    "消せない状態": "Unmatchable",
+    "属性吸収": "Attribute Absorb",
+    "根性": "Resolve",
+    "スキル遅延": "Skill Delay",
+    "5x4マス": "5×4 board",
+    "5×4マス": "5×4 board",
+    "防御力上昇": "DEF boost",
+    "超暗闇目覚め": "Super Dark awakening",
+    "攻撃力減少": "ATK reduction",
+    "個別攻撃力デバフ": "Targeted ATK debuff",
+    "回復力減少": "RCV reduction",
+    "トゲ目覚め": "Spike awakening",
+    "操作時間短縮": "Time reduction",
+    "ルーレット": "Roulette",
+    "ルレット": "Roulette",
+    "毒/猛毒": "Poison / Mortal Poison",
+    "毒_猛毒": "Poison / Mortal Poison",
+    "上限変更": "Damage cap change",
+    "コンボ吸収": "Combo absorb",
+    "コンボ減算": "Combo reduction",
+    "超暗闇": "Super Dark",
+    "操作不可": "Cannot move",
+    "雲": "Cloud",
+    "シールド": "Shield",
+    "シルド": "Shield",
+    "最大HP減少": "Max HP reduction",
+    "ロック目覚め": "Jammer awakening",
+    "お邪魔目覚め": "Hazard awakening",
+    "落ちコンなし": "No skyfall",
+    "スキルリセット": "Skill reset",
+    "コンボ無効": "Combo void"
+  },
+  "types": {
+    "ドラゴンタイプ": "Dragon",
+    "神タイプ": "God",
+    "悪魔タイプ": "Devil",
+    "攻撃タイプ": "Attacker",
+    "体力タイプ": "Physical",
+    "回復タイプ": "Healer",
+    "バランスタイプ": "Balanced",
+    "マシンタイプ": "Machine"
+  },
+  "spawnNotes": {
+    "3体出現": "3 enemies",
+    "2体出現": "2 enemies",
+    "1体出現": "1 enemy"
+  },
+  "partLabels": {
+    "上部位": "Upper body",
+    "下部位": "Lower body"
+  },
+  "tags": {
+    "残り2体になると使用": "Used when 2 enemies remain",
+    "初回行動": "First turn action",
+    "超根性発動時": "When Super Resolve triggers",
+    "HP50%以下で1回使用": "Once below 50% HP",
+    "HP50%以下で1回使用?": "Once below 50% HP (?)",
+    "HP30%以下、通常行動": "Normal action below 30% HP",
+    "HP40%以下の通常行動①": "Normal action ① below 40% HP",
+    "HP40%以下の通常行動②": "Normal action ② below 40% HP",
+    "HP40%以下の通常行動③": "Normal action ③ below 40% HP",
+    "HP40%以下の通常行動④": "Normal action ④ below 40% HP",
+    "HP5%以下で1回使用": "Once below 5% HP",
+    "通常行動": "Normal action",
+    "通常行動①": "Normal action ①",
+    "通常行動②": "Normal action ②",
+    "通常行動③": "Normal action ③",
+    "通常行動④": "Normal action ④",
+    "部位1個破壊時": "When 1 part is broken",
+    "シールド全破壊時": "When all shields break",
+    "2ターン目に使用": "Used on turn 2",
+    "3ターン目に使用": "Used on turn 3",
+    "4ターン目に使用": "Used on turn 4",
+    "↑の次に使用": "Used after the above"
+  },
+  "phrases": [
+    [
+      "盤面5×4マス",
+      "5×4 board"
+    ],
+    [
+      "5×4マス",
+      "5×4 board"
+    ],
+    [
+      "状態異常無効",
+      "Status Shield"
+    ],
+    [
+      "スキル遅延",
+      "Skill Delay"
+    ],
+    [
+      "全員4ターンスキル遅延",
+      "4-turn Skill Delay (all)"
+    ],
+    [
+      "攻撃力10倍",
+      "10× ATK"
+    ],
+    [
+      "攻撃力4倍",
+      "4× ATK"
+    ],
+    [
+      "攻撃力4.5倍",
+      "4.5× ATK"
+    ],
+    [
+      "攻撃力5倍",
+      "5× ATK"
+    ],
+    [
+      "攻撃力激減",
+      "ATK greatly reduced"
+    ],
+    [
+      "回復力激減",
+      "RCV greatly reduced"
+    ],
+    [
+      "回復力半減",
+      "RCV halved"
+    ],
+    [
+      "被ダメージ半減",
+      "Incoming damage halved"
+    ],
+    [
+      "防御力70億増加",
+      "+7B DEF"
+    ],
+    [
+      "防御力50億増加",
+      "+5B DEF"
+    ],
+    [
+      "防御力20億増加",
+      "+2B DEF"
+    ],
+    [
+      "防御力100億増加",
+      "+10B DEF"
+    ],
+    [
+      "防御力25億増加",
+      "+2.5B DEF"
+    ],
+    [
+      "防御力30億増加",
+      "+3B DEF"
+    ],
+    [
+      "50億以上吸収",
+      "Absorb over 500M"
+    ],
+    [
+      "50億以上無効",
+      "Void over 500M"
+    ],
+    [
+      "100億以上無効",
+      "Void over 1B"
+    ],
+    [
+      "20億以上無効",
+      "Void over 200M"
+    ],
+    [
+      "10億以上無効",
+      "Void over 100M"
+    ],
+    [
+      "10億以上吸収",
+      "Absorb over 100M"
+    ],
+    [
+      "ランダム1色吸収",
+      "Absorb random attribute"
+    ],
+    [
+      "属性変化",
+      "Attribute change"
+    ],
+    [
+      "火か闇属性に変化",
+      "Change to Fire or Dark"
+    ],
+    [
+      "全ドロップ変化",
+      "Change all orbs"
+    ],
+    [
+      "全ドロップ暗闇",
+      "Dark all orbs"
+    ],
+    [
+      "ドロップ5個トゲ",
+      "5 spike orbs"
+    ],
+    [
+      "ドロップ4個トゲ",
+      "4 spike orbs"
+    ],
+    [
+      "ドロップ3個トゲ",
+      "3 spike orbs"
+    ],
+    [
+      "連続攻撃",
+      "multi-hit attack"
+    ],
+    [
+      "シールド1枚生成",
+      "Spawn 1 shield"
+    ],
+    [
+      "シールド2枚生成",
+      "Spawn 2 shields"
+    ],
+    [
+      "シールド3枚生成",
+      "Spawn 3 shields"
+    ],
+    [
+      "最大HP半減",
+      "Max HP halved"
+    ],
+    [
+      "操作時間激減",
+      "Time greatly reduced"
+    ],
+    [
+      "操作時間半減",
+      "Time halved"
+    ],
+    [
+      "最上段操作不可",
+      "Cannot move top row"
+    ],
+    [
+      "操作開始位置を左下に固定",
+      "Lock start position bottom-left"
+    ],
+    [
+      "スキル封印",
+      "Skill Bind"
+    ],
+    [
+      "スキル効果リセット",
+      "Skill effect reset"
+    ],
+    [
+      "覚醒無効",
+      "Awoken Skill Bind"
+    ],
+    [
+      "アシスト無効",
+      "Assist Invalid"
+    ],
+    [
+      "トゲ目覚め",
+      "Spike awakening"
+    ],
+    [
+      "超暗闇目覚め",
+      "Super Dark awakening"
+    ],
+    [
+      "弱化目覚め",
+      "Weak awakening"
+    ],
+    [
+      "目覚め",
+      "Awakening"
+    ],
+    [
+      "落ちコンなし",
+      "No skyfall"
+    ],
+    [
+      "消せない",
+      "Unmatchable"
+    ],
+    [
+      "半減",
+      "50% reduced"
+    ],
+    [
+      "超根性",
+      "Super Resolve"
+    ],
+    [
+      "根性",
+      "Resolve"
+    ],
+    [
+      "3ターン行動",
+      "3-turn cycle"
+    ],
+    [
+      "各部位の防御",
+      "Part DEF"
+    ],
+    [
+      "枚生成",
+      "spawn"
+    ],
+    [
+      "ターン",
+      "-turn"
+    ],
+    [
+      "ダメージ",
+      " damage"
+    ],
+    [
+      "億",
+      "00M"
+    ],
+    [
+      "兆",
+      "T"
+    ],
+    [
+      "冥境チャレンジ",
+      "Underworld Challenge"
+    ],
+    [
+      "紅蓮チャレンジ",
+      "Crimson Challenge"
+    ],
+    [
+      "天境チャレンジ",
+      "Heavenly Realm Challenge"
+    ],
+    [
+      "霧雨チャレンジ",
+      "Misty Rain Challenge"
+    ],
+    [
+      "風雲チャレンジ",
+      "Wind & Cloud Challenge"
+    ],
+    [
+      "銀翼チャレンジ",
+      "Silver Wing Challenge"
+    ],
+    [
+      "12億ダンジョン",
+      "1.2B dungeon"
+    ],
+    [
+      "13億ダンジョン",
+      "1.3B dungeon"
+    ],
+    [
+      "14億ダンジョン",
+      "1.4B dungeon"
+    ],
+    [
+      "天空の儚域",
+      "Ethereal Sky Realm"
+    ],
+    [
+      "奈落の重界",
+      "Abyssal Heavy Realm"
+    ],
+    [
+      "の攻略や対策とおすすめパーティ",
+      " — counters & recommended teams"
+    ],
+    [
+      "｜",
+      " | "
+    ],
+    [
+      "【",
+      "["
+    ],
+    [
+      "】",
+      "]"
+    ]
+  ]
+}
