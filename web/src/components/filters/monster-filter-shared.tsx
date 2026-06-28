@@ -8,6 +8,7 @@ import { MONSTER_TYPES } from "../../lib/monster-types";
 import { PAD_AWAKENING } from "../../lib/pad-constants";
 import { MonsterAttributeSpriteIcon } from "../MonsterAttributeSpriteIcon";
 import { MonsterTypeSpriteIcon } from "../MonsterTypeSpriteIcon";
+import { CollapsibleFilterSection } from "./collapsible-filter-section";
 
 export { MONSTER_TYPES };
 
@@ -37,7 +38,10 @@ export function hasActiveMonsterFilters(filters: MonsterFilters): boolean {
     filters.rcvMin != null ||
     filters.rcvMax != null ||
     filters.idQuery.trim().length > 0 ||
-    filters.awakeningIds.length > 0
+    filters.awakeningIds.length > 0 ||
+    filters.excludedAwakeningIds.length > 0 ||
+    filters.vanishOnly ||
+    filters.vanishAwakeningIds.length > 0
   );
 }
 
@@ -317,44 +321,36 @@ export function MonsterRarityFilter({
   onChange: (next: MonsterFilters) => void;
   compact?: boolean;
 }) {
+  const summary =
+    filters.rarity.size > 0
+      ? `${filters.rarity.size} / ${RARITIES.length} selected`
+      : `${RARITIES.length} tiers`;
+
   return (
-    <section>
-      {!compact && (
-        <div className="mb-2 flex items-baseline justify-between gap-2">
-          <p className="text-xs font-semibold text-white">Rarity</p>
-          <span className="shrink-0 text-[10px] text-[var(--color-muted)]">
-            {filters.rarity.size > 0
-              ? `${filters.rarity.size} / ${RARITIES.length} selected`
-              : `${RARITIES.length} tiers`}
-          </span>
-        </div>
-      )}
-      <div
-        className={
-          compact
-            ? ""
-            : "rounded-lg border border-[var(--color-border)] bg-[#0d1117]/60 p-2.5"
-        }
-      >
-        <div className={`flex flex-wrap ${compact ? "gap-1" : "gap-1.5"}`}>
-          {RARITIES.map((r) => (
-            <FilterChip
-              key={r}
-              label={`${r}★`}
-              selected={filters.rarity.has(r)}
-              accent={RARITY_ACCENT}
-              compact={compact}
-              onToggle={() =>
-                onChange({
-                  ...filters,
-                  rarity: toggleSet(filters.rarity, r),
-                })
-              }
-            />
-          ))}
-        </div>
+    <CollapsibleFilterSection
+      title="Rarity"
+      summary={summary}
+      compact={compact}
+      defaultOpen={false}
+    >
+      <div className={`flex flex-wrap ${compact ? "gap-1" : "gap-1.5"}`}>
+        {RARITIES.map((r) => (
+          <FilterChip
+            key={r}
+            label={`${r}★`}
+            selected={filters.rarity.has(r)}
+            accent={RARITY_ACCENT}
+            compact={compact}
+            onToggle={() =>
+              onChange({
+                ...filters,
+                rarity: toggleSet(filters.rarity, r),
+              })
+            }
+          />
+        ))}
       </div>
-    </section>
+    </CollapsibleFilterSection>
   );
 }
 
@@ -368,69 +364,60 @@ export function MonsterAttributeFilter({
   compact?: boolean;
 }) {
   const activeSlots = filters.attributeSlots.filter((s) => s.size > 0).length;
+  const summary =
+    activeSlots > 0
+      ? `${activeSlots} slot${activeSlots === 1 ? "" : "s"} active`
+      : "per slot";
 
   return (
-    <section>
-      {!compact && (
-        <div className="mb-2 flex items-baseline justify-between gap-2">
-          <p className="text-xs font-semibold text-white">Attribute</p>
-          <span className="shrink-0 text-[10px] text-[var(--color-muted)]">
-            {activeSlots > 0
-              ? `${activeSlots} slot${activeSlots === 1 ? "" : "s"} active`
-              : "per slot"}
-          </span>
-        </div>
+    <CollapsibleFilterSection
+      title="Attribute"
+      summary={summary}
+      compact={compact}
+      defaultOpen
+    >
+      {activeSlots > 0 && (
+        <AttributeMatchToggle
+          value={filters.attributeMatch}
+          onChange={(attributeMatch) =>
+            onChange({ ...filters, attributeMatch })
+          }
+        />
       )}
-      <div
-        className={
-          compact
-            ? ""
-            : "rounded-lg border border-[var(--color-border)] bg-[#0d1117]/60 p-2.5"
-        }
-      >
-        {activeSlots > 0 && (
-          <AttributeMatchToggle
-            value={filters.attributeMatch}
-            onChange={(attributeMatch) =>
-              onChange({ ...filters, attributeMatch })
-            }
-          />
-        )}
-        <div className={compact ? "space-y-1" : "space-y-2"}>
-          {ATTRIBUTE_SLOT_LABELS.map((slotLabel, slotIndex) => (
-            <div key={slotLabel}>
-              {!compact && (
-                <p className="mb-1 text-[10px] font-medium text-[var(--color-muted)]">
-                  {slotLabel}
-                </p>
-              )}
-              <div
-                className={`flex flex-nowrap overflow-x-auto pb-0.5 ${compact ? "gap-1" : "gap-1.5"}`}
-              >
-                {MONSTER_ATTRIBUTES.map(({ id, label }) => (
-                  <AttributeFilterIconChip
-                    key={`${slotIndex}-${id}`}
-                    attributeId={id}
-                    label={`${slotLabel}: ${label}`}
-                    selected={filters.attributeSlots[slotIndex].has(id)}
-                    onToggle={() =>
-                      onChange({
-                        ...filters,
-                        attributeSlots: toggleAttributeSlot(
-                          filters.attributeSlots,
-                          slotIndex,
-                          id
-                        ),
-                      })
-                    }
-                  />
-                ))}
-              </div>
+      <div className={compact ? "space-y-1" : "space-y-2"}>
+        {ATTRIBUTE_SLOT_LABELS.map((slotLabel, slotIndex) => (
+          <div key={slotLabel}>
+            {!compact && (
+              <p className="mb-1 text-[10px] font-medium text-[var(--color-muted)]">
+                {slotLabel}
+              </p>
+            )}
+            <div
+              className={`flex flex-nowrap overflow-x-auto pb-0.5 ${compact ? "gap-1" : "gap-1.5"}`}
+            >
+              {MONSTER_ATTRIBUTES.map(({ id, label }) => (
+                <AttributeFilterIconChip
+                  key={`${slotIndex}-${id}`}
+                  attributeId={id}
+                  label={`${slotLabel}: ${label}`}
+                  selected={filters.attributeSlots[slotIndex].has(id)}
+                  onToggle={() =>
+                    onChange({
+                      ...filters,
+                      attributeSlots: toggleAttributeSlot(
+                        filters.attributeSlots,
+                        slotIndex,
+                        id
+                      ),
+                    })
+                  }
+                />
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
-    </section>
+    </CollapsibleFilterSection>
   );
 }
 
@@ -443,59 +430,70 @@ export function MonsterTypeFilter({
   onChange: (next: MonsterFilters) => void;
   compact?: boolean;
 }) {
+  const summary =
+    filters.types.size > 0
+      ? `${filters.types.size} / ${MONSTER_TYPES.length} selected`
+      : "any slot";
+
   return (
-    <section>
-      {!compact && (
-        <div className="mb-2 flex items-baseline justify-between gap-2">
-          <p className="text-xs font-semibold text-white">Type</p>
-          <span className="shrink-0 text-[10px] text-[var(--color-muted)]">
-            {filters.types.size > 0
-              ? `${filters.types.size} / ${MONSTER_TYPES.length} selected`
-              : "any slot"}
-          </span>
-        </div>
-      )}
+    <CollapsibleFilterSection
+      title="Type"
+      summary={summary}
+      compact={compact}
+      defaultOpen={false}
+    >
       <div
-        className={
-          compact
-            ? ""
-            : "rounded-lg border border-[var(--color-border)] bg-[#0d1117]/60 p-2.5"
-        }
+        className={`flex flex-nowrap overflow-x-auto pb-0.5 ${compact ? "gap-1" : "gap-1.5"}`}
       >
-        <div
-          className={`flex flex-nowrap overflow-x-auto pb-0.5 ${compact ? "gap-1" : "gap-1.5"}`}
-        >
-          {MONSTER_TYPES.map(({ id, label }) => (
-            <TypeFilterIconChip
-              key={id}
-              typeId={id}
-              label={label}
-              selected={filters.types.has(id)}
-              onToggle={() =>
-                onChange({
-                  ...filters,
-                  types: toggleSet(filters.types, id),
-                })
-              }
-            />
-          ))}
-        </div>
+        {MONSTER_TYPES.map(({ id, label }) => (
+          <TypeFilterIconChip
+            key={id}
+            typeId={id}
+            label={label}
+            selected={filters.types.has(id)}
+            onToggle={() =>
+              onChange({
+                ...filters,
+                types: toggleSet(filters.types, id),
+              })
+            }
+          />
+        ))}
       </div>
-    </section>
+    </CollapsibleFilterSection>
   );
 }
 
 export function MonsterStatsFilter({
   filters,
   onChange,
+  compact = false,
 }: {
   filters: MonsterFilters;
   onChange: (next: MonsterFilters) => void;
+  compact?: boolean;
 }) {
+  const activeCount = [
+    filters.hpMin,
+    filters.hpMax,
+    filters.atkMin,
+    filters.atkMax,
+    filters.rcvMin,
+    filters.rcvMax,
+  ].filter((v) => v != null).length;
+
   return (
-    <section className="border-t border-[var(--color-border)] pt-3">
-      <p className="mb-2 text-xs font-semibold text-white">Stats range</p>
-      <div className="grid grid-cols-2 gap-2 rounded-lg border border-[var(--color-border)] bg-[#0d1117]/60 p-2.5">
+    <CollapsibleFilterSection
+      title="Stats range"
+      summary={
+        activeCount > 0
+          ? `${activeCount} bound${activeCount === 1 ? "" : "s"}`
+          : "HP / ATK / RCV"
+      }
+      compact={compact}
+      defaultOpen={false}
+    >
+      <div className="grid grid-cols-2 gap-2">
         {numInput("HP min", filters.hpMin, (hpMin) =>
           onChange({ ...filters, hpMin })
         )}
@@ -515,7 +513,7 @@ export function MonsterStatsFilter({
           onChange({ ...filters, rcvMax })
         )}
       </div>
-    </section>
+    </CollapsibleFilterSection>
   );
 }
 
@@ -528,13 +526,15 @@ export function MonsterIdFilter({
   onChange: (next: MonsterFilters) => void;
   compact?: boolean;
 }) {
+  const summary = filters.idQuery.trim() ? "search active" : "monster_id, NA#, name";
+
   return (
-    <section>
-      {!compact && (
-        <p className="mb-1 text-xs font-medium text-[var(--color-muted)]">
-          ID / NA# / name
-        </p>
-      )}
+    <CollapsibleFilterSection
+      title="ID / NA# / name"
+      summary={summary}
+      compact={compact}
+      defaultOpen={false}
+    >
       <input
         type="search"
         placeholder="monster_id, NA#, name…"
@@ -544,7 +544,7 @@ export function MonsterIdFilter({
         value={filters.idQuery}
         onChange={(e) => onChange({ ...filters, idQuery: e.target.value })}
       />
-    </section>
+    </CollapsibleFilterSection>
   );
 }
 

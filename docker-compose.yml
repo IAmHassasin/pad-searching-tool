@@ -13,10 +13,12 @@ services:
       RUN_TRANSFORM: "true"
       HTTP_HOST: "0.0.0.0"
       HTTP_PORT: "3000"
+      VANISH_AWOKEN_SQLITE_PATH: /seed/gamewith-vanish.sqlite
     volumes:
       - dadguide_working_sqlite:/data
       # File thật trên máy host (đường dẫn trái) phải tồn tại là FILE .sqlite — khớp với SQLITE_SNAPSHOT_PATH trong .env.
       - ./seed/dadguide.sqlite:/seed/dadguide.sqlite:ro
+      - ./seed/gamewith-vanish.sqlite:/seed/gamewith-vanish.sqlite:ro
 
 volumes:
   dadguide_working_sqlite:

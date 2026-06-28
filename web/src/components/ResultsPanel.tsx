@@ -1,5 +1,5 @@
 import type { MonsterRecord } from "../types";
-import { MonsterDetailCard } from "./MonsterDetailCard";
+import { MonsterDetailPanel } from "./MonsterDetailPanel";
 import { ResultsList } from "./ResultsList";
 
 type Props = {
@@ -40,9 +40,9 @@ export function ResultsPanel({
           />
         </div>
 
-        <div className="flex min-h-0 items-start justify-center overflow-auto bg-[#0a0e12] p-3">
+        <div className="relative flex min-h-0 items-stretch justify-center overflow-auto bg-[#0a0e12] p-3">
           {selected ? (
-            <MonsterDetailCard row={selected} />
+            <MonsterDetailPanel row={selected} onSelect={onSelect} />
           ) : (
             <p className="text-sm text-[var(--color-muted)]">
               Select a row to view details.

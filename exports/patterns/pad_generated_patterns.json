@@ -943,6 +943,46 @@
             "status": "existing_tag",
             "tag_id": 26,
             "tag_name_en": "Enhanced ATK"
+        },
+        {
+            "example_matched_text": "For 2 turns, bypass att. absorb shield effects",
+            "regex_pattern": "bypass att\\. absorb(?: shield effects?)?",
+            "skill_type": "active_skill",
+            "status": "new_effect_detected",
+            "tag_id": null,
+            "tag_name_en": "bypass_att_absorb"
+        },
+        {
+            "example_matched_text": "For 2 turns, bypass damage absorb shield effects",
+            "regex_pattern": "(?:bypass |and )damage absorb shield effects?",
+            "skill_type": "active_skill",
+            "status": "new_effect_detected",
+            "tag_id": null,
+            "tag_name_en": "bypass_dmg_absorb"
+        },
+        {
+            "example_matched_text": "Remove 2 enemy's barriers",
+            "regex_pattern": "Remove ([1-5]) enemy's barriers?",
+            "skill_type": "active_skill",
+            "status": "new_effect_detected",
+            "tag_id": null,
+            "tag_name_en": "remove_barrier"
+        },
+        {
+            "example_matched_text": "For 6 turns, 1.5x HP",
+            "regex_pattern": "For (\\d+) turn(?:s)?, (\\d+\\.?\\d*)x HP",
+            "skill_type": "active_skill",
+            "status": "new_effect_detected",
+            "tag_id": null,
+            "tag_name_en": "enhanced_hp_burst"
+        },
+        {
+            "example_matched_text": "For 10 turns, recover 40% of max HP",
+            "regex_pattern": "(?:For (\\d+) turn(?:s)?, )?recover (\\d+)% of max HP",
+            "skill_type": "active_skill",
+            "status": "new_effect_detected",
+            "tag_id": null,
+            "tag_name_en": "recover_max_hp_percent"
         }
     ]
 }

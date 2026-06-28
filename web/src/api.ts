@@ -1,4 +1,6 @@
 import type {
+  CollabGroupResponse,
+  EvoTreeResponse,
   MonsterFilters,
   MonsterRecord,
   MonsterSearchResponse,
@@ -112,7 +114,11 @@ function monsterParams(q: URLSearchParams, f: MonsterFilters) {
   if (f.rcvMax != null) q.set("rcvMax", String(f.rcvMax));
   if (f.idQuery.trim()) q.set("idQuery", f.idQuery.trim());
   setCsv(q, "awakeningIds", f.awakeningIds);
-  if (f.awakeningIds.length > 0) q.set("awakeningMatch", f.awakeningMatch);
+  if (f.awakeningIds.length > 0) q.set("awakeningMatch", "all");
+  setCsv(q, "excludedAwakeningIds", f.excludedAwakeningIds);
+  if (f.vanishOnly) q.set("vanishOnly", "1");
+  setCsv(q, "vanishAwakeningIds", f.vanishAwakeningIds);
+  if (f.vanishAwakeningIds.length > 0) q.set("vanishAwakeningMatch", "all");
 }
 
 function skillParams(q: URLSearchParams, f: SkillFilters) {
@@ -168,4 +174,16 @@ export async function searchAllMonsters(
     offset += limit;
   }
   return { rows: all, total };
+}
+
+export function fetchEvoTree(monsterId: number) {
+  return getJson<EvoTreeResponse>(
+    `/monsters/evo-tree?monsterId=${encodeURIComponent(String(monsterId))}`
+  );
+}
+
+export function fetchCollabGroup(monsterId: number) {
+  return getJson<CollabGroupResponse>(
+    `/monsters/collab-group?monsterId=${encodeURIComponent(String(monsterId))}`
+  );
 }

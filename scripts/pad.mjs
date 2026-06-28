@@ -69,6 +69,8 @@ Loads .env from the project root, then runs a command.
   build       TypeScript compile only (nest build).
   snapshot    Forces IMPORT_MODE=download — immutable file at SNAPSHOT_OUTPUT_PATH.
   seed-db     Download community SQLite → seed/dadguide.sqlite (DB_DOWNLOAD_URL in .env).
+  import-vanish-db       Fetch GameWith vanish grants → gamewith-vanish.sqlite.
+  generate-vanish-map    Regenerate vanish-awoken-name-map.json from dadguide Untranslated rows.
   merge       import-external-db (IMPORT_MODE from .env: merge | replace).
   transform   categorize only (START_HTTP=false, RUN_TRANSFORM=true).
   serve       HTTP server (forces START_HTTP=true; other vars from .env).
@@ -106,6 +108,20 @@ switch (cmd) {
   case "seed-db":
   case "seed":
     run(process.execPath, [path.join(root, "scripts", "download-seed-db.mjs")]);
+    break;
+
+  case "import-vanish-db":
+    run(process.execPath, [
+      path.join(root, "scripts", "import-gamewith-vanish-db.mjs"),
+      ...forwarded,
+    ]);
+    break;
+
+  case "generate-vanish-map":
+    run(process.execPath, [
+      path.join(root, "scripts", "generate-vanish-awoken-name-map.mjs"),
+      ...forwarded,
+    ]);
     break;
 
   case "snapshot":

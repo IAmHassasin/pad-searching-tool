@@ -5,7 +5,7 @@ import type {
   PatternGroupsManifest,
   SkillFilters,
 } from "../types";
-import { MonsterDetailCard } from "./MonsterDetailCard";
+import { MonsterDetailPanel } from "./MonsterDetailPanel";
 import { ResultsList } from "./ResultsList";
 import {
   MonsterActiveFilterChips,
@@ -72,7 +72,6 @@ function MobileMonsterFilterBar({
   filters: MonsterFilters;
   onChange: (next: MonsterFilters) => void;
 }) {
-  const [statsExpanded, setStatsExpanded] = useState(false);
   const active = hasActiveMonsterFilters(filters);
 
   return (
@@ -85,17 +84,6 @@ function MobileMonsterFilterBar({
           {active && (
             <MonsterFilterClearButton filters={filters} onChange={onChange} />
           )}
-          <button
-            type="button"
-            onClick={() => setStatsExpanded((v) => !v)}
-            className={`rounded border px-2 py-0.5 text-[10px] ${
-              statsExpanded
-                ? "border-[var(--color-accent)] text-[var(--color-accent)]"
-                : "border-[var(--color-border)] text-[var(--color-muted)]"
-            }`}
-          >
-            Stats {statsExpanded ? "▾" : "▸"}
-          </button>
         </div>
       </div>
 
@@ -113,13 +101,9 @@ function MobileMonsterFilterBar({
             compact
           />
           <MonsterTypeFilter filters={filters} onChange={onChange} compact />
+          <MonsterStatsFilter filters={filters} onChange={onChange} compact />
           <MonsterIdFilter filters={filters} onChange={onChange} compact />
         </div>
-        {statsExpanded && (
-          <div className="mt-2 border-t border-[var(--color-border)] pt-2">
-            <MonsterStatsFilter filters={filters} onChange={onChange} />
-          </div>
-        )}
       </div>
     </section>
   );
@@ -130,11 +114,13 @@ function MobileDetailPanel({
   collapsed,
   onToggleCollapsed,
   onClose,
+  onSelect,
 }: {
   selected: MonsterRecord;
   collapsed: boolean;
   onToggleCollapsed: () => void;
   onClose: () => void;
+  onSelect: (row: MonsterRecord) => void;
 }) {
   if (collapsed) {
     return (
@@ -171,8 +157,8 @@ function MobileDetailPanel({
           ×
         </button>
       </div>
-      <div className="min-h-0 flex-1 overflow-auto p-2">
-        <MonsterDetailCard row={selected} />
+      <div className="relative min-h-0 flex-1 overflow-auto p-2">
+        <MonsterDetailPanel row={selected} onSelect={onSelect} />
       </div>
     </aside>
   );
@@ -207,7 +193,9 @@ function MobileBottomFilterBar({
   const selectedActive = skillFilters.selectedPatterns.filter(
     (p) => p.skillType === "active_skill"
   ).length;
-  const selectedAwk = monsterFilters.awakeningIds.length;
+  const selectedAwk =
+    monsterFilters.awakeningIds.length +
+    monsterFilters.excludedAwakeningIds.length;
 
   const panelTitle =
     openMode === "leader_skill"
@@ -230,13 +218,15 @@ function MobileBottomFilterBar({
             />
             <p className="text-xs font-semibold text-white">{panelTitle}</p>
             {openMode === "awakening" ? (
-              monsterFilters.awakeningIds.length > 0 && (
+              (monsterFilters.awakeningIds.length > 0 ||
+                monsterFilters.excludedAwakeningIds.length > 0) && (
                 <button
                   type="button"
                   onClick={() =>
                     onMonsterFiltersChange({
                       ...monsterFilters,
                       awakeningIds: [],
+                      excludedAwakeningIds: [],
                     })
                   }
                   className="rounded border border-[var(--color-border)] px-2 py-0.5 text-[10px] text-[var(--color-muted)]"
@@ -441,6 +431,7 @@ export function MobileWebviewLayout({
               collapsed={detailCollapsed}
               onToggleCollapsed={() => setDetailCollapsed((v) => !v)}
               onClose={() => onSelect(null)}
+              onSelect={(row) => handleSelect(row)}
             />
           )}
         </div>

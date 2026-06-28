@@ -146,7 +146,10 @@ sync-app: check-host
 		--exclude=web/dist \
 		--exclude=.env \
 		--exclude=.env.local \
-		--exclude='*.sqlite' \
+		--exclude='seed/dadguide.sqlite' \
+		--exclude='pad.db' \
+		--exclude='pad.working.sqlite' \
+		--exclude='test.db' \
 		--exclude='*.sqlite-*' \
 		--exclude=exports/category-bundles \
 		--exclude=terminals \
