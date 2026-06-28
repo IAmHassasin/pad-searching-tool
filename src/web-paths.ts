@@ -8,6 +8,7 @@ export const API_PREFIXES = [
   "/admin",
   "/pad-categorized",
   "/awoken-skills",
+  "/api",
 ];
 
 export function isApiPath(path: string): boolean {

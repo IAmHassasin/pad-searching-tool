@@ -1,0 +1,7 @@
+# One AppMedia URL/postId per line (dungeon-master + dungeon-import)
+https://appmedia.jp/pazudora/79970458
+https://appmedia.jp/pazudora/79335344
+https://appmedia.jp/pazudora/79620137
+https://appmedia.jp/pazudora/79768151
+https://appmedia.jp/pazudora/80048764
+https://appmedia.jp/pazudora/79887656

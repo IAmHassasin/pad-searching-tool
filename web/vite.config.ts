@@ -18,6 +18,7 @@ export default defineConfig({
       "/admin": { target: apiTarget, changeOrigin: true },
       "/pad-categorized": { target: apiTarget, changeOrigin: true },
       "/awoken-skills": { target: apiTarget, changeOrigin: true },
+      "/api": { target: apiTarget, changeOrigin: true },
     },
   },
 });

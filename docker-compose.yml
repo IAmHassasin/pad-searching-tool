@@ -19,6 +19,7 @@ services:
       # File thật trên máy host (đường dẫn trái) phải tồn tại là FILE .sqlite — khớp với SQLITE_SNAPSHOT_PATH trong .env.
       - ./seed/dadguide.sqlite:/seed/dadguide.sqlite:ro
       - ./seed/gamewith-vanish.sqlite:/seed/gamewith-vanish.sqlite:ro
+      - ./dungeon-details/seed:/app/dungeon-details/seed:ro
 
 volumes:
   dadguide_working_sqlite:

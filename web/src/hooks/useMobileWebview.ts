@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
-const MOBILE_MAX_WIDTH = 768;
+/** Align with desktop xl grid breakpoint so medium-width viewports use mobile layout. */
+const MOBILE_MAX_WIDTH = 1280;
 
 function readMobileWebviewFlag(): boolean {
   if (typeof window === "undefined") return false;
