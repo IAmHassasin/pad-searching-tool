@@ -1,4 +1,5 @@
 import type { PatternGroupsManifest, SkillFilters } from "../../types";
+import { CollapsibleFilterSection } from "./collapsible-filter-section";
 
 export function tagKey(tag: {
   tag_id: number | null;
@@ -165,22 +166,19 @@ export function SkillPatternGroup({
   const selectedInGroup = filters.selectedPatterns.filter(
     (s) => s.skillType === skillType
   ).length;
+  const summary =
+    selectedInGroup > 0
+      ? `${selectedInGroup} / ${totalTags} selected`
+      : `${totalTags} tags`;
 
   return (
-    <section>
-      <div className="mb-2 flex items-baseline justify-between gap-2">
-        <p className="text-xs font-semibold text-white">{title}</p>
-        <span className="shrink-0 text-[10px] text-[var(--color-muted)]">
-          {selectedInGroup > 0
-            ? `${selectedInGroup} / ${totalTags} selected`
-            : `${totalTags} tags`}
-        </span>
-      </div>
-      <div
-        className={`space-y-3 rounded-lg border border-[var(--color-border)] bg-[#0d1117]/60 ${
-          compact ? "p-2" : "p-2.5"
-        }`}
-      >
+    <CollapsibleFilterSection
+      title={title}
+      summary={summary}
+      compact={compact}
+      defaultOpen={selectedInGroup > 0}
+    >
+      <div className={`space-y-3 ${compact ? "" : ""}`}>
         {categories.map((cat) => {
           const accent =
             CATEGORY_ACCENT[cat.category_id] ?? "var(--color-accent)";
@@ -219,7 +217,7 @@ export function SkillPatternGroup({
           );
         })}
       </div>
-    </section>
+    </CollapsibleFilterSection>
   );
 }
 
@@ -281,15 +279,28 @@ export function SkillSelectedPatternChips({
 export function SkillTextSearchSection({
   filters,
   onChange,
+  compact = false,
 }: {
   filters: SkillFilters;
   onChange: (next: SkillFilters) => void;
+  compact?: boolean;
 }) {
+  const activeFields = [
+    filters.activeSkillText.trim(),
+    filters.leaderSkillText.trim(),
+  ].filter(Boolean).length;
+
   return (
-    <section className="border-t border-[var(--color-border)] pt-3">
-      <p className="mb-1 text-xs font-medium text-[var(--color-muted)]">
-        Skill text search (additional)
-      </p>
+    <CollapsibleFilterSection
+      title="Skill text search"
+      summary={
+        activeFields > 0
+          ? `${activeFields} field${activeFields === 1 ? "" : "s"} active`
+          : "substring filter"
+      }
+      compact={compact}
+      defaultOpen={activeFields > 0}
+    >
       <select
         className="mb-2 w-full rounded border border-[var(--color-border)] bg-[#0d1117] px-2 py-1 text-xs"
         value={filters.skillTextMode}
@@ -328,6 +339,6 @@ export function SkillTextSearchSection({
           placeholder="Substring filter (AND with patterns)…"
         />
       </label>
-    </section>
+    </CollapsibleFilterSection>
   );
 }

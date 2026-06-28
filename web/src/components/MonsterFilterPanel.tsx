@@ -21,12 +21,12 @@ export function MonsterFilterPanel({ filters, onChange }: Props) {
 
   return (
     <aside className="flex h-full min-w-0 flex-col overflow-hidden border-r border-[var(--color-border)] bg-[var(--color-panel)] p-3">
-      <div className="shrink-0 space-y-4">
+      <div className="shrink-0">
         <h2 className="text-sm font-semibold tracking-wide text-[var(--color-accent)]">
           Monster
         </h2>
 
-        <div className="flex items-start justify-between gap-2">
+        <div className="mt-2 flex items-start justify-between gap-2">
           <p className="text-[10px] text-[var(--color-muted)]/80">
             Tap chips to filter stats & attributes
           </p>
@@ -36,14 +36,16 @@ export function MonsterFilterPanel({ filters, onChange }: Props) {
         </div>
 
         <MonsterActiveFilterChips filters={filters} onChange={onChange} />
-        <MonsterRarityFilter filters={filters} onChange={onChange} />
-        <MonsterAttributeFilter filters={filters} onChange={onChange} />
-        <MonsterTypeFilter filters={filters} onChange={onChange} />
-        <MonsterStatsFilter filters={filters} onChange={onChange} />
-        <MonsterIdFilter filters={filters} onChange={onChange} />
       </div>
 
-      <div className="mt-4 flex min-h-0 flex-1 flex-col">
+      <div className="mt-3 flex min-h-0 flex-1 flex-col gap-2 overflow-hidden">
+        <div className="shrink-0 space-y-2">
+          <MonsterRarityFilter filters={filters} onChange={onChange} />
+          <MonsterAttributeFilter filters={filters} onChange={onChange} />
+          <MonsterTypeFilter filters={filters} onChange={onChange} />
+          <MonsterStatsFilter filters={filters} onChange={onChange} />
+          <MonsterIdFilter filters={filters} onChange={onChange} />
+        </div>
         <MonsterAwakeningFilter
           filters={filters}
           onChange={onChange}

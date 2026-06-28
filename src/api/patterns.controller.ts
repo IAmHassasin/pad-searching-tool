@@ -5,10 +5,12 @@ import {
   Query,
 } from "@nestjs/common";
 import { PatternCatalogService } from "../patterns/pattern-catalog.service";
+import { MonsterRelationsService } from "./monster-relations.service";
 import {
   MonsterSearchFilters,
   PatternSearchService,
 } from "./pattern-search.service";
+import type { VanishSearchFilters } from "./vanish-awoken.service";
 
 function parseCsv(raw: string | undefined): string[] {
   if (!raw?.trim()) return [];
@@ -46,7 +48,8 @@ function parseOptionalNumber(raw: string | undefined): number | null {
 export class PatternsController {
   constructor(
     private readonly catalog: PatternCatalogService,
-    private readonly search: PatternSearchService
+    private readonly search: PatternSearchService,
+    private readonly relations: MonsterRelationsService
   ) {}
 
   @Get("patterns/groups")
@@ -81,6 +84,11 @@ export class PatternsController {
     @Query("idQuery") idQuery?: string,
     @Query("awakeningIds") awakeningIdsRaw?: string,
     @Query("awakeningMatch") awakeningMatchRaw?: string,
+    @Query("excludedAwakeningIds") excludedAwakeningIdsRaw?: string,
+    @Query("vanishOnly") vanishOnlyRaw?: string,
+    @Query("vanishAwakeningIds") vanishAwakeningIdsRaw?: string,
+    @Query("vanishAwakeningMatch") vanishAwakeningMatchRaw?: string,
+    @Query("excludedVanishAwakeningIds") excludedVanishAwakeningIdsRaw?: string,
     @Query("limit") limitRaw?: string,
     @Query("offset") offsetRaw?: string
   ) {
@@ -102,6 +110,17 @@ export class PatternsController {
     const awakeningMatch =
       awakeningMatchRaw?.trim() === "any" ? "any" : ("all" as const);
     const awakeningIds = parseIntCsv(awakeningIdsRaw);
+    const excludedAwakeningIds = parseIntCsv(excludedAwakeningIdsRaw);
+
+    const vanishOnly =
+      vanishOnlyRaw?.trim() === "1" ||
+      vanishOnlyRaw?.trim().toLowerCase() === "true";
+    const vanishAwakeningMatch =
+      vanishAwakeningMatchRaw?.trim() === "any" ? "any" : ("all" as const);
+    const vanishAwakeningIds = parseIntCsv(vanishAwakeningIdsRaw);
+    const excludedVanishAwakeningIds = parseIntCsv(
+      excludedVanishAwakeningIdsRaw
+    );
 
     const types = parseIntCsv(typesRaw);
     const attributeSlots: [number[], number[], number[]] = [
@@ -127,6 +146,9 @@ export class PatternsController {
       idQuery: idQuery?.trim() || undefined,
       awakeningIds: awakeningIds.length ? awakeningIds : undefined,
       awakeningMatch: awakeningIds.length ? awakeningMatch : undefined,
+      excludedAwakeningIds: excludedAwakeningIds.length
+        ? excludedAwakeningIds
+        : undefined,
     };
 
     const hasMonsterFilters =
@@ -140,7 +162,28 @@ export class PatternsController {
       monster.rcvMin != null ||
       monster.rcvMax != null ||
       Boolean(monster.idQuery) ||
-      (monster.awakeningIds?.length ?? 0) > 0;
+      (monster.awakeningIds?.length ?? 0) > 0 ||
+      (monster.excludedAwakeningIds?.length ?? 0) > 0;
+
+    const hasVanishFilters =
+      vanishOnly ||
+      vanishAwakeningIds.length > 0 ||
+      excludedVanishAwakeningIds.length > 0;
+
+    const vanish: VanishSearchFilters | undefined = hasVanishFilters
+      ? {
+          vanishOnly: vanishOnly || undefined,
+          vanishAwakeningIds: vanishAwakeningIds.length
+            ? vanishAwakeningIds
+            : undefined,
+          vanishAwakeningMatch: vanishAwakeningIds.length
+            ? vanishAwakeningMatch
+            : undefined,
+          excludedVanishAwakeningIds: excludedVanishAwakeningIds.length
+            ? excludedVanishAwakeningIds
+            : undefined,
+        }
+      : undefined;
 
     const activeTags = parseCsv(activeTagsRaw);
     const leaderTags = parseCsv(leaderTagsRaw);
@@ -153,8 +196,27 @@ export class PatternsController {
       leaderSkillText,
       skillTextMode: skillTextModeParsed,
       monster: hasMonsterFilters ? monster : undefined,
+      vanish,
       limit,
       offset,
     });
+  }
+
+  @Get("monsters/evo-tree")
+  evoTree(@Query("monsterId") monsterIdRaw?: string) {
+    const monsterId = Number(monsterIdRaw);
+    if (!Number.isFinite(monsterId) || monsterId <= 0) {
+      throw new BadRequestException("monsterId is required.");
+    }
+    return this.relations.getEvoTree(monsterId);
+  }
+
+  @Get("monsters/collab-group")
+  collabGroup(@Query("monsterId") monsterIdRaw?: string) {
+    const monsterId = Number(monsterIdRaw);
+    if (!Number.isFinite(monsterId) || monsterId <= 0) {
+      throw new BadRequestException("monsterId is required.");
+    }
+    return this.relations.getCollabGroup(monsterId);
   }
 }

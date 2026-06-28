@@ -8,6 +8,7 @@ type Props = {
   style?: CSSProperties;
   /** portrait = full art; icon = small square (media/icons). */
   variant?: "portrait" | "icon";
+  onLoad?: () => void;
 };
 
 export function MonsterPortrait({
@@ -16,6 +17,7 @@ export function MonsterPortrait({
   className = "",
   style,
   variant = "portrait",
+  onLoad,
 }: Props) {
   const [failed, setFailed] = useState(false);
 
@@ -43,6 +45,7 @@ export function MonsterPortrait({
       style={style}
       loading="lazy"
       decoding="async"
+      onLoad={onLoad}
       onError={() => setFailed(true)}
     />
   );

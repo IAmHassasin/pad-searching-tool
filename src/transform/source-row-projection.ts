@@ -5,7 +5,11 @@
 
 const IDENT = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
 
-const INTERNAL_KEYS = new Set(["__source_pk", "__rowid"]);
+const INTERNAL_KEYS = new Set([
+  "__source_pk",
+  "__rowid",
+  "vanish_granted_awoken_ids",
+]);
 
 export function parseSourceColumnWhitelist(
   raw: string | undefined

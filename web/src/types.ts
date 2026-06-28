@@ -5,6 +5,9 @@ export type MonsterRecord = {
   monster_no_na?: number | null;
   name_en?: string | null;
   name_jp?: string | null;
+  base_id?: number | null;
+  group_id?: number | null;
+  collab_id?: number | null;
   hp_max?: number | null;
   atk_max?: number | null;
   rcv_max?: number | null;
@@ -19,11 +22,15 @@ export type MonsterRecord = {
   super_awakenings?: string | null;
   sync_awsid?: number | null;
   active_skill_name_en?: string | null;
+  active_skill_cooldown_min?: number | null;
+  active_skill_cooldown_max?: number | null;
   leader_skill_name_en?: string | null;
   active_skill_desc_en?: string | null;
   leader_skill_desc_en?: string | null;
   active_skill_tags?: string | null;
   leader_skill_tags?: string | null;
+  /** Awoken skill ids granted when this assist vanishes (GameWith supplement DB). */
+  vanish_granted_awoken_ids?: number[] | null;
   __source_pk?: number;
 };
 
@@ -63,6 +70,22 @@ export type MonsterSearchResponse = {
   rows: MonsterRecord[];
 };
 
+export type EvoTreeEdge = { from: number; to: number };
+
+export type EvoTreeResponse = {
+  monsterId: number;
+  baseId: number;
+  nodes: MonsterRecord[];
+  edges: EvoTreeEdge[];
+};
+
+export type CollabGroupResponse = {
+  monsterId: number;
+  groupId: number;
+  groupName: string | null;
+  byRarity: { rarity: number; monsters: MonsterRecord[] }[];
+};
+
 export type MonsterFilters = {
   rarity: Set<number>;
   /** Per-slot filters: index 0 → attribute_1_id, etc. */
@@ -78,7 +101,14 @@ export type MonsterFilters = {
   idQuery: string;
   /** Ordered stack — duplicates allowed (e.g. three × HP+). */
   awakeningIds: number[];
-  awakeningMatch: "any" | "all";
+  /** Must not have these awakening ids (checked in regular + super + sync). */
+  excludedAwakeningIds: number[];
+  /** Include | Exclude (slots) | Vanish (active-skill grants). */
+  awakeningPickerMode: "include" | "exclude" | "vanish";
+  /** Restrict results to monsters present in the vanish supplement DB. */
+  vanishOnly: boolean;
+  /** Ordered stack — awokens granted on vanish (active skill). */
+  vanishAwakeningIds: number[];
 };
 
 export type SkillFilters = {
@@ -102,7 +132,10 @@ export const EMPTY_MONSTER_FILTERS: MonsterFilters = {
   rcvMax: null,
   idQuery: "",
   awakeningIds: [],
-  awakeningMatch: "all",
+  excludedAwakeningIds: [],
+  awakeningPickerMode: "include",
+  vanishOnly: false,
+  vanishAwakeningIds: [],
 };
 
 export const EMPTY_SKILL_FILTERS: SkillFilters = {

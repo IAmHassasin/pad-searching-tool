@@ -32,6 +32,7 @@ COPY --from=builder /app/dist ./dist
 COPY --from=web-builder /app/web/dist ./public
 COPY docs ./docs
 COPY exports/patterns ./exports/patterns
+COPY seed/gamewith-vanish.sqlite /seed/gamewith-vanish.sqlite
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 RUN sed -i 's/\r$//' /docker-entrypoint.sh && chmod +x /docker-entrypoint.sh
 
@@ -47,6 +48,7 @@ ENV TYPEORM_SYNC=true
 ENV RUN_TRANSFORM=true
 ENV START_HTTP=true
 ENV HTTP_PORT=3000
+ENV VANISH_AWOKEN_SQLITE_PATH=/seed/gamewith-vanish.sqlite
 
 EXPOSE 3000
 

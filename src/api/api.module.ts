@@ -6,10 +6,12 @@ import { AwokenSkillsService } from "./awoken-skills.service";
 import { CategoryBundlesController } from "./category-bundles.controller";
 import { CategoryBundlesService } from "./category-bundles.service";
 import { FilterCategoriesService } from "./filter-categories.service";
+import { MonsterRelationsService } from "./monster-relations.service";
 import { PatternSearchService } from "./pattern-search.service";
 import { PatternsController } from "./patterns.controller";
 import { PadsApiController } from "./pads-api.controller";
 import { SourceRowsService } from "./source-rows.service";
+import { VanishAwokenService } from "./vanish-awoken.service";
 
 @Module({
   imports: [TypeOrmModule.forFeature([PadCategorized])],
@@ -17,10 +19,12 @@ import { SourceRowsService } from "./source-rows.service";
   providers: [
     PatternCatalogService,
     PatternSearchService,
+    MonsterRelationsService,
     SourceRowsService,
     AwokenSkillsService,
     CategoryBundlesService,
     FilterCategoriesService,
+    VanishAwokenService,
   ],
 })
 export class ApiModule {}
