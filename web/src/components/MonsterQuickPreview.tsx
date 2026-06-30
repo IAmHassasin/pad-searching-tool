@@ -5,11 +5,13 @@ import {
   resolvePrefixedAwakeningIds,
   resolveSuperAwakeningIds,
 } from "../lib/awakenings";
+import { formatActiveSkillDesc } from "../lib/format-active-skill-desc";
 import { parseMonsterAttributeIds } from "../lib/monster-attributes";
 import { PAD_AWAKENING } from "../lib/pad-constants";
 import type { MonsterRecord } from "../types";
 import { AwakeningIconList } from "./AwakeningIconList";
 import { ActiveSkillVanishAddLine } from "./ActiveSkillVanishAddLine";
+import { ActiveSkillDescText } from "./ActiveSkillDescText";
 import { MonsterAttributeStrip } from "./MonsterAttributeStrip";
 import { formatActiveSkillCooldown, StatRow } from "./monster-card-shared";
 import { MonsterAttributeSpriteIcon } from "./MonsterAttributeSpriteIcon";
@@ -86,7 +88,14 @@ function SkillSnippet({
           </span>
         )}
       </div>
-      <p className="line-clamp-2 text-[9px] leading-snug text-[#e8dcc8]">{body}</p>
+      {kind === "active" ? (
+        <ActiveSkillDescText
+          text={body}
+          className="line-clamp-2 text-[9px] leading-snug text-[#e8dcc8]"
+        />
+      ) : (
+        <p className="line-clamp-2 text-[9px] leading-snug text-[#e8dcc8]">{body}</p>
+      )}
       {kind === "active" && vanishGrantedAwokenIds?.length ? (
         <ActiveSkillVanishAddLine ids={vanishGrantedAwokenIds} iconSize={14} />
       ) : null}
@@ -130,7 +139,7 @@ export function MonsterQuickPreview({ row, id }: Props) {
   const hasSuper = prefixedAwkIds.length > 0;
   const hasRegular = regular.length > 0;
 
-  const activeDesc = row.active_skill_desc_en?.trim() || "—";
+  const activeDesc = formatActiveSkillDesc(row.active_skill_desc_en?.trim() || "—");
   const leaderDesc = row.leader_skill_desc_en?.trim() || "—";
   const activeCooldown = formatActiveSkillCooldown(
     row.active_skill_cooldown_min,

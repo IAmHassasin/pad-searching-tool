@@ -5,11 +5,13 @@ import {
   resolvePrefixedAwakeningIds,
   resolveSuperAwakeningIds,
 } from "../lib/awakenings";
+import { formatActiveSkillDesc } from "../lib/format-active-skill-desc";
 import { parseMonsterTypeIds } from "../lib/monster-types";
 import { PAD_AWAKENING, PAD_CARD_VISUAL } from "../lib/pad-constants";
 import type { MonsterRecord } from "../types";
 import { AwakeningIconList } from "./AwakeningIconList";
 import { ActiveSkillVanishAddLine } from "./ActiveSkillVanishAddLine";
+import { ActiveSkillDescText } from "./ActiveSkillDescText";
 import {
   formatActiveSkillCooldown,
   StarRow,
@@ -89,9 +91,16 @@ function SkillBlock({
           </span>
         )}
       </div>
-      <p className="whitespace-pre-wrap text-[10px] leading-relaxed text-[#e8dcc8]">
-        {body}
-      </p>
+      {kind === "active" ? (
+        <ActiveSkillDescText
+          text={body}
+          className="whitespace-pre-wrap text-[10px] leading-relaxed text-[#e8dcc8]"
+        />
+      ) : (
+        <p className="whitespace-pre-wrap text-[10px] leading-relaxed text-[#e8dcc8]">
+          {body}
+        </p>
+      )}
       {kind === "active" && vanishGrantedAwokenIds?.length ? (
         <ActiveSkillVanishAddLine ids={vanishGrantedAwokenIds} iconSize={18} />
       ) : null}
@@ -121,7 +130,7 @@ export function MonsterDetailCard({
   const hasRegular = regular.length > 0;
   const superLabel = hasSuperAwks ? "Super awakening" : "Sync awakening";
 
-  const activeDesc = row.active_skill_desc_en?.trim() || "—";
+  const activeDesc = formatActiveSkillDesc(row.active_skill_desc_en?.trim() || "—");
   const leaderDesc = row.leader_skill_desc_en?.trim() || "—";
   const activeCooldown = formatActiveSkillCooldown(
     row.active_skill_cooldown_min,

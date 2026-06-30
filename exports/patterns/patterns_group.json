@@ -70,7 +70,10 @@
         { "tag_id": 230, "tag_name_en": "Remove Lock", "label": "Unlock Orbs" },
         { "tag_id": null, "tag_name_en": "create_orbs", "label": "Generate Orbs" },
         { "tag_id": null, "tag_name_en": "create_orbs_multiple", "label": "Generate Multiple Orbs" },
-        { "tag_id": null, "tag_name_en": "create_orbs_over_non_specific", "label": "Generate Over Non-Target" }
+        { "tag_id": null, "tag_name_en": "create_orbs_over_non_specific", "label": "Generate Over Non-Target" },
+        { "tag_id": null, "tag_name_en": "create_spinner", "label": "Create Spinner" },
+        { "tag_id": null, "tag_name_en": "create_nail_orbs", "label": "Create Nail Orbs" },
+        { "tag_id": null, "tag_name_en": "nail_orb_skyfall", "label": "Nail Orb Skyfall" }
       ]
     }
   ],
