@@ -202,6 +202,19 @@ export class PatternsController {
     });
   }
 
+  @Get("monsters/lookup")
+  async lookupMonsters(@Query("ids") idsRaw?: string) {
+    const ids = parseIntCsv(idsRaw);
+    if (!ids.length) {
+      throw new BadRequestException("ids is required.");
+    }
+    if (ids.length > 50) {
+      throw new BadRequestException("Too many ids (max 50).");
+    }
+    const rows = await this.relations.lookupMonstersByIds(ids);
+    return { rows };
+  }
+
   @Get("monsters/evo-tree")
   evoTree(@Query("monsterId") monsterIdRaw?: string) {
     const monsterId = Number(monsterIdRaw);

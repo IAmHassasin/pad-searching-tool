@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { fetchMonstersByIds } from "../api";
+import { parseChangeToMonsterIds } from "../lib/format-active-skill-desc";
 import { monsterRowId } from "../lib/filters";
 import type { MonsterRecord } from "../types";
 import { MonsterCollabGroupPanel } from "./MonsterCollabGroupPanel";
@@ -14,15 +16,34 @@ type Props = {
 
 export function MonsterDetailPanel({ row, onSelect }: Props) {
   const [overlay, setOverlay] = useState<Overlay>(null);
+  const [changeTargetLoadingId, setChangeTargetLoadingId] = useState<
+    number | null
+  >(null);
   const monsterId = monsterRowId(row);
+  const changeTargetIds = useMemo(
+    () => parseChangeToMonsterIds(row.active_skill_desc_en?.trim() ?? ""),
+    [row.active_skill_desc_en]
+  );
 
   useEffect(() => {
     setOverlay(null);
+    setChangeTargetLoadingId(null);
   }, [monsterId]);
 
   const handleSelect = (next: MonsterRecord) => {
     setOverlay(null);
     onSelect(next);
+  };
+
+  const handleSelectChangeTarget = async (targetId: number) => {
+    setChangeTargetLoadingId(targetId);
+    try {
+      const { rows } = await fetchMonstersByIds([targetId]);
+      const next = rows[0];
+      if (next) handleSelect(next);
+    } finally {
+      setChangeTargetLoadingId(null);
+    }
   };
 
   return (
@@ -35,6 +56,9 @@ export function MonsterDetailPanel({ row, onSelect }: Props) {
         onOpenCollab={() =>
           setOverlay((v) => (v === "collab" ? null : "collab"))
         }
+        changeTargetIds={changeTargetIds}
+        onSelectChangeTarget={handleSelectChangeTarget}
+        changeTargetLoadingId={changeTargetLoadingId}
       />
 
       {overlay && (

@@ -12,6 +12,7 @@ import type { MonsterRecord } from "../types";
 import { AwakeningIconList } from "./AwakeningIconList";
 import { ActiveSkillVanishAddLine } from "./ActiveSkillVanishAddLine";
 import { ActiveSkillDescText } from "./ActiveSkillDescText";
+import { LeaderSkillDescText } from "./LeaderSkillDescText";
 import { MonsterAttributeStrip } from "./MonsterAttributeStrip";
 import { formatActiveSkillCooldown, StatRow } from "./monster-card-shared";
 import { MonsterAttributeSpriteIcon } from "./MonsterAttributeSpriteIcon";
@@ -94,7 +95,10 @@ function SkillSnippet({
           className="line-clamp-2 text-[9px] leading-snug text-[#e8dcc8]"
         />
       ) : (
-        <p className="line-clamp-2 text-[9px] leading-snug text-[#e8dcc8]">{body}</p>
+        <LeaderSkillDescText
+          text={body}
+          className="line-clamp-2 text-[9px] leading-snug text-[#e8dcc8]"
+        />
       )}
       {kind === "active" && vanishGrantedAwokenIds?.length ? (
         <ActiveSkillVanishAddLine ids={vanishGrantedAwokenIds} iconSize={14} />

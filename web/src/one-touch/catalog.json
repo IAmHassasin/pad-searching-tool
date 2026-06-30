@@ -1,0 +1,3999 @@
+{
+  "version": 1,
+  "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/550577",
+  "importedAt": "2026-06-30",
+  "dungeons": [
+    {
+      "id": "volcano",
+      "nameJa": "火山",
+      "nameEn": "Volcano",
+      "attributeId": 0,
+      "floors": [
+        {
+          "level": 10,
+          "stamina": 100,
+          "durationHours": 48,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "お邪魔耐性",
+              "nameEn": "Resistance-Jammers",
+              "id": 12
+            },
+            {
+              "nameJa": "水列強化",
+              "nameEn": "水列強化",
+              "id": 117
+            },
+            {
+              "nameJa": "バインド耐性",
+              "nameEn": "Resistance-Bind",
+              "id": 10
+            },
+            {
+              "nameJa": "回復強化",
+              "nameEn": "Enhanced Recovery",
+              "id": 3
+            },
+            {
+              "nameJa": "水コンボ強化",
+              "nameEn": "Water Combo Enhance",
+              "id": 74
+            },
+            {
+              "nameJa": "マルチブースト",
+              "nameEn": "Multi Boost",
+              "id": 30
+            },
+            {
+              "nameJa": "超つなげ消し強化",
+              "nameEn": "Blob Match Boost",
+              "id": 82
+            },
+            {
+              "nameJa": "自動回復",
+              "nameEn": "Auto-Recover",
+              "id": 9
+            },
+            {
+              "nameJa": "スキルボイス",
+              "nameEn": "Skill Voice",
+              "id": 63
+            },
+            {
+              "nameJa": "アシスト共鳴",
+              "nameEn": "アシスト共鳴",
+              "id": 138
+            }
+          ],
+          "rewards": {
+            "explorationExp": 1440,
+            "coins": "1億",
+            "plusPoints": 350
+          },
+          "drops": [
+            {
+              "nameJa": "宇宙シヴァドラの希石",
+              "nameEn": "宇宙シヴァドラの希石"
+            },
+            {
+              "nameJa": "火ダメージ軽減＋",
+              "nameEn": "火ダメージ軽減＋"
+            },
+            {
+              "nameJa": "火ダメージ軽減",
+              "nameEn": "Reduce Fire Damage"
+            }
+          ],
+          "hiddenConditionJa": "レアリティ5以下のモンスターが5体以上[",
+          "hiddenReward": "30,000 MP",
+          "hiddenConditionEn": "5 or more monsters with rarity 5 or below on the team"
+        },
+        {
+          "level": 9,
+          "stamina": 90,
+          "durationHours": 48,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "お邪魔耐性",
+              "nameEn": "Resistance-Jammers",
+              "id": 12
+            },
+            {
+              "nameJa": "水列強化",
+              "nameEn": "水列強化",
+              "id": 117
+            },
+            {
+              "nameJa": "バインド耐性",
+              "nameEn": "Resistance-Bind",
+              "id": 10
+            },
+            {
+              "nameJa": "回復強化",
+              "nameEn": "Enhanced Recovery",
+              "id": 3
+            },
+            {
+              "nameJa": "水コンボ強化",
+              "nameEn": "Water Combo Enhance",
+              "id": 74
+            },
+            {
+              "nameJa": "マルチブースト",
+              "nameEn": "Multi Boost",
+              "id": 30
+            },
+            {
+              "nameJa": "超つなげ消し強化",
+              "nameEn": "Blob Match Boost",
+              "id": 82
+            },
+            {
+              "nameJa": "自動回復",
+              "nameEn": "Auto-Recover",
+              "id": 9
+            },
+            {
+              "nameJa": "スキルボイス",
+              "nameEn": "Skill Voice",
+              "id": 63
+            }
+          ],
+          "rewards": {
+            "explorationExp": 1344,
+            "coins": "7500万",
+            "plusPoints": 300
+          },
+          "drops": [
+            {
+              "nameJa": "超ルビードラゴン",
+              "nameEn": "超ルビードラゴン"
+            },
+            {
+              "nameJa": "超キングルビードラゴン",
+              "nameEn": "超キングルビードラゴン"
+            },
+            {
+              "nameJa": "スキル遅延耐性",
+              "nameEn": "スキル遅延耐性"
+            },
+            {
+              "nameJa": "ホノぷれドラ",
+              "nameEn": "ホノぷれドラ"
+            }
+          ],
+          "hiddenConditionJa": "レアリティの異なるモンスターが7体以上[",
+          "hiddenReward": "30,000 MP",
+          "hiddenConditionEn": "7 or more monsters with different rarities"
+        },
+        {
+          "level": 8,
+          "stamina": 80,
+          "durationHours": 36,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "お邪魔耐性",
+              "nameEn": "Resistance-Jammers",
+              "id": 12
+            },
+            {
+              "nameJa": "水列強化",
+              "nameEn": "水列強化",
+              "id": 117
+            },
+            {
+              "nameJa": "バインド耐性",
+              "nameEn": "Resistance-Bind",
+              "id": 10
+            },
+            {
+              "nameJa": "回復強化",
+              "nameEn": "Enhanced Recovery",
+              "id": 3
+            },
+            {
+              "nameJa": "水コンボ強化",
+              "nameEn": "Water Combo Enhance",
+              "id": 74
+            },
+            {
+              "nameJa": "マルチブースト",
+              "nameEn": "Multi Boost",
+              "id": 30
+            },
+            {
+              "nameJa": "超つなげ消し強化",
+              "nameEn": "Blob Match Boost",
+              "id": 82
+            },
+            {
+              "nameJa": "自動回復",
+              "nameEn": "Auto-Recover",
+              "id": 9
+            },
+            {
+              "nameJa": "コンボドロップ生成",
+              "nameEn": "Dungeon Bonus",
+              "id": 64
+            }
+          ],
+          "rewards": {
+            "explorationExp": 936,
+            "coins": "5000万",
+            "plusPoints": 250
+          },
+          "drops": [
+            {
+              "nameJa": "枠解放",
+              "nameEn": "枠解放"
+            },
+            {
+              "nameJa": "防御力無視",
+              "nameEn": "防御力無視"
+            },
+            {
+              "nameJa": "アシスト無効回復",
+              "nameEn": "アシスト無効回復"
+            },
+            {
+              "nameJa": "ダメージ上限解放8倍",
+              "nameEn": "ダメージ上限解放8倍"
+            },
+            {
+              "nameJa": "ダメージ上限解放",
+              "nameEn": "ダメージ上限解放"
+            }
+          ],
+          "hiddenConditionJa": "神タイプのモンスターが7体以上[",
+          "hiddenReward": "20,000 MP",
+          "hiddenConditionEn": "7 or more God-type monsters"
+        },
+        {
+          "level": 7,
+          "stamina": 70,
+          "durationHours": 36,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "お邪魔耐性",
+              "nameEn": "Resistance-Jammers",
+              "id": 12
+            },
+            {
+              "nameJa": "水列強化",
+              "nameEn": "水列強化",
+              "id": 117
+            },
+            {
+              "nameJa": "バインド耐性",
+              "nameEn": "Resistance-Bind",
+              "id": 10
+            },
+            {
+              "nameJa": "回復強化",
+              "nameEn": "Enhanced Recovery",
+              "id": 3
+            },
+            {
+              "nameJa": "水コンボ強化",
+              "nameEn": "Water Combo Enhance",
+              "id": 74
+            },
+            {
+              "nameJa": "マルチブースト",
+              "nameEn": "Multi Boost",
+              "id": 30
+            },
+            {
+              "nameJa": "超つなげ消し強化",
+              "nameEn": "Blob Match Boost",
+              "id": 82
+            },
+            {
+              "nameJa": "水ドロップ強化",
+              "nameEn": "Enhanced Water Orbs",
+              "id": 15
+            }
+          ],
+          "rewards": {
+            "explorationExp": 864,
+            "coins": "3000万",
+            "plusPoints": 200
+          },
+          "drops": [],
+          "hiddenConditionJa": "悪魔タイプのモンスターが7体以上[",
+          "hiddenReward": "20,000 MP",
+          "hiddenConditionEn": "7 or more Devil-type monsters"
+        },
+        {
+          "level": 6,
+          "stamina": 60,
+          "durationHours": 24,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "お邪魔耐性",
+              "nameEn": "Resistance-Jammers",
+              "id": 12
+            },
+            {
+              "nameJa": "水列強化",
+              "nameEn": "水列強化",
+              "id": 117
+            },
+            {
+              "nameJa": "バインド耐性",
+              "nameEn": "Resistance-Bind",
+              "id": 10
+            },
+            {
+              "nameJa": "回復強化",
+              "nameEn": "Enhanced Recovery",
+              "id": 3
+            },
+            {
+              "nameJa": "水コンボ強化",
+              "nameEn": "Water Combo Enhance",
+              "id": 74
+            },
+            {
+              "nameJa": "マルチブースト",
+              "nameEn": "Multi Boost",
+              "id": 30
+            },
+            {
+              "nameJa": "バインド回復",
+              "nameEn": "Recover Bind",
+              "id": 20
+            }
+          ],
+          "rewards": {
+            "explorationExp": 528,
+            "coins": "2000万",
+            "plusPoints": 150
+          },
+          "drops": [
+            {
+              "nameJa": "火ダメージ軽減＋",
+              "nameEn": "火ダメージ軽減＋"
+            },
+            {
+              "nameJa": "火ダメージ軽減",
+              "nameEn": "Reduce Fire Damage"
+            },
+            {
+              "nameJa": "攻撃キラー",
+              "nameEn": "Attacker Killer"
+            },
+            {
+              "nameJa": "悪魔キラー",
+              "nameEn": "Devil Killer"
+            }
+          ],
+          "hiddenConditionJa": "ドラゴンタイプのモンスターが7体以上[",
+          "hiddenReward": "10,000 MP",
+          "hiddenConditionEn": "7 or more Dragon-type monsters"
+        },
+        {
+          "level": 5,
+          "stamina": 50,
+          "durationHours": 24,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "お邪魔耐性",
+              "nameEn": "Resistance-Jammers",
+              "id": 12
+            },
+            {
+              "nameJa": "水列強化",
+              "nameEn": "水列強化",
+              "id": 117
+            },
+            {
+              "nameJa": "バインド耐性",
+              "nameEn": "Resistance-Bind",
+              "id": 10
+            },
+            {
+              "nameJa": "回復強化",
+              "nameEn": "Enhanced Recovery",
+              "id": 3
+            },
+            {
+              "nameJa": "水コンボ強化",
+              "nameEn": "Water Combo Enhance",
+              "id": 74
+            },
+            {
+              "nameJa": "回復ドロップ強化",
+              "nameEn": "Enhanced Heal Orbs",
+              "id": 29
+            }
+          ],
+          "rewards": {
+            "explorationExp": 480,
+            "coins": "1000万",
+            "plusPoints": 100
+          },
+          "drops": [
+            {
+              "nameJa": "ニジピィ",
+              "nameEn": "ニジピィ"
+            },
+            {
+              "nameJa": "創装の宝玉",
+              "nameEn": "創装の宝玉"
+            },
+            {
+              "nameJa": "ホノピィ",
+              "nameEn": "ホノピィ"
+            },
+            {
+              "nameJa": "火の宝玉",
+              "nameEn": "火の宝玉"
+            }
+          ],
+          "hiddenConditionJa": "マシンタイプのモンスターが7体以上[",
+          "hiddenReward": "10,000 MP",
+          "hiddenConditionEn": "7 or more Machine-type monsters"
+        },
+        {
+          "level": 4,
+          "stamina": 40,
+          "durationHours": 20,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "お邪魔耐性",
+              "nameEn": "Resistance-Jammers",
+              "id": 12
+            },
+            {
+              "nameJa": "水列強化",
+              "nameEn": "水列強化",
+              "id": 117
+            },
+            {
+              "nameJa": "バインド耐性",
+              "nameEn": "Resistance-Bind",
+              "id": 10
+            },
+            {
+              "nameJa": "回復強化",
+              "nameEn": "Enhanced Recovery",
+              "id": 3
+            },
+            {
+              "nameJa": "水コンボ強化",
+              "nameEn": "Water Combo Enhance",
+              "id": 74
+            }
+          ],
+          "rewards": {
+            "explorationExp": 360,
+            "coins": "750万",
+            "plusPoints": 75
+          },
+          "drops": [
+            {
+              "nameJa": "黄金の番人",
+              "nameEn": "黄金の番人"
+            },
+            {
+              "nameJa": "虹の番人",
+              "nameEn": "虹の番人"
+            },
+            {
+              "nameJa": "炎の番人",
+              "nameEn": "炎の番人"
+            },
+            {
+              "nameJa": "攻撃強化＋＋",
+              "nameEn": "攻撃強化＋＋"
+            },
+            {
+              "nameJa": "攻撃強化＋",
+              "nameEn": "攻撃強化＋"
+            }
+          ],
+          "hiddenConditionJa": "チームのモンスターが5体以下[",
+          "hiddenReward": "10,000 MP",
+          "hiddenConditionEn": "5 or fewer monsters on the team"
+        },
+        {
+          "level": 3,
+          "stamina": 30,
+          "durationHours": 16,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "お邪魔耐性",
+              "nameEn": "Resistance-Jammers",
+              "id": 12
+            },
+            {
+              "nameJa": "水列強化",
+              "nameEn": "水列強化",
+              "id": 117
+            },
+            {
+              "nameJa": "バインド耐性",
+              "nameEn": "Resistance-Bind",
+              "id": 10
+            },
+            {
+              "nameJa": "回復強化",
+              "nameEn": "Enhanced Recovery",
+              "id": 3
+            }
+          ],
+          "rewards": {
+            "explorationExp": 256,
+            "coins": "500万",
+            "plusPoints": 50
+          },
+          "drops": [
+            {
+              "nameJa": "スキル遅延耐性",
+              "nameEn": "スキル遅延耐性"
+            },
+            {
+              "nameJa": "神化の紅面",
+              "nameEn": "神化の紅面"
+            },
+            {
+              "nameJa": "朱色の鬼神面",
+              "nameEn": "朱色の鬼神面"
+            },
+            {
+              "nameJa": "進化の赤仮面",
+              "nameEn": "進化の赤仮面"
+            }
+          ],
+          "hiddenConditionJa": "火属性モンスターが5体以上[",
+          "hiddenReward": "10,000 MP",
+          "hiddenConditionEn": "5 or more Fire-attribute monsters on the team"
+        },
+        {
+          "level": 2,
+          "stamina": 20,
+          "durationHours": 12,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "お邪魔耐性",
+              "nameEn": "Resistance-Jammers",
+              "id": 12
+            },
+            {
+              "nameJa": "水列強化",
+              "nameEn": "水列強化",
+              "id": 117
+            },
+            {
+              "nameJa": "バインド耐性",
+              "nameEn": "Resistance-Bind",
+              "id": 10
+            }
+          ],
+          "rewards": {
+            "explorationExp": 168,
+            "coins": "300万",
+            "plusPoints": 30
+          },
+          "drops": [
+            {
+              "nameJa": "レッドドラゴンフルーツ",
+              "nameEn": "レッドドラゴンフルーツ"
+            },
+            {
+              "nameJa": "ミスリット",
+              "nameEn": "ミスリット"
+            }
+          ],
+          "hiddenConditionJa": "合計コストが150以下[",
+          "hiddenReward": "10,000 MP",
+          "hiddenConditionEn": "Total team cost 150 or below"
+        },
+        {
+          "level": 1,
+          "stamina": 10,
+          "durationHours": 8,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "お邪魔耐性",
+              "nameEn": "Resistance-Jammers",
+              "id": 12
+            },
+            {
+              "nameJa": "水列強化",
+              "nameEn": "水列強化",
+              "id": 117
+            }
+          ],
+          "rewards": {
+            "explorationExp": 96,
+            "coins": "100万",
+            "plusPoints": 10
+          },
+          "drops": [
+            {
+              "nameJa": "ダブルビリット",
+              "nameEn": "ダブルビリット"
+            },
+            {
+              "nameJa": "ルビリット",
+              "nameEn": "ルビリット"
+            }
+          ],
+          "hiddenConditionJa": "合計レアリティが20以下[",
+          "hiddenReward": "10,000 MP",
+          "hiddenConditionEn": "Total team rarity 20 or below"
+        }
+      ]
+    },
+    {
+      "id": "icefield",
+      "nameJa": "氷原",
+      "nameEn": "Icefield",
+      "attributeId": 1,
+      "floors": [
+        {
+          "level": 10,
+          "stamina": 100,
+          "durationHours": 48,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "暗闇耐性",
+              "nameEn": "Resistance-Blind",
+              "id": 11
+            },
+            {
+              "nameJa": "木列強化",
+              "nameEn": "木列強化",
+              "id": 118
+            },
+            {
+              "nameJa": "封印耐性",
+              "nameEn": "Resistance-Skill Bind",
+              "id": 28
+            },
+            {
+              "nameJa": "HP強化",
+              "nameEn": "Enhanced HP",
+              "id": 1
+            },
+            {
+              "nameJa": "木コンボ強化",
+              "nameEn": "Wood Combo Enhance",
+              "id": 75
+            },
+            {
+              "nameJa": "マルチブースト",
+              "nameEn": "Multi Boost",
+              "id": 30
+            },
+            {
+              "nameJa": "2体攻撃",
+              "nameEn": "Two-Pronged Attack",
+              "id": 27
+            },
+            {
+              "nameJa": "浮遊",
+              "nameEn": "Levitation",
+              "id": 106
+            },
+            {
+              "nameJa": "スキルボイス",
+              "nameEn": "Skill Voice",
+              "id": 63
+            },
+            {
+              "nameJa": "アシスト共鳴",
+              "nameEn": "アシスト共鳴",
+              "id": 138
+            }
+          ],
+          "rewards": {
+            "explorationExp": 1440,
+            "coins": "1億",
+            "plusPoints": 350
+          },
+          "drops": [
+            {
+              "nameJa": "宇宙ネプドラの希石",
+              "nameEn": "宇宙ネプドラの希石"
+            },
+            {
+              "nameJa": "水ダメージ軽減＋",
+              "nameEn": "水ダメージ軽減＋"
+            },
+            {
+              "nameJa": "水ダメージ軽減",
+              "nameEn": "Reduce Water Damage"
+            }
+          ],
+          "hiddenConditionJa": "レアリティ5以下のモンスターが5体以上[",
+          "hiddenReward": "30,000 MP",
+          "hiddenConditionEn": "5 or more monsters with rarity 5 or below on the team"
+        },
+        {
+          "level": 9,
+          "stamina": 90,
+          "durationHours": 48,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "暗闇耐性",
+              "nameEn": "Resistance-Blind",
+              "id": 11
+            },
+            {
+              "nameJa": "木列強化",
+              "nameEn": "木列強化",
+              "id": 118
+            },
+            {
+              "nameJa": "封印耐性",
+              "nameEn": "Resistance-Skill Bind",
+              "id": 28
+            },
+            {
+              "nameJa": "HP強化",
+              "nameEn": "Enhanced HP",
+              "id": 1
+            },
+            {
+              "nameJa": "木コンボ強化",
+              "nameEn": "Wood Combo Enhance",
+              "id": 75
+            },
+            {
+              "nameJa": "マルチブースト",
+              "nameEn": "Multi Boost",
+              "id": 30
+            },
+            {
+              "nameJa": "2体攻撃",
+              "nameEn": "Two-Pronged Attack",
+              "id": 27
+            },
+            {
+              "nameJa": "浮遊",
+              "nameEn": "Levitation",
+              "id": 106
+            },
+            {
+              "nameJa": "スキルボイス",
+              "nameEn": "Skill Voice",
+              "id": 63
+            }
+          ],
+          "rewards": {
+            "explorationExp": 1344,
+            "coins": "7500万",
+            "plusPoints": 300
+          },
+          "drops": [
+            {
+              "nameJa": "超サファイアドラゴン",
+              "nameEn": "超サファイアドラゴン"
+            },
+            {
+              "nameJa": "超キングサファイアドラゴン",
+              "nameEn": "超キングサファイアドラゴン"
+            },
+            {
+              "nameJa": "スキル遅延耐性",
+              "nameEn": "スキル遅延耐性"
+            },
+            {
+              "nameJa": "ミズぷれドラ",
+              "nameEn": "ミズぷれドラ"
+            }
+          ],
+          "hiddenConditionJa": "レアリティの異なるモンスターが7体以上[",
+          "hiddenReward": "30,000 MP",
+          "hiddenConditionEn": "7 or more monsters with different rarities"
+        },
+        {
+          "level": 8,
+          "stamina": 80,
+          "durationHours": 36,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "暗闇耐性",
+              "nameEn": "Resistance-Blind",
+              "id": 11
+            },
+            {
+              "nameJa": "木列強化",
+              "nameEn": "木列強化",
+              "id": 118
+            },
+            {
+              "nameJa": "封印耐性",
+              "nameEn": "Resistance-Skill Bind",
+              "id": 28
+            },
+            {
+              "nameJa": "HP強化",
+              "nameEn": "Enhanced HP",
+              "id": 1
+            },
+            {
+              "nameJa": "木コンボ強化",
+              "nameEn": "Wood Combo Enhance",
+              "id": 75
+            },
+            {
+              "nameJa": "マルチブースト",
+              "nameEn": "Multi Boost",
+              "id": 30
+            },
+            {
+              "nameJa": "2体攻撃",
+              "nameEn": "Two-Pronged Attack",
+              "id": 27
+            },
+            {
+              "nameJa": "浮遊",
+              "nameEn": "Levitation",
+              "id": 106
+            },
+            {
+              "nameJa": "コンボドロップ生成",
+              "nameEn": "Dungeon Bonus",
+              "id": 64
+            }
+          ],
+          "rewards": {
+            "explorationExp": 936,
+            "coins": "5000万",
+            "plusPoints": 250
+          },
+          "drops": [
+            {
+              "nameJa": "古代の三神面",
+              "nameEn": "古代の三神面"
+            },
+            {
+              "nameJa": "防御力無視",
+              "nameEn": "防御力無視"
+            },
+            {
+              "nameJa": "ダメージ吸収貫通",
+              "nameEn": "ダメージ吸収貫通"
+            },
+            {
+              "nameJa": "属性吸収貫通",
+              "nameEn": "属性吸収貫通"
+            },
+            {
+              "nameJa": "ダメージ無効貫通",
+              "nameEn": "Damage Void Piercer"
+            }
+          ],
+          "hiddenConditionJa": "神タイプのモンスターが7体以上[",
+          "hiddenReward": "20,000 MP",
+          "hiddenConditionEn": "7 or more God-type monsters"
+        },
+        {
+          "level": 7,
+          "stamina": 70,
+          "durationHours": 36,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "暗闇耐性",
+              "nameEn": "Resistance-Blind",
+              "id": 11
+            },
+            {
+              "nameJa": "木列強化",
+              "nameEn": "木列強化",
+              "id": 118
+            },
+            {
+              "nameJa": "封印耐性",
+              "nameEn": "Resistance-Skill Bind",
+              "id": 28
+            },
+            {
+              "nameJa": "HP強化",
+              "nameEn": "Enhanced HP",
+              "id": 1
+            },
+            {
+              "nameJa": "木コンボ強化",
+              "nameEn": "Wood Combo Enhance",
+              "id": 75
+            },
+            {
+              "nameJa": "マルチブースト",
+              "nameEn": "Multi Boost",
+              "id": 30
+            },
+            {
+              "nameJa": "2体攻撃",
+              "nameEn": "Two-Pronged Attack",
+              "id": 27
+            },
+            {
+              "nameJa": "木ドロップ強化",
+              "nameEn": "Enhanced Wood Orbs",
+              "id": 16
+            }
+          ],
+          "rewards": {
+            "explorationExp": 864,
+            "coins": "3000万",
+            "plusPoints": 200
+          },
+          "drops": [],
+          "hiddenConditionJa": "悪魔タイプのモンスターが7体以上[",
+          "hiddenReward": "20,000 MP",
+          "hiddenConditionEn": "7 or more Devil-type monsters"
+        },
+        {
+          "level": 6,
+          "stamina": 60,
+          "durationHours": 24,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "暗闇耐性",
+              "nameEn": "Resistance-Blind",
+              "id": 11
+            },
+            {
+              "nameJa": "木列強化",
+              "nameEn": "木列強化",
+              "id": 118
+            },
+            {
+              "nameJa": "封印耐性",
+              "nameEn": "Resistance-Skill Bind",
+              "id": 28
+            },
+            {
+              "nameJa": "HP強化",
+              "nameEn": "Enhanced HP",
+              "id": 1
+            },
+            {
+              "nameJa": "木コンボ強化",
+              "nameEn": "Wood Combo Enhance",
+              "id": 75
+            },
+            {
+              "nameJa": "マルチブースト",
+              "nameEn": "Multi Boost",
+              "id": 30
+            },
+            {
+              "nameJa": "バインド回復",
+              "nameEn": "Recover Bind",
+              "id": 20
+            }
+          ],
+          "rewards": {
+            "explorationExp": 528,
+            "coins": "2000万",
+            "plusPoints": 150
+          },
+          "drops": [
+            {
+              "nameJa": "水ダメージ軽減＋",
+              "nameEn": "水ダメージ軽減＋"
+            },
+            {
+              "nameJa": "水ダメージ軽減",
+              "nameEn": "Reduce Water Damage"
+            },
+            {
+              "nameJa": "体力キラー",
+              "nameEn": "Physical Killer"
+            },
+            {
+              "nameJa": "マシンキラー",
+              "nameEn": "Machine Killer"
+            }
+          ],
+          "hiddenConditionJa": "ドラゴンタイプのモンスターが7体以上[",
+          "hiddenReward": "10,000 MP",
+          "hiddenConditionEn": "7 or more Dragon-type monsters"
+        },
+        {
+          "level": 5,
+          "stamina": 50,
+          "durationHours": 24,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "暗闇耐性",
+              "nameEn": "Resistance-Blind",
+              "id": 11
+            },
+            {
+              "nameJa": "木列強化",
+              "nameEn": "木列強化",
+              "id": 118
+            },
+            {
+              "nameJa": "封印耐性",
+              "nameEn": "Resistance-Skill Bind",
+              "id": 28
+            },
+            {
+              "nameJa": "HP強化",
+              "nameEn": "Enhanced HP",
+              "id": 1
+            },
+            {
+              "nameJa": "木コンボ強化",
+              "nameEn": "Wood Combo Enhance",
+              "id": 75
+            },
+            {
+              "nameJa": "回復ドロップ強化",
+              "nameEn": "Enhanced Heal Orbs",
+              "id": 29
+            }
+          ],
+          "rewards": {
+            "explorationExp": 480,
+            "coins": "1000万",
+            "plusPoints": 100
+          },
+          "drops": [
+            {
+              "nameJa": "ニジピィ",
+              "nameEn": "ニジピィ"
+            },
+            {
+              "nameJa": "創装の宝玉",
+              "nameEn": "創装の宝玉"
+            },
+            {
+              "nameJa": "ミズピィ",
+              "nameEn": "ミズピィ"
+            },
+            {
+              "nameJa": "水の宝玉",
+              "nameEn": "水の宝玉"
+            }
+          ],
+          "hiddenConditionJa": "マシンタイプのモンスターが7体以上[",
+          "hiddenReward": "10,000 MP",
+          "hiddenConditionEn": "7 or more Machine-type monsters"
+        },
+        {
+          "level": 4,
+          "stamina": 40,
+          "durationHours": 20,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "暗闇耐性",
+              "nameEn": "Resistance-Blind",
+              "id": 11
+            },
+            {
+              "nameJa": "木列強化",
+              "nameEn": "木列強化",
+              "id": 118
+            },
+            {
+              "nameJa": "封印耐性",
+              "nameEn": "Resistance-Skill Bind",
+              "id": 28
+            },
+            {
+              "nameJa": "HP強化",
+              "nameEn": "Enhanced HP",
+              "id": 1
+            },
+            {
+              "nameJa": "木コンボ強化",
+              "nameEn": "Wood Combo Enhance",
+              "id": 75
+            }
+          ],
+          "rewards": {
+            "explorationExp": 360,
+            "coins": "750万",
+            "plusPoints": 75
+          },
+          "drops": [
+            {
+              "nameJa": "黄金の番人",
+              "nameEn": "黄金の番人"
+            },
+            {
+              "nameJa": "虹の番人",
+              "nameEn": "虹の番人"
+            },
+            {
+              "nameJa": "水の番人",
+              "nameEn": "水の番人"
+            },
+            {
+              "nameJa": "HP強化＋＋",
+              "nameEn": "HP強化＋＋"
+            },
+            {
+              "nameJa": "HP強化＋",
+              "nameEn": "HP強化＋"
+            }
+          ],
+          "hiddenConditionJa": "チームのモンスターが5体以下[",
+          "hiddenReward": "10,000 MP",
+          "hiddenConditionEn": "5 or fewer monsters on the team"
+        },
+        {
+          "level": 3,
+          "stamina": 30,
+          "durationHours": 16,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "暗闇耐性",
+              "nameEn": "Resistance-Blind",
+              "id": 11
+            },
+            {
+              "nameJa": "木列強化",
+              "nameEn": "木列強化",
+              "id": 118
+            },
+            {
+              "nameJa": "封印耐性",
+              "nameEn": "Resistance-Skill Bind",
+              "id": 28
+            },
+            {
+              "nameJa": "HP強化",
+              "nameEn": "Enhanced HP",
+              "id": 1
+            }
+          ],
+          "rewards": {
+            "explorationExp": 256,
+            "coins": "500万",
+            "plusPoints": 50
+          },
+          "drops": [
+            {
+              "nameJa": "古代の蒼神面",
+              "nameEn": "古代の蒼神面"
+            },
+            {
+              "nameJa": "神化の蒼面",
+              "nameEn": "神化の蒼面"
+            },
+            {
+              "nameJa": "蒼色の鬼神面",
+              "nameEn": "蒼色の鬼神面"
+            },
+            {
+              "nameJa": "進化の青仮面",
+              "nameEn": "進化の青仮面"
+            }
+          ],
+          "hiddenConditionJa": "水属性モンスターが5体以上[",
+          "hiddenReward": "10,000 MP",
+          "hiddenConditionEn": "5 or more Water-attribute monsters on the team"
+        },
+        {
+          "level": 2,
+          "stamina": 20,
+          "durationHours": 12,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "暗闇耐性",
+              "nameEn": "Resistance-Blind",
+              "id": 11
+            },
+            {
+              "nameJa": "木列強化",
+              "nameEn": "木列強化",
+              "id": 118
+            },
+            {
+              "nameJa": "封印耐性",
+              "nameEn": "Resistance-Skill Bind",
+              "id": 28
+            }
+          ],
+          "rewards": {
+            "explorationExp": 168,
+            "coins": "300万",
+            "plusPoints": 30
+          },
+          "drops": [
+            {
+              "nameJa": "ブルードラゴンフルーツ",
+              "nameEn": "ブルードラゴンフルーツ"
+            },
+            {
+              "nameJa": "ダブミスリット",
+              "nameEn": "ダブミスリット"
+            }
+          ],
+          "hiddenConditionJa": "合計コストが150以下[",
+          "hiddenReward": "10,000 MP",
+          "hiddenConditionEn": "Total team cost 150 or below"
+        },
+        {
+          "level": 1,
+          "stamina": 10,
+          "durationHours": 8,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "暗闇耐性",
+              "nameEn": "Resistance-Blind",
+              "id": 11
+            },
+            {
+              "nameJa": "木列強化",
+              "nameEn": "木列強化",
+              "id": 118
+            }
+          ],
+          "rewards": {
+            "explorationExp": 96,
+            "coins": "100万",
+            "plusPoints": 10
+          },
+          "drops": [
+            {
+              "nameJa": "ダブサファリット",
+              "nameEn": "ダブサファリット"
+            },
+            {
+              "nameJa": "サファリット",
+              "nameEn": "サファリット"
+            }
+          ],
+          "hiddenConditionJa": "合計レアリティが20以下[",
+          "hiddenReward": "10,000 MP",
+          "hiddenConditionEn": "Total team rarity 20 or below"
+        }
+      ]
+    },
+    {
+      "id": "forest",
+      "nameJa": "森林",
+      "nameEn": "Forest",
+      "attributeId": 2,
+      "floors": [
+        {
+          "level": 10,
+          "stamina": 100,
+          "durationHours": 48,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "毒耐性",
+              "nameEn": "Resistance-Poison",
+              "id": 13
+            },
+            {
+              "nameJa": "火列強化",
+              "nameEn": "火列強化",
+              "id": 116
+            },
+            {
+              "nameJa": "ダメージ無効貫通",
+              "nameEn": "Damage Void Piercer",
+              "id": 48
+            },
+            {
+              "nameJa": "攻撃強化",
+              "nameEn": "Enhanced Attack",
+              "id": 2
+            },
+            {
+              "nameJa": "火コンボ強化",
+              "nameEn": "Fire Combo Enhance",
+              "id": 73
+            },
+            {
+              "nameJa": "マルチブースト",
+              "nameEn": "Multi Boost",
+              "id": 30
+            },
+            {
+              "nameJa": "L字消し攻撃",
+              "nameEn": "[L] Increased Attack",
+              "id": 60
+            },
+            {
+              "nameJa": "操作時間変更耐性",
+              "nameEn": "操作時間変更耐性",
+              "id": 140
+            },
+            {
+              "nameJa": "スキルボイス",
+              "nameEn": "Skill Voice",
+              "id": 63
+            },
+            {
+              "nameJa": "アシスト共鳴",
+              "nameEn": "アシスト共鳴",
+              "id": 138
+            }
+          ],
+          "rewards": {
+            "explorationExp": 1440,
+            "coins": "1億",
+            "plusPoints": 350
+          },
+          "drops": [
+            {
+              "nameJa": "宇宙オデドラの希石",
+              "nameEn": "宇宙オデドラの希石"
+            },
+            {
+              "nameJa": "木ダメージ軽減＋",
+              "nameEn": "木ダメージ軽減＋"
+            },
+            {
+              "nameJa": "木ダメージ軽減",
+              "nameEn": "Reduce Wood Damage"
+            }
+          ],
+          "hiddenConditionJa": "レアリティ5以下のモンスターが5体以上[",
+          "hiddenReward": "30,000 MP",
+          "hiddenConditionEn": "5 or more monsters with rarity 5 or below on the team"
+        },
+        {
+          "level": 9,
+          "stamina": 90,
+          "durationHours": 48,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "毒耐性",
+              "nameEn": "Resistance-Poison",
+              "id": 13
+            },
+            {
+              "nameJa": "火列強化",
+              "nameEn": "火列強化",
+              "id": 116
+            },
+            {
+              "nameJa": "ダメージ無効貫通",
+              "nameEn": "Damage Void Piercer",
+              "id": 48
+            },
+            {
+              "nameJa": "攻撃強化",
+              "nameEn": "Enhanced Attack",
+              "id": 2
+            },
+            {
+              "nameJa": "火コンボ強化",
+              "nameEn": "Fire Combo Enhance",
+              "id": 73
+            },
+            {
+              "nameJa": "マルチブースト",
+              "nameEn": "Multi Boost",
+              "id": 30
+            },
+            {
+              "nameJa": "L字消し攻撃",
+              "nameEn": "[L] Increased Attack",
+              "id": 60
+            },
+            {
+              "nameJa": "操作時間変更耐性",
+              "nameEn": "操作時間変更耐性",
+              "id": 140
+            },
+            {
+              "nameJa": "スキルボイス",
+              "nameEn": "Skill Voice",
+              "id": 63
+            }
+          ],
+          "rewards": {
+            "explorationExp": 1344,
+            "coins": "7500万",
+            "plusPoints": 300
+          },
+          "drops": [
+            {
+              "nameJa": "超エメラルドドラゴン",
+              "nameEn": "超エメラルドドラゴン"
+            },
+            {
+              "nameJa": "超キングエメラルドドラゴン",
+              "nameEn": "超キングエメラルドドラゴン"
+            },
+            {
+              "nameJa": "スキル遅延耐性",
+              "nameEn": "スキル遅延耐性"
+            },
+            {
+              "nameJa": "モクぷれドラ",
+              "nameEn": "モクぷれドラ"
+            }
+          ],
+          "hiddenConditionJa": "レアリティの異なるモンスターが7体以上[",
+          "hiddenReward": "30,000 MP",
+          "hiddenConditionEn": "7 or more monsters with different rarities"
+        },
+        {
+          "level": 8,
+          "stamina": 80,
+          "durationHours": 36,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "毒耐性",
+              "nameEn": "Resistance-Poison",
+              "id": 13
+            },
+            {
+              "nameJa": "火列強化",
+              "nameEn": "火列強化",
+              "id": 116
+            },
+            {
+              "nameJa": "ダメージ無効貫通",
+              "nameEn": "Damage Void Piercer",
+              "id": 48
+            },
+            {
+              "nameJa": "攻撃強化",
+              "nameEn": "Enhanced Attack",
+              "id": 2
+            },
+            {
+              "nameJa": "火コンボ強化",
+              "nameEn": "Fire Combo Enhance",
+              "id": 73
+            },
+            {
+              "nameJa": "マルチブースト",
+              "nameEn": "Multi Boost",
+              "id": 30
+            },
+            {
+              "nameJa": "L字消し攻撃",
+              "nameEn": "[L] Increased Attack",
+              "id": 60
+            },
+            {
+              "nameJa": "操作時間変更耐性",
+              "nameEn": "操作時間変更耐性",
+              "id": 140
+            },
+            {
+              "nameJa": "コンボドロップ生成",
+              "nameEn": "Dungeon Bonus",
+              "id": 64
+            }
+          ],
+          "rewards": {
+            "explorationExp": 936,
+            "coins": "5000万",
+            "plusPoints": 250
+          },
+          "drops": [
+            {
+              "nameJa": "ダイヤドラゴンフルーツ",
+              "nameEn": "ダイヤドラゴンフルーツ"
+            },
+            {
+              "nameJa": "防御力無視",
+              "nameEn": "防御力無視"
+            },
+            {
+              "nameJa": "リーダーチェンジ耐性",
+              "nameEn": "リーダーチェンジ耐性"
+            },
+            {
+              "nameJa": "お邪魔目覚め耐性",
+              "nameEn": "お邪魔目覚め耐性"
+            },
+            {
+              "nameJa": "毒目覚め耐性",
+              "nameEn": "毒目覚め耐性"
+            }
+          ],
+          "hiddenConditionJa": "神タイプのモンスターが7体以上[",
+          "hiddenReward": "20,000 MP",
+          "hiddenConditionEn": "7 or more God-type monsters"
+        },
+        {
+          "level": 7,
+          "stamina": 70,
+          "durationHours": 36,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "毒耐性",
+              "nameEn": "Resistance-Poison",
+              "id": 13
+            },
+            {
+              "nameJa": "火列強化",
+              "nameEn": "火列強化",
+              "id": 116
+            },
+            {
+              "nameJa": "ダメージ無効貫通",
+              "nameEn": "Damage Void Piercer",
+              "id": 48
+            },
+            {
+              "nameJa": "攻撃強化",
+              "nameEn": "Enhanced Attack",
+              "id": 2
+            },
+            {
+              "nameJa": "火コンボ強化",
+              "nameEn": "Fire Combo Enhance",
+              "id": 73
+            },
+            {
+              "nameJa": "マルチブースト",
+              "nameEn": "Multi Boost",
+              "id": 30
+            },
+            {
+              "nameJa": "L字消し攻撃",
+              "nameEn": "[L] Increased Attack",
+              "id": 60
+            },
+            {
+              "nameJa": "火ドロップ強化",
+              "nameEn": "Enhanced Fire Orbs",
+              "id": 14
+            }
+          ],
+          "rewards": {
+            "explorationExp": 864,
+            "coins": "3000万",
+            "plusPoints": 200
+          },
+          "drops": [],
+          "hiddenConditionJa": "悪魔タイプのモンスターが7体以上[",
+          "hiddenReward": "20,000 MP",
+          "hiddenConditionEn": "7 or more Devil-type monsters"
+        },
+        {
+          "level": 6,
+          "stamina": 60,
+          "durationHours": 24,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "毒耐性",
+              "nameEn": "Resistance-Poison",
+              "id": 13
+            },
+            {
+              "nameJa": "火列強化",
+              "nameEn": "火列強化",
+              "id": 116
+            },
+            {
+              "nameJa": "ダメージ無効貫通",
+              "nameEn": "Damage Void Piercer",
+              "id": 48
+            },
+            {
+              "nameJa": "攻撃強化",
+              "nameEn": "Enhanced Attack",
+              "id": 2
+            },
+            {
+              "nameJa": "火コンボ強化",
+              "nameEn": "Fire Combo Enhance",
+              "id": 73
+            },
+            {
+              "nameJa": "マルチブースト",
+              "nameEn": "Multi Boost",
+              "id": 30
+            },
+            {
+              "nameJa": "バインド回復",
+              "nameEn": "Recover Bind",
+              "id": 20
+            }
+          ],
+          "rewards": {
+            "explorationExp": 528,
+            "coins": "2000万",
+            "plusPoints": 150
+          },
+          "drops": [
+            {
+              "nameJa": "木ダメージ軽減＋",
+              "nameEn": "木ダメージ軽減＋"
+            },
+            {
+              "nameJa": "木ダメージ軽減",
+              "nameEn": "Reduce Wood Damage"
+            },
+            {
+              "nameJa": "バランスキラー",
+              "nameEn": "Balanced Killer"
+            },
+            {
+              "nameJa": "ドラゴンキラー",
+              "nameEn": "Dragon Killer"
+            }
+          ],
+          "hiddenConditionJa": "ドラゴンタイプのモンスターが7体以上[",
+          "hiddenReward": "10,000 MP",
+          "hiddenConditionEn": "7 or more Dragon-type monsters"
+        },
+        {
+          "level": 5,
+          "stamina": 50,
+          "durationHours": 24,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "毒耐性",
+              "nameEn": "Resistance-Poison",
+              "id": 13
+            },
+            {
+              "nameJa": "火列強化",
+              "nameEn": "火列強化",
+              "id": 116
+            },
+            {
+              "nameJa": "ダメージ無効貫通",
+              "nameEn": "Damage Void Piercer",
+              "id": 48
+            },
+            {
+              "nameJa": "攻撃強化",
+              "nameEn": "Enhanced Attack",
+              "id": 2
+            },
+            {
+              "nameJa": "火コンボ強化",
+              "nameEn": "Fire Combo Enhance",
+              "id": 73
+            },
+            {
+              "nameJa": "回復ドロップ強化",
+              "nameEn": "Enhanced Heal Orbs",
+              "id": 29
+            }
+          ],
+          "rewards": {
+            "explorationExp": 480,
+            "coins": "1000万",
+            "plusPoints": 100
+          },
+          "drops": [
+            {
+              "nameJa": "ニジピィ",
+              "nameEn": "ニジピィ"
+            },
+            {
+              "nameJa": "創装の宝玉",
+              "nameEn": "創装の宝玉"
+            },
+            {
+              "nameJa": "モクピィ",
+              "nameEn": "モクピィ"
+            },
+            {
+              "nameJa": "木の宝玉",
+              "nameEn": "木の宝玉"
+            }
+          ],
+          "hiddenConditionJa": "マシンタイプのモンスターが7体以上[",
+          "hiddenReward": "10,000 MP",
+          "hiddenConditionEn": "7 or more Machine-type monsters"
+        },
+        {
+          "level": 4,
+          "stamina": 40,
+          "durationHours": 20,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "毒耐性",
+              "nameEn": "Resistance-Poison",
+              "id": 13
+            },
+            {
+              "nameJa": "火列強化",
+              "nameEn": "火列強化",
+              "id": 116
+            },
+            {
+              "nameJa": "ダメージ無効貫通",
+              "nameEn": "Damage Void Piercer",
+              "id": 48
+            },
+            {
+              "nameJa": "攻撃強化",
+              "nameEn": "Enhanced Attack",
+              "id": 2
+            },
+            {
+              "nameJa": "火コンボ強化",
+              "nameEn": "Fire Combo Enhance",
+              "id": 73
+            }
+          ],
+          "rewards": {
+            "explorationExp": 360,
+            "coins": "750万",
+            "plusPoints": 75
+          },
+          "drops": [
+            {
+              "nameJa": "黄金の番人",
+              "nameEn": "黄金の番人"
+            },
+            {
+              "nameJa": "虹の番人",
+              "nameEn": "虹の番人"
+            },
+            {
+              "nameJa": "森の番人",
+              "nameEn": "森の番人"
+            },
+            {
+              "nameJa": "回復強化＋＋",
+              "nameEn": "回復強化＋＋"
+            },
+            {
+              "nameJa": "回復強化＋",
+              "nameEn": "回復強化＋"
+            }
+          ],
+          "hiddenConditionJa": "チームのモンスターが5体以下[",
+          "hiddenReward": "10,000 MP",
+          "hiddenConditionEn": "5 or fewer monsters on the team"
+        },
+        {
+          "level": 3,
+          "stamina": 30,
+          "durationHours": 16,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "毒耐性",
+              "nameEn": "Resistance-Poison",
+              "id": 13
+            },
+            {
+              "nameJa": "火列強化",
+              "nameEn": "火列強化",
+              "id": 116
+            },
+            {
+              "nameJa": "ダメージ無効貫通",
+              "nameEn": "Damage Void Piercer",
+              "id": 48
+            },
+            {
+              "nameJa": "攻撃強化",
+              "nameEn": "Enhanced Attack",
+              "id": 2
+            }
+          ],
+          "rewards": {
+            "explorationExp": 256,
+            "coins": "500万",
+            "plusPoints": 50
+          },
+          "drops": [
+            {
+              "nameJa": "古代の碧神面",
+              "nameEn": "古代の碧神面"
+            },
+            {
+              "nameJa": "神化の碧面",
+              "nameEn": "神化の碧面"
+            },
+            {
+              "nameJa": "碧色の鬼神面",
+              "nameEn": "碧色の鬼神面"
+            },
+            {
+              "nameJa": "進化の緑仮面",
+              "nameEn": "進化の緑仮面"
+            }
+          ],
+          "hiddenConditionJa": "木属性モンスターが5体以上[",
+          "hiddenReward": "10,000 MP",
+          "hiddenConditionEn": "5 or more Wood-attribute monsters on the team"
+        },
+        {
+          "level": 2,
+          "stamina": 20,
+          "durationHours": 12,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "毒耐性",
+              "nameEn": "Resistance-Poison",
+              "id": 13
+            },
+            {
+              "nameJa": "火列強化",
+              "nameEn": "火列強化",
+              "id": 116
+            },
+            {
+              "nameJa": "ダメージ無効貫通",
+              "nameEn": "Damage Void Piercer",
+              "id": 48
+            }
+          ],
+          "rewards": {
+            "explorationExp": 168,
+            "coins": "300万",
+            "plusPoints": 30
+          },
+          "drops": [
+            {
+              "nameJa": "グリーンドラゴンフルーツ",
+              "nameEn": "グリーンドラゴンフルーツ"
+            },
+            {
+              "nameJa": "ドラゴンフルーツ",
+              "nameEn": "ドラゴンフルーツ"
+            },
+            {
+              "nameJa": "ドラゴンフラワー",
+              "nameEn": "ドラゴンフラワー"
+            },
+            {
+              "nameJa": "ドラゴンプラント",
+              "nameEn": "ドラゴンプラント"
+            },
+            {
+              "nameJa": "ドラゴンシード",
+              "nameEn": "ドラゴンシード"
+            }
+          ],
+          "hiddenConditionJa": "合計コストが150以下[",
+          "hiddenReward": "10,000 MP",
+          "hiddenConditionEn": "Total team cost 150 or below"
+        },
+        {
+          "level": 1,
+          "stamina": 10,
+          "durationHours": 8,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "毒耐性",
+              "nameEn": "Resistance-Poison",
+              "id": 13
+            },
+            {
+              "nameJa": "火列強化",
+              "nameEn": "火列強化",
+              "id": 116
+            }
+          ],
+          "rewards": {
+            "explorationExp": 96,
+            "coins": "100万",
+            "plusPoints": 10
+          },
+          "drops": [
+            {
+              "nameJa": "ダブエメリット",
+              "nameEn": "ダブエメリット"
+            },
+            {
+              "nameJa": "エメリット",
+              "nameEn": "エメリット"
+            }
+          ],
+          "hiddenConditionJa": "合計レアリティが20以下[",
+          "hiddenReward": "10,000 MP",
+          "hiddenConditionEn": "Total team rarity 20 or below"
+        }
+      ]
+    },
+    {
+      "id": "ruins",
+      "nameJa": "遺跡",
+      "nameEn": "Ruins",
+      "attributeId": 3,
+      "floors": [
+        {
+          "level": 10,
+          "stamina": 100,
+          "durationHours": 48,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "陰の加護",
+              "nameEn": "陰の加護",
+              "id": 129
+            },
+            {
+              "nameJa": "闇列強化",
+              "nameEn": "闇列強化",
+              "id": 120
+            },
+            {
+              "nameJa": "雲耐性",
+              "nameEn": "Resistance-Clouds",
+              "id": 54
+            },
+            {
+              "nameJa": "全パラメータ強化",
+              "nameEn": "全パラメータ強化",
+              "id": 127
+            },
+            {
+              "nameJa": "闇コンボ強化",
+              "nameEn": "Dark Combo Enhance",
+              "id": 77
+            },
+            {
+              "nameJa": "マルチブースト",
+              "nameEn": "Multi Boost",
+              "id": 30
+            },
+            {
+              "nameJa": "追加攻撃",
+              "nameEn": "Bonus Attack",
+              "id": 45
+            },
+            {
+              "nameJa": "十字消し攻撃",
+              "nameEn": "Cross Attack",
+              "id": 78
+            },
+            {
+              "nameJa": "スキルボイス",
+              "nameEn": "Skill Voice",
+              "id": 63
+            },
+            {
+              "nameJa": "自力",
+              "nameEn": "自力",
+              "id": 139
+            }
+          ],
+          "rewards": {
+            "explorationExp": 1440,
+            "coins": "1億",
+            "plusPoints": 350
+          },
+          "drops": [
+            {
+              "nameJa": "宇宙ラードラの希石",
+              "nameEn": "宇宙ラードラの希石"
+            },
+            {
+              "nameJa": "光ダメージ軽減＋",
+              "nameEn": "光ダメージ軽減＋"
+            },
+            {
+              "nameJa": "光ダメージ軽減",
+              "nameEn": "Reduce Light Damage"
+            }
+          ],
+          "hiddenConditionJa": "レアリティ5以下のモンスターが5体以上[",
+          "hiddenReward": "30,000 MP",
+          "hiddenConditionEn": "5 or more monsters with rarity 5 or below on the team"
+        },
+        {
+          "level": 9,
+          "stamina": 90,
+          "durationHours": 48,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "陰の加護",
+              "nameEn": "陰の加護",
+              "id": 129
+            },
+            {
+              "nameJa": "闇列強化",
+              "nameEn": "闇列強化",
+              "id": 120
+            },
+            {
+              "nameJa": "雲耐性",
+              "nameEn": "Resistance-Clouds",
+              "id": 54
+            },
+            {
+              "nameJa": "全パラメータ強化",
+              "nameEn": "全パラメータ強化",
+              "id": 127
+            },
+            {
+              "nameJa": "闇コンボ強化",
+              "nameEn": "Dark Combo Enhance",
+              "id": 77
+            },
+            {
+              "nameJa": "マルチブースト",
+              "nameEn": "Multi Boost",
+              "id": 30
+            },
+            {
+              "nameJa": "追加攻撃",
+              "nameEn": "Bonus Attack",
+              "id": 45
+            },
+            {
+              "nameJa": "十字消し攻撃",
+              "nameEn": "Cross Attack",
+              "id": 78
+            },
+            {
+              "nameJa": "スキルボイス",
+              "nameEn": "Skill Voice",
+              "id": 63
+            }
+          ],
+          "rewards": {
+            "explorationExp": 1344,
+            "coins": "7500万",
+            "plusPoints": 300
+          },
+          "drops": [
+            {
+              "nameJa": "超ゴールドドラゴン",
+              "nameEn": "超ゴールドドラゴン"
+            },
+            {
+              "nameJa": "極キングゴールドドラゴン",
+              "nameEn": "極キングゴールドドラゴン"
+            },
+            {
+              "nameJa": "スキル遅延耐性",
+              "nameEn": "スキル遅延耐性"
+            },
+            {
+              "nameJa": "ヒカぷれドラ",
+              "nameEn": "ヒカぷれドラ"
+            }
+          ],
+          "hiddenConditionJa": "レアリティの異なるモンスターが7体以上[",
+          "hiddenReward": "30,000 MP",
+          "hiddenConditionEn": "7 or more monsters with different rarities"
+        },
+        {
+          "level": 8,
+          "stamina": 80,
+          "durationHours": 36,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "陰の加護",
+              "nameEn": "陰の加護",
+              "id": 129
+            },
+            {
+              "nameJa": "闇列強化",
+              "nameEn": "闇列強化",
+              "id": 120
+            },
+            {
+              "nameJa": "雲耐性",
+              "nameEn": "Resistance-Clouds",
+              "id": 54
+            },
+            {
+              "nameJa": "全パラメータ強化",
+              "nameEn": "全パラメータ強化",
+              "id": 127
+            },
+            {
+              "nameJa": "闇コンボ強化",
+              "nameEn": "Dark Combo Enhance",
+              "id": 77
+            },
+            {
+              "nameJa": "マルチブースト",
+              "nameEn": "Multi Boost",
+              "id": 30
+            },
+            {
+              "nameJa": "追加攻撃",
+              "nameEn": "Bonus Attack",
+              "id": 45
+            },
+            {
+              "nameJa": "十字消し攻撃",
+              "nameEn": "Cross Attack",
+              "id": 78
+            },
+            {
+              "nameJa": "コンボドロップ生成",
+              "nameEn": "Dungeon Bonus",
+              "id": 64
+            }
+          ],
+          "rewards": {
+            "explorationExp": 936,
+            "coins": "5000万",
+            "plusPoints": 250
+          },
+          "drops": [
+            {
+              "nameJa": "キングダイヤドラゴン",
+              "nameEn": "キングダイヤドラゴン"
+            },
+            {
+              "nameJa": "ダメージ上限解放",
+              "nameEn": "ダメージ上限解放"
+            },
+            {
+              "nameJa": "スキルブースト＋＋",
+              "nameEn": "スキルブースト＋＋"
+            },
+            {
+              "nameJa": "消せないドロップ回復",
+              "nameEn": "消せないドロップ回復"
+            },
+            {
+              "nameJa": "ルーレット回復",
+              "nameEn": "ルーレット回復"
+            }
+          ],
+          "hiddenConditionJa": "神タイプのモンスターが7体以上[",
+          "hiddenReward": "20,000 MP",
+          "hiddenConditionEn": "7 or more God-type monsters"
+        },
+        {
+          "level": 7,
+          "stamina": 70,
+          "durationHours": 36,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "陰の加護",
+              "nameEn": "陰の加護",
+              "id": 129
+            },
+            {
+              "nameJa": "闇列強化",
+              "nameEn": "闇列強化",
+              "id": 120
+            },
+            {
+              "nameJa": "雲耐性",
+              "nameEn": "Resistance-Clouds",
+              "id": 54
+            },
+            {
+              "nameJa": "全パラメータ強化",
+              "nameEn": "全パラメータ強化",
+              "id": 127
+            },
+            {
+              "nameJa": "闇コンボ強化",
+              "nameEn": "Dark Combo Enhance",
+              "id": 77
+            },
+            {
+              "nameJa": "マルチブースト",
+              "nameEn": "Multi Boost",
+              "id": 30
+            },
+            {
+              "nameJa": "追加攻撃",
+              "nameEn": "Bonus Attack",
+              "id": 45
+            },
+            {
+              "nameJa": "闇ドロップ強化",
+              "nameEn": "Enhanced Dark Orbs",
+              "id": 18
+            }
+          ],
+          "rewards": {
+            "explorationExp": 864,
+            "coins": "3000万",
+            "plusPoints": 200
+          },
+          "drops": [],
+          "hiddenConditionJa": "悪魔タイプのモンスターが7体以上[",
+          "hiddenReward": "20,000 MP",
+          "hiddenConditionEn": "7 or more Devil-type monsters"
+        },
+        {
+          "level": 6,
+          "stamina": 60,
+          "durationHours": 24,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "陰の加護",
+              "nameEn": "陰の加護",
+              "id": 129
+            },
+            {
+              "nameJa": "闇列強化",
+              "nameEn": "闇列強化",
+              "id": 120
+            },
+            {
+              "nameJa": "雲耐性",
+              "nameEn": "Resistance-Clouds",
+              "id": 54
+            },
+            {
+              "nameJa": "全パラメータ強化",
+              "nameEn": "全パラメータ強化",
+              "id": 127
+            },
+            {
+              "nameJa": "闇コンボ強化",
+              "nameEn": "Dark Combo Enhance",
+              "id": 77
+            },
+            {
+              "nameJa": "マルチブースト",
+              "nameEn": "Multi Boost",
+              "id": 30
+            },
+            {
+              "nameJa": "バインド回復",
+              "nameEn": "Recover Bind",
+              "id": 20
+            }
+          ],
+          "rewards": {
+            "explorationExp": 528,
+            "coins": "2000万",
+            "plusPoints": 150
+          },
+          "drops": [
+            {
+              "nameJa": "光ダメージ軽減＋",
+              "nameEn": "光ダメージ軽減＋"
+            },
+            {
+              "nameJa": "光ダメージ軽減",
+              "nameEn": "Reduce Light Damage"
+            },
+            {
+              "nameJa": "回復キラー",
+              "nameEn": "Healer Killer"
+            },
+            {
+              "nameJa": "神キラー",
+              "nameEn": "God Killer"
+            }
+          ],
+          "hiddenConditionJa": "ドラゴンタイプのモンスターが7体以上[",
+          "hiddenReward": "10,000 MP",
+          "hiddenConditionEn": "7 or more Dragon-type monsters"
+        },
+        {
+          "level": 5,
+          "stamina": 50,
+          "durationHours": 24,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "陰の加護",
+              "nameEn": "陰の加護",
+              "id": 129
+            },
+            {
+              "nameJa": "闇列強化",
+              "nameEn": "闇列強化",
+              "id": 120
+            },
+            {
+              "nameJa": "雲耐性",
+              "nameEn": "Resistance-Clouds",
+              "id": 54
+            },
+            {
+              "nameJa": "全パラメータ強化",
+              "nameEn": "全パラメータ強化",
+              "id": 127
+            },
+            {
+              "nameJa": "闇コンボ強化",
+              "nameEn": "Dark Combo Enhance",
+              "id": 77
+            },
+            {
+              "nameJa": "回復ドロップ強化",
+              "nameEn": "Enhanced Heal Orbs",
+              "id": 29
+            }
+          ],
+          "rewards": {
+            "explorationExp": 480,
+            "coins": "1000万",
+            "plusPoints": 100
+          },
+          "drops": [
+            {
+              "nameJa": "ニジピィ",
+              "nameEn": "ニジピィ"
+            },
+            {
+              "nameJa": "創装の宝玉",
+              "nameEn": "創装の宝玉"
+            },
+            {
+              "nameJa": "ヒカピィ",
+              "nameEn": "ヒカピィ"
+            },
+            {
+              "nameJa": "光の宝玉",
+              "nameEn": "光の宝玉"
+            }
+          ],
+          "hiddenConditionJa": "マシンタイプのモンスターが7体以上[",
+          "hiddenReward": "10,000 MP",
+          "hiddenConditionEn": "7 or more Machine-type monsters"
+        },
+        {
+          "level": 4,
+          "stamina": 40,
+          "durationHours": 20,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "陰の加護",
+              "nameEn": "陰の加護",
+              "id": 129
+            },
+            {
+              "nameJa": "闇列強化",
+              "nameEn": "闇列強化",
+              "id": 120
+            },
+            {
+              "nameJa": "雲耐性",
+              "nameEn": "Resistance-Clouds",
+              "id": 54
+            },
+            {
+              "nameJa": "全パラメータ強化",
+              "nameEn": "全パラメータ強化",
+              "id": 127
+            },
+            {
+              "nameJa": "闇コンボ強化",
+              "nameEn": "Dark Combo Enhance",
+              "id": 77
+            }
+          ],
+          "rewards": {
+            "explorationExp": 360,
+            "coins": "750万",
+            "plusPoints": 75
+          },
+          "drops": [
+            {
+              "nameJa": "黄金の番人",
+              "nameEn": "黄金の番人"
+            },
+            {
+              "nameJa": "虹の番人",
+              "nameEn": "虹の番人"
+            },
+            {
+              "nameJa": "光の番人",
+              "nameEn": "光の番人"
+            },
+            {
+              "nameJa": "全パラメータ強化",
+              "nameEn": "全パラメータ強化"
+            },
+            {
+              "nameJa": "自動回復",
+              "nameEn": "Auto-Recover"
+            }
+          ],
+          "hiddenConditionJa": "チームのモンスターが5体以下[",
+          "hiddenReward": "10,000 MP",
+          "hiddenConditionEn": "5 or fewer monsters on the team"
+        },
+        {
+          "level": 3,
+          "stamina": 30,
+          "durationHours": 16,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "陰の加護",
+              "nameEn": "陰の加護",
+              "id": 129
+            },
+            {
+              "nameJa": "闇列強化",
+              "nameEn": "闇列強化",
+              "id": 120
+            },
+            {
+              "nameJa": "雲耐性",
+              "nameEn": "Resistance-Clouds",
+              "id": 54
+            },
+            {
+              "nameJa": "全パラメータ強化",
+              "nameEn": "全パラメータ強化",
+              "id": 127
+            }
+          ],
+          "rewards": {
+            "explorationExp": 256,
+            "coins": "500万",
+            "plusPoints": 50
+          },
+          "drops": [
+            {
+              "nameJa": "神秘の仮面",
+              "nameEn": "神秘の仮面"
+            },
+            {
+              "nameJa": "神化の金面",
+              "nameEn": "神化の金面"
+            },
+            {
+              "nameJa": "黄金の鬼神面",
+              "nameEn": "黄金の鬼神面"
+            },
+            {
+              "nameJa": "進化の黄仮面",
+              "nameEn": "進化の黄仮面"
+            }
+          ],
+          "hiddenConditionJa": "光属性モンスターが5体以上[",
+          "hiddenReward": "10,000 MP",
+          "hiddenConditionEn": "5 or more Light-attribute monsters on the team"
+        },
+        {
+          "level": 2,
+          "stamina": 20,
+          "durationHours": 12,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "陰の加護",
+              "nameEn": "陰の加護",
+              "id": 129
+            },
+            {
+              "nameJa": "闇列強化",
+              "nameEn": "闇列強化",
+              "id": 120
+            },
+            {
+              "nameJa": "雲耐性",
+              "nameEn": "Resistance-Clouds",
+              "id": 54
+            }
+          ],
+          "rewards": {
+            "explorationExp": 168,
+            "coins": "300万",
+            "plusPoints": 30
+          },
+          "drops": [
+            {
+              "nameJa": "スーパーノエルドラゴン",
+              "nameEn": "スーパーノエルドラゴン"
+            },
+            {
+              "nameJa": "キングたまドラ",
+              "nameEn": "キングたまドラ"
+            },
+            {
+              "nameJa": "たまドラ",
+              "nameEn": "たまドラ"
+            }
+          ],
+          "hiddenConditionJa": "合計コストが150以下[",
+          "hiddenReward": "10,000 MP",
+          "hiddenConditionEn": "Total team cost 150 or below"
+        },
+        {
+          "level": 1,
+          "stamina": 10,
+          "durationHours": 8,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "陰の加護",
+              "nameEn": "陰の加護",
+              "id": 129
+            },
+            {
+              "nameJa": "闇列強化",
+              "nameEn": "闇列強化",
+              "id": 120
+            }
+          ],
+          "rewards": {
+            "explorationExp": 96,
+            "coins": "100万",
+            "plusPoints": 10
+          },
+          "drops": [
+            {
+              "nameJa": "ダブトパリット",
+              "nameEn": "ダブトパリット"
+            },
+            {
+              "nameJa": "トパリット",
+              "nameEn": "トパリット"
+            }
+          ],
+          "hiddenConditionJa": "合計レアリティが20以下[",
+          "hiddenReward": "10,000 MP",
+          "hiddenConditionEn": "Total team rarity 20 or below"
+        }
+      ]
+    },
+    {
+      "id": "swamp",
+      "nameJa": "沼地",
+      "nameEn": "Swamp",
+      "attributeId": 4,
+      "floors": [
+        {
+          "level": 10,
+          "stamina": 100,
+          "durationHours": 48,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "陽の加護",
+              "nameEn": "陽の加護",
+              "id": 128
+            },
+            {
+              "nameJa": "光列強化",
+              "nameEn": "光列強化",
+              "id": 119
+            },
+            {
+              "nameJa": "操作不可耐性",
+              "nameEn": "Resistance-Immobility",
+              "id": 55
+            },
+            {
+              "nameJa": "全パラメータ強化",
+              "nameEn": "全パラメータ強化",
+              "id": 127
+            },
+            {
+              "nameJa": "光コンボ強化",
+              "nameEn": "Light Combo Enhance",
+              "id": 76
+            },
+            {
+              "nameJa": "マルチブースト",
+              "nameEn": "Multi Boost",
+              "id": 30
+            },
+            {
+              "nameJa": "超追加攻撃",
+              "nameEn": "Super Bonus Attack",
+              "id": 50
+            },
+            {
+              "nameJa": "T字消し攻撃",
+              "nameEn": "T字消し攻撃",
+              "id": 126
+            },
+            {
+              "nameJa": "スキルボイス",
+              "nameEn": "Skill Voice",
+              "id": 63
+            },
+            {
+              "nameJa": "自力",
+              "nameEn": "自力",
+              "id": 139
+            }
+          ],
+          "rewards": {
+            "explorationExp": 1440,
+            "coins": "1億",
+            "plusPoints": 350
+          },
+          "drops": [
+            {
+              "nameJa": "宇宙ヨミドラの希石",
+              "nameEn": "宇宙ヨミドラの希石"
+            },
+            {
+              "nameJa": "闇ダメージ軽減＋",
+              "nameEn": "闇ダメージ軽減＋"
+            },
+            {
+              "nameJa": "闇ダメージ軽減",
+              "nameEn": "Reduce Dark Damage"
+            }
+          ],
+          "hiddenConditionJa": "レアリティ5以下のモンスターが5体以上[",
+          "hiddenReward": "30,000 MP",
+          "hiddenConditionEn": "5 or more monsters with rarity 5 or below on the team"
+        },
+        {
+          "level": 9,
+          "stamina": 90,
+          "durationHours": 48,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "陽の加護",
+              "nameEn": "陽の加護",
+              "id": 128
+            },
+            {
+              "nameJa": "光列強化",
+              "nameEn": "光列強化",
+              "id": 119
+            },
+            {
+              "nameJa": "操作不可耐性",
+              "nameEn": "Resistance-Immobility",
+              "id": 55
+            },
+            {
+              "nameJa": "全パラメータ強化",
+              "nameEn": "全パラメータ強化",
+              "id": 127
+            },
+            {
+              "nameJa": "光コンボ強化",
+              "nameEn": "Light Combo Enhance",
+              "id": 76
+            },
+            {
+              "nameJa": "マルチブースト",
+              "nameEn": "Multi Boost",
+              "id": 30
+            },
+            {
+              "nameJa": "超追加攻撃",
+              "nameEn": "Super Bonus Attack",
+              "id": 50
+            },
+            {
+              "nameJa": "T字消し攻撃",
+              "nameEn": "T字消し攻撃",
+              "id": 126
+            },
+            {
+              "nameJa": "スキルボイス",
+              "nameEn": "Skill Voice",
+              "id": 63
+            }
+          ],
+          "rewards": {
+            "explorationExp": 1344,
+            "coins": "7500万",
+            "plusPoints": 300
+          },
+          "drops": [
+            {
+              "nameJa": "超メタルドラゴン",
+              "nameEn": "超メタルドラゴン"
+            },
+            {
+              "nameJa": "極キングメタルドラゴン",
+              "nameEn": "極キングメタルドラゴン"
+            },
+            {
+              "nameJa": "スキル遅延耐性",
+              "nameEn": "スキル遅延耐性"
+            },
+            {
+              "nameJa": "ヤミぷれドラ",
+              "nameEn": "ヤミぷれドラ"
+            }
+          ],
+          "hiddenConditionJa": "レアリティの異なるモンスターが7体以上[",
+          "hiddenReward": "30,000 MP",
+          "hiddenConditionEn": "7 or more monsters with different rarities"
+        },
+        {
+          "level": 8,
+          "stamina": 80,
+          "durationHours": 36,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "陽の加護",
+              "nameEn": "陽の加護",
+              "id": 128
+            },
+            {
+              "nameJa": "光列強化",
+              "nameEn": "光列強化",
+              "id": 119
+            },
+            {
+              "nameJa": "操作不可耐性",
+              "nameEn": "Resistance-Immobility",
+              "id": 55
+            },
+            {
+              "nameJa": "全パラメータ強化",
+              "nameEn": "全パラメータ強化",
+              "id": 127
+            },
+            {
+              "nameJa": "光コンボ強化",
+              "nameEn": "Light Combo Enhance",
+              "id": 76
+            },
+            {
+              "nameJa": "マルチブースト",
+              "nameEn": "Multi Boost",
+              "id": 30
+            },
+            {
+              "nameJa": "超追加攻撃",
+              "nameEn": "Super Bonus Attack",
+              "id": 50
+            },
+            {
+              "nameJa": "T字消し攻撃",
+              "nameEn": "T字消し攻撃",
+              "id": 126
+            },
+            {
+              "nameJa": "コンボドロップ生成",
+              "nameEn": "Dungeon Bonus",
+              "id": 64
+            }
+          ],
+          "rewards": {
+            "explorationExp": 936,
+            "coins": "5000万",
+            "plusPoints": 250
+          },
+          "drops": [
+            {
+              "nameJa": "センリドラゴンの希石",
+              "nameEn": "センリドラゴンの希石"
+            },
+            {
+              "nameJa": "エリスドラゴンの希石",
+              "nameEn": "エリスドラゴンの希石"
+            },
+            {
+              "nameJa": "ブラフマードラゴンの希石",
+              "nameEn": "ブラフマードラゴンの希石"
+            },
+            {
+              "nameJa": "シェヘラザードドラゴンの希石",
+              "nameEn": "シェヘラザードドラゴンの希石"
+            },
+            {
+              "nameJa": "チィリンドラゴンの希石",
+              "nameEn": "チィリンドラゴンの希石"
+            },
+            {
+              "nameJa": "アシスト無効回復",
+              "nameEn": "アシスト無効回復"
+            },
+            {
+              "nameJa": "ダメージ上限解放",
+              "nameEn": "ダメージ上限解放"
+            },
+            {
+              "nameJa": "雲操作不可回復",
+              "nameEn": "雲操作不可回復"
+            },
+            {
+              "nameJa": "スキルブースト＋＋",
+              "nameEn": "スキルブースト＋＋"
+            }
+          ],
+          "hiddenConditionJa": "神タイプのモンスターが7体以上[",
+          "hiddenReward": "20,000 MP",
+          "hiddenConditionEn": "7 or more God-type monsters"
+        },
+        {
+          "level": 7,
+          "stamina": 70,
+          "durationHours": 36,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "陽の加護",
+              "nameEn": "陽の加護",
+              "id": 128
+            },
+            {
+              "nameJa": "光列強化",
+              "nameEn": "光列強化",
+              "id": 119
+            },
+            {
+              "nameJa": "操作不可耐性",
+              "nameEn": "Resistance-Immobility",
+              "id": 55
+            },
+            {
+              "nameJa": "全パラメータ強化",
+              "nameEn": "全パラメータ強化",
+              "id": 127
+            },
+            {
+              "nameJa": "光コンボ強化",
+              "nameEn": "Light Combo Enhance",
+              "id": 76
+            },
+            {
+              "nameJa": "マルチブースト",
+              "nameEn": "Multi Boost",
+              "id": 30
+            },
+            {
+              "nameJa": "超追加攻撃",
+              "nameEn": "Super Bonus Attack",
+              "id": 50
+            },
+            {
+              "nameJa": "光ドロップ強化",
+              "nameEn": "Enhanced Light Orbs",
+              "id": 17
+            }
+          ],
+          "rewards": {
+            "explorationExp": 864,
+            "coins": "3000万",
+            "plusPoints": 200
+          },
+          "drops": [],
+          "hiddenConditionJa": "悪魔タイプのモンスターが7体以上[",
+          "hiddenReward": "20,000 MP",
+          "hiddenConditionEn": "7 or more Devil-type monsters"
+        },
+        {
+          "level": 6,
+          "stamina": 60,
+          "durationHours": 24,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "陽の加護",
+              "nameEn": "陽の加護",
+              "id": 128
+            },
+            {
+              "nameJa": "光列強化",
+              "nameEn": "光列強化",
+              "id": 119
+            },
+            {
+              "nameJa": "操作不可耐性",
+              "nameEn": "Resistance-Immobility",
+              "id": 55
+            },
+            {
+              "nameJa": "全パラメータ強化",
+              "nameEn": "全パラメータ強化",
+              "id": 127
+            },
+            {
+              "nameJa": "光コンボ強化",
+              "nameEn": "Light Combo Enhance",
+              "id": 76
+            },
+            {
+              "nameJa": "マルチブースト",
+              "nameEn": "Multi Boost",
+              "id": 30
+            },
+            {
+              "nameJa": "バインド回復",
+              "nameEn": "Recover Bind",
+              "id": 20
+            }
+          ],
+          "rewards": {
+            "explorationExp": 528,
+            "coins": "2000万",
+            "plusPoints": 150
+          },
+          "drops": [
+            {
+              "nameJa": "闇ダメージ軽減＋",
+              "nameEn": "闇ダメージ軽減＋"
+            },
+            {
+              "nameJa": "闇ダメージ軽減",
+              "nameEn": "Reduce Dark Damage"
+            },
+            {
+              "nameJa": "売却用キラー",
+              "nameEn": "Redeemable Killer"
+            },
+            {
+              "nameJa": "強化合成用キラー",
+              "nameEn": "Enhance Killer"
+            },
+            {
+              "nameJa": "能力覚醒用キラー",
+              "nameEn": "Awaken Killer"
+            },
+            {
+              "nameJa": "進化用キラー",
+              "nameEn": "Evo Killer"
+            }
+          ],
+          "hiddenConditionJa": "ドラゴンタイプのモンスターが7体以上[",
+          "hiddenReward": "10,000 MP",
+          "hiddenConditionEn": "7 or more Dragon-type monsters"
+        },
+        {
+          "level": 5,
+          "stamina": 50,
+          "durationHours": 24,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "陽の加護",
+              "nameEn": "陽の加護",
+              "id": 128
+            },
+            {
+              "nameJa": "光列強化",
+              "nameEn": "光列強化",
+              "id": 119
+            },
+            {
+              "nameJa": "操作不可耐性",
+              "nameEn": "Resistance-Immobility",
+              "id": 55
+            },
+            {
+              "nameJa": "全パラメータ強化",
+              "nameEn": "全パラメータ強化",
+              "id": 127
+            },
+            {
+              "nameJa": "光コンボ強化",
+              "nameEn": "Light Combo Enhance",
+              "id": 76
+            },
+            {
+              "nameJa": "回復ドロップ強化",
+              "nameEn": "Enhanced Heal Orbs",
+              "id": 29
+            }
+          ],
+          "rewards": {
+            "explorationExp": 480,
+            "coins": "1000万",
+            "plusPoints": 100
+          },
+          "drops": [
+            {
+              "nameJa": "ニジピィ",
+              "nameEn": "ニジピィ"
+            },
+            {
+              "nameJa": "創装の宝玉",
+              "nameEn": "創装の宝玉"
+            },
+            {
+              "nameJa": "ヤミピィ",
+              "nameEn": "ヤミピィ"
+            },
+            {
+              "nameJa": "闇の宝玉",
+              "nameEn": "闇の宝玉"
+            }
+          ],
+          "hiddenConditionJa": "マシンタイプのモンスターが7体以上[",
+          "hiddenReward": "10,000 MP",
+          "hiddenConditionEn": "7 or more Machine-type monsters"
+        },
+        {
+          "level": 4,
+          "stamina": 40,
+          "durationHours": 20,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "陽の加護",
+              "nameEn": "陽の加護",
+              "id": 128
+            },
+            {
+              "nameJa": "光列強化",
+              "nameEn": "光列強化",
+              "id": 119
+            },
+            {
+              "nameJa": "操作不可耐性",
+              "nameEn": "Resistance-Immobility",
+              "id": 55
+            },
+            {
+              "nameJa": "全パラメータ強化",
+              "nameEn": "全パラメータ強化",
+              "id": 127
+            },
+            {
+              "nameJa": "光コンボ強化",
+              "nameEn": "Light Combo Enhance",
+              "id": 76
+            }
+          ],
+          "rewards": {
+            "explorationExp": 360,
+            "coins": "750万",
+            "plusPoints": 75
+          },
+          "drops": [
+            {
+              "nameJa": "黄金の番人",
+              "nameEn": "黄金の番人"
+            },
+            {
+              "nameJa": "虹の番人",
+              "nameEn": "虹の番人"
+            },
+            {
+              "nameJa": "闇の番人",
+              "nameEn": "闇の番人"
+            },
+            {
+              "nameJa": "操作時間延長＋",
+              "nameEn": "Extended Move Time+"
+            },
+            {
+              "nameJa": "操作時間延長",
+              "nameEn": "Extended Move Time"
+            }
+          ],
+          "hiddenConditionJa": "チームのモンスターが5体以下[",
+          "hiddenReward": "10,000 MP",
+          "hiddenConditionEn": "5 or fewer monsters on the team"
+        },
+        {
+          "level": 3,
+          "stamina": 30,
+          "durationHours": 16,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "陽の加護",
+              "nameEn": "陽の加護",
+              "id": 128
+            },
+            {
+              "nameJa": "光列強化",
+              "nameEn": "光列強化",
+              "id": 119
+            },
+            {
+              "nameJa": "操作不可耐性",
+              "nameEn": "Resistance-Immobility",
+              "id": 55
+            },
+            {
+              "nameJa": "全パラメータ強化",
+              "nameEn": "全パラメータ強化",
+              "id": 127
+            }
+          ],
+          "rewards": {
+            "explorationExp": 256,
+            "coins": "500万",
+            "plusPoints": 50
+          },
+          "drops": [
+            {
+              "nameJa": "創装の宝玉",
+              "nameEn": "創装の宝玉"
+            },
+            {
+              "nameJa": "神化の黒面",
+              "nameEn": "神化の黒面"
+            },
+            {
+              "nameJa": "紫色の鬼神面",
+              "nameEn": "紫色の鬼神面"
+            },
+            {
+              "nameJa": "進化の紫仮面",
+              "nameEn": "進化の紫仮面"
+            }
+          ],
+          "hiddenConditionJa": "闇属性モンスターが5体以上[",
+          "hiddenReward": "10,000 MP",
+          "hiddenConditionEn": "5 or more Dark-attribute monsters on the team"
+        },
+        {
+          "level": 2,
+          "stamina": 20,
+          "durationHours": 12,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "陽の加護",
+              "nameEn": "陽の加護",
+              "id": 128
+            },
+            {
+              "nameJa": "光列強化",
+              "nameEn": "光列強化",
+              "id": 119
+            },
+            {
+              "nameJa": "操作不可耐性",
+              "nameEn": "Resistance-Immobility",
+              "id": 55
+            }
+          ],
+          "rewards": {
+            "explorationExp": 168,
+            "coins": "300万",
+            "plusPoints": 30
+          },
+          "drops": [
+            {
+              "nameJa": "超絶キングメタルドラゴン",
+              "nameEn": "超絶キングメタルドラゴン"
+            },
+            {
+              "nameJa": "デビリット",
+              "nameEn": "デビリット"
+            },
+            {
+              "nameJa": "エンジェリット",
+              "nameEn": "エンジェリット"
+            }
+          ],
+          "hiddenConditionJa": "合計コストが150以下[",
+          "hiddenReward": "10,000 MP",
+          "hiddenConditionEn": "Total team cost 150 or below"
+        },
+        {
+          "level": 1,
+          "stamina": 10,
+          "durationHours": 8,
+          "recommendedAwakenings": [
+            {
+              "nameJa": "陽の加護",
+              "nameEn": "陽の加護",
+              "id": 128
+            },
+            {
+              "nameJa": "光列強化",
+              "nameEn": "光列強化",
+              "id": 119
+            }
+          ],
+          "rewards": {
+            "explorationExp": 96,
+            "coins": "100万",
+            "plusPoints": 10
+          },
+          "drops": [
+            {
+              "nameJa": "ダブアメリット",
+              "nameEn": "ダブアメリット"
+            },
+            {
+              "nameJa": "アメリット",
+              "nameEn": "アメリット"
+            }
+          ],
+          "hiddenConditionJa": "合計レアリティが20以下[",
+          "hiddenReward": "10,000 MP",
+          "hiddenConditionEn": "Total team rarity 20 or below"
+        }
+      ]
+    }
+  ],
+  "awakeningEffects": [
+    {
+      "nameJa": "ダンジョンボーナス",
+      "nameEn": "Dungeon Bonus",
+      "id": 64,
+      "effectJa": "探索ランク経験値、モンスター経験値、入手コイン、卵ドロップ率が少し上昇。",
+      "effectEn": "Slightly increases exploration rank EXP, monster EXP, coins earned, and egg drop rate."
+    },
+    {
+      "nameJa": "スキルブースト",
+      "nameEn": "Skill Boost",
+      "id": 21,
+      "effectJa": "会心率が1%アップし、一定個数でモンスターが変身",
+      "effectEn": "Critical rate +1%; transforms the monster after a set number of triggers."
+    },
+    {
+      "nameJa": "スキルブースト＋",
+      "nameEn": "Skill Boost+",
+      "id": 56,
+      "effectJa": "会心率が2%アップし、一定個数でモンスターが変身",
+      "effectEn": "Critical rate +2%; transforms the monster after a set number of triggers."
+    },
+    {
+      "nameJa": "スキルチャージ",
+      "nameEn": "Skill Charge",
+      "id": 51,
+      "effectJa": "会心ダメージ倍率が5%アップ",
+      "effectEn": "Critical damage multiplier +5%."
+    },
+    {
+      "nameJa": "スキルチャージ＋",
+      "nameEn": "Skill Charge+",
+      "id": 97,
+      "effectJa": "会心ダメージ倍率が10%アップ",
+      "effectEn": "Critical damage multiplier +10%."
+    },
+    {
+      "nameJa": "チームHP強化",
+      "nameEn": "Enhanced Team HP",
+      "id": 46,
+      "effectJa": "チームのHPが5%アップ",
+      "effectEn": "Team HP +5%."
+    },
+    {
+      "nameJa": "チーム回復強化",
+      "nameEn": "Enhanced Team Recovery",
+      "id": 47,
+      "effectJa": "チームの回復力が5%アップ",
+      "effectEn": "Team RCV +5%."
+    },
+    {
+      "nameJa": "操作時間延長＋",
+      "nameEn": "Extended Move Time+",
+      "id": 53,
+      "effectJa": "チームの攻撃力、回復力が3%アップ",
+      "effectEn": "Team ATK and RCV +3%."
+    },
+    {
+      "nameJa": "アフタヌーンティー",
+      "nameEn": "Afternoon Tea",
+      "id": 132,
+      "effectJa": "チームの全パラメータが3%アップ",
+      "effectEn": "All team stats +3%."
+    },
+    {
+      "nameJa": "火ダメージ軽減",
+      "nameEn": "Reduce Fire Damage",
+      "id": 4,
+      "effectJa": "火属性の敵からのダメージを5%軽減（軽減合計上限75%まで）",
+      "effectEn": "Reduces damage from Fire enemies by 5% (total reduction cap 75%)."
+    },
+    {
+      "nameJa": "水ダメージ軽減",
+      "nameEn": "Reduce Water Damage",
+      "id": 5,
+      "effectJa": "水属性の敵からのダメージを5%軽減（軽減合計上限75%まで）",
+      "effectEn": "Reduces damage from Water enemies by 5% (total reduction cap 75%)."
+    },
+    {
+      "nameJa": "木ダメージ軽減",
+      "nameEn": "Reduce Wood Damage",
+      "id": 6,
+      "effectJa": "木属性の敵からのダメージを5%軽減（軽減合計上限75%まで）",
+      "effectEn": "Reduces damage from Wood enemies by 5% (total reduction cap 75%)."
+    },
+    {
+      "nameJa": "光ダメージ軽減",
+      "nameEn": "Reduce Light Damage",
+      "id": 7,
+      "effectJa": "光属性の敵からのダメージを5%軽減（軽減合計上限75%まで）",
+      "effectEn": "Reduces damage from Light enemies by 5% (total reduction cap 75%)."
+    },
+    {
+      "nameJa": "闇ダメージ軽減",
+      "nameEn": "Reduce Dark Damage",
+      "id": 8,
+      "effectJa": "闇属性の敵からのダメージを5%軽減（軽減合計上限75%まで）",
+      "effectEn": "Reduces damage from Dark enemies by 5% (total reduction cap 75%)."
+    },
+    {
+      "nameJa": "HP50％以上強化",
+      "nameEn": "Anti-Skill Boost",
+      "id": 105,
+      "effectJa": "HP50%以上でチームの攻撃力が7%アップ",
+      "effectEn": "Team ATK +7% while HP is 50% or higher."
+    },
+    {
+      "nameJa": "HP50％以下強化",
+      "nameEn": "Levitation",
+      "id": 106,
+      "effectJa": "HP50%以下でチームの攻撃力が7%アップ",
+      "effectEn": "Team ATK +7% while HP is 50% or lower."
+    },
+    {
+      "nameJa": "ガードブレイク",
+      "nameEn": "Guard Break",
+      "id": 44,
+      "effectJa": "敵のダメージ軽減を10%分無視して攻撃できる",
+      "effectEn": "Attacks ignore 10% of enemy damage reduction."
+    },
+    {
+      "nameJa": "回復L字消し",
+      "nameEn": "[L] Heal Matching",
+      "id": 59,
+      "effectJa": "敵からのダメージを時々5%軽減する（軽減合計上限75%まで）",
+      "effectEn": "Sometimes reduces incoming damage by 5% (total reduction cap 75%)."
+    },
+    {
+      "nameJa": "お邪魔ドロップの加護",
+      "nameEn": "Blessing of Jammers",
+      "id": 71,
+      "effectJa": "受けているマイナス効果1種類毎にチームの攻撃力が10%アップ",
+      "effectEn": "Team ATK +10% for each type of debuff on the team."
+    },
+    {
+      "nameJa": "毒ドロップの加護",
+      "nameEn": "Blessing of Poison Orbs",
+      "id": 72,
+      "effectJa": "受けているマイナス効果1種類毎に会心ダメージ倍率が20%アップ",
+      "effectEn": "Critical damage multiplier +20% for each type of debuff on the team."
+    },
+    {
+      "nameJa": "熟成",
+      "nameEn": "Aging",
+      "id": 130,
+      "effectJa": "1WAVE毎にチームの攻撃力、回復力が2%アップ",
+      "effectEn": "Team ATK and RCV +2% after each wave."
+    },
+    {
+      "nameJa": "部位破壊ボーナス",
+      "nameEn": "Part Break Bonus",
+      "id": 131,
+      "effectJa": "バトルに勝利するたびにチームの攻撃力が3%アップ",
+      "effectEn": "Team ATK +3% after each battle victory."
+    },
+    {
+      "nameJa": "ドラゴンキラー",
+      "nameEn": "Dragon Killer",
+      "id": 31,
+      "effectJa": "ドラゴンタイプへのダメージが20%アップ",
+      "effectEn": "Damage vs Dragon type +20%."
+    },
+    {
+      "nameJa": "神キラー",
+      "nameEn": "God Killer",
+      "id": 32,
+      "effectJa": "神タイプへのダメージが20%アップ",
+      "effectEn": "Damage vs God type +20%."
+    },
+    {
+      "nameJa": "悪魔キラー",
+      "nameEn": "Devil Killer",
+      "id": 33,
+      "effectJa": "悪魔タイプへのダメージが20%アップ",
+      "effectEn": "Damage vs Devil type +20%."
+    },
+    {
+      "nameJa": "マシンキラー",
+      "nameEn": "Machine Killer",
+      "id": 34,
+      "effectJa": "マシンタイプへのダメージが20%アップ",
+      "effectEn": "Damage vs Machine type +20%."
+    },
+    {
+      "nameJa": "バランスキラー",
+      "nameEn": "Balanced Killer",
+      "id": 35,
+      "effectJa": "バランスタイプへのダメージが20%アップ",
+      "effectEn": "Damage vs Balanced type +20%."
+    },
+    {
+      "nameJa": "攻撃キラー",
+      "nameEn": "Attacker Killer",
+      "id": 36,
+      "effectJa": "攻撃タイプへのダメージが20%アップ",
+      "effectEn": "Damage vs Attacker type +20%."
+    },
+    {
+      "nameJa": "体力キラー",
+      "nameEn": "Physical Killer",
+      "id": 37,
+      "effectJa": "体力タイプへのダメージが20%アップ",
+      "effectEn": "Damage vs Physical type +20%."
+    },
+    {
+      "nameJa": "回復キラー",
+      "nameEn": "Healer Killer",
+      "id": 38,
+      "effectJa": "回復タイプへのダメージが20%アップ",
+      "effectEn": "Damage vs Healer type +20%."
+    },
+    {
+      "nameJa": "進化用キラー",
+      "nameEn": "Evo Killer",
+      "id": 39,
+      "effectJa": "進化用タイプへのダメージが20%アップ",
+      "effectEn": "Damage vs Evo Material type +20%."
+    },
+    {
+      "nameJa": "能力覚醒用キラー",
+      "nameEn": "Awaken Killer",
+      "id": 40,
+      "effectJa": "能力覚醒用タイプへのダメージが20%アップ",
+      "effectEn": "Damage vs Awakening Material type +20%."
+    },
+    {
+      "nameJa": "強化合成用キラー",
+      "nameEn": "Enhance Killer",
+      "id": 41,
+      "effectJa": "強化合成用タイプへのダメージが20%アップ",
+      "effectEn": "Damage vs Power-up Material type +20%."
+    },
+    {
+      "nameJa": "売却用キラー",
+      "nameEn": "Redeemable Killer",
+      "id": 42,
+      "effectJa": "売却用タイプへのダメージが20%アップ",
+      "effectEn": "Damage vs Sell Material type +20%."
+    },
+    {
+      "nameJa": "コンボ強化",
+      "nameEn": "Enhanced Combos",
+      "id": 43,
+      "effectJa": "自分の攻撃力が10%アップ",
+      "effectEn": "This monster's ATK +10%."
+    },
+    {
+      "nameJa": "コンボ強化＋",
+      "nameEn": "Enhanced Combos+",
+      "id": 107,
+      "effectJa": "自分の攻撃力が20%アップ",
+      "effectEn": "This monster's ATK +20%."
+    },
+    {
+      "nameJa": "超コンボ強化",
+      "nameEn": "Super Enhanced Combos",
+      "id": 61,
+      "effectJa": "自分の攻撃力が20%アップ",
+      "effectEn": "This monster's ATK +20%."
+    },
+    {
+      "nameJa": "超コンボ強化＋",
+      "nameEn": "Super Enhanced Combos+",
+      "id": 111,
+      "effectJa": "自分の攻撃力が40%アップ",
+      "effectEn": "This monster's ATK +40%."
+    },
+    {
+      "nameJa": "3色攻撃強化",
+      "nameEn": "3-Color ATK Enhance",
+      "id": 79,
+      "effectJa": "自分の攻撃力が10%アップ",
+      "effectEn": "This monster's ATK +10%."
+    },
+    {
+      "nameJa": "3色攻撃強化＋",
+      "nameEn": "3-Color ATK Enhance+",
+      "id": 112,
+      "effectJa": "自分の攻撃力が20%アップ",
+      "effectEn": "This monster's ATK +20%."
+    },
+    {
+      "nameJa": "4色攻撃強化",
+      "nameEn": "4-Color ATK Enhance",
+      "id": 80,
+      "effectJa": "自分の攻撃力が15%アップ",
+      "effectEn": "This monster's ATK +15%."
+    },
+    {
+      "nameJa": "4色攻撃強化＋",
+      "nameEn": "4-Color ATK Enhance+",
+      "id": 113,
+      "effectJa": "自分の攻撃力が30%アップ",
+      "effectEn": "This monster's ATK +30%."
+    },
+    {
+      "nameJa": "5色攻撃強化",
+      "nameEn": "5-Color ATK Enhance",
+      "id": 81,
+      "effectJa": "自分の攻撃力が20%アップ",
+      "effectEn": "This monster's ATK +20%."
+    },
+    {
+      "nameJa": "5色攻撃強化＋",
+      "nameEn": "5-Color ATK Enhance+",
+      "id": 114,
+      "effectJa": "自分の攻撃力が40%アップ",
+      "effectEn": "This monster's ATK +40%."
+    },
+    {
+      "nameJa": "火水同時攻撃",
+      "nameEn": "Fire Water Attack",
+      "id": 133,
+      "effectJa": "自分の攻撃力が50%アップ",
+      "effectEn": "This monster's ATK +50%."
+    },
+    {
+      "nameJa": "水木同時攻撃",
+      "nameEn": "Water Wood Attack",
+      "id": 134,
+      "effectJa": "自分の攻撃力が50%アップ",
+      "effectEn": "This monster's ATK +50%."
+    },
+    {
+      "nameJa": "木火同時攻撃",
+      "nameEn": "Wood Fire Attack",
+      "id": 135,
+      "effectJa": "自分の攻撃力が50%アップ",
+      "effectEn": "This monster's ATK +50%."
+    },
+    {
+      "nameJa": "達人多色強化",
+      "nameEn": "Expert Multi-Match",
+      "id": 141,
+      "effectJa": "自分の攻撃力、回復力が50%アップ",
+      "effectEn": "This monster's ATK and RCV +50%."
+    },
+    {
+      "nameJa": "暗闇耐性",
+      "nameEn": "Resistance-Blind",
+      "id": 11,
+      "effectJa": "「落とし穴」のダメージを軽減する",
+      "effectEn": "Reduces damage from \"Pitfall\"."
+    },
+    {
+      "nameJa": "暗闇耐性＋",
+      "nameEn": "Resistance-Blind+",
+      "id": 68,
+      "effectJa": "「落とし穴」のダメージを軽減する（効果大）",
+      "effectEn": "Reduces damage from \"Pitfall\" (enhanced)."
+    },
+    {
+      "nameJa": "お邪魔耐性",
+      "nameEn": "Resistance-Jammers",
+      "id": 12,
+      "effectJa": "「爆弾」のダメージを軽減する",
+      "effectEn": "Reduces damage from \"Bomb\"."
+    },
+    {
+      "nameJa": "お邪魔耐性＋",
+      "nameEn": "Resistance-Jammers+",
+      "id": 69,
+      "effectJa": "「爆弾」のダメージを軽減する（効果大）",
+      "effectEn": "Reduces damage from \"Bomb\" (enhanced)."
+    },
+    {
+      "nameJa": "毒耐性",
+      "nameEn": "Resistance-Poison",
+      "id": 13,
+      "effectJa": "「毒沼」のダメージを軽減する",
+      "effectEn": "Reduces damage from \"Poison Swamp\"."
+    },
+    {
+      "nameJa": "毒耐性＋",
+      "nameEn": "Resistance-Poison+",
+      "id": 70,
+      "effectJa": "「毒沼」のダメージを軽減する（効果大）",
+      "effectEn": "Reduces damage from \"Poison Swamp\" (enhanced)."
+    },
+    {
+      "nameJa": "火列強化",
+      "nameEn": "Enhanced Fire Rows",
+      "id": 22,
+      "effectJa": "「木の魔窟」のダメージを軽減する",
+      "effectEn": "Reduces damage from \"Wood Lair\"."
+    },
+    {
+      "nameJa": "火列強化×3",
+      "nameEn": "Triple Enhanced Fire Rows×3",
+      "id": 116,
+      "effectJa": "「木の魔窟」のダメージを軽減する（効果大）",
+      "effectEn": "Reduces damage from \"Wood Lair\" (enhanced)."
+    },
+    {
+      "nameJa": "水列強化",
+      "nameEn": "Enhanced Water Rows",
+      "id": 23,
+      "effectJa": "「火の魔窟」のダメージを軽減する",
+      "effectEn": "Reduces damage from \"Fire Lair\"."
+    },
+    {
+      "nameJa": "水列強化×3",
+      "nameEn": "Triple Enhanced Water Rows×3",
+      "id": 117,
+      "effectJa": "「火の魔窟」のダメージを軽減する（効果大）",
+      "effectEn": "Reduces damage from \"Fire Lair\" (enhanced)."
+    },
+    {
+      "nameJa": "木列強化",
+      "nameEn": "Enhanced Wood Rows",
+      "id": 24,
+      "effectJa": "「水の魔窟」のダメージを軽減する",
+      "effectEn": "Reduces damage from \"Water Lair\"."
+    },
+    {
+      "nameJa": "木列強化×3",
+      "nameEn": "Triple Enhanced Wood Rows×3",
+      "id": 118,
+      "effectJa": "「水の魔窟」のダメージを軽減する（効果大）",
+      "effectEn": "Reduces damage from \"Water Lair\" (enhanced)."
+    },
+    {
+      "nameJa": "光列強化",
+      "nameEn": "Enhanced Light Rows",
+      "id": 25,
+      "effectJa": "「闇の魔窟」のダメージを軽減する",
+      "effectEn": "Reduces damage from \"Dark Lair\"."
+    },
+    {
+      "nameJa": "光列強化×3",
+      "nameEn": "Triple Enhanced Light Rows×3",
+      "id": 119,
+      "effectJa": "「闇の魔窟」のダメージを軽減する（効果大）",
+      "effectEn": "Reduces damage from \"Dark Lair\" (enhanced)."
+    },
+    {
+      "nameJa": "闇列強化",
+      "nameEn": "Enhanced Dark Rows",
+      "id": 26,
+      "effectJa": "「光の魔窟」のダメージを軽減する",
+      "effectEn": "Reduces damage from \"Light Lair\"."
+    },
+    {
+      "nameJa": "闇列強化×3",
+      "nameEn": "Triple Enhanced Dark Rows×3",
+      "id": 120,
+      "effectJa": "「光の魔窟」のダメージを軽減する（効果大）",
+      "effectEn": "Reduces damage from \"Light Lair\" (enhanced)."
+    },
+    {
+      "nameJa": "超つなげ消し強化",
+      "nameEn": "Blob Match Boost",
+      "id": 82,
+      "effectJa": "「深淵の巣穴」のダメージを軽減する",
+      "effectEn": "Reduces damage from \"Abyss Nest\"."
+    },
+    {
+      "nameJa": "2体攻撃",
+      "nameEn": "Two-Pronged Attack",
+      "id": 27,
+      "effectJa": "「挟み撃ち」のダメージを軽減する",
+      "effectEn": "Reduces damage from \"Pincer Attack\"."
+    },
+    {
+      "nameJa": "2体攻撃＋",
+      "nameEn": "Two-Pronged Attack+",
+      "id": 96,
+      "effectJa": "「挟み撃ち」のダメージを軽減する（効果大）",
+      "effectEn": "Reduces damage from \"Pincer Attack\" (enhanced)."
+    },
+    {
+      "nameJa": "L字消し攻撃",
+      "nameEn": "[L] Increased Attack",
+      "id": 60,
+      "effectJa": "「偽宝箱」のダメージを軽減する",
+      "effectEn": "Reduces damage from \"Mimic Chest\"."
+    },
+    {
+      "nameJa": "L字消し攻撃＋",
+      "nameEn": "[L] Increased Attack+",
+      "id": 108,
+      "effectJa": "「偽宝箱」のダメージを軽減する（効果大）",
+      "effectEn": "Reduces damage from \"Mimic Chest\" (enhanced)."
+    },
+    {
+      "nameJa": "マルチブースト",
+      "nameEn": "Multi Boost",
+      "id": 30,
+      "effectJa": "「仕掛け扉」のダメージを軽減する",
+      "effectEn": "Reduces damage from \"Trap Door\"."
+    },
+    {
+      "nameJa": "追加攻撃",
+      "nameEn": "Bonus Attack",
+      "id": 45,
+      "effectJa": "「モンスター襲撃」のダメージを軽減する",
+      "effectEn": "Reduces damage from \"Monster Ambush\"."
+    },
+    {
+      "nameJa": "超追加攻撃",
+      "nameEn": "Super Bonus Attack",
+      "id": 50,
+      "effectJa": "「巨大モンスター襲撃」のダメージを軽減する",
+      "effectEn": "Reduces damage from \"Giant Monster Ambush\"."
+    },
+    {
+      "nameJa": "火コンボ強化",
+      "nameEn": "Fire Combo Enhance",
+      "id": 73,
+      "effectJa": "「汚染」のダメージを軽減する",
+      "effectEn": "Reduces damage from \"Pollution\"."
+    },
+    {
+      "nameJa": "火コンボ強化＋",
+      "nameEn": "Enhanced Fire Combos+",
+      "id": 121,
+      "effectJa": "「汚染」のダメージを軽減する（効果大）",
+      "effectEn": "Reduces damage from \"Pollution\" (enhanced)."
+    },
+    {
+      "nameJa": "水コンボ強化",
+      "nameEn": "Water Combo Enhance",
+      "id": 74,
+      "effectJa": "「炎上」のダメージを軽減する",
+      "effectEn": "Reduces damage from \"Blaze\"."
+    },
+    {
+      "nameJa": "水コンボ強化＋",
+      "nameEn": "Enhanced Water Combos+",
+      "id": 122,
+      "effectJa": "「炎上」のダメージを軽減する（効果大）",
+      "effectEn": "Reduces damage from \"Blaze\" (enhanced)."
+    },
+    {
+      "nameJa": "木コンボ強化",
+      "nameEn": "Wood Combo Enhance",
+      "id": 75,
+      "effectJa": "「氷風」のダメージを軽減する",
+      "effectEn": "Reduces damage from \"Ice Wind\"."
+    },
+    {
+      "nameJa": "木コンボ強化＋",
+      "nameEn": "Enhanced Wood Combos+",
+      "id": 123,
+      "effectJa": "「氷風」のダメージを軽減する（効果大）",
+      "effectEn": "Reduces damage from \"Ice Wind\" (enhanced)."
+    },
+    {
+      "nameJa": "光コンボ強化",
+      "nameEn": "Light Combo Enhance",
+      "id": 76,
+      "effectJa": "「呪い」のダメージを軽減する",
+      "effectEn": "Reduces damage from \"Curse\"."
+    },
+    {
+      "nameJa": "光コンボ強化＋",
+      "nameEn": "Enhanced Light Combos+",
+      "id": 124,
+      "effectJa": "「呪い」のダメージを軽減する（効果大）",
+      "effectEn": "Reduces damage from \"Curse\" (enhanced)."
+    },
+    {
+      "nameJa": "闇コンボ強化",
+      "nameEn": "Dark Combo Enhance",
+      "id": 77,
+      "effectJa": "「落雷」のダメージを軽減する",
+      "effectEn": "Reduces damage from \"Lightning\"."
+    },
+    {
+      "nameJa": "闇コンボ強化＋",
+      "nameEn": "Enhanced Dark Combos+",
+      "id": 125,
+      "effectJa": "「落雷」のダメージを軽減する（効果大）",
+      "effectEn": "Reduces damage from \"Lightning\" (enhanced)."
+    },
+    {
+      "nameJa": "陽の加護",
+      "nameEn": "Yang Protection",
+      "id": 128,
+      "effectJa": "「灼熱」のダメージを軽減する",
+      "effectEn": "Reduces damage from \"Scorching Heat\"."
+    },
+    {
+      "nameJa": "陰の加護",
+      "nameEn": "Yin Protection",
+      "id": 129,
+      "effectJa": "「極寒」のダメージを軽減する",
+      "effectEn": "Reduces damage from \"Extreme Cold\"."
+    },
+    {
+      "nameJa": "加速",
+      "nameEn": "Acceleration",
+      "id": 143,
+      "effectJa": "「崩落」のダメージを軽減する",
+      "effectEn": "Reduces damage from \"Collapse\"."
+    },
+    {
+      "nameJa": "HP強化",
+      "nameEn": "Enhanced HP",
+      "id": 1,
+      "effectJa": "「活力の旋律」を無効化することがある",
+      "effectEn": "May nullify \"Melody of Vitality\"."
+    },
+    {
+      "nameJa": "攻撃強化",
+      "nameEn": "Enhanced Attack",
+      "id": 2,
+      "effectJa": "「猛攻の旋律」を無効化することがある",
+      "effectEn": "May nullify \"Melody of Assault\"."
+    },
+    {
+      "nameJa": "回復強化",
+      "nameEn": "Enhanced Recovery",
+      "id": 3,
+      "effectJa": "「堅守の旋律」を無効化することがある",
+      "effectEn": "May nullify \"Melody of Defense\"."
+    },
+    {
+      "nameJa": "全パラメータ強化",
+      "nameEn": "All Stat Boost",
+      "id": 127,
+      "effectJa": "「全能の旋律」を無効化することがある",
+      "effectEn": "May nullify \"Melody of Omnipotence\"."
+    },
+    {
+      "nameJa": "全パラメータ強化＋",
+      "nameEn": "All Stat Boost+",
+      "id": 127,
+      "effectJa": "「全能の旋律」を無効化することがある（効果大）",
+      "effectEn": "May nullify \"Melody of Omnipotence\" (enhanced)."
+    },
+    {
+      "nameJa": "自動回復",
+      "nameEn": "Auto-Recover",
+      "id": 9,
+      "effectJa": "「結界」を無効化することがある",
+      "effectEn": "May nullify \"Barrier\"."
+    },
+    {
+      "nameJa": "自動回復＋",
+      "nameEn": "Auto-Recover+",
+      "id": 98,
+      "effectJa": "「結界」を無効化することがある（効果大）",
+      "effectEn": "May nullify \"Barrier\" (enhanced)."
+    },
+    {
+      "nameJa": "封印耐性",
+      "nameEn": "Resistance-Skill Bind",
+      "id": 28,
+      "effectJa": "「魔法陣」を無効化することがある",
+      "effectEn": "May nullify \"Magic Circle\"."
+    },
+    {
+      "nameJa": "ダメージ無効貫通",
+      "nameEn": "Damage Void Piercer",
+      "id": 48,
+      "effectJa": "「障壁魔術」を無効化することがある",
+      "effectEn": "May nullify \"Barrier Magic\"."
+    },
+    {
+      "nameJa": "ダメージ無効貫通＋",
+      "nameEn": "Damage Void Piercer+",
+      "id": 109,
+      "effectJa": "「障壁魔術」を無効化することがある（効果大）",
+      "effectEn": "May nullify \"Barrier Magic\" (enhanced)."
+    },
+    {
+      "nameJa": "バインド耐性＋",
+      "nameEn": "Resistance-Bind+",
+      "id": 52,
+      "effectJa": "「放電」を無効化することがある",
+      "effectEn": "May nullify \"Electric Discharge\"."
+    },
+    {
+      "nameJa": "雲耐性",
+      "nameEn": "Resistance-Clouds",
+      "id": 54,
+      "effectJa": "「濃霧」を無効化することがある",
+      "effectEn": "May nullify \"Dense Fog\"."
+    },
+    {
+      "nameJa": "操作不可耐性",
+      "nameEn": "Resistance-Immobility",
+      "id": 55,
+      "effectJa": "「蠢くツタ」を無効化することがある",
+      "effectEn": "May nullify \"Writhing Vines\"."
+    },
+    {
+      "nameJa": "スキルボイス",
+      "nameEn": "Skill Voice",
+      "id": 63,
+      "effectJa": "「泥棒ネズミ」を無効化することがある",
+      "effectEn": "May nullify \"Thief Mouse\"."
+    },
+    {
+      "nameJa": "十字消し攻撃",
+      "nameEn": "Cross Attack",
+      "id": 78,
+      "effectJa": "「悪霊」を無効化することがある",
+      "effectEn": "May nullify \"Evil Spirit\"."
+    },
+    {
+      "nameJa": "十字消し攻撃＋",
+      "nameEn": "Cross Attack+",
+      "id": 110,
+      "effectJa": "「悪霊」を無効化することがある（効果大）",
+      "effectEn": "May nullify \"Evil Spirit\" (enhanced)."
+    },
+    {
+      "nameJa": "浮遊",
+      "nameEn": "Levitation",
+      "id": 106,
+      "effectJa": "「重力場」を無効化することがある",
+      "effectEn": "May nullify \"Gravity Field\"."
+    },
+    {
+      "nameJa": "T字消し攻撃",
+      "nameEn": "[T] Increased Attack",
+      "id": 126,
+      "effectJa": "「迷路」を無効化することがある",
+      "effectEn": "May nullify \"Labyrinth\"."
+    },
+    {
+      "nameJa": "スキル遅延耐性",
+      "nameEn": "Skill Delay Resist",
+      "id": 136,
+      "effectJa": "「泥沼」を無効化することがある",
+      "effectEn": "May nullify \"Quagmire\"."
+    },
+    {
+      "nameJa": "操作時間変更耐性",
+      "nameEn": "Move Time Change Resist",
+      "id": 140,
+      "effectJa": "「時空の歪み」を無効化することがある",
+      "effectEn": "May nullify \"Space-Time Distortion\"."
+    },
+    {
+      "nameJa": "バインド回復",
+      "nameEn": "Recover Bind",
+      "id": 20,
+      "effectJa": "「解呪の鐘」の発動確率が上昇する",
+      "effectEn": "Increases trigger rate for \"Curse-Lifting Bell\"."
+    },
+    {
+      "nameJa": "バインド回復＋",
+      "nameEn": "Recover Bind+",
+      "id": 115,
+      "effectJa": "「解呪の鐘」の発動確率が上昇する（効果大）",
+      "effectEn": "Increases trigger rate for \"Curse-Lifting Bell\" (enhanced)."
+    },
+    {
+      "nameJa": "火ドロップ強化＋",
+      "nameEn": "Enhanced Fire Orbs+",
+      "id": 99,
+      "effectJa": "「火の祭壇」の発動確率が上昇する",
+      "effectEn": "Increases trigger rate for \"Fire Altar\"."
+    },
+    {
+      "nameJa": "水ドロップ強化＋",
+      "nameEn": "Enhanced Water Orbs+",
+      "id": 100,
+      "effectJa": "「水の祭壇」の発動確率が上昇する",
+      "effectEn": "Increases trigger rate for \"Water Altar\"."
+    },
+    {
+      "nameJa": "木ドロップ強化＋",
+      "nameEn": "Enhanced Wood Orbs+",
+      "id": 101,
+      "effectJa": "「木の祭壇」の発動確率が上昇する",
+      "effectEn": "Increases trigger rate for \"Wood Altar\"."
+    },
+    {
+      "nameJa": "光ドロップ強化＋",
+      "nameEn": "Enhanced Light Orbs+",
+      "id": 102,
+      "effectJa": "「光の祭壇」の発動確率が上昇する",
+      "effectEn": "Increases trigger rate for \"Light Altar\"."
+    },
+    {
+      "nameJa": "闇ドロップ強化＋",
+      "nameEn": "Enhanced Dark Orbs+",
+      "id": 103,
+      "effectJa": "「闇の祭壇」の発動確率が上昇する",
+      "effectEn": "Increases trigger rate for \"Dark Altar\"."
+    },
+    {
+      "nameJa": "回復ドロップ強化",
+      "nameEn": "Enhanced Heal Orbs",
+      "id": 29,
+      "effectJa": "「生命の泉」の発動確率が上昇する",
+      "effectEn": "Increases trigger rate for \"Fountain of Life\"."
+    },
+    {
+      "nameJa": "回復ドロップ強化＋",
+      "nameEn": "Enhanced Heal Orbs+",
+      "id": 104,
+      "effectJa": "「生命の泉」の発動確率が上昇する（効果大）",
+      "effectEn": "Increases trigger rate for \"Fountain of Life\" (enhanced)."
+    },
+    {
+      "nameJa": "5色ドロップ強化",
+      "nameEn": "Enhanced All Att",
+      "id": 137,
+      "effectJa": "「虹の祭壇」の発動確率が上昇する",
+      "effectEn": "Increases trigger rate for \"Rainbow Altar\"."
+    },
+    {
+      "nameJa": "コンボドロップ生成",
+      "nameEn": "Dungeon Bonus",
+      "id": 64,
+      "effectJa": "「輝く神域」の発動確率が上昇する",
+      "effectEn": "Increases trigger rate for \"Shining Sanctuary\"."
+    },
+    {
+      "nameJa": "アシスト共鳴",
+      "nameEn": "Assist Resonance",
+      "id": 138,
+      "effectJa": "「騎士の像」の発動確率が上昇する",
+      "effectEn": "Increases trigger rate for \"Knight Statue\"."
+    },
+    {
+      "nameJa": "自力",
+      "nameEn": "Self-Reliance",
+      "id": 139,
+      "effectJa": "「巨兵の像」の発動確率が上昇する",
+      "effectEn": "Increases trigger rate for \"Giant Soldier Statue\"."
+    }
+  ]
+}
