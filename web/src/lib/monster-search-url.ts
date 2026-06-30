@@ -1,5 +1,11 @@
+import type { MonsterRecord } from "../types";
+import { parseMonsterTypeIds } from "./monster-types";
+
+/** Assist equipment awakening — search target for Resonate links. */
+export const ASSIST_EQUIPMENT_AWAKENING_ID = 49;
+
 /** Awakening id 49 — excluded on every monster-search link from One-Touch. */
-export const ONE_TOUCH_EXCLUDED_AWAKENING_ID = 49;
+export const ONE_TOUCH_EXCLUDED_AWAKENING_ID = ASSIST_EQUIPMENT_AWAKENING_ID;
 
 export type MonsterSearchAwakeningUrlOptions = {
   excludedAwakeningIds?: number[];
@@ -60,4 +66,34 @@ export function parseExcludedAwakeningIdsFromSearch(
   search: string
 ): number[] | null {
   return parseIntCsvParam(search, "excludedAwakeningIds");
+}
+
+export function parseTypesFromSearch(search: string): number[] | null {
+  return parseIntCsvParam(search, "types");
+}
+
+export function parseAttributeSlot1FromSearch(search: string): number[] | null {
+  return parseIntCsvParam(search, "attributeSlot1");
+}
+
+/** Assist eq search: awk 49, host primary attribute, any host type. */
+export function buildAssistResonanceSearchUrl(
+  row: Pick<
+    MonsterRecord,
+    "attribute_1_id" | "type_1_id" | "type_2_id" | "type_3_id"
+  >
+): string | null {
+  const primaryAttr = row.attribute_1_id;
+  const typeIds = parseMonsterTypeIds(row);
+  if (primaryAttr == null || !Number.isFinite(primaryAttr) || !typeIds.length) {
+    return null;
+  }
+
+  const q = new URLSearchParams();
+  q.set("awakeningIds", String(ASSIST_EQUIPMENT_AWAKENING_ID));
+  q.set("awakeningMatch", "all");
+  q.set("attributeSlot1", String(primaryAttr));
+  q.set("attributeMatch", "all");
+  q.set("types", typeIds.join(","));
+  return `/?${q}`;
 }

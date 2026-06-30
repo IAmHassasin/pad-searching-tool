@@ -1,3 +1,6 @@
+/** Assist Resonance — activates with matching-color/type assist equipment. */
+export const ASSIST_RESONANCE_AWAKENING_ID = 138;
+
 /** Parse dadguide awakening id lists, e.g. `(52),(56)` or `(52),(56)| (56),(111)`. */
 export function parseAwakeningIds(raw?: string | null): number[] {
   if (!raw?.trim()) return [];
@@ -54,4 +57,25 @@ export function resolvePrefixedAwakeningIds(
   if (Number.isFinite(syncId) && syncId > 0) return [syncId];
 
   return [];
+}
+
+/** True if awakening id appears in regular, super, or sync slots. */
+export function monsterHasAwakening(
+  row: {
+    awakenings?: string | null;
+    super_awakenings?: string | null;
+    sync_awsid?: number | null;
+  },
+  awakeningId: number
+): boolean {
+  if (parseRegularAwakenings(row.awakenings).includes(awakeningId)) return true;
+  if (
+    resolveSuperAwakeningIds(row.awakenings, row.super_awakenings).includes(
+      awakeningId
+    )
+  ) {
+    return true;
+  }
+  const sync = Number(row.sync_awsid);
+  return Number.isFinite(sync) && sync === awakeningId;
 }
