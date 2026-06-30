@@ -9,7 +9,12 @@ import { SkillFilterPanel } from "./components/SkillFilterPanel";
 import { useAdminSession } from "./hooks/useAdminSession";
 import { useDebouncedValue } from "./hooks/useDebouncedValue";
 import { useMobileWebview } from "./hooks/useMobileWebview";
-import { parseAwakeningIdsFromSearch, parseExcludedAwakeningIdsFromSearch } from "./lib/monster-search-url";
+import {
+  parseAttributeSlot1FromSearch,
+  parseAwakeningIdsFromSearch,
+  parseExcludedAwakeningIdsFromSearch,
+  parseTypesFromSearch,
+} from "./lib/monster-search-url";
 import {
   EMPTY_MONSTER_FILTERS,
   EMPTY_SKILL_FILTERS,
@@ -18,16 +23,31 @@ import {
 } from "./types";
 
 function initialMonsterFilters(): MonsterFilters {
-  const awakeningIds = parseAwakeningIdsFromSearch(window.location.search);
-  const excludedAwakeningIds =
-    parseExcludedAwakeningIdsFromSearch(window.location.search) ?? [];
-  if (!awakeningIds?.length && !excludedAwakeningIds.length) {
+  const search = window.location.search;
+  const awakeningIds = parseAwakeningIdsFromSearch(search);
+  const excludedAwakeningIds = parseExcludedAwakeningIdsFromSearch(search) ?? [];
+  const types = parseTypesFromSearch(search);
+  const attributeSlot1 = parseAttributeSlot1FromSearch(search);
+  if (
+    !awakeningIds?.length &&
+    !excludedAwakeningIds.length &&
+    !types?.length &&
+    !attributeSlot1?.length
+  ) {
     return EMPTY_MONSTER_FILTERS;
+  }
+  const attributeSlots = EMPTY_MONSTER_FILTERS.attributeSlots.map((slot) =>
+    new Set(slot)
+  ) as MonsterFilters["attributeSlots"];
+  if (attributeSlot1?.length) {
+    attributeSlots[0] = new Set(attributeSlot1);
   }
   return {
     ...EMPTY_MONSTER_FILTERS,
     awakeningIds: awakeningIds ?? [],
     excludedAwakeningIds,
+    attributeSlots,
+    types: new Set(types ?? []),
   };
 }
 

@@ -1,10 +1,13 @@
 import cardBackground from "../assets/pad/background.png";
 import { monsterRowId } from "../lib/filters";
 import {
+  ASSIST_RESONANCE_AWAKENING_ID,
+  monsterHasAwakening,
   parseRegularAwakenings,
   resolvePrefixedAwakeningIds,
   resolveSuperAwakeningIds,
 } from "../lib/awakenings";
+import { buildAssistResonanceSearchUrl } from "../lib/monster-search-url";
 import {
   formatActiveSkillDesc,
   parseChangeToMonsterIds,
@@ -140,7 +143,19 @@ export function MonsterDetailCard({
   const hasTypes = monsterTypeIds.length > 0;
   const hasSuper = prefixedAwkIds.length > 0;
   const hasRegular = regular.length > 0;
+  const hasAssistResonance = monsterHasAwakening(row, ASSIST_RESONANCE_AWAKENING_ID);
+  const resonateSearchUrl = hasAssistResonance
+    ? buildAssistResonanceSearchUrl(row)
+    : null;
   const superLabel = hasSuperAwks ? "Super awakening" : "Sync awakening";
+
+  const awkColumnRightOffset =
+    (hasRegular ? PAD_AWAKENING.columnWidthPx : 0) +
+    (hasSuper ? PAD_AWAKENING.columnWidthPx + PAD_AWAKENING.iconGapPx : 0) +
+    12;
+  const resonateButtonRight =
+    (hasRegular ? PAD_AWAKENING.columnWidthPx : 0) +
+    (hasSuper ? PAD_AWAKENING.columnWidthPx + PAD_AWAKENING.iconGapPx : 0) - 30;
 
   const activeDesc = formatActiveSkillDesc(row.active_skill_desc_en?.trim() || "—");
   const leaderDesc = row.leader_skill_desc_en?.trim() || "—";
@@ -235,11 +250,7 @@ export function MonsterDetailCard({
             <div
               className="absolute bottom-1.5 left-1 z-20 flex items-center gap-1"
               style={{
-                right: hasRegular
-                  ? PAD_AWAKENING.columnWidthPx +
-                    (hasSuper ? PAD_AWAKENING.columnWidthPx + PAD_AWAKENING.iconGapPx : 0) +
-                    12
-                  : undefined,
+                right: hasRegular || hasSuper ? awkColumnRightOffset : undefined,
               }}
             >
               {onOpenEvo && (
@@ -257,6 +268,23 @@ export function MonsterDetailCard({
                 />
               )}
             </div>
+          )}
+          {resonateSearchUrl && (
+            <a
+              href={resonateSearchUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="absolute bottom-1.5 z-20 rounded border border-[#6b4f2a]/90 bg-[#2f2118]/95 px-1.5 py-0.5 text-[#e8dcc8] shadow-md transition-colors hover:border-[#c9a84a] hover:text-white"
+              style={{
+                fontSize: 11,
+                fontWeight: 700,
+                lineHeight: 1.25,
+                right: resonateButtonRight,
+              }}
+              title="Search assist equipment (awk 49) matching primary attribute and type"
+            >
+              Resonate
+            </a>
           )}
         </div>
       </div>
