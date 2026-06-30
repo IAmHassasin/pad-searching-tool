@@ -983,6 +983,30 @@
             "status": "new_effect_detected",
             "tag_id": null,
             "tag_name_en": "recover_max_hp_percent"
+        },
+        {
+            "example_matched_text": "Create 1 spinner that changes every 1.0s for 5 turns",
+            "regex_pattern": "Create (\\d+) spinners? that changes every (\\d+\\.?\\d*)s for (\\d+) turns?",
+            "skill_type": "active_skill",
+            "status": "new_effect_detected",
+            "tag_id": null,
+            "tag_name_en": "create_spinner"
+        },
+        {
+            "example_matched_text": "6 random orbs become nail orbs",
+            "regex_pattern": "(\\d+) random orbs? become(?:s)? nail orbs?",
+            "skill_type": "active_skill",
+            "status": "new_effect_detected",
+            "tag_id": null,
+            "tag_name_en": "create_nail_orbs"
+        },
+        {
+            "example_matched_text": "For 3 turns, +15% chance for nail orb skyfall",
+            "regex_pattern": "\\+?(\\d+)% chance for nail orb skyfall",
+            "skill_type": "active_skill",
+            "status": "new_effect_detected",
+            "tag_id": null,
+            "tag_name_en": "nail_orb_skyfall"
         }
     ]
 }
