@@ -9,6 +9,7 @@ import { SkillFilterPanel } from "./components/SkillFilterPanel";
 import { useAdminSession } from "./hooks/useAdminSession";
 import { useDebouncedValue } from "./hooks/useDebouncedValue";
 import { useMobileWebview } from "./hooks/useMobileWebview";
+import { parseAwakeningIdsFromSearch, parseExcludedAwakeningIdsFromSearch } from "./lib/monster-search-url";
 import {
   EMPTY_MONSTER_FILTERS,
   EMPTY_SKILL_FILTERS,
@@ -16,9 +17,23 @@ import {
   type SkillFilters,
 } from "./types";
 
+function initialMonsterFilters(): MonsterFilters {
+  const awakeningIds = parseAwakeningIdsFromSearch(window.location.search);
+  const excludedAwakeningIds =
+    parseExcludedAwakeningIdsFromSearch(window.location.search) ?? [];
+  if (!awakeningIds?.length && !excludedAwakeningIds.length) {
+    return EMPTY_MONSTER_FILTERS;
+  }
+  return {
+    ...EMPTY_MONSTER_FILTERS,
+    awakeningIds: awakeningIds ?? [],
+    excludedAwakeningIds,
+  };
+}
+
 export default function App() {
   const [monsterFilters, setMonsterFilters] =
-    useState<MonsterFilters>(EMPTY_MONSTER_FILTERS);
+    useState<MonsterFilters>(initialMonsterFilters);
   const [skillFilters, setSkillFilters] =
     useState<SkillFilters>(EMPTY_SKILL_FILTERS);
   const [selected, setSelected] = useState<

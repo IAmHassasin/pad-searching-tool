@@ -961,6 +961,14 @@
             "tag_name_en": "bypass_dmg_absorb"
         },
         {
+            "example_matched_text": "For 1 turn, bypass combo absorb shield effects",
+            "regex_pattern": "(?:bypass |and )combo absorb shield effects?",
+            "skill_type": "active_skill",
+            "status": "new_effect_detected",
+            "tag_id": null,
+            "tag_name_en": "bypass_combo_absorb"
+        },
+        {
             "example_matched_text": "Remove 2 enemy's barriers",
             "regex_pattern": "Remove ([1-5]) enemy's barriers?",
             "skill_type": "active_skill",

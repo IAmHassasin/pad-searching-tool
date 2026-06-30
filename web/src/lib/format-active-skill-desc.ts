@@ -1,6 +1,19 @@
 const RANDOM_SKILL_HEADER = "Activate a random skill from the list";
 const EVO_SKILL_HEADER_PREFIX = "After each skill, evolve to the next";
 
+const CHANGE_TO_MONSTER_RE = /change to \[(\d+)\]/gi;
+
+/** Monster ids from "Change to [13326] …" active skill lines. */
+export function parseChangeToMonsterIds(text: string): number[] {
+  const ids: number[] = [];
+  CHANGE_TO_MONSTER_RE.lastIndex = 0;
+  let match: RegExpExecArray | null;
+  while ((match = CHANGE_TO_MONSTER_RE.exec(text)) !== null) {
+    ids.push(Number.parseInt(match[1], 10));
+  }
+  return [...new Set(ids)];
+}
+
 /** Bracketed delayed-effect markers, e.g. [1 turn after activation]. */
 export const AFTER_ACTIVATION_SPLIT_RE = /(\[\d+ turns? after activation\])/g;
 

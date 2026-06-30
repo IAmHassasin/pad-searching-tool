@@ -21,6 +21,11 @@ const EXCLUDE_REDEEMABLE_MATS_SQL = `
   AND (type_3_id IS NULL OR type_3_id != ${REDEEMABLE_MAT_TYPE_ID})
 `;
 
+/** dadguide `transformations.to_monster_id` — dungeon "Change to [id]" forms. */
+const EXCLUDE_POST_TRANSFORM_SQL = `
+  monster_id NOT IN (SELECT to_monster_id FROM transformations)
+`;
+
 @Injectable()
 export class MonsterRelationsService {
   constructor(
@@ -168,6 +173,7 @@ export class MonsterRelationsService {
       `SELECT monster_id, rarity FROM monsters
        WHERE group_id = ? AND monster_id = base_id
          AND ${EXCLUDE_REDEEMABLE_MATS_SQL}
+         AND ${EXCLUDE_POST_TRANSFORM_SQL}
        ORDER BY rarity DESC, monster_id`,
       [groupId]
     )) as { monster_id: number; rarity: number }[];

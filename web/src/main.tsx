@@ -4,6 +4,7 @@ import { createRoot } from "react-dom/client";
 import App from "./App";
 import { DungeonDetailsPage } from "./dungeon-details/DungeonDetailsPage";
 import { DungeonListPage } from "./dungeon-details/DungeonListPage";
+import { OneTouchPage } from "./one-touch/OneTouchPage";
 import "./index.css";
 
 const queryClient = new QueryClient({
@@ -23,6 +24,9 @@ function Root() {
   }
   if (detailMatch) {
     return <DungeonDetailsPage postId={detailMatch[1]} />;
+  }
+  if (path === "/one-touch") {
+    return <OneTouchPage />;
   }
   return <App />;
 }

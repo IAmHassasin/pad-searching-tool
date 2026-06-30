@@ -5,19 +5,24 @@ import {
   resolvePrefixedAwakeningIds,
   resolveSuperAwakeningIds,
 } from "../lib/awakenings";
-import { formatActiveSkillDesc } from "../lib/format-active-skill-desc";
+import {
+  formatActiveSkillDesc,
+  parseChangeToMonsterIds,
+} from "../lib/format-active-skill-desc";
 import { parseMonsterTypeIds } from "../lib/monster-types";
 import { PAD_AWAKENING, PAD_CARD_VISUAL } from "../lib/pad-constants";
 import type { MonsterRecord } from "../types";
 import { AwakeningIconList } from "./AwakeningIconList";
 import { ActiveSkillVanishAddLine } from "./ActiveSkillVanishAddLine";
 import { ActiveSkillDescText } from "./ActiveSkillDescText";
+import { LeaderSkillDescText } from "./LeaderSkillDescText";
 import {
   formatActiveSkillCooldown,
   StarRow,
   StatRow,
 } from "./monster-card-shared";
 import { MonsterCardIconGroup } from "./MonsterCardIconGroup";
+import { MonsterChangeTargetStrip } from "./MonsterChangeTargetStrip";
 import { MonsterPortrait } from "./MonsterPortrait";
 import { MonsterTypeStrip } from "./MonsterTypeStrip";
 import { SuperAwakeningStrip } from "./SuperAwakeningStrip";
@@ -28,6 +33,9 @@ type Props = {
   collabActive?: boolean;
   onOpenEvo?: () => void;
   onOpenCollab?: () => void;
+  changeTargetIds?: number[];
+  onSelectChangeTarget?: (monsterId: number) => void;
+  changeTargetLoadingId?: number | null;
 };
 
 function RelationToggleButton({
@@ -97,9 +105,10 @@ function SkillBlock({
           className="whitespace-pre-wrap text-[10px] leading-relaxed text-[#e8dcc8]"
         />
       ) : (
-        <p className="whitespace-pre-wrap text-[10px] leading-relaxed text-[#e8dcc8]">
-          {body}
-        </p>
+        <LeaderSkillDescText
+          text={body}
+          className="whitespace-pre-wrap text-[10px] leading-relaxed text-[#e8dcc8]"
+        />
       )}
       {kind === "active" && vanishGrantedAwokenIds?.length ? (
         <ActiveSkillVanishAddLine ids={vanishGrantedAwokenIds} iconSize={18} />
@@ -114,6 +123,9 @@ export function MonsterDetailCard({
   collabActive = false,
   onOpenEvo,
   onOpenCollab,
+  changeTargetIds = [],
+  onSelectChangeTarget,
+  changeTargetLoadingId = null,
 }: Props) {
   const id = monsterRowId(row);
   const regular = parseRegularAwakenings(row.awakenings);
@@ -175,7 +187,7 @@ export function MonsterDetailCard({
           className="relative flex"
           style={{ minHeight: PAD_AWAKENING.artAreaMinHeightPx }}
         >
-          <div className="flex min-w-0 flex-1 items-start px-1 pt-1.5">
+          <div className="flex min-w-0 flex-1 flex-col items-start gap-1 px-1 pt-1.5">
             {hasTypes && (
               <MonsterCardIconGroup
                 variant="type"
@@ -183,6 +195,13 @@ export function MonsterDetailCard({
               >
                 <MonsterTypeStrip typeIds={monsterTypeIds} bare />
               </MonsterCardIconGroup>
+            )}
+            {changeTargetIds.length > 0 && onSelectChangeTarget && (
+              <MonsterChangeTargetStrip
+                targetIds={changeTargetIds}
+                onSelectTarget={onSelectChangeTarget}
+                loadingId={changeTargetLoadingId}
+              />
             )}
           </div>
           {(hasSuper || hasRegular) && (

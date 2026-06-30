@@ -34,6 +34,7 @@
         { "tag_id": 282, "tag_name_en": "Pierce Damage Void", "label": "Void Damage Pierce (VDP)" },
         { "tag_id": null, "tag_name_en": "bypass_att_absorb", "label": "Bypass Att. Absorb" },
         { "tag_id": null, "tag_name_en": "bypass_dmg_absorb", "label": "Bypass Dmg Absorb" },
+        { "tag_id": null, "tag_name_en": "bypass_combo_absorb", "label": "Bypass Combo Absorb" },
         { "tag_id": null, "tag_name_en": "remove_barrier", "label": "Remove Barrier" },
         { "tag_id": 12, "tag_name_en": "Void Damage", "label": "Void Damage Taken" },
         { "tag_id": 11, "tag_name_en": "Reduce Damage", "label": "Shield / Damage Reduction" },

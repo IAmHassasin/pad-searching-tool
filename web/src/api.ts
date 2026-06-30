@@ -176,6 +176,16 @@ export async function searchAllMonsters(
   return { rows: all, total };
 }
 
+export function fetchMonstersByIds(ids: number[]) {
+  const unique = [...new Set(ids.filter((id) => Number.isFinite(id) && id > 0))];
+  if (!unique.length) {
+    return Promise.resolve({ rows: [] as MonsterRecord[] });
+  }
+  return getJson<{ rows: MonsterRecord[] }>(
+    `/monsters/lookup?ids=${encodeURIComponent(unique.join(","))}`
+  );
+}
+
 export function fetchEvoTree(monsterId: number) {
   return getJson<EvoTreeResponse>(
     `/monsters/evo-tree?monsterId=${encodeURIComponent(String(monsterId))}`
