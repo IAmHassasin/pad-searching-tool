@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { AppToolsNav } from "../components/AppToolsNav";
 import { MonsterPortrait } from "../components/MonsterPortrait";
 import { fetchDungeon, type EnglishGlossary } from "./api";
 import type { DungeonSpawn, GimmickChip } from "./types";
@@ -207,9 +208,7 @@ export function DungeonDetailsPage({ postId }: { postId: string }) {
             >
               ← All dungeons
             </a>
-            <a href="/" className="text-sm text-[var(--color-muted)] hover:underline">
-              Monster search
-            </a>
+            <AppToolsNav variant="inline" />
           </div>
           {dungeon.data && (
             <>

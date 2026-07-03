@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { AppToolsNav } from "../components/AppToolsNav";
 import { fetchDungeonList } from "./api";
 
 export function DungeonListPage() {
@@ -10,19 +11,14 @@ export function DungeonListPage() {
   return (
     <div className="min-h-full bg-[var(--color-surface)] text-[#e6edf3]">
       <header className="border-b border-[var(--color-border)] bg-[var(--color-panel)] px-4 py-3">
-        <div className="mx-auto flex max-w-5xl items-center justify-between gap-3">
+        <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3">
           <div>
             <h1 className="text-lg font-semibold">Dungeon details</h1>
             <p className="text-sm text-[var(--color-muted)]">
               Floor tables parsed from AppMedia (English UI)
             </p>
           </div>
-          <a
-            href="/"
-            className="text-sm text-[var(--color-accent)] hover:underline"
-          >
-            ← Monster search
-          </a>
+          <AppToolsNav variant="inline" />
         </div>
       </header>
 

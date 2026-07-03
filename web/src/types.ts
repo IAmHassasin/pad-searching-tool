@@ -11,6 +11,16 @@ export type MonsterRecord = {
   hp_max?: number | null;
   atk_max?: number | null;
   rcv_max?: number | null;
+  /** % increase 99→110; 0 = no limit break. dadguide `limit_mult`. */
+  limit_mult?: number | null;
+  /** Monster EXP curve tier — used with limit_mult for LB rate. */
+  exp?: number | null;
+  /** Team cost — used with limit_mult for LB rate on some cards. */
+  cost?: number | null;
+  /** dadguide `transformations.to_monster_id` — post-transform form; max Lv.99. */
+  is_transform_form?: boolean | number | null;
+  /** Max latent slots (6 or 8). */
+  latent_slots?: number | null;
   rarity?: number | null;
   attribute_1_id?: number | null;
   attribute_2_id?: number | null;

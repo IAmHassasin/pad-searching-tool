@@ -55,8 +55,7 @@
         { "tag_id": null, "tag_name_en": "recover_max_hp_percent", "label": "Recover Max HP %" },
         { "tag_id": 20, "tag_name_en": "Attack & Heal", "label": "Nuke & Drain HP" },
         { "tag_id": 41, "tag_name_en": "Recover Bind", "label": "Bind Recovery" },
-        { "tag_id": 215, "tag_name_en": "Awoken Invalid Recovery", "label": "Awoken Bind Recovery" },
-        { "tag_id": 220, "tag_name_en": "Bind & Awoken Invalid Recovery", "label": "Full Bind & Awoken Recovery" },
+        { "tag_id": 215, "tag_name_en": "Awoken Invalid Recovery", "label": "Awoken Invalid Recovery" },
         { "tag_id": 281, "tag_name_en": "Reduce Match Restriction", "label": "Unmatchable Clear" }
       ]
     },

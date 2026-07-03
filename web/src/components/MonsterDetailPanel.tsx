@@ -12,9 +12,11 @@ type Overlay = "evo" | "collab" | null;
 type Props = {
   row: MonsterRecord;
   onSelect: (row: MonsterRecord) => void;
+  /** Mobile sidebar: fill container width, no centering gap. */
+  sidebar?: boolean;
 };
 
-export function MonsterDetailPanel({ row, onSelect }: Props) {
+export function MonsterDetailPanel({ row, onSelect, sidebar = false }: Props) {
   const [overlay, setOverlay] = useState<Overlay>(null);
   const [changeTargetLoadingId, setChangeTargetLoadingId] = useState<
     number | null
@@ -47,7 +49,11 @@ export function MonsterDetailPanel({ row, onSelect }: Props) {
   };
 
   return (
-    <div className="relative mx-auto flex h-full min-h-[min(100%,720px)] w-full max-w-[360px] flex-col">
+    <div
+      className={`relative flex h-full w-full flex-col ${
+        sidebar ? "min-h-0" : "mx-auto min-h-[min(100%,720px)] max-w-[360px]"
+      }`}
+    >
       <MonsterDetailCard
         row={row}
         evoActive={overlay === "evo"}
@@ -59,6 +65,7 @@ export function MonsterDetailPanel({ row, onSelect }: Props) {
         changeTargetIds={changeTargetIds}
         onSelectChangeTarget={handleSelectChangeTarget}
         changeTargetLoadingId={changeTargetLoadingId}
+        compact={sidebar}
       />
 
       {overlay && (

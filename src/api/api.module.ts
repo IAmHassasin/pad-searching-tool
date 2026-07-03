@@ -26,6 +26,6 @@ import { VanishAwokenService } from "./vanish-awoken.service";
     FilterCategoriesService,
     VanishAwokenService,
   ],
-  exports: [MonsterRelationsService],
+  exports: [MonsterRelationsService, VanishAwokenService],
 })
 export class ApiModule {}

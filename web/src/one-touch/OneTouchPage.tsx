@@ -1,4 +1,5 @@
 import { useCallback, useMemo, useState } from "react";
+import { AppToolsNav } from "../components/AppToolsNav";
 import { ONE_TOUCH_DUNGEONS, ONE_TOUCH_AWAKENING_EFFECTS } from "./catalog";
 import { AwakeningLookupPanel } from "./AwakeningLookupPanel";
 import { AwakeningSelectionTray } from "./AwakeningSelectionTray";
@@ -65,19 +66,14 @@ export function OneTouchPage() {
     <div className="flex min-h-full flex-col bg-[var(--color-surface)] text-[#e6edf3]">
       <header className="border-b border-[var(--color-border)] bg-[var(--color-panel)] px-4 py-3">
         <div className="mx-auto max-w-7xl">
-          <div className="flex flex-wrap items-center justify-between gap-2">
+          <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
               <h1 className="text-lg font-semibold">One-Touch Dungeon</h1>
               <p className="text-sm text-[var(--color-muted)]">
                 Floor guides &amp; awakening reference (English)
               </p>
             </div>
-            <a
-              href="/"
-              className="text-sm text-[var(--color-accent)] hover:underline"
-            >
-              ← Monster search
-            </a>
+            <AppToolsNav variant="inline" />
           </div>
           <div className="mt-4">
             <DungeonAttributePicker

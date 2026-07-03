@@ -50,12 +50,33 @@ export class VanishAwokenService implements OnModuleDestroy {
     return this.resolveDbPath() != null;
   }
 
+  /** Clear cached attach state (e.g. after SQLite connection is recreated). */
+  resetAttachment(): void {
+    this.attachedPath = null;
+  }
+
+  private async isStillAttached(): Promise<boolean> {
+    if (!this.attachedPath) return false;
+    try {
+      const rows = (await this.dataSource.query(
+        `SELECT 1 FROM ${ATTACH_ALIAS}.sqlite_master ` +
+          `WHERE type = 'table' AND name = 'monster_vanish_awoken' LIMIT 1`
+      )) as unknown[];
+      return rows.length > 0;
+    } catch {
+      return false;
+    }
+  }
+
   async ensureAttached(): Promise<boolean> {
     const path = this.resolveDbPath();
     if (!path) return false;
 
-    if (this.attachedPath === path) return true;
+    if (this.attachedPath === path && (await this.isStillAttached())) {
+      return true;
+    }
 
+    this.attachedPath = null;
     await this.detachIfNeeded();
     const escaped = path.replace(/'/g, "''");
     try {
@@ -68,6 +89,15 @@ export class VanishAwokenService implements OnModuleDestroy {
       );
       return false;
     }
+
+    if (!(await this.isStillAttached())) {
+      this.logger.warn(
+        `Vanish awoken DB at ${path} is missing monster_vanish_awoken table`
+      );
+      await this.detachIfNeeded();
+      return false;
+    }
+
     this.attachedPath = path;
     return true;
   }

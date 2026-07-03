@@ -71,74 +71,78 @@ export function SkillFilterPanel({
   }
 
   return (
-    <aside className="flex h-full min-w-0 flex-col gap-3 overflow-y-auto border-l border-[var(--color-border)] bg-[var(--color-panel)] p-3">
-      <div className="flex shrink-0 items-center justify-between gap-2">
-        <h2 className="text-sm font-semibold tracking-wide text-[var(--color-accent)]">
-          Skill patterns
-        </h2>
-        <PanelToggleButton
-          open={open}
-          onToggle={onToggle}
-          className="h-7 w-7"
-        />
+    <aside className="flex h-full min-w-0 flex-col overflow-hidden border-l border-[var(--color-border)] bg-[var(--color-panel)] p-3">
+      <div className="flex shrink-0 flex-col gap-2">
+        <div className="flex items-center justify-between gap-2">
+          <h2 className="text-sm font-semibold tracking-wide text-[var(--color-accent)]">
+            Skill patterns
+          </h2>
+          <PanelToggleButton
+            open={open}
+            onToggle={onToggle}
+            className="h-7 w-7"
+          />
+        </div>
+
+        {patternGroupsLoading && (
+          <p className="text-xs text-[var(--color-muted)]">Loading groups…</p>
+        )}
+
+        <CollapsibleFilterSection
+          title="Pattern selection"
+          summary={
+            filters.selectedPatterns.length > 0
+              ? `${filters.selectedPatterns.length} selected · ${filters.patternMatch}`
+              : "match any / all"
+          }
+          defaultOpen={filters.selectedPatterns.length > 0}
+        >
+          <div className="mb-1.5 flex items-start justify-between gap-2">
+            <p className="text-[10px] text-[var(--color-muted)]/80">
+              Tap chips to filter by regex tags
+            </p>
+            {filters.selectedPatterns.length > 0 && (
+              <button
+                type="button"
+                onClick={clearPatterns}
+                className="shrink-0 rounded border border-[var(--color-border)] px-2 py-0.5 text-[10px] text-[var(--color-muted)] hover:border-red-500/50 hover:text-red-300"
+              >
+                Clear all
+              </button>
+            )}
+          </div>
+
+          <SkillSelectedPatternChips filters={filters} onChange={onChange} />
+
+          <PatternMatchToggle
+            value={filters.patternMatch}
+            onChange={(patternMatch) => onChange({ ...filters, patternMatch })}
+          />
+        </CollapsibleFilterSection>
       </div>
 
-      {patternGroupsLoading && (
-        <p className="text-xs text-[var(--color-muted)]">Loading groups…</p>
-      )}
+      <div className="mt-2 min-h-0 flex-1 overflow-y-auto">
+        {patternGroups && (
+          <div className="space-y-2">
+            <SkillPatternGroup
+              title="Active skill"
+              skillType="active_skill"
+              categories={patternGroups.active_skill_filters}
+              filters={filters}
+              onChange={onChange}
+            />
+            <SkillPatternGroup
+              title="Leader skill"
+              skillType="leader_skill"
+              categories={patternGroups.leader_skill_filters}
+              filters={filters}
+              onChange={onChange}
+            />
+          </div>
+        )}
 
-      <CollapsibleFilterSection
-        title="Pattern selection"
-        summary={
-          filters.selectedPatterns.length > 0
-            ? `${filters.selectedPatterns.length} selected · ${filters.patternMatch}`
-            : "match any / all"
-        }
-        defaultOpen={filters.selectedPatterns.length > 0}
-      >
-        <div className="mb-2 flex items-start justify-between gap-2">
-          <p className="text-[10px] text-[var(--color-muted)]/80">
-            Tap chips to filter by regex tags
-          </p>
-          {filters.selectedPatterns.length > 0 && (
-            <button
-              type="button"
-              onClick={clearPatterns}
-              className="shrink-0 rounded border border-[var(--color-border)] px-2 py-0.5 text-[10px] text-[var(--color-muted)] hover:border-red-500/50 hover:text-red-300"
-            >
-              Clear all
-            </button>
-          )}
-        </div>
-
-        <SkillSelectedPatternChips filters={filters} onChange={onChange} />
-
-        <PatternMatchToggle
-          value={filters.patternMatch}
-          onChange={(patternMatch) => onChange({ ...filters, patternMatch })}
-        />
-      </CollapsibleFilterSection>
-
-      {patternGroups && (
-        <div className="space-y-2">
-          <SkillPatternGroup
-            title="Active skill"
-            skillType="active_skill"
-            categories={patternGroups.active_skill_filters}
-            filters={filters}
-            onChange={onChange}
-          />
-          <SkillPatternGroup
-            title="Leader skill"
-            skillType="leader_skill"
-            categories={patternGroups.leader_skill_filters}
-            filters={filters}
-            onChange={onChange}
-          />
-        </div>
-      )}
-
-      <SkillTextSearchSection filters={filters} onChange={onChange} />
+        <SkillTextSearchSection filters={filters} onChange={onChange} />
+      </div>
     </aside>
   );
 }

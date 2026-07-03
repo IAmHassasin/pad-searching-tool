@@ -153,11 +153,13 @@ export function MonsterFilterPanel({ filters, onChange }: Props) {
             <MonsterStatsFilter filters={filters} onChange={onChange} />
             <MonsterIdFilter filters={filters} onChange={onChange} />
           </div>
-          <MonsterAwakeningFilter
-            filters={filters}
-            onChange={onChange}
-            fillHeight
-          />
+          <div className="flex min-h-0 flex-1 flex-col">
+            <MonsterAwakeningFilter
+              filters={filters}
+              onChange={onChange}
+              fillHeight
+            />
+          </div>
         </div>
       )}
     </aside>

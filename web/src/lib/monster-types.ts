@@ -16,6 +16,9 @@ export const MONSTER_TYPES = [
   { id: 15, label: "Redeemable Mats", accent: "#6e7681" },
 ] as const;
 
+/** Material / non-playable monster types for quick result filters. */
+export const MATERIAL_MONSTER_TYPE_IDS = new Set<number>([0, 12, 14, 15]);
+
 const TYPE_LABEL_BY_ID = new Map(MONSTER_TYPES.map((t) => [t.id, t.label]));
 
 /** type_1 → type_2 → type_3, deduped, nulls skipped. */
@@ -32,4 +35,12 @@ export function parseMonsterTypeIds(
 
 export function monsterTypeLabel(typeId: number): string {
   return TYPE_LABEL_BY_ID.get(typeId) ?? `Type ${typeId}`;
+}
+
+export function monsterHasMaterialType(
+  row: Pick<MonsterRecord, "type_1_id" | "type_2_id" | "type_3_id">
+): boolean {
+  return parseMonsterTypeIds(row).some((id) =>
+    MATERIAL_MONSTER_TYPE_IDS.has(id)
+  );
 }

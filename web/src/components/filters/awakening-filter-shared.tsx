@@ -326,7 +326,7 @@ function AwakeningFilterGroupSection({
   hideLabel?: boolean;
 }) {
   return (
-    <section className={compact ? "mb-2 last:mb-0" : "mb-3 last:mb-0"}>
+    <section className={compact ? "mb-1.5 last:mb-0" : "mb-2 last:mb-0"}>
       {!hideLabel && (
         <p
           className={`mb-1 font-semibold uppercase tracking-wide text-[#a8c878] ${
@@ -379,7 +379,7 @@ function AwakeningGroupTabBar({
 }) {
   return (
     <div
-      className="mb-2 flex shrink-0 flex-wrap gap-0.5"
+      className="mb-1.5 flex shrink-0 flex-wrap gap-0.5"
       role="tablist"
       aria-label="Awakening groups"
     >
@@ -418,7 +418,7 @@ export function MonsterAwakeningFilter({
   singleGroupMode?: boolean;
 }) {
   const [activeGroupIndex, setActiveGroupIndex] = useState(0);
-  const iconSize = compact ? 18 : fillHeight ? 22 : 20;
+  const iconSize = compact ? 16 : fillHeight ? 18 : 18;
   const pickerMode = filters.awakeningPickerMode;
   const totalSelected =
     filters.awakeningIds.length +
@@ -463,16 +463,17 @@ export function MonsterAwakeningFilter({
   const summary =
     summaryParts.length > 0 ? summaryParts.join(" · ") : "regular + super + sync";
 
-  const gridClass = compact
-    ? "max-h-[28vh] overflow-y-auto pr-0.5"
-    : fillHeight
-      ? "min-h-0 flex-1 overflow-y-auto pr-0.5"
-      : "pr-0.5";
-
-  const useGroupTabs = singleGroupMode || compact;
+  const useGroupTabs = singleGroupMode;
   const visibleGroups = useGroupTabs
     ? [AWAKENING_FILTER_GROUPS[activeGroupIndex]].filter(Boolean)
     : AWAKENING_FILTER_GROUPS;
+
+  const gridClass =
+    compact && useGroupTabs
+      ? "max-h-[22vh] overflow-y-auto pr-0.5"
+      : fillHeight
+        ? "min-h-0 flex-1 overflow-y-auto pr-0.5"
+        : "pr-0.5";
 
   return (
     <CollapsibleFilterSection
@@ -480,14 +481,14 @@ export function MonsterAwakeningFilter({
       summary={summary}
       compact={compact}
       defaultOpen
-      fillHeight={fillHeight && !compact}
+      fillHeight={fillHeight}
       headerExtra={
         <MonsterAwakeningClearAllButton filters={filters} onChange={onChange} />
       }
     >
       <label
-        className={`mb-3 flex cursor-pointer items-center gap-2 rounded-md border border-[#8b6914]/50 bg-[#2a1f14]/60 px-2 py-1.5 ${
-          compact ? "text-[10px]" : "text-xs"
+        className={`mb-1.5 flex cursor-pointer items-center gap-1.5 rounded border border-[#8b6914]/40 bg-[#2a1f14]/50 px-1.5 py-1 ${
+          compact ? "text-[9px]" : "text-[10px]"
         }`}
       >
         <input
@@ -499,13 +500,10 @@ export function MonsterAwakeningFilter({
           className="accent-[#c9a84a]"
         />
         <span className="font-medium text-[#e8dcc8]">Vanish only</span>
-        <span className="text-[var(--color-muted)]">
-          — assists with vanish-grant data
-        </span>
       </label>
 
       {totalSelected > 0 && (
-        <div className="mb-2 flex flex-wrap gap-1">
+        <div className="mb-1 flex flex-wrap gap-0.5">
           <MonsterAwakeningSelectedChips filters={filters} onChange={onChange} />
         </div>
       )}
@@ -521,21 +519,19 @@ export function MonsterAwakeningFilter({
       {pickerMode === "exclude" && (
         <p
           className={`text-[var(--color-muted)] ${
-            compact ? "mb-2 text-[9px]" : "mb-3 text-[10px]"
+            compact ? "mb-1 text-[9px]" : "mb-1.5 text-[9px]"
           }`}
         >
-          Monster must not have selected awakening in regular, super, or sync
-          slots.
+          Must not have selected awk in regular, super, or sync.
         </p>
       )}
       {pickerMode === "vanish" && (
         <p
           className={`text-[var(--color-muted)] ${
-            compact ? "mb-2 text-[9px]" : "mb-3 text-[10px]"
+            compact ? "mb-1 text-[9px]" : "mb-1.5 text-[9px]"
           }`}
         >
-          Filter by awoken skills granted when the assist vanishes (active
-          skill). Match all selected.
+          Match vanish-granted awokens (all selected).
         </p>
       )}
 

@@ -17,7 +17,7 @@ type Props = {
   iconTitle?: (id: number) => string;
 };
 
-/** 0.png prefix + super/sync icons in a row (right-to-left before the prefix). */
+/** 0.png prefix first (left), then super/sync icons left-to-right. */
 export function SuperAwakeningStrip({
   ids,
   size = PAD_AWAKENING.iconSizePx,
@@ -30,14 +30,6 @@ export function SuperAwakeningStrip({
 
   const icons = (
     <>
-      {[...ids].reverse().map((id, index) => (
-        <AwakeningSpriteIcon
-          key={`${id}-${index}`}
-          awokenSkillId={id}
-          size={size}
-          title={iconTitle(id)}
-        />
-      ))}
       <img
         src={awakeningFallbackImageUrl}
         alt=""
@@ -45,6 +37,14 @@ export function SuperAwakeningStrip({
         className={prefixFrameClass}
         style={{ width: size, height: size }}
       />
+      {ids.map((id, index) => (
+        <AwakeningSpriteIcon
+          key={`${id}-${index}`}
+          awokenSkillId={id}
+          size={size}
+          title={iconTitle(id)}
+        />
+      ))}
     </>
   );
 

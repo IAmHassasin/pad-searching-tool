@@ -1,4 +1,8 @@
 import { useState } from "react";
+import type { AwkModifierSettings } from "../lib/awakening-stat-modifier";
+import type { ResultDisplaySections } from "../lib/result-display";
+import type { ResultQuickFilter } from "../lib/result-quick-filter";
+import type { ResultSortOption } from "../lib/results-sort";
 import type {
   MonsterFilters,
   MonsterRecord,
@@ -6,7 +10,10 @@ import type {
   SkillFilters,
 } from "../types";
 import { MonsterDetailPanel } from "./MonsterDetailPanel";
+import { ResultsDisplayControls } from "./ResultsDisplayControls";
 import { ResultsList } from "./ResultsList";
+import { ResultsQuickFilter } from "./ResultsQuickFilter";
+import { ResultsSortControls } from "./ResultsSortControls";
 import {
   MonsterActiveFilterChips,
   MonsterAttributeFilter,
@@ -39,6 +46,14 @@ type Props = {
   onSelect: (row: MonsterRecord | null) => void;
   loading: boolean;
   loadProgress: number | null;
+  resultSort: ResultSortOption;
+  onResultSortChange: (sort: ResultSortOption) => void;
+  awkModifierSettings: AwkModifierSettings;
+  onAwkModifierSettingsChange: (next: AwkModifierSettings) => void;
+  displaySections: ResultDisplaySections;
+  onDisplaySectionsChange: (next: ResultDisplaySections) => void;
+  resultQuickFilter: ResultQuickFilter;
+  onResultQuickFilterChange: (next: ResultQuickFilter) => void;
 };
 
 function CollapseButton({
@@ -138,7 +153,7 @@ function MobileDetailPanel({
   }
 
   return (
-    <aside className="flex min-h-0 w-[70%] shrink-0 flex-col border-l border-[var(--color-border)] bg-[#0a0e12]">
+    <aside className="flex min-h-0 w-[min(22.5rem,58%)] shrink-0 flex-col border-l border-[var(--color-border)] bg-[#0a0e12]">
       <div className="flex shrink-0 items-center justify-between gap-1 border-b border-[var(--color-border)] px-2 py-1">
         <p className="min-w-0 flex-1 truncate text-[10px] font-semibold text-white">
           {selected.name_en ?? "Details"}
@@ -157,8 +172,8 @@ function MobileDetailPanel({
           ×
         </button>
       </div>
-      <div className="relative min-h-0 flex-1 overflow-auto p-2">
-        <MonsterDetailPanel row={selected} onSelect={onSelect} />
+      <div className="relative min-h-0 flex-1 overflow-auto pl-1 pr-2 py-1">
+        <MonsterDetailPanel row={selected} onSelect={onSelect} sidebar />
       </div>
     </aside>
   );
@@ -209,7 +224,7 @@ function MobileBottomFilterBar({
   return (
     <section className="flex shrink-0 flex-col border-t border-[var(--color-border)] bg-[var(--color-panel)]">
       {openMode && panelExpanded && (
-        <div className="flex max-h-[38vh] min-h-0 flex-col border-b border-[var(--color-border)]">
+        <div className="flex max-h-[28vh] min-h-0 flex-col border-b border-[var(--color-border)]">
           <div className="flex shrink-0 items-center justify-between gap-2 px-2 py-1">
             <CollapseButton
               expanded={panelExpanded}
@@ -381,6 +396,14 @@ export function MobileWebviewLayout({
   onSelect,
   loading,
   loadProgress,
+  resultSort,
+  onResultSortChange,
+  awkModifierSettings,
+  onAwkModifierSettingsChange,
+  displaySections,
+  onDisplaySectionsChange,
+  resultQuickFilter,
+  onResultQuickFilterChange,
 }: Props) {
   const [detailCollapsed, setDetailCollapsed] = useState(false);
   const showDetail = selected != null;
@@ -398,23 +421,38 @@ export function MobileWebviewLayout({
       />
 
       <main className="flex min-h-0 flex-1 flex-col overflow-hidden">
-        <header className="flex shrink-0 items-center justify-between border-b border-[var(--color-border)] bg-[var(--color-panel)] px-2 py-1.5">
-          <h2 className="text-xs font-semibold">Results</h2>
-          <p className="text-[10px] text-[var(--color-muted)]">
-            {loading
-              ? `Loading… ${loadProgress ?? 0}`
-              : `${rows.length} · ${totalLoaded}`}
-          </p>
+        <header className="flex shrink-0 flex-wrap items-center justify-between gap-2 border-b border-[var(--color-border)] bg-[var(--color-panel)] px-2 py-1.5">
+          <div className="flex items-center gap-1">
+            <h2 className="text-xs font-semibold">Results</h2>
+            <ResultsQuickFilter
+              value={resultQuickFilter}
+              onChange={onResultQuickFilterChange}
+              compact
+            />
+          </div>
+          <div className="flex flex-wrap items-center gap-2">
+            <ResultsDisplayControls
+              sections={displaySections}
+              onSectionsChange={onDisplaySectionsChange}
+              compact
+            />
+            <ResultsSortControls
+              sort={resultSort}
+              onSortChange={onResultSortChange}
+              awkSettings={awkModifierSettings}
+              onAwkSettingsChange={onAwkModifierSettingsChange}
+              compact
+            />
+            <p className="text-[10px] text-[var(--color-muted)]">
+              {loading
+                ? `Loading… ${loadProgress ?? 0}`
+                : `${rows.length} · ${totalLoaded}`}
+            </p>
+          </div>
         </header>
 
         <div className="flex min-h-0 flex-1 overflow-hidden">
-          <div
-            className={`min-h-0 overflow-auto border-r border-[var(--color-border)] ${
-              showDetail && !detailCollapsed
-                ? "w-[30%] shrink-0"
-                : "min-w-0 flex-1"
-            }`}
-          >
+          <div className="min-h-0 min-w-0 flex-1 overflow-auto border-r border-[var(--color-border)]">
             <ResultsList
               rows={rows}
               selected={selected}
@@ -422,6 +460,9 @@ export function MobileWebviewLayout({
               loading={loading}
               compact={!showDetail || detailCollapsed}
               minimal={showDetail && !detailCollapsed}
+              resultSort={resultSort}
+              awkModifierSettings={awkModifierSettings}
+              displaySections={displaySections}
             />
           </div>
 

@@ -5,6 +5,7 @@ import App from "./App";
 import { DungeonDetailsPage } from "./dungeon-details/DungeonDetailsPage";
 import { DungeonListPage } from "./dungeon-details/DungeonListPage";
 import { OneTouchPage } from "./one-touch/OneTouchPage";
+import { TeamBuildPage } from "./team-build/TeamBuildPage";
 import "./index.css";
 
 const queryClient = new QueryClient({
@@ -27,6 +28,9 @@ function Root() {
   }
   if (path === "/one-touch") {
     return <OneTouchPage />;
+  }
+  if (path === "/team-build") {
+    return <TeamBuildPage />;
   }
   return <App />;
 }

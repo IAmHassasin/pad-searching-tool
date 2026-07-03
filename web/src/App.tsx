@@ -2,19 +2,34 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { fetchHealth, fetchPatternGroups, searchAllMonsters } from "./api";
 import { AdminPanel } from "./components/AdminPanel";
+import { AppToolsNav } from "./components/AppToolsNav";
 import { MobileWebviewLayout } from "./components/MobileWebviewLayout";
 import { MonsterFilterPanel } from "./components/MonsterFilterPanel";
 import { ResultsPanel } from "./components/ResultsPanel";
 import { SkillFilterPanel } from "./components/SkillFilterPanel";
+import {
+  DEFAULT_AWK_MODIFIER_SETTINGS,
+} from "./components/ResultsSortControls";
+import { DEFAULT_RESULT_DISPLAY_SECTIONS } from "./lib/result-display";
 import { useAdminSession } from "./hooks/useAdminSession";
 import { useDebouncedValue } from "./hooks/useDebouncedValue";
 import { useMobileWebview } from "./hooks/useMobileWebview";
+import type { AwkModifierSettings } from "./lib/awakening-stat-modifier";
+import type { ResultDisplaySections } from "./lib/result-display";
+import {
+  filterRowsByQuickFilter,
+  type ResultQuickFilter,
+} from "./lib/result-quick-filter";
 import {
   parseAttributeSlot1FromSearch,
   parseAwakeningIdsFromSearch,
   parseExcludedAwakeningIdsFromSearch,
   parseTypesFromSearch,
 } from "./lib/monster-search-url";
+import {
+  sortMonsterRows,
+  type ResultSortOption,
+} from "./lib/results-sort";
 import {
   EMPTY_MONSTER_FILTERS,
   EMPTY_SKILL_FILTERS,
@@ -65,6 +80,13 @@ export default function App() {
   } | null>(null);
   const [adminOpen, setAdminOpen] = useState(false);
   const [skillPanelOpen, setSkillPanelOpen] = useState(true);
+  const [resultSort, setResultSort] = useState<ResultSortOption>("default");
+  const [awkModifierSettings, setAwkModifierSettings] =
+    useState<AwkModifierSettings>(DEFAULT_AWK_MODIFIER_SETTINGS);
+  const [displaySections, setDisplaySections] =
+    useState<ResultDisplaySections>(DEFAULT_RESULT_DISPLAY_SECTIONS);
+  const [resultQuickFilter, setResultQuickFilter] =
+    useState<ResultQuickFilter>(null);
   const queryClient = useQueryClient();
   const admin = useAdminSession();
   const isMobileWebview = useMobileWebview();
@@ -129,15 +151,9 @@ export default function App() {
 
   const filtered = useMemo(() => {
     const rows = search.data?.rows ?? [];
-    return [...rows].sort((a, b) => {
-      const naA = a.monster_no_na;
-      const naB = b.monster_no_na;
-      if (naA == null && naB == null) return 0;
-      if (naA == null) return 1;
-      if (naB == null) return -1;
-      return naB - naA;
-    });
-  }, [search.data]);
+    const sorted = sortMonsterRows(rows, resultSort, awkModifierSettings);
+    return filterRowsByQuickFilter(sorted, resultQuickFilter);
+  }, [search.data, resultSort, awkModifierSettings, resultQuickFilter]);
 
   const apiError = health.error ?? patternGroups.error ?? search.error ?? null;
 
@@ -177,6 +193,8 @@ export default function App() {
           )}
         </div>
       </header>
+
+      <AppToolsNav />
 
       <AdminPanel
         open={adminOpen}
@@ -220,6 +238,14 @@ export default function App() {
           loadProgress={
             loadProgress && search.isFetching ? loadProgress.loaded : null
           }
+          resultSort={resultSort}
+          onResultSortChange={setResultSort}
+          awkModifierSettings={awkModifierSettings}
+          onAwkModifierSettingsChange={setAwkModifierSettings}
+          displaySections={displaySections}
+          onDisplaySectionsChange={setDisplaySections}
+          resultQuickFilter={resultQuickFilter}
+          onResultQuickFilterChange={setResultQuickFilter}
         />
       ) : (
         <div
@@ -242,6 +268,14 @@ export default function App() {
             loadProgress={
               loadProgress && search.isFetching ? loadProgress.loaded : null
             }
+            resultSort={resultSort}
+            onResultSortChange={setResultSort}
+            awkModifierSettings={awkModifierSettings}
+            onAwkModifierSettingsChange={setAwkModifierSettings}
+            displaySections={displaySections}
+            onDisplaySectionsChange={setDisplaySections}
+            resultQuickFilter={resultQuickFilter}
+            onResultQuickFilterChange={setResultQuickFilter}
           />
           <SkillFilterPanel
             filters={skillFilters}

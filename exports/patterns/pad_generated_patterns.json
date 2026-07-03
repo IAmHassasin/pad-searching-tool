@@ -117,8 +117,16 @@
             "regex_pattern": "Remove all binds and awoken skill binds",
             "skill_type": "active_skill",
             "status": "existing_tag",
-            "tag_id": 220,
-            "tag_name_en": "Bind & Awoken Invalid Recovery"
+            "tag_id": 41,
+            "tag_name_en": "Recover Bind"
+        },
+        {
+            "example_matched_text": "Remove all binds and awoken skill binds",
+            "regex_pattern": "Remove all binds and awoken skill binds",
+            "skill_type": "active_skill",
+            "status": "existing_tag",
+            "tag_id": 215,
+            "tag_name_en": "Awoken Invalid Recovery"
         },
         {
             "example_matched_text": "Recover 300 HP",
@@ -261,8 +269,16 @@
             "regex_pattern": "Reduce binds and awoken skill binds by (\\d+) turn(?:s)?",
             "skill_type": "active_skill",
             "status": "existing_tag",
-            "tag_id": 220,
-            "tag_name_en": "Bind & Awoken Invalid Recovery"
+            "tag_id": 41,
+            "tag_name_en": "Recover Bind"
+        },
+        {
+            "example_matched_text": "Reduce binds and awoken skill binds by 7 turns",
+            "regex_pattern": "Reduce binds and awoken skill binds by (\\d+) turn(?:s)?",
+            "skill_type": "active_skill",
+            "status": "existing_tag",
+            "tag_id": 215,
+            "tag_name_en": "Awoken Invalid Recovery"
         },
         {
             "example_matched_text": "Charge all allies' skills by 1 turn",

@@ -6,6 +6,7 @@ import {
 } from "@nestjs/common";
 import { InjectDataSource } from "@nestjs/typeorm";
 import { DataSource } from "typeorm";
+import { VanishAwokenService } from "../api/vanish-awoken.service";
 import { runCommunityDbImport } from "../import/import-external-db.core";
 import { registerDataSourceRegexp } from "../patterns/register-sqlite-regexp";
 
@@ -14,7 +15,10 @@ export class AdminRefreshService {
   private readonly logger = new Logger(AdminRefreshService.name);
   private refreshing = false;
 
-  constructor(@InjectDataSource() private readonly dataSource: DataSource) {}
+  constructor(
+    @InjectDataSource() private readonly dataSource: DataSource,
+    private readonly vanish: VanishAwokenService
+  ) {}
 
   isRefreshing(): boolean {
     return this.refreshing;
@@ -34,6 +38,7 @@ export class AdminRefreshService {
     this.logger.warn("Admin DB refresh started — closing SQLite connection…");
 
     try {
+      this.vanish.resetAttachment();
       if (this.dataSource.isInitialized) {
         await this.dataSource.destroy();
       }
@@ -44,6 +49,7 @@ export class AdminRefreshService {
         await this.dataSource.initialize();
         registerDataSourceRegexp(this.dataSource);
       }
+      this.vanish.resetAttachment();
 
       const elapsed = ((Date.now() - started) / 1000).toFixed(1);
       this.logger.warn(
