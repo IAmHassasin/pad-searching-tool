@@ -7,6 +7,7 @@ import {
 import { InjectDataSource } from "@nestjs/typeorm";
 import { DataSource } from "typeorm";
 import { VanishAwokenService } from "../api/vanish-awoken.service";
+import { VoidSuperGravityService } from "../api/void-super-gravity.service";
 import { runCommunityDbImport } from "../import/import-external-db.core";
 import { registerDataSourceRegexp } from "../patterns/register-sqlite-regexp";
 
@@ -17,7 +18,8 @@ export class AdminRefreshService {
 
   constructor(
     @InjectDataSource() private readonly dataSource: DataSource,
-    private readonly vanish: VanishAwokenService
+    private readonly vanish: VanishAwokenService,
+    private readonly voidSuperGravity: VoidSuperGravityService
   ) {}
 
   isRefreshing(): boolean {
@@ -39,6 +41,7 @@ export class AdminRefreshService {
 
     try {
       this.vanish.resetAttachment();
+      this.voidSuperGravity.resetAttachment();
       if (this.dataSource.isInitialized) {
         await this.dataSource.destroy();
       }
@@ -50,6 +53,7 @@ export class AdminRefreshService {
         registerDataSourceRegexp(this.dataSource);
       }
       this.vanish.resetAttachment();
+      this.voidSuperGravity.resetAttachment();
 
       const elapsed = ((Date.now() - started) / 1000).toFixed(1);
       this.logger.warn(

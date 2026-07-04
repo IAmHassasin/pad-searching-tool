@@ -16,6 +16,7 @@ import {
   PatternsGroupFile,
   SkillType,
 } from "./pattern-types";
+import { isSupplementActiveSkillTag } from "./supplement-pattern-tags";
 import { registerDataSourceRegexp } from "./register-sqlite-regexp";
 
 export function patternTagKey(tag: {
@@ -95,8 +96,9 @@ export class PatternCatalogService implements OnModuleInit {
       ...cat,
       tags: cat.tags.map((tag) => ({
         ...tag,
-        patternCount: this.regexPatternsForTag(skillType, patternTagKey(tag))
-          .length,
+        patternCount: isSupplementActiveSkillTag(patternTagKey(tag))
+          ? 1
+          : this.regexPatternsForTag(skillType, patternTagKey(tag)).length,
       })),
     }));
   }
@@ -135,6 +137,10 @@ export class PatternCatalogService implements OnModuleInit {
   ): PatternTagSelection[] {
     const selections: PatternTagSelection[] = [];
     for (const tagKey of activeTagKeys) {
+      if (isSupplementActiveSkillTag(tagKey)) {
+        selections.push({ skillType: "active_skill", tagKey });
+        continue;
+      }
       const patterns = this.regexPatternsForTag("active_skill", tagKey);
       if (!patterns.length) {
         throw new NotFoundException(

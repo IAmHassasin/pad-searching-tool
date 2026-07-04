@@ -9,7 +9,9 @@ import { DEFAULT_AWK_MODIFIER_SETTINGS } from "../components/ResultsSortControls
 import { computeTeamStats } from "../lib/team-build/compute-stats";
 import { lb110Percent, maxMonsterLevel } from "../lib/team-build/level-scaling";
 import {
+  exportTeamEqString,
   exportTeamIdString,
+  exportTeamTsubakiString,
   importTeamIdString,
 } from "../lib/team-build/team-import-export";
 import {
@@ -18,12 +20,9 @@ import {
 } from "../lib/team-build/super-awakening-modifier";
 import {
   BADGE_OPTIONS,
-  LATENT_OPTIONS,
-  latentSlotsUsed,
 } from "../lib/team-build/stat-reference";
 import {
   defaultTeamBuildConfig,
-  type LatentId,
   type MemberStatResult,
   type MonsterLevelTarget,
   type TeamBadgeId,
@@ -101,7 +100,7 @@ function TeamSlotCard({
     <button
       type="button"
       onClick={onSelect}
-      className={`flex w-[88px] shrink-0 flex-col items-center rounded-sm p-1 text-left transition-colors ${
+      className={`flex w-[96px] shrink-0 flex-col items-center rounded-sm p-1 text-left transition-colors ${
         selected
           ? "bg-amber-950/50 ring-1 ring-amber-500/70"
           : "hover:bg-amber-950/30"
@@ -149,18 +148,23 @@ function TeamSlotCard({
             +{plusTotal}
           </span>
         )}
+      </div>
 
-        {eqId && (
-          <div className="absolute -bottom-1 -right-1 h-7 w-7 overflow-hidden rounded border border-[#6b8f3c]/80 bg-[#1a1208] shadow">
+      {eqId && (
+        <div className="mt-1 flex w-full justify-end pr-0.5">
+          <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded border border-[#6b8f3c]/90 bg-[#1a1208]">
             <MonsterPortrait
               monsterId={eqId}
               variant="icon"
               alt=""
               className="h-full w-full object-cover"
             />
+            <span className="absolute bottom-0 left-0 max-w-[85%] truncate rounded-tr bg-black/75 px-0.5 py-px font-mono text-[8px] leading-none text-emerald-100/95">
+              {eqId}
+            </span>
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
       <div className="mt-1.5 w-full space-y-0.5 px-0.5">
         <TeamStatLine kind="hp" value={result?.hp.afterRaw ?? 0} />
@@ -188,16 +192,6 @@ function SlotEditor({
   monster: MonsterRecord | null;
   onChange: (next: TeamMemberConfig) => void;
 }) {
-  const maxLatent = monster?.latent_slots ?? 6;
-  const usedLatent = latentSlotsUsed(member.latents);
-
-  const setLatent = (id: LatentId, count: number) => {
-    const latents = { ...member.latents };
-    if (count <= 0) delete latents[id];
-    else latents[id] = count;
-    onChange({ ...member, latents });
-  };
-
   const saOptions = monster ? listSuperAwakeningOptions(monster) : [];
   const levelCap = monster ? maxMonsterLevel(monster) : 120;
   const transformForm = monster?.is_transform_form === true || monster?.is_transform_form === 1;
@@ -375,38 +369,12 @@ function SlotEditor({
           ) : (
             <>
               LB +{lb110Percent(monster)}% (lm {monster.limit_mult ?? 0}, cost{" "}
-              {monster.cost ?? "—"}) · latent {usedLatent}/{monster.latent_slots ?? 6}{" "}
-              slots
+              {monster.cost ?? "—"})
             </>
           )}
         </p>
       )}
 
-      <details className="mt-2">
-        <summary className="cursor-pointer text-xs text-[var(--color-muted)]">
-          Latents ({usedLatent}/{maxLatent})
-        </summary>
-        <div className="mt-2 grid gap-1 sm:grid-cols-2">
-          {LATENT_OPTIONS.map((opt) => (
-            <label
-              key={opt.id}
-              className="flex items-center justify-between gap-2 text-xs"
-            >
-              <span className="truncate">{opt.label}</span>
-              <input
-                type="number"
-                min={0}
-                max={8}
-                value={member.latents[opt.id] ?? ""}
-                onChange={(e) =>
-                  setLatent(opt.id, Number(e.target.value) || 0)
-                }
-                className="w-14 rounded border border-[var(--color-border)] bg-[#0d1117] px-1 py-0.5 text-right"
-              />
-            </label>
-          ))}
-        </div>
-      </details>
     </div>
   );
 }
@@ -530,11 +498,10 @@ export function TeamBuildPage() {
     }));
   };
 
-  const handleExport = async () => {
-    const text = exportTeamIdString(config);
+  const copyToClipboard = async (text: string, label: string) => {
     try {
       await navigator.clipboard.writeText(text);
-      setCopyMsg("Copied!");
+      setCopyMsg(`${label} copied`);
     } catch {
       setCopyMsg("Copy failed");
     }
@@ -554,7 +521,9 @@ export function TeamBuildPage() {
     setTimeout(() => setImportMsg(null), 4000);
   };
 
-  const exportedTeam = exportTeamIdString(config);
+  const exportedMonsters = exportTeamIdString(config);
+  const exportedEquipment = exportTeamEqString(config);
+  const exportedTsubaki = exportTeamTsubakiString(config);
 
   const selectedMember = config.members[selectedSlot];
   const selectedMonster = parseId(selectedMember.monsterId)
@@ -616,7 +585,7 @@ export function TeamBuildPage() {
           </div>
 
           <p className="mb-4 text-center text-[10px] text-[var(--color-muted)]">
-            Raw stats: level, +points, super awakening, latent, assist. No badge,
+            Raw stats: level, +points, super awakening, assist. No badge,
             leader skill, or dungeon awk.
           </p>
 
@@ -644,34 +613,79 @@ export function TeamBuildPage() {
               <h2 className="text-xs font-semibold uppercase text-[var(--color-muted)]">
                 Team IDs
               </h2>
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={handleExport}
-                  className="rounded border border-[var(--color-border)] px-2 py-1 text-xs hover:border-[var(--color-accent)]"
-                >
-                  Copy export
-                </button>
-                {copyMsg && (
-                  <span className="text-[10px] text-emerald-400">{copyMsg}</span>
-                )}
+              {copyMsg && (
+                <span className="text-[10px] text-emerald-400">{copyMsg}</span>
+              )}
+            </div>
+
+            <div className="mb-3 space-y-2">
+              <div>
+                <div className="mb-1 flex items-center justify-between gap-2">
+                  <span className="text-[10px] font-medium text-[var(--color-muted)]">
+                    Monsters
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => copyToClipboard(exportedMonsters, "Monsters")}
+                    className="rounded border border-[var(--color-border)] px-2 py-0.5 text-[10px] hover:border-[var(--color-accent)]"
+                  >
+                    Copy
+                  </button>
+                </div>
+                <output className="block break-all rounded bg-[#0d1117] px-2 py-1.5 font-mono text-xs text-[var(--color-accent)]">
+                  {exportedMonsters}
+                </output>
+              </div>
+
+              <div>
+                <div className="mb-1 flex items-center justify-between gap-2">
+                  <span className="text-[10px] font-medium text-[var(--color-muted)]">
+                    Equipment
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => copyToClipboard(exportedEquipment, "Equipment")}
+                    className="rounded border border-[var(--color-border)] px-2 py-0.5 text-[10px] hover:border-[var(--color-accent)]"
+                  >
+                    Copy
+                  </button>
+                </div>
+                <output className="block break-all rounded bg-[#0d1117] px-2 py-1.5 font-mono text-xs text-emerald-300/90">
+                  {exportedEquipment}
+                </output>
               </div>
             </div>
-            <output className="mb-2 block break-all rounded bg-[#0d1117] px-2 py-1.5 font-mono text-xs text-[var(--color-accent)]">
-              {exportedTeam}
-            </output>
+
+            <div className="mb-3 border-t border-[var(--color-border)] pt-3">
+              <div className="mb-1 flex flex-wrap items-center justify-between gap-2">
+                <span className="text-[10px] font-medium text-[var(--color-muted)]">
+                  Tsubaki
+                </span>
+                <button
+                  type="button"
+                  onClick={() => copyToClipboard(exportedTsubaki, "Tsubaki")}
+                  className="rounded border border-amber-700/60 bg-amber-950/30 px-2 py-0.5 text-[10px] text-amber-200/90 hover:border-amber-500"
+                >
+                  Copy for Tsubaki
+                </button>
+              </div>
+              <output className="block break-all rounded bg-[#0d1117] px-2 py-1.5 font-mono text-xs text-amber-200/90">
+                {exportedTsubaki}
+              </output>
+            </div>
+
             <p className="mb-2 text-[10px] text-[var(--color-muted)]">
               Order: leader · 4 subs · helper. Empty slot ={" "}
-              <code className="text-[var(--color-accent)]">1</code>. Default +99
-              all stats, Lv.120.
+              <code className="text-[var(--color-accent)]">1</code>. Import: line 1
+              monsters, line 2 equipment.
             </p>
             <div className="flex flex-col gap-2 sm:flex-row">
-              <input
-                type="text"
+              <textarea
+                rows={2}
                 value={importText}
                 onChange={(e) => setImportText(e.target.value)}
-                placeholder="Paste ID string to import…"
-                className="min-w-0 flex-1 rounded border border-[var(--color-border)] bg-[#0d1117] px-2 py-1 font-mono text-xs"
+                placeholder="Paste monster IDs (line 1) and optional eq IDs (line 2)…"
+                className="min-w-0 flex-1 resize-y rounded border border-[var(--color-border)] bg-[#0d1117] px-2 py-1 font-mono text-xs"
               />
               <button
                 type="button"

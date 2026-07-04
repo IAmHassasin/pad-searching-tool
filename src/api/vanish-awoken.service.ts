@@ -7,8 +7,14 @@ import { InjectDataSource } from "@nestjs/typeorm";
 import { existsSync, statSync } from "node:fs";
 import { resolve } from "node:path";
 import { DataSource } from "typeorm";
+import {
+  detachSupplementDb,
+  ensureSupplementDbAttached,
+  type SupplementAttachCache,
+} from "./supplement-db-attach";
 
 const ATTACH_ALIAS = "vanish_awoken_db";
+const TABLE_NAME = "monster_vanish_awoken";
 
 export type VanishSearchFilters = {
   vanishOnly?: boolean;
@@ -20,12 +26,12 @@ export type VanishSearchFilters = {
 @Injectable()
 export class VanishAwokenService implements OnModuleDestroy {
   private readonly logger = new Logger(VanishAwokenService.name);
-  private attachedPath: string | null = null;
+  private readonly cache: SupplementAttachCache = { attachedPath: null };
 
   constructor(@InjectDataSource() private readonly dataSource: DataSource) {}
 
   onModuleDestroy(): void {
-    void this.detachIfNeeded();
+    void detachSupplementDb(this.dataSource, ATTACH_ALIAS, this.cache);
   }
 
   resolveDbPath(): string | null {
@@ -50,66 +56,21 @@ export class VanishAwokenService implements OnModuleDestroy {
     return this.resolveDbPath() != null;
   }
 
-  /** Clear cached attach state (e.g. after SQLite connection is recreated). */
   resetAttachment(): void {
-    this.attachedPath = null;
-  }
-
-  private async isStillAttached(): Promise<boolean> {
-    if (!this.attachedPath) return false;
-    try {
-      const rows = (await this.dataSource.query(
-        `SELECT 1 FROM ${ATTACH_ALIAS}.sqlite_master ` +
-          `WHERE type = 'table' AND name = 'monster_vanish_awoken' LIMIT 1`
-      )) as unknown[];
-      return rows.length > 0;
-    } catch {
-      return false;
-    }
+    this.cache.attachedPath = null;
   }
 
   async ensureAttached(): Promise<boolean> {
     const path = this.resolveDbPath();
     if (!path) return false;
-
-    if (this.attachedPath === path && (await this.isStillAttached())) {
-      return true;
-    }
-
-    this.attachedPath = null;
-    await this.detachIfNeeded();
-    const escaped = path.replace(/'/g, "''");
-    try {
-      await this.dataSource.query(
-        `ATTACH DATABASE '${escaped}' AS ${ATTACH_ALIAS}`
-      );
-    } catch (err) {
-      this.logger.warn(
-        `Could not attach vanish awoken DB at ${path}: ${err instanceof Error ? err.message : err}`
-      );
-      return false;
-    }
-
-    if (!(await this.isStillAttached())) {
-      this.logger.warn(
-        `Vanish awoken DB at ${path} is missing monster_vanish_awoken table`
-      );
-      await this.detachIfNeeded();
-      return false;
-    }
-
-    this.attachedPath = path;
-    return true;
-  }
-
-  private async detachIfNeeded(): Promise<void> {
-    if (!this.attachedPath) return;
-    try {
-      await this.dataSource.query(`DETACH DATABASE ${ATTACH_ALIAS}`);
-    } catch {
-      // already detached
-    }
-    this.attachedPath = null;
+    return ensureSupplementDbAttached(this.dataSource, {
+      alias: ATTACH_ALIAS,
+      tableName: TABLE_NAME,
+      path,
+      cache: this.cache,
+      logger: this.logger,
+      label: "vanish awoken",
+    });
   }
 
   monsterIdExpr(): string {
@@ -118,7 +79,7 @@ export class VanishAwokenService implements OnModuleDestroy {
 
   joinSql(): string {
     return (
-      `LEFT JOIN ${ATTACH_ALIAS}.monster_vanish_awoken AS _vanish ` +
+      `LEFT JOIN ${ATTACH_ALIAS}.${TABLE_NAME} AS _vanish ` +
       `ON _vanish.monster_id = ${this.monsterIdExpr()}`
     );
   }

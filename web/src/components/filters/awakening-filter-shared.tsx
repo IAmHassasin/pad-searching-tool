@@ -2,6 +2,7 @@ import { AWAKENING_FILTER_GROUPS } from "../../lib/awakening-filter-groups";
 import type { MonsterFilters } from "../../types";
 import { AwakeningSpriteIcon } from "../AwakeningSpriteIcon";
 import { CollapsibleFilterSection } from "./collapsible-filter-section";
+import { SupplementFilterCheckbox } from "./supplement-filter-checkbox";
 import { useState } from "react";
 
 const AWK_ACCENT = "#6b8f3c";
@@ -486,21 +487,12 @@ export function MonsterAwakeningFilter({
         <MonsterAwakeningClearAllButton filters={filters} onChange={onChange} />
       }
     >
-      <label
-        className={`mb-1.5 flex cursor-pointer items-center gap-1.5 rounded border border-[#8b6914]/40 bg-[#2a1f14]/50 px-1.5 py-1 ${
-          compact ? "text-[9px]" : "text-[10px]"
-        }`}
-      >
-        <input
-          type="checkbox"
-          checked={filters.vanishOnly}
-          onChange={(e) =>
-            onChange({ ...filters, vanishOnly: e.target.checked })
-          }
-          className="accent-[#c9a84a]"
-        />
-        <span className="font-medium text-[#e8dcc8]">Vanish only</span>
-      </label>
+      <SupplementFilterCheckbox
+        label="Vanish only"
+        checked={filters.vanishOnly}
+        onChange={(vanishOnly) => onChange({ ...filters, vanishOnly })}
+        compact={compact}
+      />
 
       {totalSelected > 0 && (
         <div className="mb-1 flex flex-wrap gap-0.5">

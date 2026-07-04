@@ -129,3 +129,33 @@ export function formatActiveSkillDesc(raw: string): string {
   }
   return lines.join("\n");
 }
+
+const STAGE_LINE_RE = /^(\d+)\)\s/;
+
+/** dadguide `active_subskills.cooldown` per evo-loop stage (comma-separated from API). */
+export function parseActiveSkillStageCooldowns(
+  raw: string | null | undefined
+): number[] | null {
+  if (raw == null) return null;
+  const text = String(raw).trim();
+  if (!text) return null;
+  const nums = text
+    .split(",")
+    .map((part) => Number.parseInt(part.trim(), 10))
+    .filter((n) => !Number.isNaN(n) && n > 0);
+  return nums.length ? nums : null;
+}
+
+/** Evo-loop skills with 2+ subskill stages should show CD on each stage line. */
+export function hasEvoStageCooldowns(
+  rawDesc: string,
+  stageCooldowns: number[] | null | undefined
+): boolean {
+  if (!stageCooldowns || stageCooldowns.length < 2) return false;
+  const parsed = parseStagedActiveSkill(rawDesc.trim());
+  return parsed != null && isEvoStagedSkill(parsed.header);
+}
+
+export function isStagedSkillLine(line: string): boolean {
+  return STAGE_LINE_RE.test(line);
+}

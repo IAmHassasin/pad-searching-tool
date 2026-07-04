@@ -1,5 +1,3 @@
-import type { LatentId } from "./types";
-
 /** Flat + per plus point ([GameWith 108048](https://xn--0ck4aw2h.gamewith.jp/article/show/108048)). */
 export const PLUS_HP_PER_POINT = 10;
 export const PLUS_ATK_PER_POINT = 5;
@@ -17,34 +15,6 @@ export const ASSIST_BONUS_PCT = {
   hp: 10,
   rcv: 15,
 } as const;
-
-export type LatentStatPct = {
-  slots: number;
-  hp: number;
-  rcv: number;
-  requiresSuperLb?: boolean;
-};
-
-/** [GameWith 38230](https://xn--0ck4aw2h.gamewith.jp/article/show/38230) */
-export const LATENT_STAT_PCT: Record<LatentId, LatentStatPct> = {
-  hp: { slots: 1, hp: 1.5, rcv: 0 },
-  rcv: { slots: 1, hp: 0, rcv: 10 },
-  all_param: { slots: 2, hp: 3, rcv: 20 },
-  hp_plus: { slots: 2, hp: 4.5, rcv: 0 },
-  rcv_plus: { slots: 2, hp: 0, rcv: 30 },
-  hp_plus_plus: { slots: 2, hp: 10, rcv: 0, requiresSuperLb: true },
-  rcv_plus_plus: { slots: 2, hp: 0, rcv: 35, requiresSuperLb: true },
-};
-
-export const LATENT_OPTIONS: { id: LatentId; label: string }[] = [
-  { id: "hp", label: "HP Enhancement (+1.5%)" },
-  { id: "rcv", label: "RCV Enhancement (+10%)" },
-  { id: "all_param", label: "All-Parameter (+3% HP, +20% RCV)" },
-  { id: "hp_plus", label: "HP Enhancement+ (+4.5%)" },
-  { id: "rcv_plus", label: "RCV Enhancement+ (+30%)" },
-  { id: "hp_plus_plus", label: "HP Enhancement++ (+10%, SLB)" },
-  { id: "rcv_plus_plus", label: "RCV Enhancement++ (+35%, SLB)" },
-];
 
 export type BadgeStatPct = { hp: number; rcv: number };
 
@@ -74,13 +44,3 @@ export const BADGE_OPTIONS: {
   { id: "all_50", label: "All stats +50% (Skill/Status badge)" },
   { id: "team_hp_rcv_5", label: "HP & RCV +5% (awoken enhance badges)" },
 ];
-
-export function latentSlotsUsed(latents: Partial<Record<LatentId, number>>): number {
-  let total = 0;
-  for (const [id, count] of Object.entries(latents)) {
-    const def = LATENT_STAT_PCT[id as LatentId];
-    if (!def || !count) continue;
-    total += def.slots * count;
-  }
-  return total;
-}

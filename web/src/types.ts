@@ -34,6 +34,8 @@ export type MonsterRecord = {
   active_skill_name_en?: string | null;
   active_skill_cooldown_min?: number | null;
   active_skill_cooldown_max?: number | null;
+  /** Comma-separated max-level CD per evo-loop subskill stage (dadguide active_subskills). */
+  active_skill_stage_cooldowns?: string | null;
   leader_skill_name_en?: string | null;
   active_skill_desc_en?: string | null;
   leader_skill_desc_en?: string | null;
@@ -41,6 +43,8 @@ export type MonsterRecord = {
   leader_skill_tags?: string | null;
   /** Awoken skill ids granted when this assist vanishes (GameWith supplement DB). */
   vanish_granted_awoken_ids?: number[] | null;
+  /** Void super gravity duration in turns (Altema supplement DB). */
+  void_super_gravity_turns?: number | null;
   __source_pk?: number;
 };
 

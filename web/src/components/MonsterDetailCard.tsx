@@ -10,6 +10,8 @@ import {
 import { buildAssistResonanceSearchUrl } from "../lib/monster-search-url";
 import {
   formatActiveSkillDesc,
+  hasEvoStageCooldowns,
+  parseActiveSkillStageCooldowns,
   parseChangeToMonsterIds,
 } from "../lib/format-active-skill-desc";
 import { parseMonsterTypeIds } from "../lib/monster-types";
@@ -17,6 +19,7 @@ import { PAD_AWAKENING, PAD_CARD_VISUAL } from "../lib/pad-constants";
 import type { MonsterRecord } from "../types";
 import { AwakeningIconList } from "./AwakeningIconList";
 import { ActiveSkillVanishAddLine } from "./ActiveSkillVanishAddLine";
+import { ActiveSkillVoidSuperGravityLine } from "./ActiveSkillVoidSuperGravityLine";
 import { ActiveSkillDescText } from "./ActiveSkillDescText";
 import { LeaderSkillDescText } from "./LeaderSkillDescText";
 import {
@@ -76,6 +79,8 @@ function SkillBlock({
   body,
   cooldown,
   vanishGrantedAwokenIds,
+  voidSuperGravityTurns,
+  stageCooldowns,
   compact = false,
 }: {
   kind: "active" | "leader";
@@ -83,6 +88,8 @@ function SkillBlock({
   body: string;
   cooldown?: string | null;
   vanishGrantedAwokenIds?: number[] | null;
+  voidSuperGravityTurns?: number | null;
+  stageCooldowns?: number[] | null;
   compact?: boolean;
 }) {
   const badge =
@@ -122,9 +129,17 @@ function SkillBlock({
           </span>
         )}
       </div>
+      {kind === "active" && voidSuperGravityTurns != null ? (
+        <ActiveSkillVoidSuperGravityLine
+          turns={voidSuperGravityTurns}
+          compact={compact}
+        />
+      ) : null}
       {kind === "active" ? (
         <ActiveSkillDescText
           text={body}
+          stageCooldowns={stageCooldowns}
+          compact={compact}
           className={`whitespace-pre-wrap text-[#e8dcc8] ${
             compact ? "text-[9px] leading-snug" : "text-[10px] leading-relaxed"
           }`}
@@ -185,12 +200,19 @@ export function MonsterDetailCard({
     (hasRegular ? PAD_AWAKENING.columnWidthPx : 0) +
     (hasSuper ? PAD_AWAKENING.columnWidthPx + PAD_AWAKENING.iconGapPx : 0) - 30;
 
-  const activeDesc = formatActiveSkillDesc(row.active_skill_desc_en?.trim() || "—");
+  const rawActiveDesc = row.active_skill_desc_en?.trim() || "";
+  const activeDesc = formatActiveSkillDesc(rawActiveDesc || "—");
   const leaderDesc = row.leader_skill_desc_en?.trim() || "—";
-  const activeCooldown = formatActiveSkillCooldown(
-    row.active_skill_cooldown_min,
-    row.active_skill_cooldown_max
+  const stageCooldowns = parseActiveSkillStageCooldowns(
+    row.active_skill_stage_cooldowns
   );
+  const perStageCd = hasEvoStageCooldowns(rawActiveDesc, stageCooldowns);
+  const activeCooldown = perStageCd
+    ? null
+    : formatActiveSkillCooldown(
+        row.active_skill_cooldown_min,
+        row.active_skill_cooldown_max
+      );
 
   return (
     <article
@@ -466,7 +488,9 @@ export function MonsterDetailCard({
           title={row.active_skill_name_en?.trim() || "—"}
           body={activeDesc}
           cooldown={activeCooldown}
+          stageCooldowns={perStageCd ? stageCooldowns : null}
           vanishGrantedAwokenIds={row.vanish_granted_awoken_ids}
+          voidSuperGravityTurns={row.void_super_gravity_turns}
           compact={compact}
         />
         <SkillBlock

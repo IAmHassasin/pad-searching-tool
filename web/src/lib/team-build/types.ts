@@ -12,15 +12,6 @@ export type TeamBadgeId =
   | "all_50"
   | "team_hp_rcv_5";
 
-export type LatentId =
-  | "hp"
-  | "rcv"
-  | "all_param"
-  | "hp_plus"
-  | "rcv_plus"
-  | "hp_plus_plus"
-  | "rcv_plus_plus";
-
 export type TeamSlotRole = "leader" | "sub";
 
 export type TeamMemberConfig = {
@@ -36,8 +27,6 @@ export type TeamMemberConfig = {
   level: MonsterLevelTarget;
   /** Active super awakening / sync awk; null = none. */
   selectedSuperAwakening: number | null;
-  /** Count per latent type (respects latent_slots). */
-  latents: Partial<Record<LatentId, number>>;
 };
 
 export type TeamBuildConfig = {
@@ -56,9 +45,8 @@ export type StatBreakdown = {
   afterLevel: number;
   afterPlus: number;
   afterAwk: number;
-  afterLatent: number;
   afterAssist: number;
-  /** Level + plus + latent + assist (no dungeon awk, badge, or LS). */
+  /** Level + plus + super awk + assist (no dungeon awk, badge, or LS). */
   afterRaw: number;
   afterBadge: number;
   afterLeader: number;
@@ -102,7 +90,6 @@ export function emptyMember(role: TeamSlotRole): TeamMemberConfig {
     eqPlusRcv: 0,
     level: 120,
     selectedSuperAwakening: null,
-    latents: {},
   };
 }
 

@@ -11,6 +11,7 @@ import {
 } from "../awakening-equivalence";
 import { PatternCatalogService } from "../patterns/pattern-catalog.service";
 import type { PatternTagSelection, SkillType } from "../patterns/pattern-types";
+import { VOID_SUPER_GRAVITY_TAG_KEY } from "../patterns/supplement-pattern-tags";
 import {
   getSourceColumnWhitelistFromEnv,
   projectSourceRows,
@@ -20,6 +21,7 @@ import {
   VanishAwokenService,
   type VanishSearchFilters,
 } from "./vanish-awoken.service";
+import { VoidSuperGravityService } from "./void-super-gravity.service";
 
 const IDENT = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
 
@@ -58,7 +60,8 @@ export class PatternSearchService {
   constructor(
     @InjectDataSource() private readonly dataSource: DataSource,
     private readonly patterns: PatternCatalogService,
-    private readonly vanish: VanishAwokenService
+    private readonly vanish: VanishAwokenService,
+    private readonly voidSuperGravity: VoidSuperGravityService
   ) {}
 
   private activeDescColumn(): string {
@@ -141,12 +144,19 @@ export class PatternSearchService {
   private buildPatternWhere(
     selections: PatternTagSelection[],
     patternMatch: "any" | "all",
-    params: unknown[]
+    params: unknown[],
+    vsgAttached: boolean
   ): string | null {
     if (!selections.length) return null;
 
     const tagClauses: string[] = [];
     for (const sel of selections) {
+      if (sel.tagKey === VOID_SUPER_GRAVITY_TAG_KEY) {
+        tagClauses.push(
+          vsgAttached ? `_vsg.monster_id IS NOT NULL` : `1=0`
+        );
+        continue;
+      }
       const clause = this.patterns.buildTagOrClause(
         sel.skillType,
         sel.tagKey,
@@ -410,7 +420,10 @@ export class PatternSearchService {
     return clauses;
   }
 
-  private compileWhere(input: PatternSearchInput): {
+  private compileWhere(
+    input: PatternSearchInput,
+    attach: { vanishAttached: boolean; vsgAttached: boolean }
+  ): {
     whereSql: string;
     params: unknown[];
     selections: PatternTagSelection[];
@@ -425,12 +438,15 @@ export class PatternSearchService {
     const patternWhere = this.buildPatternWhere(
       selections,
       input.patternMatch,
-      params
+      params,
+      attach.vsgAttached
     );
     if (patternWhere) parts.push(patternWhere);
     parts.push(...this.buildTextWhere(input, params));
     parts.push(...this.buildMonsterWhere(input.monster, params));
-    parts.push(...this.vanish.buildVanishWhere(input.vanish, params));
+    if (attach.vanishAttached && hasVanishFilters(input.vanish)) {
+      parts.push(...this.vanish.buildVanishWhere(input.vanish, params));
+    }
 
     const whereSql = parts.length ? `WHERE ${parts.join(" AND ")}` : "";
     return { whereSql, params, selections };
@@ -448,15 +464,28 @@ export class PatternSearchService {
     rows: Record<string, unknown>[];
   }> {
     const { sql: inner, sourceLabel, mode } = this.buildSourceSubquery();
-    const { whereSql, params, selections } = this.compileWhere(input);
 
     const vanishAttached = await this.vanish.ensureAttached();
-    const vanishFilterActive = vanishAttached && hasVanishFilters(input.vanish);
-    const vanishEnrich = vanishAttached;
-    const joinSql =
-      vanishFilterActive || vanishEnrich ? ` ${this.vanish.joinSql()}` : "";
-    const selectExtra =
-      vanishEnrich ? `, ${this.vanish.selectSql()}` : "";
+    const vsgAttached = await this.voidSuperGravity.ensureAttached();
+    const vsgTagSelected = input.activeTags.includes(VOID_SUPER_GRAVITY_TAG_KEY);
+
+    const { whereSql, params, selections } = this.compileWhere(input, {
+      vanishAttached,
+      vsgAttached,
+    });
+
+    const joinParts: string[] = [];
+    if (vanishAttached) {
+      joinParts.push(this.vanish.joinSql());
+    }
+    if (vsgAttached) {
+      joinParts.push(this.voidSuperGravity.joinSql());
+    }
+    const joinSql = joinParts.length ? ` ${joinParts.join(" ")}` : "";
+    const selectParts: string[] = [];
+    if (vanishAttached) selectParts.push(this.vanish.selectSql());
+    if (vsgAttached) selectParts.push(this.voidSuperGravity.selectSql());
+    const selectExtra = selectParts.length ? `, ${selectParts.join(", ")}` : "";
 
     const baseFrom = `FROM (${inner}) AS _src${joinSql} ${whereSql}`;
     const countSql = `SELECT COUNT(*) AS cnt ${baseFrom}`;
@@ -472,8 +501,11 @@ export class PatternSearchService {
       string,
       unknown
     >[];
-    if (vanishEnrich) {
+    if (vanishAttached) {
       rows = this.vanish.enrichRows(rows);
+    }
+    if (vsgAttached) {
+      rows = this.voidSuperGravity.enrichRows(rows);
     }
     rows = projectSourceRows(rows, getSourceColumnWhitelistFromEnv());
 

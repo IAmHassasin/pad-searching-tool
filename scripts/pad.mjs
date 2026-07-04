@@ -70,6 +70,8 @@ Loads .env from the project root, then runs a command.
   snapshot    Forces IMPORT_MODE=download — immutable file at SNAPSHOT_OUTPUT_PATH.
   seed-db     Download community SQLite → seed/dadguide.sqlite (DB_DOWNLOAD_URL in .env).
   import-vanish-db       Fetch GameWith vanish grants → gamewith-vanish.sqlite.
+  import-void-super-gravity-db  Build void-super-gravity.sqlite from seed JSON.
+  import-supplement-dbs Refresh all supplement SQLite DBs (vanish, void gravity, …).
   generate-vanish-map    Regenerate vanish-awoken-name-map.json from dadguide Untranslated rows.
   dungeon:gimmick-master  Merge gimmick master from AppMedia URL(s) (--urls dungeon-details/seed/dungeon-urls.txt).
   dungeon:import          Parse dungeon guide URL(s) → dungeon-details/seed/dungeons/<id>.json.
@@ -115,6 +117,20 @@ switch (cmd) {
   case "import-vanish-db":
     run(process.execPath, [
       path.join(root, "scripts", "import-gamewith-vanish-db.mjs"),
+      ...forwarded,
+    ]);
+    break;
+
+  case "import-void-super-gravity-db":
+    run(process.execPath, [
+      path.join(root, "scripts", "import-void-super-gravity-db.mjs"),
+      ...forwarded,
+    ]);
+    break;
+
+  case "import-supplement-dbs":
+    run(process.execPath, [
+      path.join(root, "scripts", "import-supplement-dbs.mjs"),
       ...forwarded,
     ]);
     break;

@@ -5,7 +5,11 @@ import {
   resolvePrefixedAwakeningIds,
   resolveSuperAwakeningIds,
 } from "../lib/awakenings";
-import { formatActiveSkillDesc } from "../lib/format-active-skill-desc";
+import {
+  formatActiveSkillDesc,
+  hasEvoStageCooldowns,
+  parseActiveSkillStageCooldowns,
+} from "../lib/format-active-skill-desc";
 import { parseMonsterAttributeIds } from "../lib/monster-attributes";
 import { PAD_AWAKENING } from "../lib/pad-constants";
 import {
@@ -15,6 +19,7 @@ import {
 import type { MonsterRecord } from "../types";
 import { AwakeningIconList } from "./AwakeningIconList";
 import { ActiveSkillVanishAddLine } from "./ActiveSkillVanishAddLine";
+import { ActiveSkillVoidSuperGravityLine } from "./ActiveSkillVoidSuperGravityLine";
 import { ActiveSkillDescText } from "./ActiveSkillDescText";
 import { LeaderSkillDescText } from "./LeaderSkillDescText";
 import { MonsterAttributeStrip } from "./MonsterAttributeStrip";
@@ -68,6 +73,8 @@ function SkillSnippet({
   body,
   cooldown,
   vanishGrantedAwokenIds,
+  voidSuperGravityTurns,
+  stageCooldowns,
   inline = false,
 }: {
   kind: "active" | "leader";
@@ -75,6 +82,8 @@ function SkillSnippet({
   body: string;
   cooldown?: string | null;
   vanishGrantedAwokenIds?: number[] | null;
+  voidSuperGravityTurns?: number | null;
+  stageCooldowns?: number[] | null;
   inline?: boolean;
 }) {
   const badgeClass =
@@ -113,9 +122,17 @@ function SkillSnippet({
           </span>
         )}
       </div>
+      {kind === "active" && voidSuperGravityTurns != null ? (
+        <ActiveSkillVoidSuperGravityLine
+          turns={voidSuperGravityTurns}
+          compact={inline}
+        />
+      ) : null}
       {kind === "active" ? (
         <ActiveSkillDescText
           text={body}
+          stageCooldowns={stageCooldowns}
+          compact={inline}
           className={`text-[#e8dcc8] ${
             inline
               ? "line-clamp-1 text-[8px] leading-tight"
@@ -198,12 +215,19 @@ export function MonsterQuickPreview({
   const hasSuper = prefixedAwkIds.length > 0;
   const hasRegular = regular.length > 0;
 
-  const activeDesc = formatActiveSkillDesc(row.active_skill_desc_en?.trim() || "—");
+  const rawActiveDesc = row.active_skill_desc_en?.trim() || "";
+  const activeDesc = formatActiveSkillDesc(rawActiveDesc || "—");
   const leaderDesc = row.leader_skill_desc_en?.trim() || "—";
-  const activeCooldown = formatActiveSkillCooldown(
-    row.active_skill_cooldown_min,
-    row.active_skill_cooldown_max
+  const stageCooldowns = parseActiveSkillStageCooldowns(
+    row.active_skill_stage_cooldowns
   );
+  const perStageCd = hasEvoStageCooldowns(rawActiveDesc, stageCooldowns);
+  const activeCooldown = perStageCd
+    ? null
+    : formatActiveSkillCooldown(
+        row.active_skill_cooldown_min,
+        row.active_skill_cooldown_max
+      );
 
   const inline = variant === "inline";
   const showAll = sections ? isAllSectionsEnabled(sections) : true;
@@ -275,7 +299,9 @@ export function MonsterQuickPreview({
             title={row.active_skill_name_en?.trim() || "—"}
             body={activeDesc}
             cooldown={activeCooldown}
+            stageCooldowns={perStageCd ? stageCooldowns : null}
             vanishGrantedAwokenIds={row.vanish_granted_awoken_ids}
+            voidSuperGravityTurns={row.void_super_gravity_turns}
             inline
           />
         )}
@@ -348,7 +374,9 @@ export function MonsterQuickPreview({
               title={row.active_skill_name_en?.trim() || "—"}
               body={activeDesc}
               cooldown={activeCooldown}
+              stageCooldowns={perStageCd ? stageCooldowns : null}
               vanishGrantedAwokenIds={row.vanish_granted_awoken_ids}
+              voidSuperGravityTurns={row.void_super_gravity_turns}
               inline={inline}
             />
           )}

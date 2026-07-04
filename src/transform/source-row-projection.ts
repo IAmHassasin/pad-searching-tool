@@ -9,6 +9,8 @@ const INTERNAL_KEYS = new Set([
   "__source_pk",
   "__rowid",
   "vanish_granted_awoken_ids",
+  "void_super_gravity_turns",
+  "active_skill_stage_cooldowns",
 ]);
 
 export function parseSourceColumnWhitelist(

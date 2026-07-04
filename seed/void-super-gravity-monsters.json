@@ -1,0 +1,15 @@
+{
+  "_comment": "Curated 超重力を無効化 holders — dadguide skill text omits this effect (TBD placeholders). turns from Altema skill_sonota/72.",
+  "sourceUrl": "https://altema.jp/pazudora/skill_sonota/72",
+  "monsters": [
+    { "monster_id": 6668, "name_en": "Crow Guardian Mystic, Kukan", "turns": 2 },
+    { "monster_id": 6669, "name_en": "Gatekeeper Mystic, Kukan", "turns": 2 },
+    { "monster_id": 6693, "name_en": "Kukan's Binding Seal", "turns": 2 },
+    { "monster_id": 13410, "name_en": "Frieren the Slayer", "turns": 1 },
+    { "monster_id": 13472, "name_en": "Frieren (Clone Made from Magic)", "turns": 1 },
+    { "monster_id": 13609, "name_en": "Competitive Draconic Songstress on Flute, Eva", "turns": 2 },
+    { "monster_id": 13616, "name_en": "Science Club's Spectre, Yura", "turns": 1 },
+    { "monster_id": 13828, "name_en": "Solomon & Merna", "turns": 10 },
+    { "monster_id": 13852, "name_en": "Maid Ilumina", "turns": 1 }
+  ]
+}

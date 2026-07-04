@@ -10,6 +10,7 @@ import {
   projectSourceRows,
 } from "../transform/source-row-projection";
 import { VanishAwokenService } from "./vanish-awoken.service";
+import { VoidSuperGravityService } from "./void-super-gravity.service";
 
 const IDENT = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
 /** dadguide `d_types.type_id` — Redeemable Mats */
@@ -30,7 +31,8 @@ const EXCLUDE_POST_TRANSFORM_SQL = `
 export class MonsterRelationsService {
   constructor(
     @InjectDataSource() private readonly dataSource: DataSource,
-    private readonly vanish: VanishAwokenService
+    private readonly vanish: VanishAwokenService,
+    private readonly voidSuperGravity: VoidSuperGravityService
   ) {}
 
   private buildSourceSubquery(): string {
@@ -62,8 +64,15 @@ export class MonsterRelationsService {
     const inner = this.buildSourceSubquery();
     const placeholders = ids.map(() => "?").join(", ");
     const vanishAttached = await this.vanish.ensureAttached();
-    const joinSql = vanishAttached ? ` ${this.vanish.joinSql()}` : "";
-    const selectExtra = vanishAttached ? `, ${this.vanish.selectSql()}` : "";
+    const vsgAttached = await this.voidSuperGravity.ensureAttached();
+    const joinParts: string[] = [];
+    if (vanishAttached) joinParts.push(this.vanish.joinSql());
+    if (vsgAttached) joinParts.push(this.voidSuperGravity.joinSql());
+    const joinSql = joinParts.length ? ` ${joinParts.join(" ")}` : "";
+    const selectParts: string[] = [];
+    if (vanishAttached) selectParts.push(this.vanish.selectSql());
+    if (vsgAttached) selectParts.push(this.voidSuperGravity.selectSql());
+    const selectExtra = selectParts.length ? `, ${selectParts.join(", ")}` : "";
     const sql =
       `SELECT _src.*${selectExtra} FROM (${inner}) AS _src${joinSql} ` +
       `WHERE _src."monster_id" IN (${placeholders})`;
@@ -73,6 +82,9 @@ export class MonsterRelationsService {
     >[];
     if (vanishAttached) {
       rows = this.vanish.enrichRows(rows);
+    }
+    if (vsgAttached) {
+      rows = this.voidSuperGravity.enrichRows(rows);
     }
     return projectSourceRows(rows, getSourceColumnWhitelistFromEnv());
   }

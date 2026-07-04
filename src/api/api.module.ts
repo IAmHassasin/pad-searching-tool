@@ -12,6 +12,7 @@ import { PatternsController } from "./patterns.controller";
 import { PadsApiController } from "./pads-api.controller";
 import { SourceRowsService } from "./source-rows.service";
 import { VanishAwokenService } from "./vanish-awoken.service";
+import { VoidSuperGravityService } from "./void-super-gravity.service";
 
 @Module({
   imports: [TypeOrmModule.forFeature([PadCategorized])],
@@ -25,7 +26,8 @@ import { VanishAwokenService } from "./vanish-awoken.service";
     CategoryBundlesService,
     FilterCategoriesService,
     VanishAwokenService,
+    VoidSuperGravityService,
   ],
-  exports: [MonsterRelationsService, VanishAwokenService],
+  exports: [MonsterRelationsService, VanishAwokenService, VoidSuperGravityService],
 })
 export class ApiModule {}

@@ -6,7 +6,6 @@ import type { MonsterRecord } from "../../types";
 import { computeAssistBonus } from "./assist-bonus";
 import { applyTeamBadge } from "./badge-modifiers";
 import { scaleStatForLevel } from "./level-scaling";
-import { applyLatentMultiplier, sumLatentPct } from "./latent-modifiers";
 import { superAwakeningStatMultipliers } from "./super-awakening-modifier";
 import {
   combineLeaderMultipliers,
@@ -30,7 +29,6 @@ function emptyBreakdown(): StatBreakdown {
     afterLevel: 0,
     afterPlus: 0,
     afterAwk: 0,
-    afterLatent: 0,
     afterAssist: 0,
     afterRaw: 0,
     afterBadge: 0,
@@ -74,9 +72,6 @@ function computeMemberStat(
   )[stat];
   const afterSuperAwakening = Math.round(breakdown.afterPlus * saMult);
 
-  const latentPct = sumLatentPct(config.latents, stat);
-  const rawAfterLatent = applyLatentMultiplier(afterSuperAwakening, latentPct);
-
   const assist =
     stat === "hp" || stat === "rcv"
       ? computeAssistBonus(
@@ -88,13 +83,14 @@ function computeMemberStat(
         )
       : { hp: 0, rcv: 0 };
   breakdown.afterRaw =
-    rawAfterLatent + (stat === "hp" ? assist.hp : stat === "rcv" ? assist.rcv : 0);
+    afterSuperAwakening +
+    (stat === "hp" ? assist.hp : stat === "rcv" ? assist.rcv : 0);
 
   const awkMult = computeMonsterStatMultipliers(row, awkSettings)[stat];
   breakdown.afterAwk = Math.round(breakdown.afterPlus * awkMult);
-  breakdown.afterLatent = applyLatentMultiplier(breakdown.afterAwk, latentPct);
   breakdown.afterAssist =
-    breakdown.afterLatent + (stat === "hp" ? assist.hp : stat === "rcv" ? assist.rcv : 0);
+    breakdown.afterAwk +
+    (stat === "hp" ? assist.hp : stat === "rcv" ? assist.rcv : 0);
 
   breakdown.afterBadge =
     stat === "atk"
