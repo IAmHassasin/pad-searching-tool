@@ -19,33 +19,37 @@
       "category_id": "as_buffs_caps",
       "category_name": "Buffs & Caps",
       "tags": [
-        { "tag_id": 3, "tag_name_en": "Enhanced Attack", "label": "Burst: Att. / Type" },
+        { "tag_id": 3, "tag_name_en": "Enhanced Attack", "label": "ATK Burst" },
         { "tag_id": null, "tag_name_en": "enhanced_attack_self", "label": "Self ATK Burst" },
         { "tag_id": 21, "tag_name_en": "Enhanced Heal", "label": "RCV Burst" },
         { "tag_id": null, "tag_name_en": "enhanced_hp_burst", "label": "HP Multiplier Burst" },
-        { "tag_id": null, "tag_name_en": "damage_cap_increase_self", "label": "Self Damage Cap Break" },
-        { "tag_id": null, "tag_name_en": "damage_cap_increase_allies", "label": "Allies Damage Cap Break" }
+        { "tag_id": null, "tag_name_en": "damage_cap_increase_self", "label": "Dmg Cap Break" },
+        { "tag_id": null, "tag_name_en": "damage_cap_increase_allies", "label": "Allies Dmg Cap Break" }
       ]
     },
     {
       "category_id": "as_mechanics_utility",
       "category_name": "Mechanics & Utility",
       "tags": [
-        { "tag_id": 282, "tag_name_en": "Pierce Damage Void", "label": "Void Damage Pierce (VDP)" },
+        { "tag_id": 282, "tag_name_en": "Pierce Damage Void", "label": "Pierce Damage Void" },
         { "tag_id": null, "tag_name_en": "bypass_att_absorb", "label": "Bypass Att. Absorb" },
         { "tag_id": null, "tag_name_en": "bypass_dmg_absorb", "label": "Bypass Dmg Absorb" },
         { "tag_id": null, "tag_name_en": "bypass_combo_absorb", "label": "Bypass Combo Absorb" },
-        { "tag_id": null, "tag_name_en": "void_super_gravity", "label": "Void Super Gravity" },
+        { "tag_id": null, "tag_name_en": "void_super_gravity", "label": "Void Gravity" },
         { "tag_id": null, "tag_name_en": "remove_barrier", "label": "Remove Barrier" },
         { "tag_id": 12, "tag_name_en": "Void Damage", "label": "Void Damage Taken" },
-        { "tag_id": 11, "tag_name_en": "Reduce Damage", "label": "Shield / Damage Reduction" },
+        { "tag_id": 11, "tag_name_en": "Reduce Damage", "label": "Damage Reduction" },
+        { "tag_id": 100, "tag_name_en": "Change Attribute", "label": "Attribute Change" },
+        { "tag_id": 160, "tag_name_en": "Add Combo", "label": "Add Combo" },
+        { "tag_id": null, "tag_name_en": "board_change", "label": "Board Change" },
+        { "tag_id": null, "tag_name_en": "skill_bind", "label": "Skill Bind" },
         { "tag_id": 4, "tag_name_en": "Reduce Defense", "label": "Defense Break" },
         { "tag_id": 9, "tag_name_en": "Menace", "label": "Delay Enemies" },
         { "tag_id": 110, "tag_name_en": "Reduce Skill Turn", "label": "Skill Haste" },
         { "tag_id": 80, "tag_name_en": "Extends time", "label": "Time Extend" },
         { "tag_id": 10, "tag_name_en": "Stop Time", "label": "Change the World (CTW)" },
         { "tag_id": 22, "tag_name_en": "The Switch", "label": "Leader Swap" },
-        { "tag_id": 23, "tag_name_en": "Attack Changer", "label": "Mass Attack Buff" }
+        { "tag_id": 23, "tag_name_en": "Attack Changer", "label": "Mass Attack" }
       ]
     },
     {
@@ -56,8 +60,8 @@
         { "tag_id": null, "tag_name_en": "recover_max_hp_percent", "label": "Recover Max HP %" },
         { "tag_id": 20, "tag_name_en": "Attack & Heal", "label": "Nuke & Drain HP" },
         { "tag_id": 41, "tag_name_en": "Recover Bind", "label": "Bind Recovery" },
-        { "tag_id": 215, "tag_name_en": "Awoken Invalid Recovery", "label": "Awoken Invalid Recovery" },
-        { "tag_id": 281, "tag_name_en": "Reduce Match Restriction", "label": "Unmatchable Clear" }
+        { "tag_id": 215, "tag_name_en": "Awoken Invalid Recovery", "label": "Awk Bind Recovery" },
+        { "tag_id": 281, "tag_name_en": "Reduce Match Restriction", "label": "Unmatch Bind Recovery" }
       ]
     },
     {

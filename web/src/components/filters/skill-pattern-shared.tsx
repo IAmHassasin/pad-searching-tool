@@ -1,3 +1,5 @@
+import { EffectFilterSpriteIcon } from "../EffectFilterSpriteIcon";
+import { hasEffectFilterIcon } from "../../lib/effect-filter-sprite";
 import type { PatternGroupsManifest, SkillFilters } from "../../types";
 import { CollapsibleFilterSection } from "./collapsible-filter-section";
 
@@ -37,18 +39,29 @@ export function PatternTagChip({
   onToggle: () => void;
   compact?: boolean;
 }) {
+  const hasIcon = hasEffectFilterIcon(label);
+  const iconSize = compact ? 26 : 30;
+  const tooltip = disabled
+    ? "No regex patterns loaded for this tag"
+    : count > 0
+      ? `${label} — ${count} pattern(s)`
+      : label;
+
   return (
     <button
       type="button"
       disabled={disabled}
       onClick={onToggle}
-      title={
-        disabled
-          ? "No regex patterns loaded for this tag"
-          : `${count} regex pattern(s)`
-      }
+      title={tooltip}
+      aria-label={label}
       className={`group inline-flex max-w-full items-center gap-1 rounded-md border text-left transition-colors ${
-        compact ? "px-1.5 py-0.5 text-[10px] leading-tight" : "px-2 py-1 text-[11px] leading-tight"
+        hasIcon
+          ? compact
+            ? "p-0.5"
+            : "p-1"
+          : compact
+            ? "px-1.5 py-0.5 text-[10px] leading-tight"
+            : "px-2 py-1 text-[11px] leading-tight"
       } ${
         disabled
           ? "cursor-not-allowed border-[var(--color-border)]/50 text-[var(--color-muted)] opacity-40"
@@ -62,13 +75,23 @@ export function PatternTagChip({
           : undefined
       }
     >
-      <span
-        className={`h-1.5 w-1.5 shrink-0 rounded-full ${selected ? "opacity-100" : "opacity-60 group-hover:opacity-100"}`}
-        style={{ backgroundColor: accent }}
-        aria-hidden
-      />
-      <span className="min-w-0 truncate">{label}</span>
-      {count > 0 && (
+      {hasIcon ? (
+        <EffectFilterSpriteIcon
+          label={label}
+          size={iconSize}
+          className={selected ? "ring-1 ring-[var(--color-accent)]/70" : ""}
+        />
+      ) : (
+        <>
+          <span
+            className={`h-1.5 w-1.5 shrink-0 rounded-full ${selected ? "opacity-100" : "opacity-60 group-hover:opacity-100"}`}
+            style={{ backgroundColor: accent }}
+            aria-hidden
+          />
+          <span className="min-w-0 truncate">{label}</span>
+        </>
+      )}
+      {count > 0 && !hasIcon && (
         <span
           className={`shrink-0 rounded px-1 py-px text-[9px] font-medium tabular-nums ${
             selected
@@ -128,6 +151,9 @@ export function SkillPatternGroup({
   filters,
   onChange,
   compact = false,
+  iconOnly = false,
+  showAdvancedToggle = false,
+  defaultOpen,
 }: {
   title: string;
   skillType: "active_skill" | "leader_skill";
@@ -135,6 +161,11 @@ export function SkillPatternGroup({
   filters: SkillFilters;
   onChange: (next: SkillFilters) => void;
   compact?: boolean;
+  /** When true, only show filters that have effect icons. */
+  iconOnly?: boolean;
+  /** Desktop active-skill: show advanced-filters checkbox. */
+  showAdvancedToggle?: boolean;
+  defaultOpen?: boolean;
 }) {
   if (!categories.length) return null;
 
@@ -162,7 +193,18 @@ export function SkillPatternGroup({
     }
   };
 
-  const totalTags = categories.reduce((n, c) => n + c.tags.length, 0);
+  const visibleCategories = categories
+    .map((cat) => ({
+      ...cat,
+      tags: iconOnly
+        ? cat.tags.filter((tag) => hasEffectFilterIcon(tag.label))
+        : cat.tags,
+    }))
+    .filter((cat) => cat.tags.length > 0);
+
+  if (iconOnly && visibleCategories.length === 0) return null;
+
+  const totalTags = visibleCategories.reduce((n, c) => n + c.tags.length, 0);
   const selectedInGroup = filters.selectedPatterns.filter(
     (s) => s.skillType === skillType
   ).length;
@@ -171,15 +213,41 @@ export function SkillPatternGroup({
       ? `${selectedInGroup} / ${totalTags} selected`
       : `${totalTags} tags`;
 
+  const sectionDefaultOpen =
+    defaultOpen ?? selectedInGroup > 0;
+
   return (
     <CollapsibleFilterSection
       title={title}
       summary={summary}
       compact={compact}
-      defaultOpen={selectedInGroup > 0}
+      defaultOpen={sectionDefaultOpen}
+      headerExtra={
+        showAdvancedToggle ? (
+          <label
+            className={`flex shrink-0 cursor-pointer items-center gap-1 text-[var(--color-muted)] ${
+              compact ? "text-[9px]" : "text-[10px]"
+            }`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <input
+              type="checkbox"
+              checked={filters.activeSkillAdvancedFilters}
+              onChange={(e) =>
+                onChange({
+                  ...filters,
+                  activeSkillAdvancedFilters: e.target.checked,
+                })
+              }
+              className="accent-[var(--color-accent)]"
+            />
+            Advanced
+          </label>
+        ) : undefined
+      }
     >
       <div className={`space-y-3 ${compact ? "" : ""}`}>
-        {categories.map((cat) => {
+        {visibleCategories.map((cat) => {
           const accent =
             CATEGORY_ACCENT[cat.category_id] ?? "var(--color-accent)";
           return (
@@ -221,6 +289,51 @@ export function SkillPatternGroup({
   );
 }
 
+export function SkillPatternSelectionBar({
+  filters,
+  onChange,
+  compact = false,
+}: {
+  filters: SkillFilters;
+  onChange: (next: SkillFilters) => void;
+  compact?: boolean;
+}) {
+  const clearPatterns = () => {
+    onChange({ ...filters, selectedPatterns: [] });
+  };
+
+  return (
+    <div
+      className={`shrink-0 border-b border-[var(--color-border)] bg-[var(--color-panel)] ${
+        compact ? "px-0 pb-2" : "pb-2"
+      }`}
+    >
+      {filters.selectedPatterns.length > 0 && (
+        <div
+          className={`mb-1.5 flex items-center justify-end ${
+            compact ? "" : "gap-2"
+          }`}
+        >
+          <button
+            type="button"
+            onClick={clearPatterns}
+            className={`shrink-0 rounded border border-[var(--color-border)] text-[var(--color-muted)] hover:border-red-500/50 hover:text-red-300 ${
+              compact ? "px-2 py-0.5 text-[10px]" : "px-2 py-0.5 text-[10px]"
+            }`}
+          >
+            Clear all
+          </button>
+        </div>
+      )}
+      <SkillSelectedPatternChips filters={filters} onChange={onChange} />
+      <PatternMatchToggle
+        value={filters.patternMatch}
+        onChange={(patternMatch) => onChange({ ...filters, patternMatch })}
+      />
+    </div>
+  );
+}
+
 export function SkillSelectedPatternChips({
   filters,
   onChange,
@@ -258,20 +371,31 @@ export function SkillSelectedPatternChips({
 
   return (
     <div className="mb-2 flex flex-wrap gap-1">
-      {filters.selectedPatterns.map((p) => (
-        <button
-          key={`${p.skillType}-${p.tagKey}`}
-          type="button"
-          onClick={() =>
-            toggleTag(p.skillType, p.tagKey, p.label ?? p.tagKey)
-          }
-          className="inline-flex items-center gap-1 rounded-full border border-[var(--color-accent)]/50 bg-[#1f3a5f] px-2 py-0.5 text-[10px] text-[var(--color-accent)] hover:border-red-500/50 hover:bg-red-950/40 hover:text-red-300"
-          title="Click to remove"
-        >
-          {p.label ?? p.tagKey}
-          <span aria-hidden>×</span>
-        </button>
-      ))}
+      {filters.selectedPatterns.map((p) => {
+        const label = p.label ?? p.tagKey;
+        const hasIcon = hasEffectFilterIcon(label);
+        return (
+          <button
+            key={`${p.skillType}-${p.tagKey}`}
+            type="button"
+            onClick={() => toggleTag(p.skillType, p.tagKey, label)}
+            className={`inline-flex items-center gap-1 rounded-full border border-[var(--color-accent)]/50 bg-[#1f3a5f] ${
+              hasIcon ? "p-0.5" : "px-2 py-0.5 text-[10px] text-[var(--color-accent)]"
+            } hover:border-red-500/50 hover:bg-red-950/40 hover:text-red-300`}
+            title={`${label} — click to remove`}
+            aria-label={`Remove ${label}`}
+          >
+            {hasIcon ? (
+              <EffectFilterSpriteIcon label={label} size={22} />
+            ) : (
+              label
+            )}
+            <span aria-hidden className={hasIcon ? "pr-1 text-[10px]" : ""}>
+              ×
+            </span>
+          </button>
+        );
+      })}
     </div>
   );
 }

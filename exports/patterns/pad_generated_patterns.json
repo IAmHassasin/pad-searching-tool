@@ -1031,6 +1031,54 @@
             "status": "new_effect_detected",
             "tag_id": null,
             "tag_name_en": "nail_orb_skyfall"
+        },
+        {
+            "example_matched_text": "For 1 turn, the board becomes 7x6",
+            "regex_pattern": "For (\\d+) turn(?:s)?, the board becomes 7x6",
+            "skill_type": "active_skill",
+            "status": "new_effect_detected",
+            "tag_id": null,
+            "tag_name_en": "board_change"
+        },
+        {
+            "example_matched_text": "For 1 turn, the board becomes 6x5",
+            "regex_pattern": "For (\\d+) turn(?:s)?, the board becomes 6x5",
+            "skill_type": "active_skill",
+            "status": "new_effect_detected",
+            "tag_id": null,
+            "tag_name_en": "board_change"
+        },
+        {
+            "example_matched_text": "For 1 turn, the board becomes 5x4",
+            "regex_pattern": "For (\\d+) turn(?:s)?, the board becomes 5x4",
+            "skill_type": "active_skill",
+            "status": "new_effect_detected",
+            "tag_id": null,
+            "tag_name_en": "board_change"
+        },
+        {
+            "example_matched_text": "For 5 turns, change the attribute of rightside ally and leftside ally to Light",
+            "regex_pattern": "change the attribute of .+ to (Fire|Water|Wood|Light|Dark)",
+            "skill_type": "active_skill",
+            "status": "existing_tag",
+            "tag_id": 100,
+            "tag_name_en": "Change Attribute"
+        },
+        {
+            "example_matched_text": "For 1 turn, increase combo count by 5",
+            "regex_pattern": "For (\\d+) turn(?:s)?, increase combo count by (\\d+)",
+            "skill_type": "active_skill",
+            "status": "existing_tag",
+            "tag_id": 160,
+            "tag_name_en": "Add Combo"
+        },
+        {
+            "example_matched_text": "Binds self for 2 turns",
+            "regex_pattern": "Binds self for (\\d+) turn(?:s)?",
+            "skill_type": "active_skill",
+            "status": "new_effect_detected",
+            "tag_id": null,
+            "tag_name_en": "skill_bind"
         }
     ]
 }

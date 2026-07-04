@@ -2,24 +2,19 @@ import {
   useCallback,
   useEffect,
   useId,
-  useRef,
   useState,
-  type FocusEvent,
   type MouseEvent,
 } from "react";
 import { createPortal } from "react-dom";
-import { monsterRowId } from "../lib/filters";
 import type { MonsterRecord } from "../types";
 import { MonsterQuickPreview } from "./MonsterQuickPreview";
 
-const SHOW_DELAY_MS = 150;
 const POPOVER_WIDTH = 360;
 const POPOVER_MARGIN = 8;
 
 type PreviewState = {
   row: MonsterRecord;
   anchorRect: DOMRect;
-  pinned: boolean;
 };
 
 function canUseHoverPreview(): boolean {
@@ -62,16 +57,14 @@ function MonsterPreviewFloating({ state, previewId, onClose }: FloatingPreviewPr
 
   return createPortal(
     <>
-      {state.pinned && (
-        <button
-          type="button"
-          aria-label="Close preview"
-          className="fixed inset-0 z-[99] cursor-default bg-black/20"
-          onClick={onClose}
-        />
-      )}
+      <button
+        type="button"
+        aria-label="Close preview"
+        className="fixed inset-0 z-[99] cursor-default bg-black/20"
+        onClick={onClose}
+      />
       <div
-        className={`fixed z-[100] ${state.pinned ? "pointer-events-auto" : "pointer-events-none"}`}
+        className="pointer-events-auto fixed z-[100]"
         style={{ top, left, width: POPOVER_WIDTH }}
       >
         <MonsterQuickPreview row={state.row} id={previewId} />
@@ -104,96 +97,18 @@ export function MonsterPreviewInfoButton({
 export function useMonsterResultPreview() {
   const previewId = useId();
   const [preview, setPreview] = useState<PreviewState | null>(null);
-  const showTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const hoverCapableRef = useRef(canUseHoverPreview());
-
-  const clearShowTimer = useCallback(() => {
-    if (showTimerRef.current) {
-      clearTimeout(showTimerRef.current);
-      showTimerRef.current = null;
-    }
-  }, []);
+  const hoverCapableRef = canUseHoverPreview();
 
   const closePreview = useCallback(() => {
-    clearShowTimer();
     setPreview(null);
-  }, [clearShowTimer]);
+  }, []);
 
-  const openPreview = useCallback(
-    (row: MonsterRecord, anchor: HTMLElement, pinned: boolean) => {
-      clearShowTimer();
-      setPreview({
-        row,
-        anchorRect: anchor.getBoundingClientRect(),
-        pinned,
-      });
-    },
-    [clearShowTimer]
-  );
-
-  const scheduleHoverPreview = useCallback(
-    (row: MonsterRecord, anchor: HTMLElement) => {
-      if (!hoverCapableRef.current) return;
-      clearShowTimer();
-      showTimerRef.current = setTimeout(() => {
-        openPreview(row, anchor, false);
-      }, SHOW_DELAY_MS);
-    },
-    [clearShowTimer, openPreview]
-  );
-
-  const bindRowPreview = useCallback(
-    (row: MonsterRecord) => {
-      const rowId = monsterRowId(row);
-
-      const onMouseEnter = (e: MouseEvent<HTMLTableRowElement>) => {
-        scheduleHoverPreview(row, e.currentTarget);
-      };
-
-      const onMouseLeave = () => {
-        clearShowTimer();
-        setPreview((current) => {
-          if (!current || current.pinned) return current;
-          return monsterRowId(current.row) === rowId ? null : current;
-        });
-      };
-
-      const onFocus = (e: FocusEvent<HTMLTableRowElement>) => {
-        if (!hoverCapableRef.current) return;
-        openPreview(row, e.currentTarget, false);
-      };
-
-      const onBlur = (e: FocusEvent<HTMLTableRowElement>) => {
-        const next = e.relatedTarget as Node | null;
-        if (next && e.currentTarget.contains(next)) return;
-        setPreview((current) =>
-          current && monsterRowId(current.row) === rowId && !current.pinned
-            ? null
-            : current
-        );
-      };
-
-      const isPreviewTarget =
-        preview != null && monsterRowId(preview.row) === rowId;
-
-      return {
-        onMouseEnter,
-        onMouseLeave,
-        onFocus,
-        onBlur,
-        tabIndex: 0,
-        "aria-describedby": isPreviewTarget ? previewId : undefined,
-      };
-    },
-    [clearShowTimer, openPreview, preview, previewId, scheduleHoverPreview]
-  );
-
-  const openPinnedPreview = useCallback(
-    (row: MonsterRecord, anchor: HTMLElement) => {
-      openPreview(row, anchor, true);
-    },
-    [openPreview]
-  );
+  const openPinnedPreview = useCallback((row: MonsterRecord, anchor: HTMLElement) => {
+    setPreview({
+      row,
+      anchorRect: anchor.getBoundingClientRect(),
+    });
+  }, []);
 
   useEffect(() => {
     if (!preview) return;
@@ -202,27 +117,16 @@ export function useMonsterResultPreview() {
       if (e.key === "Escape") closePreview();
     };
 
-    const onScroll = () => {
-      if (!preview.pinned) closePreview();
-    };
-
     window.addEventListener("keydown", onKeyDown);
-    window.addEventListener("scroll", onScroll, true);
-    return () => {
-      window.removeEventListener("keydown", onKeyDown);
-      window.removeEventListener("scroll", onScroll, true);
-    };
+    return () => window.removeEventListener("keydown", onKeyDown);
   }, [preview, closePreview]);
-
-  useEffect(() => () => clearShowTimer(), [clearShowTimer]);
 
   return {
     preview,
     previewId,
-    bindRowPreview,
     openPinnedPreview,
     closePreview,
-    hoverCapable: hoverCapableRef.current,
+    hoverCapable: hoverCapableRef,
   };
 }
 

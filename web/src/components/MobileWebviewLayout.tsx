@@ -26,9 +26,8 @@ import {
 } from "./filters/monster-filter-shared";
 import { MonsterAwakeningFilter } from "./filters/awakening-filter-shared";
 import {
-  PatternMatchToggle,
   SkillPatternGroup,
-  SkillSelectedPatternChips,
+  SkillPatternSelectionBar,
 } from "./filters/skill-pattern-shared";
 
 type BottomPanelMode = "leader_skill" | "active_skill" | "awakening" | null;
@@ -250,66 +249,56 @@ function MobileBottomFilterBar({
                 </button>
               )
             ) : (
-              skillFilters.selectedPatterns.length > 0 && (
-                <button
-                  type="button"
-                  onClick={() =>
-                    onSkillFiltersChange({
-                      ...skillFilters,
-                      selectedPatterns: [],
-                    })
-                  }
-                  className="rounded border border-[var(--color-border)] px-2 py-0.5 text-[10px] text-[var(--color-muted)]"
-                >
-                  Clear
-                </button>
-              )
+              <span className="w-12" aria-hidden />
             )}
           </div>
-          <div className="min-h-0 flex-1 overflow-y-auto px-2 pb-2">
+          <div className="flex min-h-0 flex-1 flex-col">
             {openMode === "awakening" ? (
-              <MonsterAwakeningFilter
-                filters={monsterFilters}
-                onChange={onMonsterFiltersChange}
-                compact
-              />
+              <div className="min-h-0 flex-1 overflow-y-auto px-2 pb-2">
+                <MonsterAwakeningFilter
+                  filters={monsterFilters}
+                  onChange={onMonsterFiltersChange}
+                  compact
+                />
+              </div>
             ) : (
               <>
                 {patternGroupsLoading && (
-                  <p className="text-xs text-[var(--color-muted)]">
+                  <p className="shrink-0 px-2 pt-1 text-xs text-[var(--color-muted)]">
                     Loading groups…
                   </p>
                 )}
-                <SkillSelectedPatternChips
-                  filters={skillFilters}
-                  onChange={onSkillFiltersChange}
-                />
-                <PatternMatchToggle
-                  value={skillFilters.patternMatch}
-                  onChange={(patternMatch) =>
-                    onSkillFiltersChange({ ...skillFilters, patternMatch })
-                  }
-                />
-                {patternGroups && openMode === "leader_skill" && (
-                  <SkillPatternGroup
-                    title="Leader skill"
-                    skillType="leader_skill"
-                    categories={patternGroups.leader_skill_filters}
+                <div className="shrink-0 px-2 pt-1">
+                  <SkillPatternSelectionBar
                     filters={skillFilters}
                     onChange={onSkillFiltersChange}
                     compact
                   />
-                )}
-                {patternGroups && openMode === "active_skill" && (
-                  <SkillPatternGroup
-                    title="Active skill"
-                    skillType="active_skill"
-                    categories={patternGroups.active_skill_filters}
-                    filters={skillFilters}
-                    onChange={onSkillFiltersChange}
-                    compact
-                  />
-                )}
+                </div>
+                <div className="min-h-0 flex-1 overflow-y-auto px-2 pb-2">
+                  {patternGroups && openMode === "leader_skill" && (
+                    <SkillPatternGroup
+                      title="Leader skill"
+                      skillType="leader_skill"
+                      categories={patternGroups.leader_skill_filters}
+                      filters={skillFilters}
+                      onChange={onSkillFiltersChange}
+                      compact
+                    />
+                  )}
+                  {patternGroups && openMode === "active_skill" && (
+                    <SkillPatternGroup
+                      title="Active skill"
+                      skillType="active_skill"
+                      categories={patternGroups.active_skill_filters}
+                      filters={skillFilters}
+                      onChange={onSkillFiltersChange}
+                      compact
+                      iconOnly={!skillFilters.activeSkillAdvancedFilters}
+                      defaultOpen
+                    />
+                  )}
+                </div>
               </>
             )}
           </div>

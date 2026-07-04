@@ -131,6 +131,8 @@ export type SkillFilters = {
   skillTextMode: "both" | "active" | "leader";
   selectedPatterns: SelectedPatternTag[];
   patternMatch: "any" | "all";
+  /** Show all active-skill pattern tags; when false, only tags with icons. */
+  activeSkillAdvancedFilters: boolean;
 };
 
 export const EMPTY_MONSTER_FILTERS: MonsterFilters = {
@@ -158,4 +160,5 @@ export const EMPTY_SKILL_FILTERS: SkillFilters = {
   skillTextMode: "both",
   selectedPatterns: [],
   patternMatch: "all",
+  activeSkillAdvancedFilters: false,
 };

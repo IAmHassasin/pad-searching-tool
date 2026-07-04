@@ -1,11 +1,9 @@
 import type { PatternGroupsManifest, SkillFilters } from "../types";
 import {
-  PatternMatchToggle,
   SkillPatternGroup,
-  SkillSelectedPatternChips,
+  SkillPatternSelectionBar,
   SkillTextSearchSection,
 } from "./filters/skill-pattern-shared";
-import { CollapsibleFilterSection } from "./filters/collapsible-filter-section";
 
 type Props = {
   filters: SkillFilters;
@@ -49,10 +47,6 @@ export function SkillFilterPanel({
   open,
   onToggle,
 }: Props) {
-  const clearPatterns = () => {
-    onChange({ ...filters, selectedPatterns: [] });
-  };
-
   if (!open) {
     return (
       <aside className="flex h-full w-10 shrink-0 flex-col items-center border-l border-[var(--color-border)] bg-[var(--color-panel)] py-3">
@@ -71,57 +65,28 @@ export function SkillFilterPanel({
   }
 
   return (
-    <aside className="flex h-full min-w-0 flex-col overflow-hidden border-l border-[var(--color-border)] bg-[var(--color-panel)] p-3">
-      <div className="flex shrink-0 flex-col gap-2">
-        <div className="flex items-center justify-between gap-2">
-          <h2 className="text-sm font-semibold tracking-wide text-[var(--color-accent)]">
-            Skill patterns
-          </h2>
-          <PanelToggleButton
-            open={open}
-            onToggle={onToggle}
-            className="h-7 w-7"
-          />
-        </div>
-
-        {patternGroupsLoading && (
-          <p className="text-xs text-[var(--color-muted)]">Loading groups…</p>
-        )}
-
-        <CollapsibleFilterSection
-          title="Pattern selection"
-          summary={
-            filters.selectedPatterns.length > 0
-              ? `${filters.selectedPatterns.length} selected · ${filters.patternMatch}`
-              : "match any / all"
-          }
-          defaultOpen={filters.selectedPatterns.length > 0}
-        >
-          <div className="mb-1.5 flex items-start justify-between gap-2">
-            <p className="text-[10px] text-[var(--color-muted)]/80">
-              Tap chips to filter by regex tags
-            </p>
-            {filters.selectedPatterns.length > 0 && (
-              <button
-                type="button"
-                onClick={clearPatterns}
-                className="shrink-0 rounded border border-[var(--color-border)] px-2 py-0.5 text-[10px] text-[var(--color-muted)] hover:border-red-500/50 hover:text-red-300"
-              >
-                Clear all
-              </button>
-            )}
-          </div>
-
-          <SkillSelectedPatternChips filters={filters} onChange={onChange} />
-
-          <PatternMatchToggle
-            value={filters.patternMatch}
-            onChange={(patternMatch) => onChange({ ...filters, patternMatch })}
-          />
-        </CollapsibleFilterSection>
+    <aside className="flex h-full min-w-0 flex-col overflow-hidden border-l border-[var(--color-border)] bg-[var(--color-panel)]">
+      <div className="flex shrink-0 items-center justify-between gap-2 border-b border-[var(--color-border)] px-3 py-2">
+        <h2 className="text-sm font-semibold tracking-wide text-[var(--color-accent)]">
+          Skill patterns
+        </h2>
+        <PanelToggleButton
+          open={open}
+          onToggle={onToggle}
+          className="h-7 w-7"
+        />
       </div>
 
-      <div className="mt-2 min-h-0 flex-1 overflow-y-auto">
+      <div className="shrink-0 px-3 pt-2">
+        {patternGroupsLoading && (
+          <p className="mb-2 text-xs text-[var(--color-muted)]">
+            Loading groups…
+          </p>
+        )}
+        <SkillPatternSelectionBar filters={filters} onChange={onChange} />
+      </div>
+
+      <div className="min-h-0 flex-1 overflow-y-auto px-3 pb-3">
         {patternGroups && (
           <div className="space-y-2">
             <SkillPatternGroup
@@ -130,6 +95,8 @@ export function SkillFilterPanel({
               categories={patternGroups.active_skill_filters}
               filters={filters}
               onChange={onChange}
+              iconOnly={!filters.activeSkillAdvancedFilters}
+              showAdvancedToggle
             />
             <SkillPatternGroup
               title="Leader skill"

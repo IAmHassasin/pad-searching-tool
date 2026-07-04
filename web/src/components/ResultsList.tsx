@@ -44,7 +44,6 @@ export function ResultsList({
   const {
     preview,
     previewId,
-    bindRowPreview,
     openPinnedPreview,
     closePreview,
     hoverCapable,
@@ -112,14 +111,12 @@ export function ResultsList({
           {rows.slice(0, 2000).map((row) => {
             const id = monsterRowId(row);
             const active = selected && monsterRowId(selected) === id;
-            const previewProps = bindRowPreview(row);
 
             return (
               <tr
                 key={id}
                 onClick={() => onSelect(row)}
-                className={`cursor-pointer border-t border-[var(--color-border)] outline-none hover:bg-[#21262d] focus-visible:ring-1 focus-visible:ring-[var(--color-accent)] focus-visible:ring-inset ${active ? "bg-[#1f3a5f]" : ""}`}
-                {...previewProps}
+                className={`cursor-pointer border-t border-[var(--color-border)] hover:bg-[#21262d] ${active ? "bg-[#1f3a5f]" : ""}`}
               >
                 <td
                   className={`w-0 whitespace-nowrap align-top py-1 font-mono tabular-nums ${minimal ? "px-1 text-[10px]" : "px-1 text-xs"}`}
@@ -177,7 +174,10 @@ export function ResultsList({
                       }
                       onClick={(e) => {
                         e.stopPropagation();
-                        if (preview?.row === row && preview.pinned) {
+                        if (
+                          preview != null &&
+                          monsterRowId(preview.row) === id
+                        ) {
                           closePreview();
                         } else {
                           openPinnedPreview(row, e.currentTarget.closest("tr")!);
