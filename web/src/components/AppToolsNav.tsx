@@ -29,9 +29,20 @@ export function AppToolsNav({ variant = "bar", className = "" }: Props) {
                   : "border-[var(--color-border)] text-[var(--color-muted)] hover:border-[var(--color-accent)] hover:text-white"
               }`}
             >
-              <span aria-hidden className="text-sm leading-none">
-                {tool.icon}
-              </span>
+              {tool.imageUrl ? (
+                <img
+                  src={tool.imageUrl}
+                  alt=""
+                  width={16}
+                  height={16}
+                  className="rounded-sm"
+                  aria-hidden
+                />
+              ) : (
+                <span aria-hidden className="text-sm leading-none">
+                  {tool.icon}
+                </span>
+              )}
               <span className="font-medium">{tool.label}</span>
             </a>
           );
@@ -60,9 +71,20 @@ export function AppToolsNav({ variant = "bar", className = "" }: Props) {
                   : "border-[var(--color-border)] bg-[var(--color-panel)] text-[var(--color-muted)] hover:border-[var(--color-accent)] hover:text-white"
               }`}
             >
-              <span aria-hidden className="text-xl leading-none">
-                {tool.icon}
-              </span>
+              {tool.imageUrl ? (
+                <img
+                  src={tool.imageUrl}
+                  alt=""
+                  width={28}
+                  height={28}
+                  className="rounded-md"
+                  aria-hidden
+                />
+              ) : (
+                <span aria-hidden className="text-xl leading-none">
+                  {tool.icon}
+                </span>
+              )}
               <span className="text-[10px] font-semibold uppercase tracking-wide">
                 {tool.label}
               </span>

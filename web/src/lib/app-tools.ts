@@ -1,9 +1,13 @@
+import { pstLogoUrl } from "./pst-brand";
+
 export type AppTool = {
   href: string;
   label: string;
   description: string;
   /** Emoji or short glyph for the launcher tile */
-  icon: string;
+  icon?: string;
+  /** Brand image (overrides icon when set) */
+  imageUrl?: string;
 };
 
 export const APP_TOOLS: AppTool[] = [
@@ -11,7 +15,7 @@ export const APP_TOOLS: AppTool[] = [
     href: "/",
     label: "Search",
     description: "Monster & skill filters",
-    icon: "🔍",
+    imageUrl: pstLogoUrl,
   },
   {
     href: "/team-build",

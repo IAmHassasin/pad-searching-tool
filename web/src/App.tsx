@@ -2,6 +2,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { fetchHealth, fetchPatternGroups, searchAllMonsters } from "./api";
 import { AdminPanel } from "./components/AdminPanel";
+import { AppBrand } from "./components/AppBrand";
 import { AppToolsNav } from "./components/AppToolsNav";
 import { MobileWebviewLayout } from "./components/MobileWebviewLayout";
 import { MonsterFilterPanel } from "./components/MonsterFilterPanel";
@@ -160,7 +161,7 @@ export default function App() {
   return (
     <div className="flex h-full flex-col">
       <header className="flex shrink-0 items-center justify-between border-b border-[var(--color-border)] bg-[#0d1117] px-4 py-2">
-        <h1 className="text-base font-semibold">PAD Searching Tool</h1>
+        <AppBrand />
         <div className="flex items-center gap-3 text-xs text-[var(--color-muted)]">
           <span
             className={
