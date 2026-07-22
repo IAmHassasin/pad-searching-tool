@@ -27,6 +27,14 @@ const EXCLUDE_POST_TRANSFORM_SQL = `
   monster_id NOT IN (SELECT to_monster_id FROM transformations)
 `;
 
+/**
+ * dadguide `leader_skills.leader_skill_id` — the shared sentinel used for any
+ * monster whose skill is "usable only when set as Assist". Combined with a
+ * missing leader skill (`0`), this reliably flags evolution-fodder / equip
+ * forms (Keepsake, Seeds, Spawn, ...) vs. genuinely playable evolutions.
+ */
+const ASSIST_LEADER_SKILL_ID = 37216;
+
 @Injectable()
 export class MonsterRelationsService {
   constructor(
@@ -147,6 +155,208 @@ export class MonsterRelationsService {
       baseId,
       nodes,
       edges: edgeRows.map((e) => ({ from: e.from_id, to: e.to_id })),
+    };
+  }
+
+  /**
+   * Like getEvoTree, but also follows the `transformations` table outward
+   * (e.g. a skill-triggered "change to final form" partner sits on a
+   * *different* base_id than its pre-form, so a plain base_id lookup misses it).
+   */
+  async getMonsterFamily(monsterId: number): Promise<{
+    monsterId: number;
+    baseId: number;
+    /** Last stage of the skill-transform chain — use this monster's art for thumbnails. */
+    coverMonsterId: number;
+    nodes: Record<string, unknown>[];
+    edges: { from: number; to: number; kind: "evolution" | "transform" }[];
+  }> {
+    if (!Number.isFinite(monsterId) || monsterId <= 0) {
+      throw new BadRequestException("Invalid monsterId.");
+    }
+
+    const { baseId: resolvedBaseId } = await this.resolveIds(monsterId);
+
+    // Collect every base_id linked by skill-transform in *either* direction.
+    // Utsuro (13688) is a transform *of* Shoyo (13687) but has its own base_id —
+    // forward-only walk from 13688 would miss the pre-form (and its assist evo).
+    const baseIds = new Set<number>([resolvedBaseId]);
+    let frontier = [resolvedBaseId];
+
+    for (let hop = 0; hop < 4 && frontier.length; hop++) {
+      const idRows = (await this.dataSource.query(
+        `SELECT monster_id FROM monsters WHERE base_id IN (${frontier.map(() => "?").join(", ")})`,
+        frontier
+      )) as { monster_id: number }[];
+      const ids = idRows.map((r) => r.monster_id);
+      if (!ids.length) break;
+
+      const transformRows = (await this.dataSource.query(
+        `SELECT from_monster_id, to_monster_id FROM transformations
+         WHERE from_monster_id IN (${ids.map(() => "?").join(", ")})
+            OR to_monster_id IN (${ids.map(() => "?").join(", ")})`,
+        [...ids, ...ids]
+      )) as { from_monster_id: number; to_monster_id: number }[];
+      if (!transformRows.length) break;
+
+      const linkedIds = [
+        ...new Set(
+          transformRows.flatMap((r) => [r.from_monster_id, r.to_monster_id])
+        ),
+      ];
+      const linkedBaseRows = (await this.dataSource.query(
+        `SELECT DISTINCT base_id FROM monsters WHERE monster_id IN (${linkedIds.map(() => "?").join(", ")})`,
+        linkedIds
+      )) as { base_id: number }[];
+
+      const newBaseIds = linkedBaseRows
+        .map((r) => r.base_id)
+        .filter((id) => !baseIds.has(id));
+      if (!newBaseIds.length) break;
+      newBaseIds.forEach((id) => baseIds.add(id));
+      frontier = newBaseIds;
+    }
+
+    // Canonical family base = earliest pre-transform form (no inbound transform
+    // from within the collected set). Falls back to the resolved base_id.
+    const baseIdList = [...baseIds];
+    const idRows = (await this.dataSource.query(
+      `SELECT monster_id FROM monsters WHERE base_id IN (${baseIdList.map(() => "?").join(", ")}) ORDER BY rarity, monster_id`,
+      baseIdList
+    )) as { monster_id: number }[];
+    const ids = idRows.map((r) => r.monster_id);
+    const nodes = await this.fetchMonstersByIds(ids);
+
+    const allTransformRows =
+      ids.length > 0
+        ? ((await this.dataSource.query(
+            `SELECT from_monster_id, to_monster_id FROM transformations
+             WHERE from_monster_id IN (${ids.map(() => "?").join(", ")})
+                OR to_monster_id IN (${ids.map(() => "?").join(", ")})`,
+            [...ids, ...ids]
+          )) as { from_monster_id: number; to_monster_id: number }[])
+        : [];
+    const transformTargets = new Set(
+      allTransformRows.map((r) => r.to_monster_id)
+    );
+    const rootCandidates = ids.filter((id) => !transformTargets.has(id));
+    const baseId =
+      rootCandidates.length > 0
+        ? Math.min(...rootCandidates)
+        : resolvedBaseId;
+
+    const evoEdgeRows =
+      ids.length > 1
+        ? ((await this.dataSource.query(
+            `SELECT from_id, to_id FROM evolutions
+             WHERE from_id IN (${ids.map(() => "?").join(", ")})
+               AND to_id IN (${ids.map(() => "?").join(", ")})`,
+            [...ids, ...ids]
+          )) as { from_id: number; to_id: number }[])
+        : [];
+
+    const transformEdgeRows =
+      ids.length > 1
+        ? ((await this.dataSource.query(
+            `SELECT from_monster_id, to_monster_id FROM transformations
+             WHERE from_monster_id IN (${ids.map(() => "?").join(", ")})
+               AND to_monster_id IN (${ids.map(() => "?").join(", ")})`,
+            [...ids, ...ids]
+          )) as { from_monster_id: number; to_monster_id: number }[])
+        : [];
+
+    // Order: base form -> skill-transform chain -> equip/assist fodder (Keepsake,
+    // Seeds, Spawn, ...) -> genuinely playable evolutions.
+    const transformChildrenOf = new Map<number, number[]>();
+    for (const e of transformEdgeRows) {
+      const list = transformChildrenOf.get(e.from_monster_id) ?? [];
+      list.push(e.to_monster_id);
+      transformChildrenOf.set(e.from_monster_id, list);
+    }
+
+    const orderedIds: number[] = [baseId];
+    let frontierT = [baseId];
+    while (frontierT.length) {
+      const next: number[] = [];
+      for (const id of frontierT) {
+        for (const child of transformChildrenOf.get(id) ?? []) {
+          if (orderedIds.includes(child)) continue;
+          orderedIds.push(child);
+          next.push(child);
+        }
+      }
+      frontierT = next;
+    }
+    // Cover art walks forward from the *requested* monster, not the group's
+    // absolute base — e.g. a new evolution grafted onto an old base line
+    // (whose base has its own unrelated transform chain) should cover itself.
+    let coverMonsterId = monsterId;
+    const coverSeen = new Set([coverMonsterId]);
+    for (;;) {
+      const next = transformChildrenOf.get(coverMonsterId)?.[0];
+      if (next == null || coverSeen.has(next)) break;
+      coverMonsterId = next;
+      coverSeen.add(next);
+    }
+    const transformChainIds = new Set(orderedIds);
+
+    const leaderRows =
+      ids.length > 0
+        ? ((await this.dataSource.query(
+            `SELECT monster_id, leader_skill_id FROM monsters WHERE monster_id IN (${ids.map(() => "?").join(", ")})`,
+            ids
+          )) as { monster_id: number; leader_skill_id: number }[])
+        : [];
+    const leaderSkillById = new Map(
+      leaderRows.map((r) => [r.monster_id, r.leader_skill_id] as const)
+    );
+    const isAssistTier = (id: number) => {
+      const lsid = leaderSkillById.get(id);
+      return lsid == null || lsid === 0 || lsid === ASSIST_LEADER_SKILL_ID;
+    };
+
+    const evoChildIds = [
+      ...new Set(
+        evoEdgeRows
+          .filter((e) => transformChainIds.has(e.from_id))
+          .map((e) => e.to_id)
+      ),
+    ];
+    const eqIds = evoChildIds.filter(isAssistTier).sort((a, b) => a - b);
+    const evoIds = evoChildIds
+      .filter((id) => !isAssistTier(id))
+      .sort((a, b) => a - b);
+    orderedIds.push(...eqIds, ...evoIds);
+
+    const placed = new Set(orderedIds);
+    for (const id of ids) {
+      if (!placed.has(id)) orderedIds.push(id);
+    }
+
+    const nodeById = new Map(
+      nodes.map((row) => [Number(row.monster_id), row] as const)
+    );
+    const orderedNodes = orderedIds
+      .map((id) => nodeById.get(id))
+      .filter((row): row is Record<string, unknown> => row != null);
+
+    return {
+      monsterId,
+      baseId,
+      coverMonsterId,
+      nodes: orderedNodes,
+      edges: [
+        ...evoEdgeRows.map((e) => ({
+          from: e.from_id,
+          to: e.to_id,
+          kind: "evolution" as const,
+        })),
+        ...transformEdgeRows.map((e) => ({
+          from: e.from_monster_id,
+          to: e.to_monster_id,
+          kind: "transform" as const,
+        })),
+      ],
     };
   }
 

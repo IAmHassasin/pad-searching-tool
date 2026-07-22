@@ -22,6 +22,7 @@ services:
       - ./seed/gamewith-vanish.sqlite:/seed/gamewith-vanish.sqlite:ro
       - ./seed/void-super-gravity.sqlite:/seed/void-super-gravity.sqlite:ro
       - ./dungeon-details/seed:/app/dungeon-details/seed:ro
+      - ./event/seed:/app/event/seed:ro
 
 volumes:
   dadguide_working_sqlite:

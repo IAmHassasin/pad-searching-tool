@@ -35,6 +35,12 @@ export const APP_TOOLS: AppTool[] = [
     description: "AppMedia floor tables",
     icon: "🏰",
   },
+  {
+    href: "/event",
+    label: "Events",
+    description: "New monster & evolution announcements",
+    icon: "📰",
+  },
 ];
 
 export function currentAppPath(): string {

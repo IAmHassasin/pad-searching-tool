@@ -4,6 +4,7 @@ import { AdminModule } from "./admin/admin.module";
 import { ApiModule } from "./api/api.module";
 import { DungeonDetailsModule } from "./dungeon-details/dungeon-details.module";
 import { PadCategorized } from "./entities/pad-categorized.entity";
+import { EventModule } from "./event/event.module";
 import { TransformModule } from "./transform/transform.module";
 
 const sqlitePath = process.env.SQLITE_PATH ?? "./pad.db";
@@ -20,6 +21,7 @@ const sqlitePath = process.env.SQLITE_PATH ?? "./pad.db";
     TransformModule,
     ApiModule,
     DungeonDetailsModule,
+    EventModule,
     AdminModule,
   ],
 })

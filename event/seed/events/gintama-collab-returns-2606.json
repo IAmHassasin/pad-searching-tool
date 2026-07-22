@@ -1,0 +1,42 @@
+{
+  "eventId": "gintama-collab-returns-2606",
+  "title": "GINTAMA COLLAB RETURNS",
+  "subtitle": "New Evolutions & Upgrades",
+  "publishedAt": "2026-06-24",
+  "sourceUrl": "https://www.puzzleanddragons.us/single-post/new-evolutions-upgrades-2606-3",
+  "loading": {
+    "theme": "sword-slash",
+    "minMs": 1400,
+    "asset": "/event-loading/gintama-sword.png"
+  },
+  "coverMonsterIds": [13681, 13672, 13676, 13678, 13688, 13685],
+  "entries": [
+    { "monsterId": 13681, "role": "new-evolution", "label": "New Evolution", "note": "Ultimate Evolution for Silver-Haired Samurai, Gintoki Sakata" },
+    { "monsterId": 13672, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13674, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13676, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13678, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13683, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13685, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13687, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13690, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13692, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13694, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13696, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13698, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13700, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13702, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13704, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13706, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13708, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13710, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13712, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13714, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13716, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13718, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13720, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13722, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13724, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13726, "role": "new-monster", "label": "New Monster" }
+  ]
+}

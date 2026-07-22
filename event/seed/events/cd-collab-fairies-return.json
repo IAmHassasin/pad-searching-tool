@@ -1,0 +1,44 @@
+{
+  "eventId": "cd-collab-fairies-return",
+  "title": "STAR & DARK FAIRIES RETURN",
+  "subtitle": "New Monsters & Evolutions",
+  "publishedAt": "2026-05-08",
+  "coverMonsterIds": [13736, 13740, 13744, 13748, 13752, 13756],
+  "entries": [
+    { "monsterId": 13736, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13740, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13744, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13748, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13752, "role": "new-monster", "label": "New Monster" },
+    {
+      "monsterId": 13756,
+      "role": "new-evolution",
+      "label": "New Evolution",
+      "note": "New ultimate evolution for Hibiscus Star Sprout"
+    },
+    {
+      "monsterId": 13757,
+      "role": "new-evolution",
+      "label": "New Evolution",
+      "note": "New ultimate evolution for Hydrangea Star Sprout"
+    },
+    {
+      "monsterId": 13758,
+      "role": "new-evolution",
+      "label": "New Evolution",
+      "note": "New ultimate evolution for Dahlia Star Sprout"
+    },
+    {
+      "monsterId": 13759,
+      "role": "new-evolution",
+      "label": "New Evolution",
+      "note": "New ultimate evolution for Lily of the Valley Star Sprout"
+    },
+    {
+      "monsterId": 13760,
+      "role": "new-evolution",
+      "label": "New Evolution",
+      "note": "New ultimate evolution for Black Rose Dark Sprout"
+    }
+  ]
+}

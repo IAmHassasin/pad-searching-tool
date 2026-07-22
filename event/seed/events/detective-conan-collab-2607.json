@@ -1,0 +1,144 @@
+{
+  "eventId": "detective-conan-collab-2607",
+  "title": "DETECTIVE CONAN COLLAB",
+  "subtitle": "Full Lineup - New Monsters & Evolutions",
+  "publishedAt": "2026-07-24",
+  "sourceUrl": "https://pad.neocyon.com/M/Promotions/conan_DOW3PXVN/",
+  "loading": {
+    "theme": "shoji-slide",
+    "minMs": 1600
+  },
+  "coverMonsterIds": [
+    13771,
+    13773,
+    13775,
+    13778,
+    13780,
+    12365
+  ],
+  "entries": [
+    {
+      "monsterId": 13771,
+      "role": "new-monster",
+      "label": "New Monster"
+    },
+    {
+      "monsterId": 13773,
+      "role": "new-monster",
+      "label": "New Monster"
+    },
+    {
+      "monsterId": 13775,
+      "role": "new-monster",
+      "label": "New Monster"
+    },
+    {
+      "monsterId": 12365,
+      "role": "new-evolution",
+      "label": "New Evolution"
+    },
+    {
+      "monsterId": 12367,
+      "role": "new-evolution",
+      "label": "New Evolution"
+    },
+    {
+      "monsterId": 12373,
+      "role": "returning"
+    },
+    {
+      "monsterId": 12388,
+      "role": "returning"
+    },
+    {
+      "monsterId": 12390,
+      "role": "returning"
+    },
+    {
+      "monsterId": 12397,
+      "role": "returning"
+    },
+    {
+      "monsterId": 12399,
+      "role": "returning"
+    },
+    {
+      "monsterId": 12369,
+      "role": "new-evolution",
+      "label": "New Evolution"
+    },
+    {
+      "monsterId": 12412,
+      "role": "returning"
+    },
+    {
+      "monsterId": 12376,
+      "role": "returning"
+    },
+    {
+      "monsterId": 12393,
+      "role": "returning"
+    },
+    {
+      "monsterId": 13780,
+      "role": "new-monster",
+      "label": "New Monster"
+    },
+    {
+      "monsterId": 12382,
+      "role": "returning"
+    },
+    {
+      "monsterId": 12379,
+      "role": "returning"
+    },
+    {
+      "monsterId": 13777,
+      "role": "new-monster",
+      "label": "New Monster"
+    },
+    {
+      "monsterId": 12414,
+      "role": "returning"
+    },
+    {
+      "monsterId": 13786,
+      "role": "new-monster",
+      "label": "New Monster"
+    },
+    {
+      "monsterId": 12418,
+      "role": "returning"
+    },
+    {
+      "monsterId": 12416,
+      "role": "returning"
+    },
+    {
+      "monsterId": 12395,
+      "role": "returning"
+    },
+    {
+      "monsterId": 13784,
+      "role": "new-monster",
+      "label": "New Monster"
+    },
+    {
+      "monsterId": 12402,
+      "role": "returning"
+    },
+    {
+      "monsterId": 12420,
+      "role": "returning"
+    },
+    {
+      "monsterId": 12404,
+      "role": "returning"
+    },
+    {
+      "monsterId": 13782,
+      "role": "new-monster",
+      "label": "New Monster"
+    }
+  ]
+}
