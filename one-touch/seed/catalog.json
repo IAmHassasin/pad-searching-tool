@@ -1,7 +1,7 @@
 {
   "version": 1,
   "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/550577",
-  "importedAt": "2026-06-30",
+  "importedAt": "2026-08-03",
   "dungeons": [
     {
       "id": "volcano",
@@ -84,7 +84,7 @@
               "nameEn": "Reduce Fire Damage"
             }
           ],
-          "hiddenConditionJa": "レアリティ5以下のモンスターが5体以上[",
+          "hiddenConditionJa": "レアリティ5以下のモンスターが5体以上",
           "hiddenReward": "30,000 MP",
           "hiddenConditionEn": "5 or more monsters with rarity 5 or below on the team"
         },
@@ -162,9 +162,9 @@
               "nameEn": "ホノぷれドラ"
             }
           ],
-          "hiddenConditionJa": "レアリティの異なるモンスターが7体以上[",
+          "hiddenConditionJa": "レアリティの異なるモンスターが7体以上",
           "hiddenReward": "30,000 MP",
-          "hiddenConditionEn": "7 or more monsters with different rarities"
+          "hiddenConditionEn": "Team includes monsters of at least 7 different rarities"
         },
         {
           "level": 8,
@@ -244,7 +244,7 @@
               "nameEn": "ダメージ上限解放"
             }
           ],
-          "hiddenConditionJa": "神タイプのモンスターが7体以上[",
+          "hiddenConditionJa": "神タイプのモンスターが7体以上",
           "hiddenReward": "20,000 MP",
           "hiddenConditionEn": "7 or more God-type monsters"
         },
@@ -300,7 +300,7 @@
             "plusPoints": 200
           },
           "drops": [],
-          "hiddenConditionJa": "悪魔タイプのモンスターが7体以上[",
+          "hiddenConditionJa": "悪魔タイプのモンスターが7体以上",
           "hiddenReward": "20,000 MP",
           "hiddenConditionEn": "7 or more Devil-type monsters"
         },
@@ -368,7 +368,7 @@
               "nameEn": "Devil Killer"
             }
           ],
-          "hiddenConditionJa": "ドラゴンタイプのモンスターが7体以上[",
+          "hiddenConditionJa": "ドラゴンタイプのモンスターが7体以上",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "7 or more Dragon-type monsters"
         },
@@ -431,7 +431,7 @@
               "nameEn": "火の宝玉"
             }
           ],
-          "hiddenConditionJa": "マシンタイプのモンスターが7体以上[",
+          "hiddenConditionJa": "マシンタイプのモンスターが7体以上",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "7 or more Machine-type monsters"
         },
@@ -493,7 +493,7 @@
               "nameEn": "攻撃強化＋"
             }
           ],
-          "hiddenConditionJa": "チームのモンスターが5体以下[",
+          "hiddenConditionJa": "チームのモンスターが5体以下",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "5 or fewer monsters on the team"
         },
@@ -546,7 +546,7 @@
               "nameEn": "進化の赤仮面"
             }
           ],
-          "hiddenConditionJa": "火属性モンスターが5体以上[",
+          "hiddenConditionJa": "火属性モンスターが5体以上",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "5 or more Fire-attribute monsters on the team"
         },
@@ -586,7 +586,7 @@
               "nameEn": "ミスリット"
             }
           ],
-          "hiddenConditionJa": "合計コストが150以下[",
+          "hiddenConditionJa": "合計コストが150以下",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "Total team cost 150 or below"
         },
@@ -621,7 +621,7 @@
               "nameEn": "ルビリット"
             }
           ],
-          "hiddenConditionJa": "合計レアリティが20以下[",
+          "hiddenConditionJa": "合計レアリティが20以下",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "Total team rarity 20 or below"
         }
@@ -708,7 +708,7 @@
               "nameEn": "Reduce Water Damage"
             }
           ],
-          "hiddenConditionJa": "レアリティ5以下のモンスターが5体以上[",
+          "hiddenConditionJa": "レアリティ5以下のモンスターが5体以上",
           "hiddenReward": "30,000 MP",
           "hiddenConditionEn": "5 or more monsters with rarity 5 or below on the team"
         },
@@ -786,9 +786,9 @@
               "nameEn": "ミズぷれドラ"
             }
           ],
-          "hiddenConditionJa": "レアリティの異なるモンスターが7体以上[",
+          "hiddenConditionJa": "レアリティの異なるモンスターが7体以上",
           "hiddenReward": "30,000 MP",
-          "hiddenConditionEn": "7 or more monsters with different rarities"
+          "hiddenConditionEn": "Team includes monsters of at least 7 different rarities"
         },
         {
           "level": 8,
@@ -868,7 +868,7 @@
               "nameEn": "Damage Void Piercer"
             }
           ],
-          "hiddenConditionJa": "神タイプのモンスターが7体以上[",
+          "hiddenConditionJa": "神タイプのモンスターが7体以上",
           "hiddenReward": "20,000 MP",
           "hiddenConditionEn": "7 or more God-type monsters"
         },
@@ -924,7 +924,7 @@
             "plusPoints": 200
           },
           "drops": [],
-          "hiddenConditionJa": "悪魔タイプのモンスターが7体以上[",
+          "hiddenConditionJa": "悪魔タイプのモンスターが7体以上",
           "hiddenReward": "20,000 MP",
           "hiddenConditionEn": "7 or more Devil-type monsters"
         },
@@ -992,7 +992,7 @@
               "nameEn": "Machine Killer"
             }
           ],
-          "hiddenConditionJa": "ドラゴンタイプのモンスターが7体以上[",
+          "hiddenConditionJa": "ドラゴンタイプのモンスターが7体以上",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "7 or more Dragon-type monsters"
         },
@@ -1055,7 +1055,7 @@
               "nameEn": "水の宝玉"
             }
           ],
-          "hiddenConditionJa": "マシンタイプのモンスターが7体以上[",
+          "hiddenConditionJa": "マシンタイプのモンスターが7体以上",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "7 or more Machine-type monsters"
         },
@@ -1117,7 +1117,7 @@
               "nameEn": "HP強化＋"
             }
           ],
-          "hiddenConditionJa": "チームのモンスターが5体以下[",
+          "hiddenConditionJa": "チームのモンスターが5体以下",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "5 or fewer monsters on the team"
         },
@@ -1170,7 +1170,7 @@
               "nameEn": "進化の青仮面"
             }
           ],
-          "hiddenConditionJa": "水属性モンスターが5体以上[",
+          "hiddenConditionJa": "水属性モンスターが5体以上",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "5 or more Water-attribute monsters on the team"
         },
@@ -1210,7 +1210,7 @@
               "nameEn": "ダブミスリット"
             }
           ],
-          "hiddenConditionJa": "合計コストが150以下[",
+          "hiddenConditionJa": "合計コストが150以下",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "Total team cost 150 or below"
         },
@@ -1245,7 +1245,7 @@
               "nameEn": "サファリット"
             }
           ],
-          "hiddenConditionJa": "合計レアリティが20以下[",
+          "hiddenConditionJa": "合計レアリティが20以下",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "Total team rarity 20 or below"
         }
@@ -1332,7 +1332,7 @@
               "nameEn": "Reduce Wood Damage"
             }
           ],
-          "hiddenConditionJa": "レアリティ5以下のモンスターが5体以上[",
+          "hiddenConditionJa": "レアリティ5以下のモンスターが5体以上",
           "hiddenReward": "30,000 MP",
           "hiddenConditionEn": "5 or more monsters with rarity 5 or below on the team"
         },
@@ -1410,9 +1410,9 @@
               "nameEn": "モクぷれドラ"
             }
           ],
-          "hiddenConditionJa": "レアリティの異なるモンスターが7体以上[",
+          "hiddenConditionJa": "レアリティの異なるモンスターが7体以上",
           "hiddenReward": "30,000 MP",
-          "hiddenConditionEn": "7 or more monsters with different rarities"
+          "hiddenConditionEn": "Team includes monsters of at least 7 different rarities"
         },
         {
           "level": 8,
@@ -1492,7 +1492,7 @@
               "nameEn": "毒目覚め耐性"
             }
           ],
-          "hiddenConditionJa": "神タイプのモンスターが7体以上[",
+          "hiddenConditionJa": "神タイプのモンスターが7体以上",
           "hiddenReward": "20,000 MP",
           "hiddenConditionEn": "7 or more God-type monsters"
         },
@@ -1548,7 +1548,7 @@
             "plusPoints": 200
           },
           "drops": [],
-          "hiddenConditionJa": "悪魔タイプのモンスターが7体以上[",
+          "hiddenConditionJa": "悪魔タイプのモンスターが7体以上",
           "hiddenReward": "20,000 MP",
           "hiddenConditionEn": "7 or more Devil-type monsters"
         },
@@ -1616,7 +1616,7 @@
               "nameEn": "Dragon Killer"
             }
           ],
-          "hiddenConditionJa": "ドラゴンタイプのモンスターが7体以上[",
+          "hiddenConditionJa": "ドラゴンタイプのモンスターが7体以上",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "7 or more Dragon-type monsters"
         },
@@ -1679,7 +1679,7 @@
               "nameEn": "木の宝玉"
             }
           ],
-          "hiddenConditionJa": "マシンタイプのモンスターが7体以上[",
+          "hiddenConditionJa": "マシンタイプのモンスターが7体以上",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "7 or more Machine-type monsters"
         },
@@ -1741,7 +1741,7 @@
               "nameEn": "回復強化＋"
             }
           ],
-          "hiddenConditionJa": "チームのモンスターが5体以下[",
+          "hiddenConditionJa": "チームのモンスターが5体以下",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "5 or fewer monsters on the team"
         },
@@ -1794,7 +1794,7 @@
               "nameEn": "進化の緑仮面"
             }
           ],
-          "hiddenConditionJa": "木属性モンスターが5体以上[",
+          "hiddenConditionJa": "木属性モンスターが5体以上",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "5 or more Wood-attribute monsters on the team"
         },
@@ -1846,7 +1846,7 @@
               "nameEn": "ドラゴンシード"
             }
           ],
-          "hiddenConditionJa": "合計コストが150以下[",
+          "hiddenConditionJa": "合計コストが150以下",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "Total team cost 150 or below"
         },
@@ -1881,7 +1881,7 @@
               "nameEn": "エメリット"
             }
           ],
-          "hiddenConditionJa": "合計レアリティが20以下[",
+          "hiddenConditionJa": "合計レアリティが20以下",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "Total team rarity 20 or below"
         }
@@ -1968,7 +1968,7 @@
               "nameEn": "Reduce Light Damage"
             }
           ],
-          "hiddenConditionJa": "レアリティ5以下のモンスターが5体以上[",
+          "hiddenConditionJa": "レアリティ5以下のモンスターが5体以上",
           "hiddenReward": "30,000 MP",
           "hiddenConditionEn": "5 or more monsters with rarity 5 or below on the team"
         },
@@ -2046,9 +2046,9 @@
               "nameEn": "ヒカぷれドラ"
             }
           ],
-          "hiddenConditionJa": "レアリティの異なるモンスターが7体以上[",
+          "hiddenConditionJa": "レアリティの異なるモンスターが7体以上",
           "hiddenReward": "30,000 MP",
-          "hiddenConditionEn": "7 or more monsters with different rarities"
+          "hiddenConditionEn": "Team includes monsters of at least 7 different rarities"
         },
         {
           "level": 8,
@@ -2128,7 +2128,7 @@
               "nameEn": "ルーレット回復"
             }
           ],
-          "hiddenConditionJa": "神タイプのモンスターが7体以上[",
+          "hiddenConditionJa": "神タイプのモンスターが7体以上",
           "hiddenReward": "20,000 MP",
           "hiddenConditionEn": "7 or more God-type monsters"
         },
@@ -2184,7 +2184,7 @@
             "plusPoints": 200
           },
           "drops": [],
-          "hiddenConditionJa": "悪魔タイプのモンスターが7体以上[",
+          "hiddenConditionJa": "悪魔タイプのモンスターが7体以上",
           "hiddenReward": "20,000 MP",
           "hiddenConditionEn": "7 or more Devil-type monsters"
         },
@@ -2252,7 +2252,7 @@
               "nameEn": "God Killer"
             }
           ],
-          "hiddenConditionJa": "ドラゴンタイプのモンスターが7体以上[",
+          "hiddenConditionJa": "ドラゴンタイプのモンスターが7体以上",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "7 or more Dragon-type monsters"
         },
@@ -2315,7 +2315,7 @@
               "nameEn": "光の宝玉"
             }
           ],
-          "hiddenConditionJa": "マシンタイプのモンスターが7体以上[",
+          "hiddenConditionJa": "マシンタイプのモンスターが7体以上",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "7 or more Machine-type monsters"
         },
@@ -2377,7 +2377,7 @@
               "nameEn": "Auto-Recover"
             }
           ],
-          "hiddenConditionJa": "チームのモンスターが5体以下[",
+          "hiddenConditionJa": "チームのモンスターが5体以下",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "5 or fewer monsters on the team"
         },
@@ -2430,7 +2430,7 @@
               "nameEn": "進化の黄仮面"
             }
           ],
-          "hiddenConditionJa": "光属性モンスターが5体以上[",
+          "hiddenConditionJa": "光属性モンスターが5体以上",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "5 or more Light-attribute monsters on the team"
         },
@@ -2474,7 +2474,7 @@
               "nameEn": "たまドラ"
             }
           ],
-          "hiddenConditionJa": "合計コストが150以下[",
+          "hiddenConditionJa": "合計コストが150以下",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "Total team cost 150 or below"
         },
@@ -2509,7 +2509,7 @@
               "nameEn": "トパリット"
             }
           ],
-          "hiddenConditionJa": "合計レアリティが20以下[",
+          "hiddenConditionJa": "合計レアリティが20以下",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "Total team rarity 20 or below"
         }
@@ -2596,7 +2596,7 @@
               "nameEn": "Reduce Dark Damage"
             }
           ],
-          "hiddenConditionJa": "レアリティ5以下のモンスターが5体以上[",
+          "hiddenConditionJa": "レアリティ5以下のモンスターが5体以上",
           "hiddenReward": "30,000 MP",
           "hiddenConditionEn": "5 or more monsters with rarity 5 or below on the team"
         },
@@ -2674,9 +2674,9 @@
               "nameEn": "ヤミぷれドラ"
             }
           ],
-          "hiddenConditionJa": "レアリティの異なるモンスターが7体以上[",
+          "hiddenConditionJa": "レアリティの異なるモンスターが7体以上",
           "hiddenReward": "30,000 MP",
-          "hiddenConditionEn": "7 or more monsters with different rarities"
+          "hiddenConditionEn": "Team includes monsters of at least 7 different rarities"
         },
         {
           "level": 8,
@@ -2772,7 +2772,7 @@
               "nameEn": "スキルブースト＋＋"
             }
           ],
-          "hiddenConditionJa": "神タイプのモンスターが7体以上[",
+          "hiddenConditionJa": "神タイプのモンスターが7体以上",
           "hiddenReward": "20,000 MP",
           "hiddenConditionEn": "7 or more God-type monsters"
         },
@@ -2828,7 +2828,7 @@
             "plusPoints": 200
           },
           "drops": [],
-          "hiddenConditionJa": "悪魔タイプのモンスターが7体以上[",
+          "hiddenConditionJa": "悪魔タイプのモンスターが7体以上",
           "hiddenReward": "20,000 MP",
           "hiddenConditionEn": "7 or more Devil-type monsters"
         },
@@ -2904,7 +2904,7 @@
               "nameEn": "Evo Killer"
             }
           ],
-          "hiddenConditionJa": "ドラゴンタイプのモンスターが7体以上[",
+          "hiddenConditionJa": "ドラゴンタイプのモンスターが7体以上",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "7 or more Dragon-type monsters"
         },
@@ -2967,7 +2967,7 @@
               "nameEn": "闇の宝玉"
             }
           ],
-          "hiddenConditionJa": "マシンタイプのモンスターが7体以上[",
+          "hiddenConditionJa": "マシンタイプのモンスターが7体以上",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "7 or more Machine-type monsters"
         },
@@ -3029,7 +3029,7 @@
               "nameEn": "Extended Move Time"
             }
           ],
-          "hiddenConditionJa": "チームのモンスターが5体以下[",
+          "hiddenConditionJa": "チームのモンスターが5体以下",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "5 or fewer monsters on the team"
         },
@@ -3082,7 +3082,7 @@
               "nameEn": "進化の紫仮面"
             }
           ],
-          "hiddenConditionJa": "闇属性モンスターが5体以上[",
+          "hiddenConditionJa": "闇属性モンスターが5体以上",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "5 or more Dark-attribute monsters on the team"
         },
@@ -3126,7 +3126,7 @@
               "nameEn": "エンジェリット"
             }
           ],
-          "hiddenConditionJa": "合計コストが150以下[",
+          "hiddenConditionJa": "合計コストが150以下",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "Total team cost 150 or below"
         },
@@ -3161,7 +3161,7 @@
               "nameEn": "アメリット"
             }
           ],
-          "hiddenConditionJa": "合計レアリティが20以下[",
+          "hiddenConditionJa": "合計レアリティが20以下",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "Total team rarity 20 or below"
         }

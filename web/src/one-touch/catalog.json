@@ -1,7 +1,7 @@
 {
   "version": 1,
   "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/550577",
-  "importedAt": "2026-06-30",
+  "importedAt": "2026-08-03",
   "dungeons": [
     {
       "id": "volcano",
@@ -84,7 +84,7 @@
               "nameEn": "Reduce Fire Damage"
             }
           ],
-          "hiddenConditionJa": "レアリティ5以下のモンスターが5体以上[",
+          "hiddenConditionJa": "レアリティ5以下のモンスターが5体以上",
           "hiddenReward": "30,000 MP",
           "hiddenConditionEn": "5 or more monsters with rarity 5 or below on the team"
         },
@@ -162,9 +162,9 @@
               "nameEn": "ホノぷれドラ"
             }
           ],
-          "hiddenConditionJa": "レアリティの異なるモンスターが7体以上[",
+          "hiddenConditionJa": "レアリティの異なるモンスターが7体以上",
           "hiddenReward": "30,000 MP",
-          "hiddenConditionEn": "7 or more monsters with different rarities"
+          "hiddenConditionEn": "Team includes monsters of at least 7 different rarities"
         },
         {
           "level": 8,
@@ -244,7 +244,7 @@
               "nameEn": "ダメージ上限解放"
             }
           ],
-          "hiddenConditionJa": "神タイプのモンスターが7体以上[",
+          "hiddenConditionJa": "神タイプのモンスターが7体以上",
           "hiddenReward": "20,000 MP",
           "hiddenConditionEn": "7 or more God-type monsters"
         },
@@ -300,7 +300,7 @@
             "plusPoints": 200
           },
           "drops": [],
-          "hiddenConditionJa": "悪魔タイプのモンスターが7体以上[",
+          "hiddenConditionJa": "悪魔タイプのモンスターが7体以上",
           "hiddenReward": "20,000 MP",
           "hiddenConditionEn": "7 or more Devil-type monsters"
         },
@@ -368,7 +368,7 @@
               "nameEn": "Devil Killer"
             }
           ],
-          "hiddenConditionJa": "ドラゴンタイプのモンスターが7体以上[",
+          "hiddenConditionJa": "ドラゴンタイプのモンスターが7体以上",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "7 or more Dragon-type monsters"
         },
@@ -431,7 +431,7 @@
               "nameEn": "火の宝玉"
             }
           ],
-          "hiddenConditionJa": "マシンタイプのモンスターが7体以上[",
+          "hiddenConditionJa": "マシンタイプのモンスターが7体以上",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "7 or more Machine-type monsters"
         },
@@ -493,7 +493,7 @@
               "nameEn": "攻撃強化＋"
             }
           ],
-          "hiddenConditionJa": "チームのモンスターが5体以下[",
+          "hiddenConditionJa": "チームのモンスターが5体以下",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "5 or fewer monsters on the team"
         },
@@ -546,7 +546,7 @@
               "nameEn": "進化の赤仮面"
             }
           ],
-          "hiddenConditionJa": "火属性モンスターが5体以上[",
+          "hiddenConditionJa": "火属性モンスターが5体以上",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "5 or more Fire-attribute monsters on the team"
         },
@@ -586,7 +586,7 @@
               "nameEn": "ミスリット"
             }
           ],
-          "hiddenConditionJa": "合計コストが150以下[",
+          "hiddenConditionJa": "合計コストが150以下",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "Total team cost 150 or below"
         },
@@ -621,7 +621,7 @@
               "nameEn": "ルビリット"
             }
           ],
-          "hiddenConditionJa": "合計レアリティが20以下[",
+          "hiddenConditionJa": "合計レアリティが20以下",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "Total team rarity 20 or below"
         }
@@ -708,7 +708,7 @@
               "nameEn": "Reduce Water Damage"
             }
           ],
-          "hiddenConditionJa": "レアリティ5以下のモンスターが5体以上[",
+          "hiddenConditionJa": "レアリティ5以下のモンスターが5体以上",
           "hiddenReward": "30,000 MP",
           "hiddenConditionEn": "5 or more monsters with rarity 5 or below on the team"
         },
@@ -786,9 +786,9 @@
               "nameEn": "ミズぷれドラ"
             }
           ],
-          "hiddenConditionJa": "レアリティの異なるモンスターが7体以上[",
+          "hiddenConditionJa": "レアリティの異なるモンスターが7体以上",
           "hiddenReward": "30,000 MP",
-          "hiddenConditionEn": "7 or more monsters with different rarities"
+          "hiddenConditionEn": "Team includes monsters of at least 7 different rarities"
         },
         {
           "level": 8,
@@ -868,7 +868,7 @@
               "nameEn": "Damage Void Piercer"
             }
           ],
-          "hiddenConditionJa": "神タイプのモンスターが7体以上[",
+          "hiddenConditionJa": "神タイプのモンスターが7体以上",
           "hiddenReward": "20,000 MP",
           "hiddenConditionEn": "7 or more God-type monsters"
         },
@@ -924,7 +924,7 @@
             "plusPoints": 200
           },
           "drops": [],
-          "hiddenConditionJa": "悪魔タイプのモンスターが7体以上[",
+          "hiddenConditionJa": "悪魔タイプのモンスターが7体以上",
           "hiddenReward": "20,000 MP",
           "hiddenConditionEn": "7 or more Devil-type monsters"
         },
@@ -992,7 +992,7 @@
               "nameEn": "Machine Killer"
             }
           ],
-          "hiddenConditionJa": "ドラゴンタイプのモンスターが7体以上[",
+          "hiddenConditionJa": "ドラゴンタイプのモンスターが7体以上",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "7 or more Dragon-type monsters"
         },
@@ -1055,7 +1055,7 @@
               "nameEn": "水の宝玉"
             }
           ],
-          "hiddenConditionJa": "マシンタイプのモンスターが7体以上[",
+          "hiddenConditionJa": "マシンタイプのモンスターが7体以上",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "7 or more Machine-type monsters"
         },
@@ -1117,7 +1117,7 @@
               "nameEn": "HP強化＋"
             }
           ],
-          "hiddenConditionJa": "チームのモンスターが5体以下[",
+          "hiddenConditionJa": "チームのモンスターが5体以下",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "5 or fewer monsters on the team"
         },
@@ -1170,7 +1170,7 @@
               "nameEn": "進化の青仮面"
             }
           ],
-          "hiddenConditionJa": "水属性モンスターが5体以上[",
+          "hiddenConditionJa": "水属性モンスターが5体以上",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "5 or more Water-attribute monsters on the team"
         },
@@ -1210,7 +1210,7 @@
               "nameEn": "ダブミスリット"
             }
           ],
-          "hiddenConditionJa": "合計コストが150以下[",
+          "hiddenConditionJa": "合計コストが150以下",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "Total team cost 150 or below"
         },
@@ -1245,7 +1245,7 @@
               "nameEn": "サファリット"
             }
           ],
-          "hiddenConditionJa": "合計レアリティが20以下[",
+          "hiddenConditionJa": "合計レアリティが20以下",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "Total team rarity 20 or below"
         }
@@ -1332,7 +1332,7 @@
               "nameEn": "Reduce Wood Damage"
             }
           ],
-          "hiddenConditionJa": "レアリティ5以下のモンスターが5体以上[",
+          "hiddenConditionJa": "レアリティ5以下のモンスターが5体以上",
           "hiddenReward": "30,000 MP",
           "hiddenConditionEn": "5 or more monsters with rarity 5 or below on the team"
         },
@@ -1410,9 +1410,9 @@
               "nameEn": "モクぷれドラ"
             }
           ],
-          "hiddenConditionJa": "レアリティの異なるモンスターが7体以上[",
+          "hiddenConditionJa": "レアリティの異なるモンスターが7体以上",
           "hiddenReward": "30,000 MP",
-          "hiddenConditionEn": "7 or more monsters with different rarities"
+          "hiddenConditionEn": "Team includes monsters of at least 7 different rarities"
         },
         {
           "level": 8,
@@ -1492,7 +1492,7 @@
               "nameEn": "毒目覚め耐性"
             }
           ],
-          "hiddenConditionJa": "神タイプのモンスターが7体以上[",
+          "hiddenConditionJa": "神タイプのモンスターが7体以上",
           "hiddenReward": "20,000 MP",
           "hiddenConditionEn": "7 or more God-type monsters"
         },
@@ -1548,7 +1548,7 @@
             "plusPoints": 200
           },
           "drops": [],
-          "hiddenConditionJa": "悪魔タイプのモンスターが7体以上[",
+          "hiddenConditionJa": "悪魔タイプのモンスターが7体以上",
           "hiddenReward": "20,000 MP",
           "hiddenConditionEn": "7 or more Devil-type monsters"
         },
@@ -1616,7 +1616,7 @@
               "nameEn": "Dragon Killer"
             }
           ],
-          "hiddenConditionJa": "ドラゴンタイプのモンスターが7体以上[",
+          "hiddenConditionJa": "ドラゴンタイプのモンスターが7体以上",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "7 or more Dragon-type monsters"
         },
@@ -1679,7 +1679,7 @@
               "nameEn": "木の宝玉"
             }
           ],
-          "hiddenConditionJa": "マシンタイプのモンスターが7体以上[",
+          "hiddenConditionJa": "マシンタイプのモンスターが7体以上",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "7 or more Machine-type monsters"
         },
@@ -1741,7 +1741,7 @@
               "nameEn": "回復強化＋"
             }
           ],
-          "hiddenConditionJa": "チームのモンスターが5体以下[",
+          "hiddenConditionJa": "チームのモンスターが5体以下",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "5 or fewer monsters on the team"
         },
@@ -1794,7 +1794,7 @@
               "nameEn": "進化の緑仮面"
             }
           ],
-          "hiddenConditionJa": "木属性モンスターが5体以上[",
+          "hiddenConditionJa": "木属性モンスターが5体以上",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "5 or more Wood-attribute monsters on the team"
         },
@@ -1846,7 +1846,7 @@
               "nameEn": "ドラゴンシード"
             }
           ],
-          "hiddenConditionJa": "合計コストが150以下[",
+          "hiddenConditionJa": "合計コストが150以下",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "Total team cost 150 or below"
         },
@@ -1881,7 +1881,7 @@
               "nameEn": "エメリット"
             }
           ],
-          "hiddenConditionJa": "合計レアリティが20以下[",
+          "hiddenConditionJa": "合計レアリティが20以下",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "Total team rarity 20 or below"
         }
@@ -1968,7 +1968,7 @@
               "nameEn": "Reduce Light Damage"
             }
           ],
-          "hiddenConditionJa": "レアリティ5以下のモンスターが5体以上[",
+          "hiddenConditionJa": "レアリティ5以下のモンスターが5体以上",
           "hiddenReward": "30,000 MP",
           "hiddenConditionEn": "5 or more monsters with rarity 5 or below on the team"
         },
@@ -2046,9 +2046,9 @@
               "nameEn": "ヒカぷれドラ"
             }
           ],
-          "hiddenConditionJa": "レアリティの異なるモンスターが7体以上[",
+          "hiddenConditionJa": "レアリティの異なるモンスターが7体以上",
           "hiddenReward": "30,000 MP",
-          "hiddenConditionEn": "7 or more monsters with different rarities"
+          "hiddenConditionEn": "Team includes monsters of at least 7 different rarities"
         },
         {
           "level": 8,
@@ -2128,7 +2128,7 @@
               "nameEn": "ルーレット回復"
             }
           ],
-          "hiddenConditionJa": "神タイプのモンスターが7体以上[",
+          "hiddenConditionJa": "神タイプのモンスターが7体以上",
           "hiddenReward": "20,000 MP",
           "hiddenConditionEn": "7 or more God-type monsters"
         },
@@ -2184,7 +2184,7 @@
             "plusPoints": 200
           },
           "drops": [],
-          "hiddenConditionJa": "悪魔タイプのモンスターが7体以上[",
+          "hiddenConditionJa": "悪魔タイプのモンスターが7体以上",
           "hiddenReward": "20,000 MP",
           "hiddenConditionEn": "7 or more Devil-type monsters"
         },
@@ -2252,7 +2252,7 @@
               "nameEn": "God Killer"
             }
           ],
-          "hiddenConditionJa": "ドラゴンタイプのモンスターが7体以上[",
+          "hiddenConditionJa": "ドラゴンタイプのモンスターが7体以上",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "7 or more Dragon-type monsters"
         },
@@ -2315,7 +2315,7 @@
               "nameEn": "光の宝玉"
             }
           ],
-          "hiddenConditionJa": "マシンタイプのモンスターが7体以上[",
+          "hiddenConditionJa": "マシンタイプのモンスターが7体以上",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "7 or more Machine-type monsters"
         },
@@ -2377,7 +2377,7 @@
               "nameEn": "Auto-Recover"
             }
           ],
-          "hiddenConditionJa": "チームのモンスターが5体以下[",
+          "hiddenConditionJa": "チームのモンスターが5体以下",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "5 or fewer monsters on the team"
         },
@@ -2430,7 +2430,7 @@
               "nameEn": "進化の黄仮面"
             }
           ],
-          "hiddenConditionJa": "光属性モンスターが5体以上[",
+          "hiddenConditionJa": "光属性モンスターが5体以上",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "5 or more Light-attribute monsters on the team"
         },
@@ -2474,7 +2474,7 @@
               "nameEn": "たまドラ"
             }
           ],
-          "hiddenConditionJa": "合計コストが150以下[",
+          "hiddenConditionJa": "合計コストが150以下",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "Total team cost 150 or below"
         },
@@ -2509,7 +2509,7 @@
               "nameEn": "トパリット"
             }
           ],
-          "hiddenConditionJa": "合計レアリティが20以下[",
+          "hiddenConditionJa": "合計レアリティが20以下",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "Total team rarity 20 or below"
         }
@@ -2596,7 +2596,7 @@
               "nameEn": "Reduce Dark Damage"
             }
           ],
-          "hiddenConditionJa": "レアリティ5以下のモンスターが5体以上[",
+          "hiddenConditionJa": "レアリティ5以下のモンスターが5体以上",
           "hiddenReward": "30,000 MP",
           "hiddenConditionEn": "5 or more monsters with rarity 5 or below on the team"
         },
@@ -2674,9 +2674,9 @@
               "nameEn": "ヤミぷれドラ"
             }
           ],
-          "hiddenConditionJa": "レアリティの異なるモンスターが7体以上[",
+          "hiddenConditionJa": "レアリティの異なるモンスターが7体以上",
           "hiddenReward": "30,000 MP",
-          "hiddenConditionEn": "7 or more monsters with different rarities"
+          "hiddenConditionEn": "Team includes monsters of at least 7 different rarities"
         },
         {
           "level": 8,
@@ -2772,7 +2772,7 @@
               "nameEn": "スキルブースト＋＋"
             }
           ],
-          "hiddenConditionJa": "神タイプのモンスターが7体以上[",
+          "hiddenConditionJa": "神タイプのモンスターが7体以上",
           "hiddenReward": "20,000 MP",
           "hiddenConditionEn": "7 or more God-type monsters"
         },
@@ -2828,7 +2828,7 @@
             "plusPoints": 200
           },
           "drops": [],
-          "hiddenConditionJa": "悪魔タイプのモンスターが7体以上[",
+          "hiddenConditionJa": "悪魔タイプのモンスターが7体以上",
           "hiddenReward": "20,000 MP",
           "hiddenConditionEn": "7 or more Devil-type monsters"
         },
@@ -2904,7 +2904,7 @@
               "nameEn": "Evo Killer"
             }
           ],
-          "hiddenConditionJa": "ドラゴンタイプのモンスターが7体以上[",
+          "hiddenConditionJa": "ドラゴンタイプのモンスターが7体以上",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "7 or more Dragon-type monsters"
         },
@@ -2967,7 +2967,7 @@
               "nameEn": "闇の宝玉"
             }
           ],
-          "hiddenConditionJa": "マシンタイプのモンスターが7体以上[",
+          "hiddenConditionJa": "マシンタイプのモンスターが7体以上",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "7 or more Machine-type monsters"
         },
@@ -3029,7 +3029,7 @@
               "nameEn": "Extended Move Time"
             }
           ],
-          "hiddenConditionJa": "チームのモンスターが5体以下[",
+          "hiddenConditionJa": "チームのモンスターが5体以下",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "5 or fewer monsters on the team"
         },
@@ -3082,7 +3082,7 @@
               "nameEn": "進化の紫仮面"
             }
           ],
-          "hiddenConditionJa": "闇属性モンスターが5体以上[",
+          "hiddenConditionJa": "闇属性モンスターが5体以上",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "5 or more Dark-attribute monsters on the team"
         },
@@ -3126,7 +3126,7 @@
               "nameEn": "エンジェリット"
             }
           ],
-          "hiddenConditionJa": "合計コストが150以下[",
+          "hiddenConditionJa": "合計コストが150以下",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "Total team cost 150 or below"
         },
@@ -3161,7 +3161,7 @@
               "nameEn": "アメリット"
             }
           ],
-          "hiddenConditionJa": "合計レアリティが20以下[",
+          "hiddenConditionJa": "合計レアリティが20以下",
           "hiddenReward": "10,000 MP",
           "hiddenConditionEn": "Total team rarity 20 or below"
         }
@@ -3227,7 +3227,7 @@
     },
     {
       "nameJa": "アフタヌーンティー",
-      "nameEn": "Afternoon Tea",
+      "nameEn": "アフタヌーンティー",
       "id": 132,
       "effectJa": "チームの全パラメータが3%アップ",
       "effectEn": "All team stats +3%."
@@ -3311,14 +3311,14 @@
     },
     {
       "nameJa": "熟成",
-      "nameEn": "Aging",
+      "nameEn": "熟成",
       "id": 130,
       "effectJa": "1WAVE毎にチームの攻撃力、回復力が2%アップ",
       "effectEn": "Team ATK and RCV +2% after each wave."
     },
     {
       "nameJa": "部位破壊ボーナス",
-      "nameEn": "Part Break Bonus",
+      "nameEn": "部位破壊ボーナス",
       "id": 131,
       "effectJa": "バトルに勝利するたびにチームの攻撃力が3%アップ",
       "effectEn": "Team ATK +3% after each battle victory."
@@ -3430,7 +3430,7 @@
     },
     {
       "nameJa": "超コンボ強化＋",
-      "nameEn": "Super Enhanced Combos+",
+      "nameEn": "超コンボ強化＋",
       "id": 111,
       "effectJa": "自分の攻撃力が40%アップ",
       "effectEn": "This monster's ATK +40%."
@@ -3444,7 +3444,7 @@
     },
     {
       "nameJa": "3色攻撃強化＋",
-      "nameEn": "3-Color ATK Enhance+",
+      "nameEn": "3色攻撃強化＋",
       "id": 112,
       "effectJa": "自分の攻撃力が20%アップ",
       "effectEn": "This monster's ATK +20%."
@@ -3458,7 +3458,7 @@
     },
     {
       "nameJa": "4色攻撃強化＋",
-      "nameEn": "4-Color ATK Enhance+",
+      "nameEn": "4色攻撃強化＋",
       "id": 113,
       "effectJa": "自分の攻撃力が30%アップ",
       "effectEn": "This monster's ATK +30%."
@@ -3472,35 +3472,35 @@
     },
     {
       "nameJa": "5色攻撃強化＋",
-      "nameEn": "5-Color ATK Enhance+",
+      "nameEn": "5色攻撃強化＋",
       "id": 114,
       "effectJa": "自分の攻撃力が40%アップ",
       "effectEn": "This monster's ATK +40%."
     },
     {
       "nameJa": "火水同時攻撃",
-      "nameEn": "Fire Water Attack",
+      "nameEn": "火水同時攻撃",
       "id": 133,
       "effectJa": "自分の攻撃力が50%アップ",
       "effectEn": "This monster's ATK +50%."
     },
     {
       "nameJa": "水木同時攻撃",
-      "nameEn": "Water Wood Attack",
+      "nameEn": "水木同時攻撃",
       "id": 134,
       "effectJa": "自分の攻撃力が50%アップ",
       "effectEn": "This monster's ATK +50%."
     },
     {
       "nameJa": "木火同時攻撃",
-      "nameEn": "Wood Fire Attack",
+      "nameEn": "木火同時攻撃",
       "id": 135,
       "effectJa": "自分の攻撃力が50%アップ",
       "effectEn": "This monster's ATK +50%."
     },
     {
       "nameJa": "達人多色強化",
-      "nameEn": "Expert Multi-Match",
+      "nameEn": "達人多色強化",
       "id": 141,
       "effectJa": "自分の攻撃力、回復力が50%アップ",
       "effectEn": "This monster's ATK and RCV +50%."
@@ -3549,70 +3549,70 @@
     },
     {
       "nameJa": "火列強化",
-      "nameEn": "Enhanced Fire Rows",
-      "id": 22,
+      "nameEn": "火列強化",
+      "id": 116,
       "effectJa": "「木の魔窟」のダメージを軽減する",
       "effectEn": "Reduces damage from \"Wood Lair\"."
     },
     {
       "nameJa": "火列強化×3",
-      "nameEn": "Triple Enhanced Fire Rows×3",
+      "nameEn": "火列強化×3",
       "id": 116,
       "effectJa": "「木の魔窟」のダメージを軽減する（効果大）",
       "effectEn": "Reduces damage from \"Wood Lair\" (enhanced)."
     },
     {
       "nameJa": "水列強化",
-      "nameEn": "Enhanced Water Rows",
-      "id": 23,
+      "nameEn": "水列強化",
+      "id": 117,
       "effectJa": "「火の魔窟」のダメージを軽減する",
       "effectEn": "Reduces damage from \"Fire Lair\"."
     },
     {
       "nameJa": "水列強化×3",
-      "nameEn": "Triple Enhanced Water Rows×3",
+      "nameEn": "水列強化×3",
       "id": 117,
       "effectJa": "「火の魔窟」のダメージを軽減する（効果大）",
       "effectEn": "Reduces damage from \"Fire Lair\" (enhanced)."
     },
     {
       "nameJa": "木列強化",
-      "nameEn": "Enhanced Wood Rows",
-      "id": 24,
+      "nameEn": "木列強化",
+      "id": 118,
       "effectJa": "「水の魔窟」のダメージを軽減する",
       "effectEn": "Reduces damage from \"Water Lair\"."
     },
     {
       "nameJa": "木列強化×3",
-      "nameEn": "Triple Enhanced Wood Rows×3",
+      "nameEn": "木列強化×3",
       "id": 118,
       "effectJa": "「水の魔窟」のダメージを軽減する（効果大）",
       "effectEn": "Reduces damage from \"Water Lair\" (enhanced)."
     },
     {
       "nameJa": "光列強化",
-      "nameEn": "Enhanced Light Rows",
-      "id": 25,
+      "nameEn": "光列強化",
+      "id": 119,
       "effectJa": "「闇の魔窟」のダメージを軽減する",
       "effectEn": "Reduces damage from \"Dark Lair\"."
     },
     {
       "nameJa": "光列強化×3",
-      "nameEn": "Triple Enhanced Light Rows×3",
+      "nameEn": "光列強化×3",
       "id": 119,
       "effectJa": "「闇の魔窟」のダメージを軽減する（効果大）",
       "effectEn": "Reduces damage from \"Dark Lair\" (enhanced)."
     },
     {
       "nameJa": "闇列強化",
-      "nameEn": "Enhanced Dark Rows",
-      "id": 26,
+      "nameEn": "闇列強化",
+      "id": 120,
       "effectJa": "「光の魔窟」のダメージを軽減する",
       "effectEn": "Reduces damage from \"Light Lair\"."
     },
     {
       "nameJa": "闇列強化×3",
-      "nameEn": "Triple Enhanced Dark Rows×3",
+      "nameEn": "闇列強化×3",
       "id": 120,
       "effectJa": "「光の魔窟」のダメージを軽減する（効果大）",
       "effectEn": "Reduces damage from \"Light Lair\" (enhanced)."
@@ -3682,7 +3682,7 @@
     },
     {
       "nameJa": "火コンボ強化＋",
-      "nameEn": "Enhanced Fire Combos+",
+      "nameEn": "火コンボ強化＋",
       "id": 121,
       "effectJa": "「汚染」のダメージを軽減する（効果大）",
       "effectEn": "Reduces damage from \"Pollution\" (enhanced)."
@@ -3696,7 +3696,7 @@
     },
     {
       "nameJa": "水コンボ強化＋",
-      "nameEn": "Enhanced Water Combos+",
+      "nameEn": "水コンボ強化＋",
       "id": 122,
       "effectJa": "「炎上」のダメージを軽減する（効果大）",
       "effectEn": "Reduces damage from \"Blaze\" (enhanced)."
@@ -3710,7 +3710,7 @@
     },
     {
       "nameJa": "木コンボ強化＋",
-      "nameEn": "Enhanced Wood Combos+",
+      "nameEn": "木コンボ強化＋",
       "id": 123,
       "effectJa": "「氷風」のダメージを軽減する（効果大）",
       "effectEn": "Reduces damage from \"Ice Wind\" (enhanced)."
@@ -3724,7 +3724,7 @@
     },
     {
       "nameJa": "光コンボ強化＋",
-      "nameEn": "Enhanced Light Combos+",
+      "nameEn": "光コンボ強化＋",
       "id": 124,
       "effectJa": "「呪い」のダメージを軽減する（効果大）",
       "effectEn": "Reduces damage from \"Curse\" (enhanced)."
@@ -3738,29 +3738,29 @@
     },
     {
       "nameJa": "闇コンボ強化＋",
-      "nameEn": "Enhanced Dark Combos+",
+      "nameEn": "闇コンボ強化＋",
       "id": 125,
       "effectJa": "「落雷」のダメージを軽減する（効果大）",
       "effectEn": "Reduces damage from \"Lightning\" (enhanced)."
     },
     {
       "nameJa": "陽の加護",
-      "nameEn": "Yang Protection",
+      "nameEn": "陽の加護",
       "id": 128,
       "effectJa": "「灼熱」のダメージを軽減する",
       "effectEn": "Reduces damage from \"Scorching Heat\"."
     },
     {
       "nameJa": "陰の加護",
-      "nameEn": "Yin Protection",
+      "nameEn": "陰の加護",
       "id": 129,
       "effectJa": "「極寒」のダメージを軽減する",
       "effectEn": "Reduces damage from \"Extreme Cold\"."
     },
     {
       "nameJa": "加速",
-      "nameEn": "Acceleration",
-      "id": 143,
+      "nameEn": "加速",
+      "id": 142,
       "effectJa": "「崩落」のダメージを軽減する",
       "effectEn": "Reduces damage from \"Collapse\"."
     },
@@ -3787,14 +3787,14 @@
     },
     {
       "nameJa": "全パラメータ強化",
-      "nameEn": "All Stat Boost",
+      "nameEn": "全パラメータ強化",
       "id": 127,
       "effectJa": "「全能の旋律」を無効化することがある",
       "effectEn": "May nullify \"Melody of Omnipotence\"."
     },
     {
       "nameJa": "全パラメータ強化＋",
-      "nameEn": "All Stat Boost+",
+      "nameEn": "全パラメータ強化＋",
       "id": 127,
       "effectJa": "「全能の旋律」を無効化することがある（効果大）",
       "effectEn": "May nullify \"Melody of Omnipotence\" (enhanced)."
@@ -3829,7 +3829,7 @@
     },
     {
       "nameJa": "ダメージ無効貫通＋",
-      "nameEn": "Damage Void Piercer+",
+      "nameEn": "ダメージ無効貫通＋",
       "id": 109,
       "effectJa": "「障壁魔術」を無効化することがある（効果大）",
       "effectEn": "May nullify \"Barrier Magic\" (enhanced)."
@@ -3871,7 +3871,7 @@
     },
     {
       "nameJa": "十字消し攻撃＋",
-      "nameEn": "Cross Attack+",
+      "nameEn": "十字消し攻撃＋",
       "id": 110,
       "effectJa": "「悪霊」を無効化することがある（効果大）",
       "effectEn": "May nullify \"Evil Spirit\" (enhanced)."
@@ -3885,21 +3885,21 @@
     },
     {
       "nameJa": "T字消し攻撃",
-      "nameEn": "[T] Increased Attack",
+      "nameEn": "T字消し攻撃",
       "id": 126,
       "effectJa": "「迷路」を無効化することがある",
       "effectEn": "May nullify \"Labyrinth\"."
     },
     {
       "nameJa": "スキル遅延耐性",
-      "nameEn": "Skill Delay Resist",
+      "nameEn": "スキル遅延耐性",
       "id": 136,
       "effectJa": "「泥沼」を無効化することがある",
       "effectEn": "May nullify \"Quagmire\"."
     },
     {
       "nameJa": "操作時間変更耐性",
-      "nameEn": "Move Time Change Resist",
+      "nameEn": "操作時間変更耐性",
       "id": 140,
       "effectJa": "「時空の歪み」を無効化することがある",
       "effectEn": "May nullify \"Space-Time Distortion\"."
@@ -3913,7 +3913,7 @@
     },
     {
       "nameJa": "バインド回復＋",
-      "nameEn": "Recover Bind+",
+      "nameEn": "バインド回復＋",
       "id": 115,
       "effectJa": "「解呪の鐘」の発動確率が上昇する（効果大）",
       "effectEn": "Increases trigger rate for \"Curse-Lifting Bell\" (enhanced)."
@@ -3969,7 +3969,7 @@
     },
     {
       "nameJa": "5色ドロップ強化",
-      "nameEn": "Enhanced All Att",
+      "nameEn": "5色ドロップ強化",
       "id": 137,
       "effectJa": "「虹の祭壇」の発動確率が上昇する",
       "effectEn": "Increases trigger rate for \"Rainbow Altar\"."
@@ -3983,14 +3983,14 @@
     },
     {
       "nameJa": "アシスト共鳴",
-      "nameEn": "Assist Resonance",
+      "nameEn": "アシスト共鳴",
       "id": 138,
       "effectJa": "「騎士の像」の発動確率が上昇する",
       "effectEn": "Increases trigger rate for \"Knight Statue\"."
     },
     {
       "nameJa": "自力",
-      "nameEn": "Self-Reliance",
+      "nameEn": "自力",
       "id": 139,
       "effectJa": "「巨兵の像」の発動確率が上昇する",
       "effectEn": "Increases trigger rate for \"Giant Soldier Statue\"."

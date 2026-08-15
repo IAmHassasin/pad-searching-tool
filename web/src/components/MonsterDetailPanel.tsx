@@ -14,9 +14,16 @@ type Props = {
   onSelect: (row: MonsterRecord) => void;
   /** Mobile sidebar: fill container width, no centering gap. */
   sidebar?: boolean;
+  /** When true with sidebar, show full card art instead of compact layout. */
+  showFullArt?: boolean;
 };
 
-export function MonsterDetailPanel({ row, onSelect, sidebar = false }: Props) {
+export function MonsterDetailPanel({
+  row,
+  onSelect,
+  sidebar = false,
+  showFullArt = false,
+}: Props) {
   const [overlay, setOverlay] = useState<Overlay>(null);
   const [changeTargetLoadingId, setChangeTargetLoadingId] = useState<
     number | null
@@ -65,7 +72,7 @@ export function MonsterDetailPanel({ row, onSelect, sidebar = false }: Props) {
         changeTargetIds={changeTargetIds}
         onSelectChangeTarget={handleSelectChangeTarget}
         changeTargetLoadingId={changeTargetLoadingId}
-        compact={sidebar}
+        compact={sidebar && !showFullArt}
       />
 
       {overlay && (

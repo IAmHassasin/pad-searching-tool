@@ -18,6 +18,11 @@ test.db
 dist/
 web/node_modules/
 web/dist/
+web/dist-android/
+
+# Android Studio project state (machine-local, not part of the Capacitor template)
+web/android/.idea/
+web/android/local.properties
 
 # SQLite làm việc cục bộ (không commit)
 pad.db

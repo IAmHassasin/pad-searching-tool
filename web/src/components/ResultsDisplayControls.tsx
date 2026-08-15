@@ -59,7 +59,8 @@ export function ResultsDisplayControls({
   const activeCount =
     Number(sections.awk) +
     Number(sections.activeSkill) +
-    Number(sections.leaderSkill);
+    Number(sections.leaderSkill) +
+    Number(sections.fullArt);
 
   useEffect(() => {
     if (!open) return;
@@ -97,7 +98,9 @@ export function ResultsDisplayControls({
             <DisplayCheckbox
               label="All"
               checked={allEnabled}
-              onChange={(checked) => onSectionsChange(setAllDisplaySections(checked))}
+              onChange={(checked) =>
+                onSectionsChange(setAllDisplaySections(sections, checked))
+              }
             />
             <DisplayCheckbox
               label="Awk"
@@ -120,6 +123,15 @@ export function ResultsDisplayControls({
                 onSectionsChange({ ...sections, leaderSkill: checked })
               }
             />
+            {compact && (
+              <DisplayCheckbox
+                label="Show full art"
+                checked={sections.fullArt}
+                onChange={(checked) =>
+                  onSectionsChange({ ...sections, fullArt: checked })
+                }
+              />
+            )}
           </div>
         </div>
       )}

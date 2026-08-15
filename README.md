@@ -54,6 +54,28 @@ COMMUNITY_DB_URL=https://...
 
 In the UI header: **Admin login** → **Refresh community DB**. Same logic as `npm run pad -- merge`, without SSH.
 
+## Android app (Capacitor)
+
+`web/android/` is a Capacitor-wrapped build of the React UI — a native shell that
+calls the deployed API directly (`VITE_API_BASE` in `web/.env.android`), instead of
+relative same-origin paths. Requires Android Studio (bundles the SDK) + a JDK that
+your installed Gradle version supports as its own runtime — see the note in
+`web/.env.android` if you hit a `class file major version` error.
+
+```bash
+cd web
+npm run android:sync   # build web assets (prod API) + copy into the native project
+npm run android:open   # opens android/ in Android Studio — Run, or Build > Build APK(s)
+npm run android:apk    # sync + assembleDebug, copies APK to releases/pad-searching-tool.apk
+```
+
+**Download (debug APK):** [releases/pad-searching-tool.apk](releases/pad-searching-tool.apk)
+
+Regenerate the committed APK after UI/native changes with `npm run android:apk` from `web/`, then commit `releases/pad-searching-tool.apk` if you want the download link to stay current.
+
+To point the app at a different backend (e.g. local dev), edit `VITE_API_BASE` in
+`web/.env.android` before `android:sync`.
+
 ## Deploy to Oracle Cloud (Terraform + Makefile)
 
 Infrastructure is defined in **`iac/`** (Terraform). OCI API key: **`key/api_key_name.pem`**. VM SSH key is generated to **`key/vm_ssh.pem`** on first `terraform apply`.

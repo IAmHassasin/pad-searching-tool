@@ -33,7 +33,9 @@ const HIDDEN_REWARD_EN = {
     reward: "30,000 MP",
   },
   9: {
-    condition: "7 or more monsters with different rarities",
+    // JA: レアリティの異なるモンスターが7体以上
+    // = team must include monsters of ≥7 distinct rarity values
+    condition: "Team includes monsters of at least 7 different rarities",
     reward: "30,000 MP",
   },
   8: { condition: "7 or more God-type monsters", reward: "20,000 MP" },
@@ -198,8 +200,13 @@ function parseFloorRow(level, cell, lookup) {
   let hiddenCondition = null;
   let hiddenReward = "10,000 MP";
   if (hiddenRaw) {
-    const condMatch = hiddenRaw.match(/^(.+?)(?:パズドラの|$)/);
-    hiddenCondition = condMatch ? condMatch[1].trim() : hiddenRaw;
+    // Strip markdown reward link: "...条件[パズドラのMP…](url)" or plain JP reward text
+    const condMatch = hiddenRaw.match(
+      /^(.+?)(?:\s*\[?パズドラの|\s*\d+万MP|$)/
+    );
+    hiddenCondition = (condMatch ? condMatch[1] : hiddenRaw)
+      .replace(/\[+$/, "")
+      .trim();
     if (hiddenRaw.includes("3万MP")) hiddenReward = "30,000 MP";
     else if (hiddenRaw.includes("2万MP")) hiddenReward = "20,000 MP";
     else if (hiddenRaw.includes("1万MP")) hiddenReward = "10,000 MP";

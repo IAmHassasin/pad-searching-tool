@@ -28,9 +28,15 @@ import { MonsterAwakeningFilter } from "./filters/awakening-filter-shared";
 import {
   SkillPatternGroup,
   SkillPatternSelectionBar,
+  SkillTextSearchSection,
 } from "./filters/skill-pattern-shared";
 
-type BottomPanelMode = "leader_skill" | "active_skill" | "awakening" | null;
+type BottomPanelMode =
+  | "leader_skill"
+  | "active_skill"
+  | "awakening"
+  | "by_text"
+  | null;
 
 type Props = {
   monsterFilters: MonsterFilters;
@@ -129,12 +135,14 @@ function MobileDetailPanel({
   onToggleCollapsed,
   onClose,
   onSelect,
+  showFullArt,
 }: {
   selected: MonsterRecord;
   collapsed: boolean;
   onToggleCollapsed: () => void;
   onClose: () => void;
   onSelect: (row: MonsterRecord) => void;
+  showFullArt: boolean;
 }) {
   if (collapsed) {
     return (
@@ -172,7 +180,12 @@ function MobileDetailPanel({
         </button>
       </div>
       <div className="relative min-h-0 flex-1 overflow-auto pl-1 pr-2 py-1">
-        <MonsterDetailPanel row={selected} onSelect={onSelect} sidebar />
+        <MonsterDetailPanel
+          row={selected}
+          onSelect={onSelect}
+          sidebar
+          showFullArt={showFullArt}
+        />
       </div>
     </aside>
   );
@@ -210,6 +223,10 @@ function MobileBottomFilterBar({
   const selectedAwk =
     monsterFilters.awakeningIds.length +
     monsterFilters.excludedAwakeningIds.length;
+  const selectedByText = [
+    skillFilters.activeSkillText.trim(),
+    skillFilters.leaderSkillText.trim(),
+  ].filter(Boolean).length;
 
   const panelTitle =
     openMode === "leader_skill"
@@ -218,7 +235,9 @@ function MobileBottomFilterBar({
         ? "Active skill"
         : openMode === "awakening"
           ? "Awakenings"
-          : "";
+          : openMode === "by_text"
+            ? "By Text"
+            : "";
 
   return (
     <section className="flex shrink-0 flex-col border-t border-[var(--color-border)] bg-[var(--color-panel)]">
@@ -248,6 +267,20 @@ function MobileBottomFilterBar({
                   Clear all
                 </button>
               )
+            ) : openMode === "by_text" && selectedByText > 0 ? (
+              <button
+                type="button"
+                onClick={() =>
+                  onSkillFiltersChange({
+                    ...skillFilters,
+                    activeSkillText: "",
+                    leaderSkillText: "",
+                  })
+                }
+                className="rounded border border-[var(--color-border)] px-2 py-0.5 text-[10px] text-[var(--color-muted)]"
+              >
+                Clear
+              </button>
             ) : (
               <span className="w-12" aria-hidden />
             )}
@@ -259,6 +292,15 @@ function MobileBottomFilterBar({
                   filters={monsterFilters}
                   onChange={onMonsterFiltersChange}
                   compact
+                />
+              </div>
+            ) : openMode === "by_text" ? (
+              <div className="min-h-0 flex-1 overflow-y-auto px-2 pb-2">
+                <SkillTextSearchSection
+                  filters={skillFilters}
+                  onChange={onSkillFiltersChange}
+                  compact
+                  embedded
                 />
               </div>
             ) : (
@@ -318,7 +360,7 @@ function MobileBottomFilterBar({
         </div>
       )}
 
-      <div className="grid shrink-0 grid-cols-3 gap-1 p-1.5">
+      <div className="grid shrink-0 grid-cols-4 gap-1 p-1.5">
         <button
           type="button"
           onClick={() => toggleMode("leader_skill")}
@@ -364,6 +406,22 @@ function MobileBottomFilterBar({
           {selectedAwk > 0 && (
             <span className="ml-1 rounded bg-[#6b8f3c]/20 px-1 text-[10px] tabular-nums">
               {selectedAwk}
+            </span>
+          )}
+        </button>
+        <button
+          type="button"
+          onClick={() => toggleMode("by_text")}
+          className={`rounded-md border px-1 py-2 text-xs font-semibold transition-colors ${
+            openMode === "by_text"
+              ? "border-[#39c5cf] bg-[#12333a] text-[#7ee7ef]"
+              : "border-[var(--color-border)] bg-[#0d1117] text-[var(--color-muted)]"
+          }`}
+        >
+          By Text
+          {selectedByText > 0 && (
+            <span className="ml-1 rounded bg-[#39c5cf]/20 px-1 text-[10px] tabular-nums">
+              {selectedByText}
             </span>
           )}
         </button>
@@ -462,6 +520,7 @@ export function MobileWebviewLayout({
               onToggleCollapsed={() => setDetailCollapsed((v) => !v)}
               onClose={() => onSelect(null)}
               onSelect={(row) => handleSelect(row)}
+              showFullArt={displaySections.fullArt}
             />
           )}
         </div>

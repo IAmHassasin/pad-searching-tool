@@ -400,7 +400,7 @@ export function SkillSelectedPatternChips({
   );
 }
 
-export function SkillTextSearchSection({
+function SkillTextSearchFields({
   filters,
   onChange,
   compact = false,
@@ -409,24 +409,12 @@ export function SkillTextSearchSection({
   onChange: (next: SkillFilters) => void;
   compact?: boolean;
 }) {
-  const activeFields = [
-    filters.activeSkillText.trim(),
-    filters.leaderSkillText.trim(),
-  ].filter(Boolean).length;
-
   return (
-    <CollapsibleFilterSection
-      title="Skill text search"
-      summary={
-        activeFields > 0
-          ? `${activeFields} field${activeFields === 1 ? "" : "s"} active`
-          : "substring filter"
-      }
-      compact={compact}
-      defaultOpen={activeFields > 0}
-    >
+    <>
       <select
-        className="mb-2 w-full rounded border border-[var(--color-border)] bg-[#0d1117] px-2 py-1 text-xs"
+        className={`mb-2 w-full rounded border border-[var(--color-border)] bg-[#0d1117] px-2 py-1 ${
+          compact ? "text-[10px]" : "text-xs"
+        }`}
         value={filters.skillTextMode}
         onChange={(e) =>
           onChange({
@@ -439,11 +427,17 @@ export function SkillTextSearchSection({
         <option value="active">Active only</option>
         <option value="leader">Leader only</option>
       </select>
-      <label className="mb-2 flex flex-col gap-0.5 text-xs text-[var(--color-muted)]">
+      <label
+        className={`mb-2 flex flex-col gap-0.5 text-[var(--color-muted)] ${
+          compact ? "text-[10px]" : "text-xs"
+        }`}
+      >
         Active skill description
         <textarea
-          rows={3}
-          className="resize-y rounded border border-[var(--color-border)] bg-[#0d1117] px-2 py-1 text-sm text-white"
+          rows={compact ? 2 : 3}
+          className={`resize-y rounded border border-[var(--color-border)] bg-[#0d1117] px-2 py-1 text-white ${
+            compact ? "text-xs" : "text-sm"
+          }`}
           value={filters.activeSkillText}
           onChange={(e) =>
             onChange({ ...filters, activeSkillText: e.target.value })
@@ -451,11 +445,17 @@ export function SkillTextSearchSection({
           placeholder="Substring filter (AND with patterns)…"
         />
       </label>
-      <label className="flex flex-col gap-0.5 text-xs text-[var(--color-muted)]">
+      <label
+        className={`flex flex-col gap-0.5 text-[var(--color-muted)] ${
+          compact ? "text-[10px]" : "text-xs"
+        }`}
+      >
         Leader skill description
         <textarea
-          rows={3}
-          className="resize-y rounded border border-[var(--color-border)] bg-[#0d1117] px-2 py-1 text-sm text-white"
+          rows={compact ? 2 : 3}
+          className={`resize-y rounded border border-[var(--color-border)] bg-[#0d1117] px-2 py-1 text-white ${
+            compact ? "text-xs" : "text-sm"
+          }`}
           value={filters.leaderSkillText}
           onChange={(e) =>
             onChange({ ...filters, leaderSkillText: e.target.value })
@@ -463,6 +463,53 @@ export function SkillTextSearchSection({
           placeholder="Substring filter (AND with patterns)…"
         />
       </label>
+    </>
+  );
+}
+
+export function SkillTextSearchSection({
+  filters,
+  onChange,
+  compact = false,
+  /** Skip collapsible chrome (e.g. mobile By Text panel). */
+  embedded = false,
+}: {
+  filters: SkillFilters;
+  onChange: (next: SkillFilters) => void;
+  compact?: boolean;
+  embedded?: boolean;
+}) {
+  const activeFields = [
+    filters.activeSkillText.trim(),
+    filters.leaderSkillText.trim(),
+  ].filter(Boolean).length;
+
+  if (embedded) {
+    return (
+      <SkillTextSearchFields
+        filters={filters}
+        onChange={onChange}
+        compact={compact}
+      />
+    );
+  }
+
+  return (
+    <CollapsibleFilterSection
+      title="Skill text search"
+      summary={
+        activeFields > 0
+          ? `${activeFields} field${activeFields === 1 ? "" : "s"} active`
+          : "substring filter"
+      }
+      compact={compact}
+      defaultOpen={activeFields > 0}
+    >
+      <SkillTextSearchFields
+        filters={filters}
+        onChange={onChange}
+        compact={compact}
+      />
     </CollapsibleFilterSection>
   );
 }
