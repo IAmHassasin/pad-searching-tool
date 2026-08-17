@@ -2,7 +2,7 @@ name = "pst-gateway"
 main = "src/index.js"
 compatibility_date = "2024-11-01"
 
-# Route: public subdomain → this worker (orange cloud DNS on pst)
+# Copy → wrangler.toml (gitignored). Fill your public host + grey-cloud origin.
 routes = [
   { pattern = "app.example.com/*", zone_name = "example.com" }
 ]
@@ -10,5 +10,5 @@ routes = [
 [vars]
 PUBLIC_HOST = "app.example.com"
 
-# Grey-cloud origin hostname (DNS only A → Oracle VM). Never fetch PUBLIC_HOST from worker.
+# Grey-cloud origin hostname (DNS only A → origin VM). Never fetch PUBLIC_HOST from worker.
 ORIGIN_PAD = "http://origin-app.example.com"

@@ -1,5 +1,5 @@
 /**
- * Path router for app.example.com
+ * Path router for the public app host.
  *
  * Add new services here (longest prefix wins).
  * Each `origin` must be a hostname NOT proxied through Cloudflare (grey cloud DNS
@@ -19,9 +19,28 @@ export function buildRoutes(env) {
     {
       name: 'pad-search',
       prefix: '/',
-      origin: (env.ORIGIN_PAD || 'http://origin-app.example.com').replace(/\/$/, ''),
+      origin: (env.ORIGIN_PAD || '').replace(/\/$/, ''),
       spaFallback: true,
     },
+
+    // ── Future services (uncomment & set ORIGIN_* in wrangler.toml) ─────────────
+    //
+    // {
+    //   name: 'wiki',
+    //   prefix: '/wiki',
+    //   origin: (env.ORIGIN_WIKI || '').replace(/\/$/, ''),
+    //   spaFallback: true,
+    //   mapPath: (path) => (path === '/wiki' || path === '/wiki/' ? '/wiki/index.html' : path),
+    // },
+    //
+    // {
+    //   name: 'static-assets',
+    //   prefix: '/cdn',
+    //   origin: (env.ORIGIN_CDN || '').replace(/\/$/, ''),
+    //   mapPath: (path) => path.replace(/^\/cdn/, '') || '/index.html',
+    // },
+  ].filter((r) => r.origin);
+}
 
     // ── Future services (uncomment & set ORIGIN_* in wrangler.toml) ─────────────
     //

@@ -1,29 +1,33 @@
-# app.example.com — Cloudflare Worker gateway
+# Cloudflare Worker gateway
 
 Edge router cho **một subdomain public**, nhiều backend phía sau.
 
 ```
-Browser → https://app.example.com/wiki/...
+Browser → https://<PUBLIC_HOST>/...
               ↓ Cloudflare (orange, SSL)
          pst-gateway Worker  (path router)
               ↓ fetch grey-cloud / external origins only
     ┌─────────┴──────────┬─────────────────┐
     ↓                    ↓                 ↓
-origin-pst...      origin-wiki...    OCI bucket URL
-(PAD Docker)       (future)          (future /cdn)
+origin host          other origins     OCI bucket URL
+(PAD Docker)         (future)          (future /cdn)
 ```
 
-**Không** fetch `app.example.com` hay IP trực tiếp từ Worker → tránh error **1003**.
+**Không** fetch the public host hay IP trực tiếp từ Worker → tránh error **1003**.
 
-## DNS (zone `example.com`)
+Copy `wrangler.toml.example` → `wrangler.toml` (gitignored) and fill `PUBLIC_HOST`, `ORIGIN_PAD`, and the Worker route.
+
+## DNS
+
+Lấy IP origin từ Terraform (`cd iac && terraform output public_ip`) — **không** commit IP VM hay hostname thật vào git.
 
 | Type | Name | Content | Proxy |
 |------|------|---------|-------|
-| A | `pst` | `203.0.113.10` | **Proxied** (orange) |
-| A | `origin-pst` | `203.0.113.10` | **DNS only** (grey) |
+| A | public host | `<ORACLE_PUBLIC_IP>` | **Proxied** (orange) |
+| A | origin host | `<ORACLE_PUBLIC_IP>` | **DNS only** (grey) |
 
-- `pst` — user-facing, Worker route `app.example.com/*`
-- `origin-pst` — Worker → VM origin (PAD app qua Caddy :80)
+- Public host — user-facing, Worker route
+- Origin host — Worker → VM origin (PAD app qua Caddy :80)
 
 SSL/TLS: **Flexible** hoặc **Full** (origin HTTP only).
 
@@ -31,6 +35,7 @@ SSL/TLS: **Flexible** hoặc **Full** (origin HTTP only).
 
 ```bash
 cd cloudflare/pst-gateway
+cp wrangler.toml.example wrangler.toml   # fill real hostnames
 npm install
 npx wrangler login
 npm run deploy
@@ -69,19 +74,19 @@ npm run dev
 
 Cloudflare → Cache Rules → **Bypass** cho:
 
-- `app.example.com/monsters/*`
-- `app.example.com/admin/*`
-- `app.example.com/patterns/*`
-- `app.example.com/health`
+- `/monsters/*`
+- `/admin/*`
+- `/patterns/*`
+- `/health`
 
 ## Verify (thứ tự deploy — tránh 502 tạm)
 
 ```bash
 # 1. VM + Docker chạy
-curl -s http://origin-app.example.com/health    # → {"ok":true}
+curl -s http://<ORIGIN_HOST>/health    # → {"ok":true}
 
 # 2. Sau đó mới deploy Worker
-curl -s https://app.example.com/health          # → {"ok":true}
+curl -s https://<PUBLIC_HOST>/health   # → {"ok":true}
 ```
 
-**502 Bad gateway** thường do: Docker đang build/restart, `origin-pst` chưa có DNS grey, hoặc Worker deploy trước khi VM sẵn sàng. Đợi `deploy.cmd deploy` xong + health OK rồi `npm run deploy` Worker.
+**502 Bad gateway** thường do: Docker đang build/restart, origin DNS grey chưa có, hoặc Worker deploy trước khi VM sẵn sàng. Đợi `deploy.cmd deploy` xong + health OK rồi `npm run deploy` Worker.

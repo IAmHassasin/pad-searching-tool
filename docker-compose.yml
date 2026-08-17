@@ -1,6 +1,9 @@
 services:
   app:
-    build: .
+    build:
+      context: .
+      args:
+        VITE_PAD_CDN_ORIGIN: ${VITE_PAD_CDN_ORIGIN:-}
     env_file:
       - .env
     ports:

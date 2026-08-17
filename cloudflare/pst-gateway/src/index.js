@@ -54,9 +54,9 @@ async function proxyToOrigin(request, env, route) {
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
-    const publicHost = env.PUBLIC_HOST || 'app.example.com';
+    const publicHost = env.PUBLIC_HOST || '';
 
-    if (url.hostname !== publicHost) {
+    if (!publicHost || url.hostname !== publicHost) {
       return new Response('Not found', { status: 404 });
     }
 

@@ -25,7 +25,9 @@ export function MonsterPortrait({
     setFailed(false);
   }, [monsterId]);
 
-  if (failed) {
+  const src = variant === "icon" ? iconUrl(monsterId) : portraitUrl(monsterId);
+
+  if (failed || !src) {
     return (
       <div
         role="img"
@@ -39,7 +41,7 @@ export function MonsterPortrait({
 
   return (
     <img
-      src={variant === "icon" ? iconUrl(monsterId) : portraitUrl(monsterId)}
+      src={src}
       alt={alt}
       className={className}
       style={style}

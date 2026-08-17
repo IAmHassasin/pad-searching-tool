@@ -38,7 +38,7 @@ export function EventDetailPage({ eventId }: { eventId: string }) {
       if (entry.family.coverMonsterId > 0) ids.add(entry.family.coverMonsterId);
       if (entry.family.monsterId > 0) ids.add(entry.family.monsterId);
     }
-    return [...ids].map(portraitUrl);
+    return [...ids].map(portraitUrl).filter(Boolean);
   }, [event.data, entries]);
 
   return (

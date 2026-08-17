@@ -46,7 +46,7 @@ Three panels: monster filters (left), results (center), skill pattern filters (r
 Set in `.env` (VM secrets — do not commit):
 
 ```env
-ADMIN_USERNAME=superadmin
+ADMIN_USERNAME=...
 ADMIN_PASSWORD=...
 ADMIN_JWT_SECRET=...
 COMMUNITY_DB_URL=https://...
@@ -57,10 +57,11 @@ In the UI header: **Admin login** → **Refresh community DB**. Same logic as `n
 ## Android app (Capacitor)
 
 `web/android/` is a Capacitor-wrapped build of the React UI — a native shell that
-calls the deployed API directly (`VITE_API_BASE` in `web/.env.android`), instead of
+calls the deployed API directly (`VITE_API_BASE` in gitignored `web/.env.android`;
+copy from `web/.env.android.example`), instead of
 relative same-origin paths. Requires Android Studio (bundles the SDK) + a JDK that
 your installed Gradle version supports as its own runtime — see the note in
-`web/.env.android` if you hit a `class file major version` error.
+`web/.env.android.example` if you hit a `class file major version` error.
 
 ```bash
 cd web
@@ -141,7 +142,7 @@ deploy.cmd ssh
 make -f deploy.mk deploy ORACLE_HOST=1.2.3.4 SSH_KEY=../key/vm_ssh.pem ORACLE_USER=opc
 make -f deploy.mk deploy \
   COMMUNITY_DB_URL='https://...' \
-  ADMIN_USERNAME=superadmin \
+  ADMIN_USERNAME='...' \
   ADMIN_PASSWORD='...' \
   ADMIN_JWT_SECRET='...'
 ```
@@ -180,7 +181,7 @@ Optional overrides: `SSH_KEY=../key/vm_ssh.pem` `ORACLE_USER=opc` `ENV_FILE=../.
 
 Cloud-init on the VM installs **Docker**, **Caddy** (reverse proxy → `:3000`), and opens **22/80/443**.
 
-**Cloudflare:** `terraform output cloudflare_dns` → DNS `pst` (proxied) + `origin-pst` (grey) + deploy Worker in **`cloudflare/pst-gateway/`** (path router for multiple services under `app.example.com`).
+**Cloudflare:** `terraform output cloudflare_dns` → DNS for the public host (proxied) + origin host (grey) + deploy Worker in **`cloudflare/pst-gateway/`** (copy `wrangler.toml.example` → `wrangler.toml`, gitignored).
 
 ## CLI (`npm run pad`)
 

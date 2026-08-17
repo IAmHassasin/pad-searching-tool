@@ -1,6 +1,7 @@
 node_modules/
 .env
 .env.local
+web/.env.android
 
 # Local brainstorm / agent session artifacts
 .superpowers/
@@ -32,3 +33,4 @@ seed/*.sqlite
 
 cloudflare/**/node_modules/
 cloudflare/**/.wrangler/
+cloudflare/pst-gateway/wrangler.toml

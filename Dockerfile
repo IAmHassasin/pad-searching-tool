@@ -4,8 +4,10 @@ WORKDIR /app/web
 COPY web/package.json web/package-lock.json ./
 RUN npm ci
 COPY web/ ./
-# Same origin as API in the container (port 3000).
+# Same origin as API in the container (port 3000). Media CDN comes from gitignored `.env`.
+ARG VITE_PAD_CDN_ORIGIN=
 ENV VITE_API_BASE=
+ENV VITE_PAD_CDN_ORIGIN=$VITE_PAD_CDN_ORIGIN
 RUN npm run build
 
 # ── Backend ─────────────────────────────────────────────────────────────────

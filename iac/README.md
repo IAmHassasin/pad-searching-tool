@@ -81,7 +81,7 @@ Tạo **2** DNS records (cùng VM IP):
 
 | Name | Proxy | Mục đích |
 |------|-------|----------|
-| `pst` | **Proxied** (orange) | User → `https://app.example.com` |
+| `pst` | **Proxied** (orange) | User → public app host |
 | `origin-pst` | **DNS only** (grey) | Worker fetch → VM (tránh error 1003) |
 
 Deploy Worker (path router — thêm service sau trong `src/routes.js`):

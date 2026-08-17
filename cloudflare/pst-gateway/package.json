@@ -2,7 +2,7 @@
   "name": "pst-gateway",
   "private": true,
   "version": "1.0.0",
-  "description": "Cloudflare Worker — path router for app.example.com",
+  "description": "Cloudflare Worker — path router for the public app host",
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
