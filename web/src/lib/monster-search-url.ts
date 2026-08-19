@@ -1,4 +1,10 @@
-import type { MonsterRecord } from "../types";
+import type {
+  MonsterRecord,
+  MonsterFilters,
+  PatternGroupsManifest,
+  SelectedPatternTag,
+  SkillFilters,
+} from "../types";
 import { parseMonsterTypeIds } from "./monster-types";
 
 /** Assist equipment awakening — search target for Resonate links. */
@@ -74,6 +80,185 @@ export function parseTypesFromSearch(search: string): number[] | null {
 
 export function parseAttributeSlot1FromSearch(search: string): number[] | null {
   return parseIntCsvParam(search, "attributeSlot1");
+}
+
+export function parseAttributeSlot2FromSearch(search: string): number[] | null {
+  return parseIntCsvParam(search, "attributeSlot2");
+}
+
+export function parseAttributeSlot3FromSearch(search: string): number[] | null {
+  return parseIntCsvParam(search, "attributeSlot3");
+}
+
+function parseOptionalNumberParam(search: string, key: string): number | null {
+  const raw = new URLSearchParams(search).get(key);
+  if (!raw?.trim()) return null;
+  const n = Number(raw.trim());
+  return Number.isFinite(n) ? n : null;
+}
+
+function parseStringParam(search: string, key: string): string {
+  return new URLSearchParams(search).get(key)?.trim() ?? "";
+}
+
+export function parseMonsterFiltersFromSearch(
+  search: string,
+  fallback: MonsterFilters
+): MonsterFilters {
+  const attributeSlots = fallback.attributeSlots.map(
+    (slot) => new Set(slot)
+  ) as MonsterFilters["attributeSlots"];
+  const attribute1 = parseAttributeSlot1FromSearch(search);
+  const attribute2 = parseAttributeSlot2FromSearch(search);
+  const attribute3 = parseAttributeSlot3FromSearch(search);
+  if (attribute1?.length) attributeSlots[0] = new Set(attribute1);
+  if (attribute2?.length) attributeSlots[1] = new Set(attribute2);
+  if (attribute3?.length) attributeSlots[2] = new Set(attribute3);
+
+  const q = new URLSearchParams(search);
+  const attributeMatch = q.get("attributeMatch") === "any" ? "any" : "all";
+
+  return {
+    ...fallback,
+    rarity: new Set(parseIntCsvParam(search, "rarity") ?? []),
+    attributeSlots,
+    attributeMatch,
+    types: new Set(parseTypesFromSearch(search) ?? []),
+    hpMin: parseOptionalNumberParam(search, "hpMin"),
+    hpMax: parseOptionalNumberParam(search, "hpMax"),
+    atkMin: parseOptionalNumberParam(search, "atkMin"),
+    atkMax: parseOptionalNumberParam(search, "atkMax"),
+    rcvMin: parseOptionalNumberParam(search, "rcvMin"),
+    rcvMax: parseOptionalNumberParam(search, "rcvMax"),
+    idQuery: parseStringParam(search, "idQuery"),
+    awakeningIds: parseAwakeningIdsFromSearch(search) ?? [],
+    excludedAwakeningIds: parseExcludedAwakeningIdsFromSearch(search) ?? [],
+    vanishOnly: q.get("vanishOnly") === "1" || q.get("vanishOnly") === "true",
+    vanishAwakeningIds: parseIntCsvParam(search, "vanishAwakeningIds") ?? [],
+  };
+}
+
+export function parseSkillFiltersFromSearch(
+  search: string,
+  fallback: SkillFilters
+): SkillFilters {
+  const q = new URLSearchParams(search);
+  const skillTextMode = q.get("skillTextMode");
+  const patternMatch = q.get("patternMatch");
+  return {
+    ...fallback,
+    activeSkillText: parseStringParam(search, "activeSkillText"),
+    leaderSkillText: parseStringParam(search, "leaderSkillText"),
+    skillTextMode:
+      skillTextMode === "active" || skillTextMode === "leader"
+        ? skillTextMode
+        : "both",
+    patternMatch: patternMatch === "any" ? "any" : "all",
+  };
+}
+
+export function parsePatternTagKeysFromSearch(search: string): {
+  activeTags: string[];
+  leaderTags: string[];
+} {
+  const parseCsvStrings = (key: string) =>
+    (new URLSearchParams(search).get(key) ?? "")
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean);
+  return {
+    activeTags: parseCsvStrings("activeTags"),
+    leaderTags: parseCsvStrings("leaderTags"),
+  };
+}
+
+export function resolveSelectedPatterns(
+  patternGroups: PatternGroupsManifest,
+  keys: { activeTags: string[]; leaderTags: string[] }
+): SelectedPatternTag[] {
+  const byType = (
+    skillType: "active_skill" | "leader_skill",
+    categories: PatternGroupsManifest["active_skill_filters"],
+    wanted: string[]
+  ): SelectedPatternTag[] => {
+    const wantedSet = new Set(wanted);
+    const out: SelectedPatternTag[] = [];
+    for (const category of categories) {
+      for (const tag of category.tags) {
+        const key = tag.tag_id != null ? String(tag.tag_id) : tag.tag_name_en;
+        if (wantedSet.has(key)) {
+          out.push({ skillType, tagKey: key, label: tag.label });
+        }
+      }
+    }
+    return out;
+  };
+
+  return [
+    ...byType("active_skill", patternGroups.active_skill_filters, keys.activeTags),
+    ...byType("leader_skill", patternGroups.leader_skill_filters, keys.leaderTags),
+  ];
+}
+
+function setCsv(q: URLSearchParams, key: string, values: number[] | string[]) {
+  if (values.length) q.set(key, values.join(","));
+}
+
+export function buildSearchParamsFromFilters(
+  monsterFilters: MonsterFilters,
+  skillFilters: SkillFilters
+): URLSearchParams {
+  const q = new URLSearchParams();
+  setCsv(q, "rarity", [...monsterFilters.rarity]);
+  monsterFilters.attributeSlots.forEach((slot, index) => {
+    setCsv(q, `attributeSlot${index + 1}`, [...slot]);
+  });
+  if (monsterFilters.attributeSlots.some((slot) => slot.size > 0)) {
+    q.set("attributeMatch", monsterFilters.attributeMatch);
+  }
+  setCsv(q, "types", [...monsterFilters.types]);
+  if (monsterFilters.hpMin != null) q.set("hpMin", String(monsterFilters.hpMin));
+  if (monsterFilters.hpMax != null) q.set("hpMax", String(monsterFilters.hpMax));
+  if (monsterFilters.atkMin != null) q.set("atkMin", String(monsterFilters.atkMin));
+  if (monsterFilters.atkMax != null) q.set("atkMax", String(monsterFilters.atkMax));
+  if (monsterFilters.rcvMin != null) q.set("rcvMin", String(monsterFilters.rcvMin));
+  if (monsterFilters.rcvMax != null) q.set("rcvMax", String(monsterFilters.rcvMax));
+  if (monsterFilters.idQuery.trim()) q.set("idQuery", monsterFilters.idQuery.trim());
+  setCsv(q, "awakeningIds", monsterFilters.awakeningIds);
+  if (monsterFilters.awakeningIds.length > 0) q.set("awakeningMatch", "all");
+  setCsv(q, "excludedAwakeningIds", monsterFilters.excludedAwakeningIds);
+  if (monsterFilters.vanishOnly) q.set("vanishOnly", "1");
+  setCsv(q, "vanishAwakeningIds", monsterFilters.vanishAwakeningIds);
+  if (monsterFilters.vanishAwakeningIds.length > 0) {
+    q.set("vanishAwakeningMatch", "all");
+  }
+
+  const activeTags = skillFilters.selectedPatterns
+    .filter((p) => p.skillType === "active_skill")
+    .map((p) => p.tagKey);
+  const leaderTags = skillFilters.selectedPatterns
+    .filter((p) => p.skillType === "leader_skill")
+    .map((p) => p.tagKey);
+  setCsv(q, "activeTags", activeTags);
+  setCsv(q, "leaderTags", leaderTags);
+  q.set("patternMatch", skillFilters.patternMatch);
+  q.set("skillTextMode", skillFilters.skillTextMode);
+  if (skillFilters.activeSkillText.trim()) {
+    q.set("activeSkillText", skillFilters.activeSkillText.trim());
+  }
+  if (skillFilters.leaderSkillText.trim()) {
+    q.set("leaderSkillText", skillFilters.leaderSkillText.trim());
+  }
+
+  return q;
+}
+
+export function buildShareSearchUrl(
+  monsterFilters: MonsterFilters,
+  skillFilters: SkillFilters
+): string {
+  const q = buildSearchParamsFromFilters(monsterFilters, skillFilters).toString();
+  return q ? `/?${q}` : "/";
 }
 
 /** Assist eq search: awk 49, host primary attribute, any host type. */

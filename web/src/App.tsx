@@ -1,5 +1,5 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { fetchHealth, fetchPatternGroups, searchAllMonsters } from "./api";
 import { AdminPanel } from "./components/AdminPanel";
 import { AppBrand } from "./components/AppBrand";
@@ -22,10 +22,11 @@ import {
   type ResultQuickFilter,
 } from "./lib/result-quick-filter";
 import {
-  parseAttributeSlot1FromSearch,
-  parseAwakeningIdsFromSearch,
-  parseExcludedAwakeningIdsFromSearch,
-  parseTypesFromSearch,
+  buildShareSearchUrl,
+  parseMonsterFiltersFromSearch,
+  parsePatternTagKeysFromSearch,
+  parseSkillFiltersFromSearch,
+  resolveSelectedPatterns,
 } from "./lib/monster-search-url";
 import {
   sortMonsterRows,
@@ -39,39 +40,25 @@ import {
 } from "./types";
 
 function initialMonsterFilters(): MonsterFilters {
-  const search = window.location.search;
-  const awakeningIds = parseAwakeningIdsFromSearch(search);
-  const excludedAwakeningIds = parseExcludedAwakeningIdsFromSearch(search) ?? [];
-  const types = parseTypesFromSearch(search);
-  const attributeSlot1 = parseAttributeSlot1FromSearch(search);
-  if (
-    !awakeningIds?.length &&
-    !excludedAwakeningIds.length &&
-    !types?.length &&
-    !attributeSlot1?.length
-  ) {
-    return EMPTY_MONSTER_FILTERS;
-  }
-  const attributeSlots = EMPTY_MONSTER_FILTERS.attributeSlots.map((slot) =>
-    new Set(slot)
-  ) as MonsterFilters["attributeSlots"];
-  if (attributeSlot1?.length) {
-    attributeSlots[0] = new Set(attributeSlot1);
-  }
-  return {
-    ...EMPTY_MONSTER_FILTERS,
-    awakeningIds: awakeningIds ?? [],
-    excludedAwakeningIds,
-    attributeSlots,
-    types: new Set(types ?? []),
-  };
+  return parseMonsterFiltersFromSearch(
+    window.location.search,
+    EMPTY_MONSTER_FILTERS
+  );
+}
+
+function initialSkillFilters(): SkillFilters {
+  return parseSkillFiltersFromSearch(window.location.search, EMPTY_SKILL_FILTERS);
 }
 
 export default function App() {
+  const initialPatternKeys = useMemo(
+    () => parsePatternTagKeysFromSearch(window.location.search),
+    []
+  );
   const [monsterFilters, setMonsterFilters] =
     useState<MonsterFilters>(initialMonsterFilters);
   const [skillFilters, setSkillFilters] =
-    useState<SkillFilters>(EMPTY_SKILL_FILTERS);
+    useState<SkillFilters>(initialSkillFilters);
   const [selected, setSelected] = useState<
     import("./types").MonsterRecord | null
   >(null);
@@ -88,6 +75,7 @@ export default function App() {
     useState<ResultDisplaySections>(DEFAULT_RESULT_DISPLAY_SECTIONS);
   const [resultQuickFilter, setResultQuickFilter] =
     useState<ResultQuickFilter>(null);
+  const [shareMsg, setShareMsg] = useState<string | null>(null);
   const queryClient = useQueryClient();
   const admin = useAdminSession();
   const isMobileWebview = useMobileWebview();
@@ -107,6 +95,24 @@ export default function App() {
     staleTime: Infinity,
     gcTime: Infinity,
   });
+
+  useEffect(() => {
+    if (!patternGroups.data) return;
+    const hasPendingSharedTags =
+      initialPatternKeys.activeTags.length > 0 ||
+      initialPatternKeys.leaderTags.length > 0;
+    if (!hasPendingSharedTags) return;
+    setSkillFilters((current) => {
+      if (current.selectedPatterns.length > 0) return current;
+      return {
+        ...current,
+        selectedPatterns: resolveSelectedPatterns(
+          patternGroups.data,
+          initialPatternKeys
+        ),
+      };
+    });
+  }, [initialPatternKeys, patternGroups.data]);
 
   const searchKey = useMemo(
     () => ({
@@ -158,11 +164,39 @@ export default function App() {
 
   const apiError = health.error ?? patternGroups.error ?? search.error ?? null;
 
+  const handleShareFilter = async () => {
+    const relativeUrl = buildShareSearchUrl(monsterFilters, skillFilters);
+    const absoluteUrl = new URL(relativeUrl, window.location.origin).toString();
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: "PAD Searching Tool filter",
+          url: absoluteUrl,
+        });
+        setShareMsg("Filter link shared");
+      } else {
+        await navigator.clipboard.writeText(absoluteUrl);
+        setShareMsg("Filter link copied");
+      }
+    } catch {
+      setShareMsg("Share cancelled");
+    }
+    window.setTimeout(() => setShareMsg(null), 2000);
+  };
+
   return (
     <div className="flex h-full flex-col">
       <header className="flex shrink-0 items-center justify-between border-b border-[var(--color-border)] bg-[#0d1117] px-4 py-2">
         <AppBrand />
         <div className="flex items-center gap-3 text-xs text-[var(--color-muted)]">
+          <button
+            type="button"
+            className="rounded border border-[var(--color-border)] px-2 py-0.5 text-[var(--color-muted)] hover:border-[var(--color-accent)] hover:text-white"
+            onClick={() => void handleShareFilter()}
+          >
+            Share filter
+          </button>
+          {shareMsg && <span>{shareMsg}</span>}
           <span
             className={
               health.data?.ok ? "text-emerald-400" : "text-amber-400"
