@@ -1,4 +1,5 @@
 import { useState, type ReactNode } from "react";
+import { useTruncatedTitle } from "../hooks/useTruncatedTitle";
 import { monsterRowId } from "../lib/filters";
 import {
   parseRegularAwakenings,
@@ -106,8 +107,8 @@ function SkillSnippet({
           {kind === "active" ? "AS" : "LS"}
         </span>
         <p
-          className={`min-w-0 flex-1 font-bold text-[#f5e6c8] ${
-            inline ? "truncate text-[9px]" : "truncate text-[10px]"
+          className={`min-w-0 flex-1 break-words font-bold text-[#f5e6c8] ${
+            inline ? "text-[9px]" : "text-[10px]"
           }`}
         >
           {title}
@@ -134,18 +135,14 @@ function SkillSnippet({
           stageCooldowns={stageCooldowns}
           compact={inline}
           className={`text-[#e8dcc8] ${
-            inline
-              ? "line-clamp-1 text-[8px] leading-tight"
-              : "line-clamp-2 text-[9px] leading-snug"
+            inline ? "text-[8px] leading-tight" : "text-[9px] leading-snug"
           }`}
         />
       ) : (
         <LeaderSkillDescText
           text={body}
           className={`text-[#e8dcc8] ${
-            inline
-              ? "line-clamp-1 text-[8px] leading-tight"
-              : "line-clamp-2 text-[9px] leading-snug"
+            inline ? "text-[8px] leading-tight" : "text-[9px] leading-snug"
           }`}
         />
       )}
@@ -202,6 +199,9 @@ export function MonsterQuickPreview({
   sections,
 }: Props) {
   const monsterId = monsterRowId(row);
+  const nameTitle = useTruncatedTitle<HTMLHeadingElement>(
+    row.name_en ?? "Unknown"
+  );
   const attributeIds = parseMonsterAttributeIds(row);
   const regular = parseRegularAwakenings(row.awakenings);
   const hasSuperAwks =
@@ -350,6 +350,8 @@ export function MonsterQuickPreview({
                 )}
               </p>
               <h3
+                ref={nameTitle.ref}
+                title={nameTitle.title}
                 className={`truncate font-bold text-white ${inline ? "text-[10px]" : "text-xs"}`}
               >
                 {row.name_en ?? "Unknown"}

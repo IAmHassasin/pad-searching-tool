@@ -1,3 +1,4 @@
+import { useTruncatedTitle } from "../hooks/useTruncatedTitle";
 import { monsterRowId } from "../lib/filters";
 import {
   computeModifiedStat,
@@ -16,6 +17,25 @@ import {
   MonsterResultPreviewFloating,
   useMonsterResultPreview,
 } from "./MonsterResultPreviewPopover";
+
+function MonsterNameCell({
+  name,
+  minimal,
+}: {
+  name: string;
+  minimal?: boolean;
+}) {
+  const nameTitle = useTruncatedTitle<HTMLParagraphElement>(name);
+  return (
+    <p
+      ref={nameTitle.ref}
+      title={nameTitle.title}
+      className={`truncate ${minimal ? "text-[10px]" : ""}`}
+    >
+      {name}
+    </p>
+  );
+}
 
 type Props = {
   rows: MonsterRecord[];
@@ -132,11 +152,10 @@ export function ResultsList({
                       displaySections &&
                       isAllSectionsEnabled(displaySections)
                     ) && (
-                      <p
-                        className={`truncate ${minimal ? "text-[10px]" : ""}`}
-                      >
-                        {row.name_en ?? "—"}
-                      </p>
+                      <MonsterNameCell
+                        name={row.name_en ?? "—"}
+                        minimal={minimal}
+                      />
                     )}
                     {showInlineCard && displaySections && (
                       <MonsterQuickPreview

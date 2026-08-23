@@ -1,3 +1,4 @@
+import type { CSSProperties, ReactNode } from "react";
 import cardBackground from "../assets/pad/background.png";
 import { monsterRowId } from "../lib/filters";
 import {
@@ -7,7 +8,10 @@ import {
   resolvePrefixedAwakeningIds,
   resolveSuperAwakeningIds,
 } from "../lib/awakenings";
-import { buildAssistResonanceSearchUrl } from "../lib/monster-search-url";
+import {
+  buildAssistResonanceSearchUrl,
+  buildMonsterGoogleSearchUrl,
+} from "../lib/monster-search-url";
 import {
   formatActiveSkillDesc,
   hasEvoStageCooldowns,
@@ -32,6 +36,7 @@ import { MonsterChangeTargetStrip } from "./MonsterChangeTargetStrip";
 import { MonsterPortrait } from "./MonsterPortrait";
 import { MonsterTypeStrip } from "./MonsterTypeStrip";
 import { SuperAwakeningStrip } from "./SuperAwakeningStrip";
+import { useTruncatedTitle } from "../hooks/useTruncatedTitle";
 
 const COMPACT_AWAKENING_ICON_SIZE = 16;
 
@@ -70,6 +75,33 @@ function RelationToggleButton({
     >
       {label}
     </button>
+  );
+}
+
+function LinkPillButton({
+  href,
+  title,
+  className = "",
+  style,
+  children,
+}: {
+  href: string;
+  title?: string;
+  className?: string;
+  style?: CSSProperties;
+  children: ReactNode;
+}) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      title={title}
+      style={{ fontSize: 11, fontWeight: 700, lineHeight: 1.25, ...style }}
+      className={`rounded border border-[#6b4f2a]/90 bg-[#2f2118]/95 px-1.5 py-0.5 text-[#e8dcc8] shadow-md transition-colors hover:border-[#c9a84a] hover:text-white ${className}`}
+    >
+      {children}
+    </a>
   );
 }
 
@@ -174,6 +206,9 @@ export function MonsterDetailCard({
   compact = false,
 }: Props) {
   const id = monsterRowId(row);
+  const nameTitle = useTruncatedTitle<HTMLHeadingElement>(
+    row.name_en ?? "Unknown"
+  );
   const regular = parseRegularAwakenings(row.awakenings);
   const hasSuperAwks =
     resolveSuperAwakeningIds(row.awakenings, row.super_awakenings).length > 0;
@@ -190,6 +225,7 @@ export function MonsterDetailCard({
   const resonateSearchUrl = hasAssistResonance
     ? buildAssistResonanceSearchUrl(row)
     : null;
+  const googleSearchUrl = buildMonsterGoogleSearchUrl(row);
   const superLabel = hasSuperAwks ? "Super awakening" : "Sync awakening";
 
   const awkColumnRightOffset =
@@ -267,12 +303,24 @@ export function MonsterDetailCard({
                 No.{id}
               </p>
               <h3
+                ref={nameTitle.ref}
+                title={nameTitle.title}
                 className={`truncate font-bold text-white ${compact ? "text-xs" : "text-sm"}`}
               >
                 {row.name_en ?? "Unknown"}
               </h3>
             </div>
-            <StarRow count={row.rarity ?? 0} />
+            <div className="flex shrink-0 flex-col items-end gap-1">
+              <StarRow count={row.rarity ?? 0} />
+              {googleSearchUrl && (
+                <LinkPillButton
+                  href={googleSearchUrl}
+                  title="Search this monster on Google (パズドラ)"
+                >
+                  Google
+                </LinkPillButton>
+              )}
+            </div>
           </div>
         </div>
       </header>
@@ -321,20 +369,12 @@ export function MonsterDetailCard({
                   />
                 )}
                 {resonateSearchUrl && (
-                  <a
+                  <LinkPillButton
                     href={resonateSearchUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="rounded border border-[#6b4f2a]/90 bg-[#2f2118]/95 px-1.5 py-0.5 text-[#e8dcc8] shadow-md transition-colors hover:border-[#c9a84a] hover:text-white"
-                    style={{
-                      fontSize: 11,
-                      fontWeight: 700,
-                      lineHeight: 1.25,
-                    }}
                     title="Search assist equipment (awk 49) matching primary attribute and type"
                   >
                     Resonate
-                  </a>
+                  </LinkPillButton>
                 )}
               </div>
             )}
@@ -431,21 +471,14 @@ export function MonsterDetailCard({
             </div>
           )}
           {!compact && resonateSearchUrl && (
-            <a
+            <LinkPillButton
               href={resonateSearchUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="absolute bottom-1.5 z-20 rounded border border-[#6b4f2a]/90 bg-[#2f2118]/95 px-1.5 py-0.5 text-[#e8dcc8] shadow-md transition-colors hover:border-[#c9a84a] hover:text-white"
-              style={{
-                fontSize: 11,
-                fontWeight: 700,
-                lineHeight: 1.25,
-                right: resonateButtonRight,
-              }}
+              className="absolute bottom-1.5 z-20"
+              style={{ right: resonateButtonRight }}
               title="Search assist equipment (awk 49) matching primary attribute and type"
             >
               Resonate
-            </a>
+            </LinkPillButton>
           )}
         </div>
       </div>

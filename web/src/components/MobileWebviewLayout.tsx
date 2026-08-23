@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTruncatedTitle } from "../hooks/useTruncatedTitle";
 import type { AwkModifierSettings } from "../lib/awakening-stat-modifier";
 import type { ResultDisplaySections } from "../lib/result-display";
 import type { ResultQuickFilter } from "../lib/result-quick-filter";
@@ -144,6 +145,10 @@ function MobileDetailPanel({
   onSelect: (row: MonsterRecord) => void;
   showFullArt: boolean;
 }) {
+  const nameTitle = useTruncatedTitle<HTMLParagraphElement>(
+    selected.name_en ?? "Details"
+  );
+
   if (collapsed) {
     return (
       <aside className="flex w-8 shrink-0 flex-col items-center border-l border-[var(--color-border)] bg-[#0a0e12] py-2">
@@ -162,7 +167,11 @@ function MobileDetailPanel({
   return (
     <aside className="flex min-h-0 w-[min(22.5rem,58%)] shrink-0 flex-col border-l border-[var(--color-border)] bg-[#0a0e12]">
       <div className="flex shrink-0 items-center justify-between gap-1 border-b border-[var(--color-border)] px-2 py-1">
-        <p className="min-w-0 flex-1 truncate text-[10px] font-semibold text-white">
+        <p
+          ref={nameTitle.ref}
+          title={nameTitle.title}
+          className="min-w-0 flex-1 truncate text-[10px] font-semibold text-white"
+        >
           {selected.name_en ?? "Details"}
         </p>
         <CollapseButton

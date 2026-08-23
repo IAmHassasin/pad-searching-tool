@@ -6,6 +6,7 @@ import { AwakeningSpriteIcon } from "../components/AwakeningSpriteIcon";
 import { AwkModifierModal } from "../components/AwkModifierModal";
 import { MonsterPortrait } from "../components/MonsterPortrait";
 import { DEFAULT_AWK_MODIFIER_SETTINGS } from "../components/ResultsSortControls";
+import { useTruncatedTitle } from "../hooks/useTruncatedTitle";
 import { computeTeamStats } from "../lib/team-build/compute-stats";
 import { lb110Percent, maxMonsterLevel } from "../lib/team-build/level-scaling";
 import {
@@ -195,6 +196,9 @@ function SlotEditor({
   const saOptions = monster ? listSuperAwakeningOptions(monster) : [];
   const levelCap = monster ? maxMonsterLevel(monster) : 120;
   const transformForm = monster?.is_transform_form === true || monster?.is_transform_form === 1;
+  const nameTitle = useTruncatedTitle<HTMLSpanElement>(
+    monster ? monster.name_en ?? `#${monster.monster_id}` : ""
+  );
 
   const roleLabel =
     index === 0 ? "Leader" : index === 5 ? "Helper" : `Sub ${index}`;
@@ -206,7 +210,11 @@ function SlotEditor({
           {roleLabel}
         </span>
         {monster && (
-          <span className="truncate text-xs text-[var(--color-accent)]">
+          <span
+            ref={nameTitle.ref}
+            title={nameTitle.title}
+            className="truncate text-xs text-[var(--color-accent)]"
+          >
             {monster.name_en ?? `#${monster.monster_id}`}
           </span>
         )}

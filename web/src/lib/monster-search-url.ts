@@ -261,6 +261,16 @@ export function buildShareSearchUrl(
   return q ? `/?${q}` : "/";
 }
 
+/** Google search for a monster: "パズドラ" + its Japanese name (falls back to the English name). */
+export function buildMonsterGoogleSearchUrl(
+  row: Pick<MonsterRecord, "name_jp" | "name_en">
+): string | null {
+  const name = row.name_jp?.trim() || row.name_en?.trim();
+  if (!name) return null;
+  const query = new URLSearchParams({ q: `パズドラ ${name}` });
+  return `https://www.google.com/search?${query}`;
+}
+
 /** Assist eq search: awk 49, host primary attribute, any host type. */
 export function buildAssistResonanceSearchUrl(
   row: Pick<
