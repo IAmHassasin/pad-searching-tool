@@ -1,9 +1,10 @@
 import { AWAKENING_FILTER_GROUPS } from "../../lib/awakening-filter-groups";
+import { VANISH_FILTER_GROUPS } from "../../lib/vanish-filter-groups";
 import type { MonsterFilters } from "../../types";
 import { AwakeningSpriteIcon } from "../AwakeningSpriteIcon";
 import { CollapsibleFilterSection } from "./collapsible-filter-section";
 import { SupplementFilterCheckbox } from "./supplement-filter-checkbox";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const AWK_ACCENT = "#6b8f3c";
 const AWK_EXCLUDE_ACCENT = "#f85149";
@@ -372,9 +373,11 @@ const AWAKENING_GROUP_SHORT_LABELS: Record<string, string> = {
 };
 
 function AwakeningGroupTabBar({
+  groups,
   activeIndex,
   onChange,
 }: {
+  groups: typeof AWAKENING_FILTER_GROUPS;
   activeIndex: number;
   onChange: (index: number) => void;
 }) {
@@ -384,7 +387,7 @@ function AwakeningGroupTabBar({
       role="tablist"
       aria-label="Awakening groups"
     >
-      {AWAKENING_FILTER_GROUPS.map((group, index) => (
+      {groups.map((group, index) => (
         <button
           key={group.label}
           type="button"
@@ -421,6 +424,10 @@ export function MonsterAwakeningFilter({
   const [activeGroupIndex, setActiveGroupIndex] = useState(0);
   const iconSize = compact ? 16 : fillHeight ? 18 : 18;
   const pickerMode = filters.awakeningPickerMode;
+
+  useEffect(() => {
+    setActiveGroupIndex(0);
+  }, [pickerMode]);
   const totalSelected =
     filters.awakeningIds.length +
     filters.excludedAwakeningIds.length +
@@ -464,10 +471,17 @@ export function MonsterAwakeningFilter({
   const summary =
     summaryParts.length > 0 ? summaryParts.join(" · ") : "regular + super + sync";
 
+  const awakeningGroups =
+    pickerMode === "vanish" ? VANISH_FILTER_GROUPS : AWAKENING_FILTER_GROUPS;
+  const safeGroupIndex = Math.min(
+    activeGroupIndex,
+    Math.max(0, awakeningGroups.length - 1)
+  );
+
   const useGroupTabs = singleGroupMode;
   const visibleGroups = useGroupTabs
-    ? [AWAKENING_FILTER_GROUPS[activeGroupIndex]].filter(Boolean)
-    : AWAKENING_FILTER_GROUPS;
+    ? [awakeningGroups[safeGroupIndex]].filter(Boolean)
+    : awakeningGroups;
 
   const gridClass =
     compact && useGroupTabs
@@ -529,7 +543,8 @@ export function MonsterAwakeningFilter({
 
       {useGroupTabs && (
         <AwakeningGroupTabBar
-          activeIndex={activeGroupIndex}
+          groups={awakeningGroups}
+          activeIndex={safeGroupIndex}
           onChange={setActiveGroupIndex}
         />
       )}
