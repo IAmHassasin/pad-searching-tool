@@ -4,6 +4,8 @@ import {
   Get,
   Query,
 } from "@nestjs/common";
+import { EffectValueCatalogService } from "../patterns/effect-value-catalog.service";
+import type { EffectValueRangeInput } from "../patterns/effect-value-types";
 import { PatternCatalogService } from "../patterns/pattern-catalog.service";
 import { MonsterRelationsService } from "./monster-relations.service";
 import {
@@ -44,10 +46,39 @@ function parseOptionalNumber(raw: string | undefined): number | null {
   return n;
 }
 
+/**
+ * `effect=familyId:min:max,...` — either bound may be empty for unbounded,
+ * e.g. `effect=shield_percent:50:,skill_charge_turns:2:3`.
+ */
+function parseEffectRanges(raw: string | undefined): EffectValueRangeInput[] {
+  if (!raw?.trim()) return [];
+  const out: EffectValueRangeInput[] = [];
+  for (const part of raw.split(",")) {
+    const spec = part.trim();
+    if (!spec) continue;
+    const [familyId, minRaw, maxRaw] = spec.split(":");
+    const id = familyId?.trim();
+    if (!id) {
+      throw new BadRequestException(`Invalid effect filter: ${spec}`);
+    }
+    const min = parseOptionalNumber(minRaw);
+    const max = parseOptionalNumber(maxRaw);
+    if (min == null && max == null) continue;
+    if (min != null && max != null && min > max) {
+      throw new BadRequestException(
+        `Effect filter "${id}": min (${min}) is greater than max (${max}).`
+      );
+    }
+    out.push({ familyId: id, min, max });
+  }
+  return out;
+}
+
 @Controller()
 export class PatternsController {
   constructor(
     private readonly catalog: PatternCatalogService,
+    private readonly effectValues: EffectValueCatalogService,
     private readonly search: PatternSearchService,
     private readonly relations: MonsterRelationsService
   ) {}
@@ -55,6 +86,12 @@ export class PatternsController {
   @Get("patterns/groups")
   groups() {
     return this.catalog.getGroupsManifest();
+  }
+
+  /** Numeric effect-value families for the advanced search UI. */
+  @Get("patterns/effect-families")
+  effectFamilies() {
+    return this.effectValues.getFamiliesManifest();
   }
 
   /**
@@ -89,6 +126,7 @@ export class PatternsController {
     @Query("vanishAwakeningIds") vanishAwakeningIdsRaw?: string,
     @Query("vanishAwakeningMatch") vanishAwakeningMatchRaw?: string,
     @Query("excludedVanishAwakeningIds") excludedVanishAwakeningIdsRaw?: string,
+    @Query("effect") effectRaw?: string,
     @Query("limit") limitRaw?: string,
     @Query("offset") offsetRaw?: string
   ) {
@@ -187,6 +225,7 @@ export class PatternsController {
 
     const activeTags = parseCsv(activeTagsRaw);
     const leaderTags = parseCsv(leaderTagsRaw);
+    const effectRanges = parseEffectRanges(effectRaw);
 
     return this.search.search({
       activeTags,
@@ -197,6 +236,7 @@ export class PatternsController {
       skillTextMode: skillTextModeParsed,
       monster: hasMonsterFilters ? monster : undefined,
       vanish,
+      effectRanges: effectRanges.length ? effectRanges : undefined,
       limit,
       offset,
     });

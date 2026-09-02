@@ -1,12 +1,30 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Segoe UI", system-ui, sans-serif;
+  /* Type — a technical/data-terminal pairing: monospace for brand + numerals,
+     a warm humanist sans for reading. Neither is a stock system font. */
+  --font-sans: "Public Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Base surfaces */
   --color-surface: #0f1419;
   --color-panel: #161b22;
   --color-border: #30363d;
   --color-accent: #58a6ff;
+  --color-accent-2: #e3b341; /* amber terminal glow — brand + preview accents */
   --color-muted: #8b949e;
+
+  /* Promoted from ad hoc literals sprinkled across filter components —
+     keeps the redesign on a real token backbone instead of more magic hex. */
+  --color-inset: #0d1117; /* input / chip / header well background */
+  --color-accent-muted: #1f3a5f; /* selected-chip accent-tinted background */
+  --color-hover: #21262d; /* unselected-chip hover background */
+  --color-positive: #6b8f3c; /* awakening include / positive accent */
+  --color-negative: #f85149; /* awakening exclude / negative accent */
+  --color-gold: #c9a84a; /* vanish / supplemental-data accent */
+  --color-amber-border: #8b6914;
+  --color-amber-bg: #2a1f14;
+  --color-amber-text: #e8dcc8;
 }
 
 html,
@@ -18,8 +36,12 @@ body,
 body {
   margin: 0;
   font-family: var(--font-sans);
-  background: var(--color-surface);
   color: #e6edf3;
+  background:
+    radial-gradient(ellipse 1200px 600px at 12% -10%, rgba(88, 166, 255, 0.05), transparent 60%),
+    radial-gradient(ellipse 900px 500px at 100% 0%, rgba(227, 179, 65, 0.035), transparent 55%),
+    var(--color-surface);
+  background-attachment: fixed;
 }
 
 input,
@@ -27,4 +49,41 @@ select,
 textarea,
 button {
   font: inherit;
+}
+
+/* Numerals (ids, stats, coordinates) read better tabular + monospaced. */
+.font-mono,
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+::selection {
+  background: rgba(88, 166, 255, 0.35);
+  color: #fff;
+}
+
+/* Slim dark scrollbars everywhere instead of the OS default light chrome. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: var(--color-border);
+  border-radius: 999px;
+  border: 2px solid var(--color-surface);
+}
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-muted);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 1px;
 }

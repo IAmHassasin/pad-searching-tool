@@ -66,8 +66,8 @@ export function FilterChip({
         compact ? "px-1.5 py-0.5 text-[10px] leading-tight" : "px-2 py-1 text-[11px] leading-tight"
       } ${
         selected
-          ? "border-[var(--color-accent)] bg-[#1f3a5f] text-white shadow-[inset_0_0_0_1px_rgba(88,166,255,0.25)]"
-          : "border-[var(--color-border)] bg-[#0d1117] text-[#c9d1d9] hover:border-[var(--color-accent)]/60 hover:bg-[#21262d]"
+          ? "border-[var(--color-accent)] bg-[var(--color-accent-muted)] text-white shadow-[inset_0_0_0_1px_rgba(88,166,255,0.25)]"
+          : "border-[var(--color-border)] bg-[var(--color-inset)] text-[#c9d1d9] hover:border-[var(--color-accent)]/60 hover:bg-[var(--color-hover)]"
       }`}
       style={
         selected ? { boxShadow: `inset 3px 0 0 0 ${accent}` } : undefined
@@ -105,8 +105,8 @@ function AttributeFilterIconChip({
       aria-pressed={selected}
       className={`shrink-0 rounded-md border p-0.5 transition-colors ${
         selected
-          ? "border-[var(--color-accent)] bg-[#1f3a5f] shadow-[inset_0_0_0_1px_rgba(88,166,255,0.25)]"
-          : "border-[var(--color-border)] bg-[#0d1117] hover:border-[var(--color-accent)]/60 hover:bg-[#21262d]"
+          ? "border-[var(--color-accent)] bg-[var(--color-accent-muted)] shadow-[inset_0_0_0_1px_rgba(88,166,255,0.25)]"
+          : "border-[var(--color-border)] bg-[var(--color-inset)] hover:border-[var(--color-accent)]/60 hover:bg-[var(--color-hover)]"
       }`}
     >
       <MonsterAttributeSpriteIcon
@@ -127,7 +127,7 @@ function AttributeMatchToggle({
 }) {
   return (
     <div
-      className="mb-2 flex rounded-lg border border-[var(--color-border)] bg-[#0d1117] p-0.5"
+      className="mb-2 flex rounded-lg border border-[var(--color-border)] bg-[var(--color-inset)] p-0.5"
       role="radiogroup"
       aria-label="Attribute slot match mode"
     >
@@ -145,7 +145,7 @@ function AttributeMatchToggle({
           onClick={() => onChange(id)}
           className={`flex-1 rounded-md px-2 py-1 text-xs font-medium transition-colors ${
             value === id
-              ? "bg-[var(--color-accent)] text-[#0d1117]"
+              ? "bg-[var(--color-accent)] text-[var(--color-inset)]"
               : "text-[var(--color-muted)] hover:text-white"
           }`}
         >
@@ -178,8 +178,8 @@ function TypeFilterIconChip({
       aria-pressed={selected}
       className={`shrink-0 rounded-md border p-0.5 transition-colors ${
         selected
-          ? "border-[var(--color-accent)] bg-[#1f3a5f] shadow-[inset_0_0_0_1px_rgba(88,166,255,0.25)]"
-          : "border-[var(--color-border)] bg-[#0d1117] hover:border-[var(--color-accent)]/60 hover:bg-[#21262d]"
+          ? "border-[var(--color-accent)] bg-[var(--color-accent-muted)] shadow-[inset_0_0_0_1px_rgba(88,166,255,0.25)]"
+          : "border-[var(--color-border)] bg-[var(--color-inset)] hover:border-[var(--color-accent)]/60 hover:bg-[var(--color-hover)]"
       }`}
     >
       <MonsterTypeSpriteIcon typeId={typeId} size={size} title={label} />
@@ -187,17 +187,21 @@ function TypeFilterIconChip({
   );
 }
 
-function numInput(
+/** Labeled numeric input — the shared min/max convention (HP/ATK/RCV today,
+ * advanced effect-value ranges reuse it too). Exported for that reuse. */
+export function numInput(
   label: string,
   value: number | null,
-  onChange: (v: number | null) => void
+  onChange: (v: number | null) => void,
+  disabled = false
 ) {
   return (
     <label className="flex flex-col gap-0.5 text-[10px] font-medium uppercase tracking-wide text-[var(--color-muted)]">
       {label}
       <input
         type="number"
-        className="rounded-md border border-[var(--color-border)] bg-[#0d1117] px-2 py-1 text-sm text-white transition-colors focus:border-[var(--color-accent)] focus:outline-none"
+        disabled={disabled}
+        className="rounded-md border border-[var(--color-border)] bg-[var(--color-inset)] px-2 py-1 text-sm tabular-nums text-white transition-colors focus:border-[var(--color-accent)] focus:outline-none disabled:cursor-not-allowed disabled:opacity-40"
         value={value ?? ""}
         onChange={(e) => {
           const v = e.target.value;
@@ -236,7 +240,7 @@ export function MonsterActiveFilterChips({
                 rarity: toggleSet(filters.rarity, r),
               })
             }
-            className="inline-flex items-center gap-1 rounded-full border border-[var(--color-accent)]/50 bg-[#1f3a5f] px-2 py-0.5 text-[10px] text-[var(--color-accent)] hover:border-red-500/50 hover:bg-red-950/40 hover:text-red-300"
+            className="inline-flex items-center gap-1 rounded-full border border-[var(--color-accent)]/50 bg-[var(--color-accent-muted)] px-2 py-0.5 text-[10px] text-[var(--color-accent)] hover:border-red-500/50 hover:bg-red-950/40 hover:text-red-300"
             title="Click to remove"
           >
             {r}★
@@ -264,7 +268,7 @@ export function MonsterActiveFilterChips({
                     ),
                   })
                 }
-                className="inline-flex items-center gap-0.5 rounded-full border border-[var(--color-accent)]/50 bg-[#1f3a5f] p-0.5 hover:border-red-500/50 hover:bg-red-950/40"
+                className="inline-flex items-center gap-0.5 rounded-full border border-[var(--color-accent)]/50 bg-[var(--color-accent-muted)] p-0.5 hover:border-red-500/50 hover:bg-red-950/40"
                 title={`${ATTRIBUTE_SLOT_LABELS[slotIndex]}: ${label} — click to remove`}
                 aria-label={`Remove ${ATTRIBUTE_SLOT_LABELS[slotIndex]} ${label} filter`}
               >
@@ -294,7 +298,7 @@ export function MonsterActiveFilterChips({
                 types: toggleSet(filters.types, id),
               })
             }
-            className="inline-flex items-center gap-0.5 rounded-full border border-[var(--color-accent)]/50 bg-[#1f3a5f] p-0.5 hover:border-red-500/50 hover:bg-red-950/40"
+            className="inline-flex items-center gap-0.5 rounded-full border border-[var(--color-accent)]/50 bg-[var(--color-accent-muted)] p-0.5 hover:border-red-500/50 hover:bg-red-950/40"
             title={`${label} — click to remove`}
             aria-label={`Remove ${label} filter`}
           >
@@ -374,7 +378,7 @@ export function MonsterAttributeFilter({
       title="Attribute"
       summary={summary}
       compact={compact}
-      defaultOpen
+      defaultOpen={false}
     >
       {activeSlots > 0 && (
         <AttributeMatchToggle
@@ -538,12 +542,60 @@ export function MonsterIdFilter({
       <input
         type="search"
         placeholder="monster_id, NA#, name…"
-        className={`w-full rounded-md border border-[var(--color-border)] bg-[#0d1117] text-white transition-colors focus:border-[var(--color-accent)] focus:outline-none ${
+        className={`w-full rounded-md border border-[var(--color-border)] bg-[var(--color-inset)] text-white transition-colors focus:border-[var(--color-accent)] focus:outline-none ${
           compact ? "px-2 py-1 text-xs" : "px-2 py-1.5 text-sm"
         }`}
         value={filters.idQuery}
         onChange={(e) => onChange({ ...filters, idQuery: e.target.value })}
       />
+    </CollapsibleFilterSection>
+  );
+}
+
+/**
+ * Rarity/Attribute/Type/Stats/ID pinned as one compact, collapsed-by-default
+ * group so Awakenings (the most-used filter) can claim the panel's vertical
+ * space by default instead of competing with five separate accordion rows.
+ */
+export function MonsterMoreFiltersGroup({
+  filters,
+  onChange,
+  compact = false,
+}: {
+  filters: MonsterFilters;
+  onChange: (next: MonsterFilters) => void;
+  compact?: boolean;
+}) {
+  const activeCount =
+    (filters.rarity.size > 0 ? 1 : 0) +
+    (hasAttributeSlotFilters(filters.attributeSlots) ? 1 : 0) +
+    (filters.types.size > 0 ? 1 : 0) +
+    ([filters.hpMin, filters.hpMax, filters.atkMin, filters.atkMax, filters.rcvMin, filters.rcvMax].some(
+      (v) => v != null
+    )
+      ? 1
+      : 0) +
+    (filters.idQuery.trim() ? 1 : 0);
+
+  return (
+    <CollapsibleFilterSection
+      title="More filters"
+      summary={
+        activeCount > 0
+          ? `${activeCount} active`
+          : "rarity · attribute · type · stats · id"
+      }
+      compact={compact}
+      defaultOpen={false}
+      className="shrink-0"
+    >
+      <div className="space-y-2">
+        <MonsterRarityFilter filters={filters} onChange={onChange} compact={compact} />
+        <MonsterAttributeFilter filters={filters} onChange={onChange} compact={compact} />
+        <MonsterTypeFilter filters={filters} onChange={onChange} compact={compact} />
+        <MonsterStatsFilter filters={filters} onChange={onChange} compact={compact} />
+        <MonsterIdFilter filters={filters} onChange={onChange} compact={compact} />
+      </div>
     </CollapsibleFilterSection>
   );
 }

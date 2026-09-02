@@ -162,3 +162,91 @@ export const EMPTY_SKILL_FILTERS: SkillFilters = {
   patternMatch: "all",
   activeSkillAdvancedFilters: false,
 };
+
+/** Inclusive numeric bound pair for one advanced effect-value filter. */
+export type EffectValueRange = { min: number | null; max: number | null };
+
+/** Family ids come from the server manifest (`GET /patterns/effect-families`). */
+export type EffectFamilyId = string;
+
+/** One numeric skill-effect family the server can range-filter on. */
+export type EffectFamilyDef = {
+  id: EffectFamilyId;
+  label: string;
+  /** Which skill text the family reads — used for UI grouping. */
+  group: "active" | "leader" | "both";
+  unit: string;
+  value_type: "int" | "float";
+  step?: number;
+  /** Measured against the current DB snapshot — shown as an input hint. */
+  min_observed?: number;
+  max_observed?: number;
+  cards_observed?: number;
+};
+
+export type EffectFamiliesManifest = {
+  families: EffectFamilyDef[];
+};
+
+/**
+ * Advanced numeric effect-value filters (shield %, xN HP, charge turns, …).
+ * Sent to `GET /monsters/search` as `effect=familyId:min:max,…`; the server
+ * extracts the number out of the skill description with the family's regex
+ * (see exports/patterns/effect_value_families.json).
+ */
+export type AdvancedEffectFilters = {
+  ranges: Partial<Record<EffectFamilyId, EffectValueRange>>;
+};
+
+export const EMPTY_ADVANCED_EFFECT_FILTERS: AdvancedEffectFilters = {
+  ranges: {},
+};
+
+export function hasAdvancedEffectFilters(
+  filters: AdvancedEffectFilters
+): boolean {
+  return Object.values(filters.ranges).some(
+    (r) => r != null && (r.min != null || r.max != null)
+  );
+}
+
+export function countAdvancedEffectFilters(
+  filters: AdvancedEffectFilters
+): number {
+  return Object.values(filters.ranges).filter(
+    (r) => r != null && (r.min != null || r.max != null)
+  ).length;
+}
+
+/** `familyId:min:max` pairs for the `effect` query param / share URL. */
+export function serializeAdvancedEffectFilters(
+  filters: AdvancedEffectFilters
+): string {
+  const parts: string[] = [];
+  for (const [familyId, range] of Object.entries(filters.ranges)) {
+    if (!range || (range.min == null && range.max == null)) continue;
+    parts.push(
+      `${familyId}:${range.min ?? ""}:${range.max ?? ""}`
+    );
+  }
+  return parts.join(",");
+}
+
+export function parseAdvancedEffectFilters(
+  raw: string | null | undefined
+): AdvancedEffectFilters {
+  if (!raw?.trim()) return EMPTY_ADVANCED_EFFECT_FILTERS;
+  const ranges: AdvancedEffectFilters["ranges"] = {};
+  for (const spec of raw.split(",")) {
+    const [familyId, minRaw, maxRaw] = spec.trim().split(":");
+    if (!familyId) continue;
+    const min = minRaw?.trim() ? Number(minRaw) : null;
+    const max = maxRaw?.trim() ? Number(maxRaw) : null;
+    if (min == null && max == null) continue;
+    ranges[familyId] = {
+      min: min != null && Number.isFinite(min) ? min : null,
+      max: max != null && Number.isFinite(max) ? max : null,
+    };
+  }
+  return { ranges };
+}

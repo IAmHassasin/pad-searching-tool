@@ -18,10 +18,12 @@ export function AppBrand({
         alt=""
         width={size}
         height={size}
-        className="shrink-0 rounded-lg shadow-sm"
+        className="shrink-0 rounded-lg shadow-[0_0_0_1px_rgba(88,166,255,0.25),0_4px_12px_-4px_rgba(0,0,0,0.6)]"
         aria-hidden
       />
-      <h1 className="text-base font-semibold">{title}</h1>
+      <h1 className="whitespace-nowrap text-sm font-bold tracking-tight text-white sm:text-base [font-family:var(--font-mono)]">
+        {title}
+      </h1>
     </div>
   );
 }

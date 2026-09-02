@@ -6,9 +6,9 @@ import { CollapsibleFilterSection } from "./collapsible-filter-section";
 import { SupplementFilterCheckbox } from "./supplement-filter-checkbox";
 import { useEffect, useState } from "react";
 
-const AWK_ACCENT = "#6b8f3c";
-const AWK_EXCLUDE_ACCENT = "#f85149";
-const VANISH_ACCENT = "#c9a84a";
+const AWK_ACCENT = "var(--color-positive)";
+const AWK_EXCLUDE_ACCENT = "var(--color-negative)";
+const VANISH_ACCENT = "var(--color-gold)";
 
 export {
   listFilterableAwakeningIds,
@@ -96,17 +96,17 @@ function AwakeningPickerIcon({
       className={`flex shrink-0 items-center justify-center rounded-sm border p-0.5 transition-colors ${
         active > 0
           ? pickerMode === "include"
-            ? "border-[var(--color-accent)] bg-[#1f3a5f] shadow-[inset_0_0_0_1px_rgba(88,166,255,0.35)]"
+            ? "border-[var(--color-accent)] bg-[var(--color-accent-muted)] shadow-[inset_0_0_0_1px_rgba(88,166,255,0.35)]"
             : pickerMode === "exclude"
               ? "border-red-500/70 bg-red-950/40 shadow-[inset_0_0_0_1px_rgba(248,81,73,0.35)]"
-              : "border-[#c9a84a]/80 bg-[#3a2f12] shadow-[inset_0_0_0_1px_rgba(201,168,74,0.35)]"
+              : "border-[var(--color-gold)]/80 bg-[#3a2f12] shadow-[inset_0_0_0_1px_rgba(201,168,74,0.35)]"
           : inStack > 0
-            ? "border-[#6b8f3c]/40 bg-[#1a2a12]/60"
+            ? "border-[var(--color-positive)]/40 bg-[#1a2a12]/60"
             : excludedInStack > 0
               ? "border-red-500/30 bg-red-950/20"
               : vanishInStack > 0
-                ? "border-[#c9a84a]/30 bg-[#3a2f12]/40"
-                : "border-transparent hover:border-[#6b8f3c]/50 hover:bg-[#21262d]"
+                ? "border-[var(--color-gold)]/30 bg-[#3a2f12]/40"
+                : "border-transparent hover:border-[var(--color-positive)]/50 hover:bg-[var(--color-hover)]"
       }`}
       style={
         active > 0 ? { boxShadow: `inset 0 0 0 1px ${accent}` } : undefined
@@ -128,7 +128,7 @@ export function AwakeningPickerModeToggle({
 }) {
   return (
     <div
-      className={`flex rounded-lg border border-[var(--color-border)] bg-[#0d1117] p-0.5 ${
+      className={`flex rounded-lg border border-[var(--color-border)] bg-[var(--color-inset)] p-0.5 ${
         compact ? "mb-2" : "mb-3"
       }`}
       role="radiogroup"
@@ -155,7 +155,7 @@ export function AwakeningPickerModeToggle({
                 ? "bg-red-600 text-white"
                 : id === "vanish"
                   ? "bg-[#8b6914] text-white"
-                  : "bg-[var(--color-accent)] text-[#0d1117]"
+                  : "bg-[var(--color-accent)] text-[var(--color-inset)]"
               : "text-[var(--color-muted)] hover:text-white"
           }`}
         >
@@ -225,7 +225,7 @@ export function MonsterAwakeningSelectedChips({
               awakeningIds: removeOneAwakeningFromStack(filters.awakeningIds, id),
             })
           }
-          className="inline-flex items-center gap-0.5 rounded-full border border-[#6b8f3c]/60 bg-[#1a2a12] p-0.5 pr-1.5 hover:border-red-500/50"
+          className="inline-flex items-center gap-0.5 rounded-full border border-[var(--color-positive)]/60 bg-[#1a2a12] p-0.5 pr-1.5 hover:border-red-500/50"
           title={
             count > 1
               ? `Remove one included #${id} (${count} stacked)`
@@ -284,7 +284,7 @@ export function MonsterAwakeningSelectedChips({
               ),
             })
           }
-          className="inline-flex items-center gap-0.5 rounded-full border border-[#c9a84a]/60 bg-[#3a2f12] p-0.5 pr-1.5 hover:border-red-500/50"
+          className="inline-flex items-center gap-0.5 rounded-full border border-[var(--color-gold)]/60 bg-[#3a2f12] p-0.5 pr-1.5 hover:border-red-500/50"
           title={
             count > 1
               ? `Remove one vanish #${id} (${count} stacked)`
@@ -293,11 +293,11 @@ export function MonsterAwakeningSelectedChips({
         >
           <AwakeningSpriteIcon awokenSkillId={id} size={16} />
           {count > 1 && (
-            <span className="text-[9px] font-bold tabular-nums text-[#c9a84a]">
+            <span className="text-[9px] font-bold tabular-nums text-[var(--color-gold)]">
               ×{count}
             </span>
           )}
-          <span className="text-[9px] text-[#c9a84a]">×</span>
+          <span className="text-[9px] text-[var(--color-gold)]">×</span>
         </button>
       ))}
     </>
@@ -328,7 +328,9 @@ function AwakeningFilterGroupSection({
   hideLabel?: boolean;
 }) {
   return (
-    <section className={compact ? "mb-1.5 last:mb-0" : "mb-2 last:mb-0"}>
+    <section
+      className={`break-inside-avoid ${compact ? "mb-1.5" : "mb-2"}`}
+    >
       {!hideLabel && (
         <p
           className={`mb-1 font-semibold uppercase tracking-wide text-[#a8c878] ${
@@ -396,8 +398,8 @@ function AwakeningGroupTabBar({
           onClick={() => onChange(index)}
           className={`rounded border px-1 py-0.5 text-[9px] font-semibold transition-colors ${
             activeIndex === index
-              ? "border-[#6b8f3c] bg-[#1a2a12] text-[#a8c878]"
-              : "border-[var(--color-border)] bg-[#0d1117] text-[var(--color-muted)] hover:border-[#6b8f3c]/50 hover:text-white"
+              ? "border-[var(--color-positive)] bg-[#1a2a12] text-[#a8c878]"
+              : "border-[var(--color-border)] bg-[var(--color-inset)] text-[var(--color-muted)] hover:border-[var(--color-positive)]/50 hover:text-white"
           }`}
         >
           {AWAKENING_GROUP_SHORT_LABELS[group.label] ?? group.label}
@@ -486,9 +488,14 @@ export function MonsterAwakeningFilter({
   const gridClass =
     compact && useGroupTabs
       ? "max-h-[22vh] overflow-y-auto pr-0.5"
-      : fillHeight
+      : fillHeight && useGroupTabs
         ? "min-h-0 flex-1 overflow-y-auto pr-0.5"
-        : "pr-0.5";
+        : fillHeight
+          ? // All groups at once, desktop: flow into as many ~168px columns as
+            // the (resizable) panel width allows instead of one tall stack —
+            // uses width to cut down how much needs to scroll vertically.
+            "min-h-0 flex-1 overflow-y-auto columns-[168px] gap-x-3 pr-0.5 [column-fill:auto]"
+          : "pr-0.5";
 
   return (
     <CollapsibleFilterSection

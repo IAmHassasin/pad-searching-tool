@@ -1,6 +1,11 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
-import { fetchHealth, fetchPatternGroups, searchAllMonsters } from "./api";
+import {
+  fetchEffectFamilies,
+  fetchHealth,
+  fetchPatternGroups,
+  searchAllMonsters,
+} from "./api";
 import { AdminPanel } from "./components/AdminPanel";
 import { AppBrand } from "./components/AppBrand";
 import { AppToolsNav } from "./components/AppToolsNav";
@@ -23,6 +28,7 @@ import {
 } from "./lib/result-quick-filter";
 import {
   buildShareSearchUrl,
+  parseAdvancedEffectFiltersFromSearch,
   parseMonsterFiltersFromSearch,
   parsePatternTagKeysFromSearch,
   parseSkillFiltersFromSearch,
@@ -35,6 +41,8 @@ import {
 import {
   EMPTY_MONSTER_FILTERS,
   EMPTY_SKILL_FILTERS,
+  serializeAdvancedEffectFilters,
+  type AdvancedEffectFilters,
   type MonsterFilters,
   type SkillFilters,
 } from "./types";
@@ -48,6 +56,10 @@ function initialMonsterFilters(): MonsterFilters {
 
 function initialSkillFilters(): SkillFilters {
   return parseSkillFiltersFromSearch(window.location.search, EMPTY_SKILL_FILTERS);
+}
+
+function initialAdvancedEffectFilters(): AdvancedEffectFilters {
+  return parseAdvancedEffectFiltersFromSearch(window.location.search);
 }
 
 export default function App() {
@@ -67,7 +79,8 @@ export default function App() {
     total: number;
   } | null>(null);
   const [adminOpen, setAdminOpen] = useState(false);
-  const [skillPanelOpen, setSkillPanelOpen] = useState(true);
+  const [advancedEffectFilters, setAdvancedEffectFilters] =
+    useState<AdvancedEffectFilters>(initialAdvancedEffectFilters);
   const [resultSort, setResultSort] = useState<ResultSortOption>("default");
   const [awkModifierSettings, setAwkModifierSettings] =
     useState<AwkModifierSettings>(DEFAULT_AWK_MODIFIER_SETTINGS);
@@ -82,6 +95,7 @@ export default function App() {
 
   const debouncedMonster = useDebouncedValue(monsterFilters, 300);
   const debouncedSkill = useDebouncedValue(skillFilters, 400);
+  const debouncedEffects = useDebouncedValue(advancedEffectFilters, 400);
 
   const health = useQuery({
     queryKey: ["health"],
@@ -92,6 +106,13 @@ export default function App() {
   const patternGroups = useQuery({
     queryKey: ["patterns", "groups"],
     queryFn: fetchPatternGroups,
+    staleTime: Infinity,
+    gcTime: Infinity,
+  });
+
+  const effectFamilies = useQuery({
+    queryKey: ["patterns", "effect-families"],
+    queryFn: fetchEffectFamilies,
     staleTime: Infinity,
     gcTime: Infinity,
   });
@@ -142,15 +163,19 @@ export default function App() {
         skillType: p.skillType,
         tagKey: p.tagKey,
       })),
+      effect: serializeAdvancedEffectFilters(debouncedEffects),
     }),
-    [debouncedMonster, debouncedSkill]
+    [debouncedMonster, debouncedSkill, debouncedEffects]
   );
 
   const search = useQuery({
     queryKey: ["monsters", "search", searchKey],
     queryFn: () =>
-      searchAllMonsters(debouncedMonster, debouncedSkill, (loaded, total) =>
-        setLoadProgress({ loaded, total })
+      searchAllMonsters(
+        debouncedMonster,
+        debouncedSkill,
+        (loaded, total) => setLoadProgress({ loaded, total }),
+        debouncedEffects
       ),
     retry: 1,
     placeholderData: (prev) => prev,
@@ -165,7 +190,11 @@ export default function App() {
   const apiError = health.error ?? patternGroups.error ?? search.error ?? null;
 
   const handleShareFilter = async () => {
-    const relativeUrl = buildShareSearchUrl(monsterFilters, skillFilters);
+    const relativeUrl = buildShareSearchUrl(
+      monsterFilters,
+      skillFilters,
+      advancedEffectFilters
+    );
     const absoluteUrl = new URL(relativeUrl, window.location.origin).toString();
     try {
       if (navigator.share) {
@@ -186,9 +215,20 @@ export default function App() {
 
   return (
     <div className="flex h-full flex-col">
-      <header className="flex shrink-0 items-center justify-between border-b border-[var(--color-border)] bg-[#0d1117] px-4 py-2">
-        <AppBrand />
-        <div className="flex items-center gap-3 text-xs text-[var(--color-muted)]">
+      <header className="relative flex shrink-0 flex-wrap items-center justify-between gap-x-3 gap-y-1 border-b border-[var(--color-border)] bg-[var(--color-inset)] px-4 py-2">
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(90deg, rgba(88,166,255,0.08), transparent 40%), linear-gradient(90deg, transparent 60%, rgba(227,179,65,0.06))",
+            zIndex: 0,
+          }}
+          aria-hidden
+        />
+        <div className="relative z-10">
+          <AppBrand />
+        </div>
+        <div className="relative z-10 flex flex-wrap items-center gap-x-3 gap-y-1 text-[10px] text-[var(--color-muted)] sm:text-xs">
           <button
             type="button"
             className="rounded border border-[var(--color-border)] px-2 py-0.5 text-[var(--color-muted)] hover:border-[var(--color-accent)] hover:text-white"
@@ -205,13 +245,13 @@ export default function App() {
             API {health.isLoading ? "…" : health.data?.ok ? "online" : "offline"}
           </span>
           {search.data && (
-            <span>
+            <span className="tabular-nums">
               {search.data.total} match
               {search.data.total === 1 ? "" : "es"}
             </span>
           )}
           {patternGroups.data && (
-            <span>
+            <span className="hidden tabular-nums sm:inline">
               {patternGroups.data.active_skill_filters.length +
                 patternGroups.data.leader_skill_filters.length}{" "}
               pattern groups
@@ -281,15 +321,17 @@ export default function App() {
           onDisplaySectionsChange={setDisplaySections}
           resultQuickFilter={resultQuickFilter}
           onResultQuickFilterChange={setResultQuickFilter}
+          advancedEffectFilters={advancedEffectFilters}
+          onAdvancedEffectFiltersChange={setAdvancedEffectFilters}
+          effectFamilies={effectFamilies.data?.families}
+          effectFamiliesLoading={effectFamilies.isLoading}
         />
       ) : (
-        <div
-          className={`grid min-h-0 flex-1 grid-cols-1 ${
-            skillPanelOpen
-              ? "xl:grid-cols-[25%_minmax(0,1fr)_25%]"
-              : "xl:grid-cols-[25%_minmax(0,1fr)_auto]"
-          }`}
-        >
+        // Plain flex row, not a grid: below `xl` (1280px) isMobileWebview is
+        // already true (see useMobileWebview), so there's no narrower desktop
+        // state to fall back to — each side panel manages its own width via
+        // useResizablePanel/ResizableSidePanel instead of a fixed column %.
+        <div className="flex min-h-0 flex-1 overflow-hidden">
           <MonsterFilterPanel
             filters={monsterFilters}
             onChange={setMonsterFilters}
@@ -317,8 +359,10 @@ export default function App() {
             onChange={setSkillFilters}
             patternGroups={patternGroups.data}
             patternGroupsLoading={patternGroups.isLoading}
-            open={skillPanelOpen}
-            onToggle={() => setSkillPanelOpen((v) => !v)}
+            advancedEffectFilters={advancedEffectFilters}
+            onAdvancedEffectFiltersChange={setAdvancedEffectFilters}
+            effectFamilies={effectFamilies.data?.families}
+            effectFamiliesLoading={effectFamilies.isLoading}
           />
         </div>
       )}

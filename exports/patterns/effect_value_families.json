@@ -1,0 +1,271 @@
+{
+  "_comment": [
+    "Numeric skill-effect families for the advanced search (min/max range filters).",
+    "Each matcher's regex is applied with flags 'gi' to the skill description column",
+    "for its skill_type; value_group is the capture group holding the number.",
+    "A monster matches a family range if ANY occurrence of ANY of its matchers",
+    "yields a value inside [min, max]. min_observed/max_observed/cards_observed are",
+    "documentation only (measured against the dadguide snapshot) and drive UI hints.",
+    "Regexes deliberately use [^.;]*? rather than [^.]*? so a matcher cannot jump",
+    "across clause boundaries and capture a number belonging to a different effect."
+  ],
+  "families": [
+    {
+      "id": "skill_charge_turns",
+      "label": "Skill Charge (Haste)",
+      "group": "active",
+      "unit": "turns",
+      "value_type": "int",
+      "step": 1,
+      "min_observed": 1,
+      "max_observed": 8,
+      "cards_observed": 2223,
+      "matchers": [
+        {
+          "skill_type": "active_skill",
+          "regex": "charge all allies'? skills by (\\d+) turn",
+          "value_group": 1
+        }
+      ]
+    },
+    {
+      "id": "shield_percent",
+      "label": "Shield / Damage Reduction",
+      "group": "both",
+      "unit": "%",
+      "value_type": "int",
+      "step": 5,
+      "min_observed": 1,
+      "max_observed": 100,
+      "cards_observed": 5588,
+      "matchers": [
+        {
+          "skill_type": "active_skill",
+          "regex": "reduce damage taken[^.;]*?by (\\d+)%",
+          "value_group": 1
+        },
+        {
+          "skill_type": "leader_skill",
+          "regex": "reduce damage taken[^.;]*?by (\\d+)%",
+          "value_group": 1
+        }
+      ]
+    },
+    {
+      "id": "hp_multiplier",
+      "label": "HP Multiplier (LS)",
+      "group": "leader",
+      "unit": "x",
+      "value_type": "float",
+      "step": 0.5,
+      "min_observed": 0.5,
+      "max_observed": 6,
+      "cards_observed": 3123,
+      "matchers": [
+        {
+          "skill_type": "leader_skill",
+          "regex": "(?<![+\\d.])(\\d+\\.?\\d*)x HP",
+          "value_group": 1
+        }
+      ]
+    },
+    {
+      "id": "atk_multiplier",
+      "label": "ATK Multiplier (LS)",
+      "group": "leader",
+      "unit": "x",
+      "value_type": "float",
+      "step": 1,
+      "min_observed": 0.5,
+      "max_observed": 500,
+      "cards_observed": 8040,
+      "matchers": [
+        {
+          "skill_type": "leader_skill",
+          "regex": "(?<![+\\d.])(\\d+\\.?\\d*)x ATK",
+          "value_group": 1
+        }
+      ]
+    },
+    {
+      "id": "rcv_multiplier",
+      "label": "RCV Multiplier (LS)",
+      "group": "leader",
+      "unit": "x",
+      "value_type": "float",
+      "step": 0.5,
+      "min_observed": 0.25,
+      "max_observed": 20,
+      "cards_observed": 1050,
+      "matchers": [
+        {
+          "skill_type": "leader_skill",
+          "regex": "(?<![+\\d.])(\\d+\\.?\\d*)x RCV",
+          "value_group": 1
+        }
+      ]
+    },
+    {
+      "id": "all_stat_multiplier",
+      "label": "All Stats Multiplier (LS)",
+      "group": "leader",
+      "unit": "x",
+      "value_type": "float",
+      "step": 0.5,
+      "min_observed": 1.1,
+      "max_observed": 6,
+      "cards_observed": 1305,
+      "matchers": [
+        {
+          "skill_type": "leader_skill",
+          "regex": "(?<![+\\d.])(\\d+\\.?\\d*)x all stats",
+          "value_group": 1
+        }
+      ]
+    },
+    {
+      "id": "delay_turns",
+      "label": "Delay / Menace",
+      "group": "active",
+      "unit": "turns",
+      "value_type": "int",
+      "step": 1,
+      "min_observed": 1,
+      "max_observed": 6,
+      "cards_observed": 1049,
+      "matchers": [
+        {
+          "skill_type": "active_skill",
+          "regex": "delay(?:s)? enem[^.;]*?by (\\d+) turn",
+          "value_group": 1
+        }
+      ]
+    },
+    {
+      "id": "heal_percent_max_hp",
+      "label": "Heal % of Max HP",
+      "group": "active",
+      "unit": "%",
+      "value_type": "int",
+      "step": 5,
+      "min_observed": 8,
+      "max_observed": 100,
+      "cards_observed": 640,
+      "matchers": [
+        {
+          "skill_type": "active_skill",
+          "regex": "recover (\\d+)% of max HP",
+          "value_group": 1
+        }
+      ]
+    },
+    {
+      "id": "nuke_atk_multiplier",
+      "label": "Nuke Damage (xATK)",
+      "group": "active",
+      "unit": "x",
+      "value_type": "float",
+      "step": 5,
+      "min_observed": 1,
+      "max_observed": 800,
+      "cards_observed": 413,
+      "matchers": [
+        {
+          "skill_type": "active_skill",
+          "regex": "deal (\\d+\\.?\\d*)x ATK",
+          "value_group": 1
+        }
+      ]
+    },
+    {
+      "id": "active_atk_buff_multiplier",
+      "label": "ATK Buff (AS)",
+      "group": "active",
+      "unit": "x",
+      "value_type": "float",
+      "step": 0.5,
+      "min_observed": 0.01,
+      "max_observed": 100,
+      "cards_observed": 3543,
+      "matchers": [
+        {
+          "skill_type": "active_skill",
+          "regex": "(?<![+\\d.])(\\d+\\.?\\d*)x ATK for",
+          "value_group": 1
+        }
+      ]
+    },
+    {
+      "id": "enemy_defense_reduce_percent",
+      "label": "Enemy Defense Break",
+      "group": "active",
+      "unit": "%",
+      "value_type": "int",
+      "step": 25,
+      "min_observed": 25,
+      "max_observed": 100,
+      "cards_observed": 278,
+      "matchers": [
+        {
+          "skill_type": "active_skill",
+          "regex": "(?:reduce|void)[^.;]*?defen[cs]e by (\\d+)%",
+          "value_group": 1
+        }
+      ]
+    },
+    {
+      "id": "bind_recover_turns",
+      "label": "Bind Recovery",
+      "group": "active",
+      "unit": "turns",
+      "value_type": "int",
+      "step": 1,
+      "min_observed": 1,
+      "max_observed": 5,
+      "cards_observed": 101,
+      "matchers": [
+        {
+          "skill_type": "active_skill",
+          "regex": "reduce(?:s)? binds? by (\\d+) turn",
+          "value_group": 1
+        }
+      ]
+    },
+    {
+      "id": "awoken_bind_recover_turns",
+      "label": "Awoken Bind Recovery",
+      "group": "active",
+      "unit": "turns",
+      "value_type": "int",
+      "step": 1,
+      "min_observed": 1,
+      "max_observed": 7,
+      "cards_observed": 50,
+      "matchers": [
+        {
+          "skill_type": "active_skill",
+          "regex": "reduce(?:s)? awoken skill binds? by (\\d+) turn",
+          "value_group": 1
+        }
+      ]
+    },
+    {
+      "id": "movetime_seconds",
+      "label": "Orb Move Time",
+      "group": "active",
+      "unit": "sec",
+      "value_type": "float",
+      "step": 1,
+      "min_observed": 1,
+      "max_observed": 29.5,
+      "cards_observed": 122,
+      "matchers": [
+        {
+          "skill_type": "active_skill",
+          "regex": "(?:increase|extend)[^.;]*?move time by (\\d+\\.?\\d*) second",
+          "value_group": 1
+        }
+      ]
+    }
+  ]
+}

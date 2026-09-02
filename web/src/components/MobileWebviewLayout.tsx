@@ -4,7 +4,10 @@ import type { AwkModifierSettings } from "../lib/awakening-stat-modifier";
 import type { ResultDisplaySections } from "../lib/result-display";
 import type { ResultQuickFilter } from "../lib/result-quick-filter";
 import type { ResultSortOption } from "../lib/results-sort";
+import { countAdvancedEffectFilters } from "../types";
 import type {
+  AdvancedEffectFilters,
+  EffectFamilyDef,
   MonsterFilters,
   MonsterRecord,
   PatternGroupsManifest,
@@ -15,6 +18,7 @@ import { ResultsDisplayControls } from "./ResultsDisplayControls";
 import { ResultsList } from "./ResultsList";
 import { ResultsQuickFilter } from "./ResultsQuickFilter";
 import { ResultsSortControls } from "./ResultsSortControls";
+import { AdvancedEffectFilterSection } from "./filters/advanced-effect-filter";
 import {
   MonsterActiveFilterChips,
   MonsterAttributeFilter,
@@ -37,6 +41,7 @@ type BottomPanelMode =
   | "active_skill"
   | "awakening"
   | "by_text"
+  | "advanced"
   | null;
 
 type Props = {
@@ -46,6 +51,10 @@ type Props = {
   onSkillFiltersChange: (next: SkillFilters) => void;
   patternGroups: PatternGroupsManifest | undefined;
   patternGroupsLoading: boolean;
+  advancedEffectFilters: AdvancedEffectFilters;
+  onAdvancedEffectFiltersChange: (next: AdvancedEffectFilters) => void;
+  effectFamilies: EffectFamilyDef[] | undefined;
+  effectFamiliesLoading: boolean;
   rows: MonsterRecord[];
   totalLoaded: number;
   selected: MonsterRecord | null;
@@ -207,6 +216,10 @@ function MobileBottomFilterBar({
   onSkillFiltersChange,
   patternGroups,
   patternGroupsLoading,
+  advancedEffectFilters,
+  onAdvancedEffectFiltersChange,
+  effectFamilies,
+  effectFamiliesLoading,
 }: {
   monsterFilters: MonsterFilters;
   onMonsterFiltersChange: (next: MonsterFilters) => void;
@@ -214,6 +227,10 @@ function MobileBottomFilterBar({
   onSkillFiltersChange: (next: SkillFilters) => void;
   patternGroups: PatternGroupsManifest | undefined;
   patternGroupsLoading: boolean;
+  advancedEffectFilters: AdvancedEffectFilters;
+  onAdvancedEffectFiltersChange: (next: AdvancedEffectFilters) => void;
+  effectFamilies: EffectFamilyDef[] | undefined;
+  effectFamiliesLoading: boolean;
 }) {
   const [openMode, setOpenMode] = useState<BottomPanelMode>(null);
   const [panelExpanded, setPanelExpanded] = useState(true);
@@ -236,6 +253,7 @@ function MobileBottomFilterBar({
     skillFilters.activeSkillText.trim(),
     skillFilters.leaderSkillText.trim(),
   ].filter(Boolean).length;
+  const selectedEffects = countAdvancedEffectFilters(advancedEffectFilters);
 
   const panelTitle =
     openMode === "leader_skill"
@@ -246,7 +264,9 @@ function MobileBottomFilterBar({
           ? "Awakenings"
           : openMode === "by_text"
             ? "By Text"
-            : "";
+            : openMode === "advanced"
+              ? "Effect values"
+              : "";
 
   return (
     <section className="flex shrink-0 flex-col border-t border-[var(--color-border)] bg-[var(--color-panel)]">
@@ -312,6 +332,16 @@ function MobileBottomFilterBar({
                   embedded
                 />
               </div>
+            ) : openMode === "advanced" ? (
+              <div className="min-h-0 flex-1 overflow-y-auto px-2 pb-2">
+                <AdvancedEffectFilterSection
+                  filters={advancedEffectFilters}
+                  onChange={onAdvancedEffectFiltersChange}
+                  families={effectFamilies}
+                  loading={effectFamiliesLoading}
+                  compact
+                />
+              </div>
             ) : (
               <>
                 {patternGroupsLoading && (
@@ -369,7 +399,7 @@ function MobileBottomFilterBar({
         </div>
       )}
 
-      <div className="grid shrink-0 grid-cols-4 gap-1 p-1.5">
+      <div className="grid shrink-0 grid-cols-5 gap-1 p-1.5">
         <button
           type="button"
           onClick={() => toggleMode("leader_skill")}
@@ -434,6 +464,23 @@ function MobileBottomFilterBar({
             </span>
           )}
         </button>
+        <button
+          type="button"
+          onClick={() => toggleMode("advanced")}
+          className={`rounded-md border px-1 py-2 text-xs font-semibold transition-colors ${
+            openMode === "advanced"
+              ? "border-[#a371f7] bg-[#2a1f3d] text-[#d4b8f7]"
+              : "border-[var(--color-border)] bg-[var(--color-inset)] text-[var(--color-muted)]"
+          }`}
+          title="Numeric effect-value filters (shield %, xN HP, charge turns…)"
+        >
+          Values
+          {selectedEffects > 0 && (
+            <span className="ml-1 rounded bg-[#a371f7]/20 px-1 text-[10px] tabular-nums">
+              {selectedEffects}
+            </span>
+          )}
+        </button>
       </div>
     </section>
   );
@@ -446,6 +493,10 @@ export function MobileWebviewLayout({
   onSkillFiltersChange,
   patternGroups,
   patternGroupsLoading,
+  advancedEffectFilters,
+  onAdvancedEffectFiltersChange,
+  effectFamilies,
+  effectFamiliesLoading,
   rows,
   totalLoaded,
   selected,
@@ -542,6 +593,10 @@ export function MobileWebviewLayout({
         onSkillFiltersChange={onSkillFiltersChange}
         patternGroups={patternGroups}
         patternGroupsLoading={patternGroupsLoading}
+        advancedEffectFilters={advancedEffectFilters}
+        onAdvancedEffectFiltersChange={onAdvancedEffectFiltersChange}
+        effectFamilies={effectFamilies}
+        effectFamiliesLoading={effectFamiliesLoading}
       />
     </div>
   );

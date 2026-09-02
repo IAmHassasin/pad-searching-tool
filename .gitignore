@@ -34,3 +34,4 @@ seed/*.sqlite
 cloudflare/**/node_modules/
 cloudflare/**/.wrangler/
 cloudflare/pst-gateway/wrangler.toml
+.gstack/
