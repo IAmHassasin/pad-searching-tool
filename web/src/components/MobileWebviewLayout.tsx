@@ -568,7 +568,6 @@ export function MobileWebviewLayout({
               compact={!showDetail || detailCollapsed}
               minimal={showDetail && !detailCollapsed}
               resultSort={resultSort}
-              awkModifierSettings={awkModifierSettings}
               displaySections={displaySections}
             />
           </div>

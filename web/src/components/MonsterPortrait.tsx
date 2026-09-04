@@ -8,6 +8,8 @@ type Props = {
   style?: CSSProperties;
   /** portrait = full art; icon = small square (media/icons). */
   variant?: "portrait" | "icon";
+  /** When set, use this URL instead of CDN (e.g. blob: from custom card upload). */
+  src?: string | null;
   onLoad?: () => void;
 };
 
@@ -17,15 +19,19 @@ export function MonsterPortrait({
   className = "",
   style,
   variant = "portrait",
+  src: srcOverride,
   onLoad,
 }: Props) {
   const [failed, setFailed] = useState(false);
 
   useEffect(() => {
     setFailed(false);
-  }, [monsterId]);
+  }, [monsterId, srcOverride, variant]);
 
-  const src = variant === "icon" ? iconUrl(monsterId) : portraitUrl(monsterId);
+  const cdnSrc =
+    variant === "icon" ? iconUrl(monsterId) : portraitUrl(monsterId);
+  const src =
+    srcOverride != null && srcOverride !== "" ? srcOverride : cdnSrc;
 
   if (failed || !src) {
     return (

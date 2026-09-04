@@ -89,7 +89,6 @@ export function ResultsPanel({
             onSelect={onSelect}
             loading={loading}
             resultSort={resultSort}
-            awkModifierSettings={awkModifierSettings}
             displaySections={displaySections}
           />
         </div>

@@ -144,6 +144,14 @@ sync-app: check-host
 		--exclude=.git \
 		--exclude=dist \
 		--exclude=web/dist \
+		--exclude=web/dist-android \
+		--exclude=web/android/.gradle \
+		--exclude=web/android/build \
+		--exclude=web/android/app/build \
+		--exclude=web/android/.idea \
+		--exclude=web/android/local.properties \
+		--exclude=web/android/.externalNativeBuild \
+		--exclude=web/android/.cxx \
 		--exclude=.env \
 		--exclude=.env.local \
 		--exclude='seed/dadguide.sqlite' \
