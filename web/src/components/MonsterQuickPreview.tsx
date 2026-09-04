@@ -133,6 +133,7 @@ function SkillSnippet({
         <ActiveSkillDescText
           text={body}
           stageCooldowns={stageCooldowns}
+          skillCdRange={stageCooldowns?.length ? cooldown : null}
           compact={inline}
           className={`text-[#e8dcc8] ${
             inline ? "text-[8px] leading-tight" : "text-[9px] leading-snug"
@@ -222,12 +223,11 @@ export function MonsterQuickPreview({
     row.active_skill_stage_cooldowns
   );
   const perStageCd = hasEvoStageCooldowns(rawActiveDesc, stageCooldowns);
-  const activeCooldown = perStageCd
-    ? null
-    : formatActiveSkillCooldown(
-        row.active_skill_cooldown_min,
-        row.active_skill_cooldown_max
-      );
+  // Always show overall min–max CD (same as normal cards), even for evo/stage skills.
+  const activeCooldown = formatActiveSkillCooldown(
+    row.active_skill_cooldown_min,
+    row.active_skill_cooldown_max
+  );
 
   const inline = variant === "inline";
   const showAll = sections ? isAllSectionsEnabled(sections) : true;

@@ -1,0 +1,22 @@
+{
+  "eventId": "gungho-collab-returns-2609",
+  "title": "GUNGHO COLLAB RETURNS",
+  "subtitle": "New Monsters & Evolutions",
+  "publishedAt": "2026-09-05",
+  "sourceUrl": "https://www.puzzleanddragons.us/single-post/gungho-collab-returns-2609",
+  "loading": {
+    "theme": "fade",
+    "minMs": 700
+  },
+  "coverMonsterIds": [13924, 13927, 13929, 13931, 13933, 13935],
+  "entries": [
+    { "monsterId": 13923, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13924, "role": "new-evolution", "label": "New Evolution", "note": "Ultimate Evolution for Selfie Buddy Goddesses, Niska & Danett" },
+    { "monsterId": 13925, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13927, "role": "new-evolution", "label": "New Evolution", "note": "Ultimate Evolution for Dream-Catcher New Star, Anetta" },
+    { "monsterId": 13928, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13931, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13933, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13935, "role": "new-monster", "label": "New Monster" }
+  ]
+}

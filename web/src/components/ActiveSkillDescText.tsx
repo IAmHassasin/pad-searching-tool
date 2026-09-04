@@ -9,6 +9,11 @@ type Props = {
   className?: string;
   /** Max-level CD per evo-loop stage, aligned with numbered stage lines. */
   stageCooldowns?: number[] | null;
+  /**
+   * Overall skill CD label (same as header), e.g. "2–6".
+   * Stage 1 badge uses this min–max; later stages use stageCooldowns[i].
+   */
+  skillCdRange?: string | null;
   compact?: boolean;
 };
 
@@ -38,16 +43,18 @@ function DescLineContent({ line }: { line: string }) {
 function StageCdBadge({
   cd,
   compact = false,
+  title,
 }: {
-  cd: number;
+  cd: string;
   compact?: boolean;
+  title?: string;
 }) {
   return (
     <span
       className={`shrink-0 rounded border border-[#5b8fd4]/40 bg-[#1a2a3f]/80 font-bold tabular-nums text-[#9ec5ff] ${
         compact ? "px-1 py-px text-[8px]" : "px-1 py-px text-[9px]"
       }`}
-      title="Active skill cooldown for this stage (turns at max level)"
+      title={title ?? "Active skill cooldown for this stage"}
     >
       CD {cd}
     </span>
@@ -58,6 +65,7 @@ export function ActiveSkillDescText({
   text,
   className,
   stageCooldowns,
+  skillCdRange = null,
   compact = false,
 }: Props) {
   const stageCds = stageCooldowns?.length ? stageCooldowns : null;
@@ -70,12 +78,20 @@ export function ActiveSkillDescText({
       <div className={className}>
         {lines.map((line, i) => {
           const isStageLine = isStagedSkillLine(line);
-          const cd =
-            isStageLine && stageIdx < stageCds.length
-              ? stageCds[stageIdx++]
-              : null;
+          let cdLabel: string | null = null;
+          if (isStageLine) {
+            const idx = stageIdx++;
+            if (idx === 0 && skillCdRange) {
+              // Stage 1 = overall skill CD min–max (same as header).
+              cdLabel = skillCdRange;
+            } else if (idx < stageCds.length && stageCds[idx] != null) {
+              cdLabel = String(stageCds[idx]);
+            } else if (idx === 0 && stageCds[0] != null) {
+              cdLabel = String(stageCds[0]);
+            }
+          }
 
-          if (cd != null) {
+          if (cdLabel != null) {
             return (
               <div
                 key={i}
@@ -86,7 +102,15 @@ export function ActiveSkillDescText({
                 <span className="min-w-0">
                   <DescLineContent line={line} />
                 </span>
-                <StageCdBadge cd={cd} compact={compact} />
+                <StageCdBadge
+                  cd={cdLabel}
+                  compact={compact}
+                  title={
+                    stageIdx === 1 && skillCdRange
+                      ? "Stage 1 cooldown (same as overall skill CD min–max)"
+                      : "Active skill cooldown for this stage (turns at max level)"
+                  }
+                />
               </div>
             );
           }
