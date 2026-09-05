@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AppToolsNav } from "../components/AppToolsNav";
+import { ArtCropModal, applyArtCropFromUrl } from "./ArtCropModal";
 import { ArtUploadPanel } from "./ArtUploadPanel";
 import { AttributeTypeEditor } from "./AttributeTypeEditor";
 import { AwakeningEditor } from "./AwakeningEditor";
@@ -12,14 +13,20 @@ import { buildExportFilename, exportElementToPng } from "./export-png";
 import {
   createEmptyDraft,
   MAX_ART_BYTES,
+  type ArtCropRect,
   type CustomCardDraft,
   type IconCropRect,
 } from "./types";
 
+function revokeUrl(url: string | null | undefined) {
+  if (url) URL.revokeObjectURL(url);
+}
+
 export function CustomCardPage() {
   const [draft, setDraft] = useState<CustomCardDraft>(() => createEmptyDraft());
   const [artError, setArtError] = useState<string | null>(null);
-  const [cropOpen, setCropOpen] = useState(false);
+  const [artCropOpen, setArtCropOpen] = useState(false);
+  const [iconCropOpen, setIconCropOpen] = useState(false);
   const [exportMsg, setExportMsg] = useState<string | null>(null);
   const [exporting, setExporting] = useState(false);
   const previewRef = useRef<HTMLDivElement>(null);
@@ -30,8 +37,9 @@ export function CustomCardPage() {
 
   useEffect(() => {
     return () => {
-      if (draft.artObjectUrl) URL.revokeObjectURL(draft.artObjectUrl);
-      if (draft.iconObjectUrl) URL.revokeObjectURL(draft.iconObjectUrl);
+      revokeUrl(draft.sourceArtObjectUrl);
+      revokeUrl(draft.artObjectUrl);
+      revokeUrl(draft.iconObjectUrl);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps -- revoke only on unmount
   }, []);
@@ -46,29 +54,58 @@ export function CustomCardPage() {
       return;
     }
     setArtError(null);
+    const sourceUrl = URL.createObjectURL(file);
     setDraft((prev) => {
-      if (prev.artObjectUrl) URL.revokeObjectURL(prev.artObjectUrl);
-      if (prev.iconObjectUrl) URL.revokeObjectURL(prev.iconObjectUrl);
+      revokeUrl(prev.sourceArtObjectUrl);
+      revokeUrl(prev.artObjectUrl);
+      revokeUrl(prev.iconObjectUrl);
       return {
         ...prev,
-        artBlob: file,
-        artObjectUrl: URL.createObjectURL(file),
+        sourceArtBlob: file,
+        sourceArtObjectUrl: sourceUrl,
+        artBlob: null,
+        artObjectUrl: null,
+        artCrop: null,
         iconBlob: null,
         iconObjectUrl: null,
         iconCrop: null,
       };
     });
+    setArtCropOpen(true);
+    // Bake a default 2:3 crop so preview isn't empty while the modal is open.
+    void applyArtCropFromUrl(sourceUrl, null)
+      .then(({ crop, blob }) => {
+        setDraft((prev) => {
+          if (prev.sourceArtObjectUrl !== sourceUrl) return prev;
+          revokeUrl(prev.artObjectUrl);
+          return {
+            ...prev,
+            artBlob: blob,
+            artObjectUrl: URL.createObjectURL(blob),
+            artCrop: crop,
+          };
+        });
+      })
+      .catch(() => {
+        setArtError("Could not prepare art crop.");
+      });
   }, []);
 
   const clearArt = useCallback(() => {
     setArtError(null);
+    setArtCropOpen(false);
+    setIconCropOpen(false);
     setDraft((prev) => {
-      if (prev.artObjectUrl) URL.revokeObjectURL(prev.artObjectUrl);
-      if (prev.iconObjectUrl) URL.revokeObjectURL(prev.iconObjectUrl);
+      revokeUrl(prev.sourceArtObjectUrl);
+      revokeUrl(prev.artObjectUrl);
+      revokeUrl(prev.iconObjectUrl);
       return {
         ...prev,
+        sourceArtBlob: null,
+        sourceArtObjectUrl: null,
         artBlob: null,
         artObjectUrl: null,
+        artCrop: null,
         iconBlob: null,
         iconObjectUrl: null,
         iconCrop: null,
@@ -76,9 +113,22 @@ export function CustomCardPage() {
     });
   }, []);
 
-  const applyCrop = useCallback((crop: IconCropRect, iconBlob: Blob) => {
+  const applyArtCrop = useCallback((crop: ArtCropRect, artBlob: Blob) => {
     setDraft((prev) => {
-      if (prev.iconObjectUrl) URL.revokeObjectURL(prev.iconObjectUrl);
+      revokeUrl(prev.artObjectUrl);
+      return {
+        ...prev,
+        artBlob,
+        artObjectUrl: URL.createObjectURL(artBlob),
+        artCrop: crop,
+      };
+    });
+    setArtCropOpen(false);
+  }, []);
+
+  const applyIconCrop = useCallback((crop: IconCropRect, iconBlob: Blob) => {
+    setDraft((prev) => {
+      revokeUrl(prev.iconObjectUrl);
       return {
         ...prev,
         iconBlob,
@@ -86,7 +136,7 @@ export function CustomCardPage() {
         iconCrop: crop,
       };
     });
-    setCropOpen(false);
+    setIconCropOpen(false);
   }, []);
 
   const handleDownload = useCallback(async () => {
@@ -148,10 +198,13 @@ export function CustomCardPage() {
         <div className="flex min-h-0 flex-col gap-3 overflow-auto pb-8">
           <ArtUploadPanel
             artObjectUrl={draft.artObjectUrl}
+            sourceArtObjectUrl={draft.sourceArtObjectUrl}
             error={artError}
             onArtSelected={replaceArt}
             onClearArt={clearArt}
-            onOpenCrop={() => setCropOpen(true)}
+            onOpenArtCrop={() => setArtCropOpen(true)}
+            onOpenIconCrop={() => setIconCropOpen(true)}
+            hasArtCrop={Boolean(draft.artCrop)}
             hasIcon={Boolean(draft.iconObjectUrl)}
           />
           <IdentityEditor draft={draft} onChange={patch} />
@@ -162,13 +215,22 @@ export function CustomCardPage() {
         </div>
       </div>
 
-      {draft.artObjectUrl && (
+      {draft.sourceArtObjectUrl && (
+        <ArtCropModal
+          open={artCropOpen}
+          imageUrl={draft.sourceArtObjectUrl}
+          initialCrop={draft.artCrop}
+          onCancel={() => setArtCropOpen(false)}
+          onConfirm={applyArtCrop}
+        />
+      )}
+      {draft.sourceArtObjectUrl && (
         <IconCropModal
-          open={cropOpen}
-          imageUrl={draft.artObjectUrl}
+          open={iconCropOpen}
+          imageUrl={draft.sourceArtObjectUrl}
           initialCrop={draft.iconCrop}
-          onCancel={() => setCropOpen(false)}
-          onConfirm={applyCrop}
+          onCancel={() => setIconCropOpen(false)}
+          onConfirm={applyIconCrop}
         />
       )}
     </div>

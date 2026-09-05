@@ -1,8 +1,9 @@
+import { useLayoutEffect, useRef, useState } from "react";
+import { isStagedSkillLine } from "../lib/format-active-skill-desc";
 import {
-  AFTER_ACTIVATION_SPLIT_RE,
-  isAfterActivationMarker,
-  isStagedSkillLine,
-} from "../lib/format-active-skill-desc";
+  SkillDescRichContent,
+  skillDescNeedsRichRender,
+} from "./SkillDescRichText";
 
 type Props = {
   text: string;
@@ -17,27 +18,9 @@ type Props = {
   compact?: boolean;
 };
 
-function DescLineContent({ line }: { line: string }) {
-  const parts = line.split(AFTER_ACTIVATION_SPLIT_RE);
-  const hasMarker = parts.some(isAfterActivationMarker);
-
-  if (!hasMarker) {
-    return <span>{line}</span>;
-  }
-
-  return (
-    <>
-      {parts.map((part, i) =>
-        isAfterActivationMarker(part) ? (
-          <strong key={i} className="font-bold text-[#f5e6c8]">
-            {part}
-          </strong>
-        ) : (
-          <span key={i}>{part}</span>
-        )
-      )}
-    </>
-  );
+function readLineHeightPx(el: HTMLElement): number | null {
+  const lineHeight = Number.parseFloat(getComputedStyle(el).lineHeight);
+  return Number.isFinite(lineHeight) && lineHeight > 0 ? lineHeight : null;
 }
 
 function StageCdBadge({
@@ -68,21 +51,37 @@ export function ActiveSkillDescText({
   skillCdRange = null,
   compact = false,
 }: Props) {
+  const rootRef = useRef<HTMLDivElement>(null);
+  const [iconSize, setIconSize] = useState<number | null>(null);
   const stageCds = stageCooldowns?.length ? stageCooldowns : null;
+  const needsIcons = skillDescNeedsRichRender(text);
+
+  useLayoutEffect(() => {
+    if (!needsIcons) return;
+    const el = rootRef.current;
+    if (!el) return;
+    const update = () => {
+      const lineHeight = readLineHeightPx(el);
+      if (lineHeight != null) setIconSize(Math.round(lineHeight));
+    };
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [needsIcons, text, className, compact]);
 
   if (stageCds) {
     const lines = text.split("\n");
     let stageIdx = 0;
 
     return (
-      <div className={className}>
+      <div ref={rootRef} className={className}>
         {lines.map((line, i) => {
           const isStageLine = isStagedSkillLine(line);
           let cdLabel: string | null = null;
           if (isStageLine) {
             const idx = stageIdx++;
             if (idx === 0 && skillCdRange) {
-              // Stage 1 = overall skill CD min–max (same as header).
               cdLabel = skillCdRange;
             } else if (idx < stageCds.length && stageCds[idx] != null) {
               cdLabel = String(stageCds[idx]);
@@ -100,7 +99,7 @@ export function ActiveSkillDescText({
                 }`}
               >
                 <span className="min-w-0">
-                  <DescLineContent line={line} />
+                  <SkillDescRichContent text={line} iconSize={iconSize} />
                 </span>
                 <StageCdBadge
                   cd={cdLabel}
@@ -121,7 +120,7 @@ export function ActiveSkillDescText({
 
           return (
             <p key={i} className={i > 0 ? (compact ? "mt-0.5" : "mt-1") : ""}>
-              <DescLineContent line={line} />
+              <SkillDescRichContent text={line} iconSize={iconSize} />
             </p>
           );
         })}
@@ -129,24 +128,13 @@ export function ActiveSkillDescText({
     );
   }
 
-  const parts = text.split(AFTER_ACTIVATION_SPLIT_RE);
-  const hasMarker = parts.some(isAfterActivationMarker);
-
-  if (!hasMarker) {
+  if (!needsIcons) {
     return <p className={className}>{text}</p>;
   }
 
   return (
-    <p className={className}>
-      {parts.map((part, i) =>
-        isAfterActivationMarker(part) ? (
-          <strong key={i} className="font-bold text-[#f5e6c8]">
-            {part}
-          </strong>
-        ) : (
-          <span key={i}>{part}</span>
-        )
-      )}
-    </p>
+    <div ref={rootRef} className={className}>
+      <SkillDescRichContent text={text} iconSize={iconSize} />
+    </div>
   );
 }

@@ -10,6 +10,31 @@ export type IconCropRect = {
   size: number;
 };
 
+/**
+ * Portrait art crop for the card middle frame.
+ * Width is derived from `height` × {@link CUSTOM_CARD_ART_ASPECT}.
+ * `x` / `y` may be outside 0–1 so the frame can hang past the image
+ * (outside areas rasterize as transparent).
+ */
+export type ArtCropRect = {
+  /** Normalized left (may be &lt; 0 or &gt; 1 — past image edges). */
+  x: number;
+  /** Normalized top (may be &lt; 0 or &gt; 1 — past image edges). */
+  y: number;
+  /** Crop height as a fraction of image height (may be &gt; 1). */
+  height: number;
+};
+
+/**
+ * Fixed portrait frame (width / height).
+ * Calibrated from the Kirito custom-card export (~658×1024 ≈ 0.643).
+ */
+export const CUSTOM_CARD_ART_ASPECT = 2 / 3;
+
+/** Output size for cropped card art (matches {@link CUSTOM_CARD_ART_ASPECT}). */
+export const CUSTOM_CARD_ART_OUT_WIDTH = 720;
+export const CUSTOM_CARD_ART_OUT_HEIGHT = 1080;
+
 /** Custom active-skill layout (matches dadguide compound skill types). */
 export type CustomActiveSkillType =
   | "normal"
@@ -58,8 +83,13 @@ export type CustomCardDraft = {
   hpMax: number | null;
   atkMax: number | null;
   rcvMax: number | null;
+  /** Original uploaded PNG (icon crop source). */
+  sourceArtBlob: Blob | null;
+  sourceArtObjectUrl: string | null;
+  /** Portrait-cropped art shown on the card. */
   artBlob: Blob | null;
   artObjectUrl: string | null;
+  artCrop: ArtCropRect | null;
   iconBlob: Blob | null;
   iconObjectUrl: string | null;
   iconCrop: IconCropRect | null;
@@ -96,8 +126,11 @@ export function createEmptyDraft(): CustomCardDraft {
     hpMax: null,
     atkMax: null,
     rcvMax: null,
+    sourceArtBlob: null,
+    sourceArtObjectUrl: null,
     artBlob: null,
     artObjectUrl: null,
+    artCrop: null,
     iconBlob: null,
     iconObjectUrl: null,
     iconCrop: null,
