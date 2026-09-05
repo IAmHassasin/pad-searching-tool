@@ -1,0 +1,43 @@
+{
+  "eventId": "butlers-maids-and-pad-cafe-returns-2608",
+  "title": "BUTLERS, MAIDS, AND PAD CAFÉ RETURNS",
+  "subtitle": "New Monsters & Evolutions",
+  "publishedAt": "2026-08-18",
+  "sourceUrl": "https://www.puzzleanddragons.us/single-post/butlers-maids-and-pad-cafe-returns-2608",
+  "loading": {
+    "theme": "fade",
+    "minMs": 700
+  },
+  "coverMonsterIds": [13826, 13828, 13832, 13852, 13876, 13878],
+  "entries": [
+    { "monsterId": 13826, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13827, "role": "new-evolution", "label": "New Evolution", "note": "Assist Evolution for Heroic Part-Time Butlers, Gileon & Dyer" },
+    { "monsterId": 13828, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13829, "role": "new-evolution", "label": "New Evolution", "note": "Assist Evolution for Devilishly Kicking Butler & Maid, Solomon & Meiluna" },
+    { "monsterId": 13830, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13832, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13834, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13836, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13838, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13840, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13842, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13844, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13846, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13848, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13850, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13852, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13854, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13856, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13858, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13860, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13862, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13864, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13866, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13868, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13870, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13872, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13874, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13876, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13878, "role": "new-monster", "label": "New Monster" }
+  ]
+}

@@ -1,9 +1,12 @@
-import type {
-  MonsterRecord,
-  MonsterFilters,
-  PatternGroupsManifest,
-  SelectedPatternTag,
-  SkillFilters,
+import {
+  parseAdvancedEffectFilters,
+  serializeAdvancedEffectFilters,
+  type AdvancedEffectFilters,
+  type MonsterRecord,
+  type MonsterFilters,
+  type PatternGroupsManifest,
+  type SelectedPatternTag,
+  type SkillFilters,
 } from "../types";
 import { parseMonsterTypeIds } from "./monster-types";
 
@@ -206,7 +209,8 @@ function setCsv(q: URLSearchParams, key: string, values: number[] | string[]) {
 
 export function buildSearchParamsFromFilters(
   monsterFilters: MonsterFilters,
-  skillFilters: SkillFilters
+  skillFilters: SkillFilters,
+  advancedEffectFilters?: AdvancedEffectFilters
 ): URLSearchParams {
   const q = new URLSearchParams();
   setCsv(q, "rarity", [...monsterFilters.rarity]);
@@ -250,14 +254,31 @@ export function buildSearchParamsFromFilters(
     q.set("leaderSkillText", skillFilters.leaderSkillText.trim());
   }
 
+  if (advancedEffectFilters) {
+    const effect = serializeAdvancedEffectFilters(advancedEffectFilters);
+    if (effect) q.set("effect", effect);
+  }
+
   return q;
+}
+
+export function parseAdvancedEffectFiltersFromSearch(
+  search: string
+): AdvancedEffectFilters {
+  const params = new URLSearchParams(search);
+  return parseAdvancedEffectFilters(params.get("effect"));
 }
 
 export function buildShareSearchUrl(
   monsterFilters: MonsterFilters,
-  skillFilters: SkillFilters
+  skillFilters: SkillFilters,
+  advancedEffectFilters?: AdvancedEffectFilters
 ): string {
-  const q = buildSearchParamsFromFilters(monsterFilters, skillFilters).toString();
+  const q = buildSearchParamsFromFilters(
+    monsterFilters,
+    skillFilters,
+    advancedEffectFilters
+  ).toString();
   return q ? `/?${q}` : "/";
 }
 

@@ -2,7 +2,10 @@
 FROM node:20-bookworm-slim AS web-builder
 WORKDIR /app/web
 COPY web/package.json web/package-lock.json ./
-RUN npm ci
+# --ignore-scripts avoids esbuild postinstall race (ETXTBSY) on Docker overlayfs;
+# then install the platform binary once in a separate step.
+RUN npm ci --ignore-scripts \
+  && node node_modules/esbuild/install.js
 COPY web/ ./
 # Same origin as API in the container (port 3000). Media CDN comes from gitignored `.env`.
 ARG VITE_PAD_CDN_ORIGIN=

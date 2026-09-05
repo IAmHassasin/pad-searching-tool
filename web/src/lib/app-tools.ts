@@ -30,6 +30,12 @@ export const APP_TOOLS: AppTool[] = [
     icon: "👆",
   },
   {
+    href: "/custom-card",
+    label: "Custom",
+    description: "Build a custom monster card",
+    icon: "🎨",
+  },
+  {
     href: "/dungeon-details",
     label: "Dungeons",
     description: "AppMedia floor tables",

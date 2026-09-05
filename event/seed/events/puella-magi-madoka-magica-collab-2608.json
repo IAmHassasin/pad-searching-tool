@@ -1,0 +1,24 @@
+{
+  "eventId": "puella-magi-madoka-magica-collab-2608",
+  "title": "PUELLA MAGI MADOKA MAGICA COLLAB",
+  "subtitle": "New Monsters & Evolutions",
+  "publishedAt": "2026-08-27",
+  "sourceUrl": "https://www.puzzleanddragons.us/single-post/puella-magi-madoka-magica-collab-arrives-2608",
+  "loading": {
+    "theme": "fade",
+    "minMs": 700
+  },
+  "coverMonsterIds": [13887, 13889, 13891, 13903, 13897, 13894],
+  "entries": [
+    { "monsterId": 13887, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13888, "role": "new-evolution", "label": "New Evolution", "note": "Assist Evolution for Ultimate Madoka & Devil Homura" },
+    { "monsterId": 13889, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13890, "role": "new-evolution", "label": "New Evolution", "note": "Assist Evolution for Kyubey" },
+    { "monsterId": 13891, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13894, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13897, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13900, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13903, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 13907, "role": "new-monster", "label": "New Monster", "note": "Dessert Witch Descended" }
+  ]
+}

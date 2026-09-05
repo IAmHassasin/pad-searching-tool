@@ -31,6 +31,9 @@ import {
   StarRow,
   StatRow,
 } from "./monster-card-shared";
+import { parseMonsterAttributeIds } from "../lib/monster-attributes";
+import { MonsterAttributeStrip } from "./MonsterAttributeStrip";
+import { FramedMonsterIcon } from "./FramedMonsterIcon";
 import { MonsterCardIconGroup } from "./MonsterCardIconGroup";
 import { MonsterChangeTargetStrip } from "./MonsterChangeTargetStrip";
 import { MonsterPortrait } from "./MonsterPortrait";
@@ -51,6 +54,16 @@ type Props = {
   changeTargetLoadingId?: number | null;
   /** Mobile sidebar: hide hero art, tighter layout. */
   compact?: boolean;
+  /** Override full art URL (blob / data). */
+  artSrc?: string | null;
+  /** Override icon URL (blob / data). */
+  iconSrc?: string | null;
+  /** Show attribute strip (used by custom card preview). */
+  showAttributes?: boolean;
+  /** Render attribute frames on the stats/header icon (PAD corners). */
+  framedIcon?: boolean;
+  /** Hide Google / Assist Resonance links (export / custom card). */
+  hideUtilityLinks?: boolean;
 };
 
 function RelationToggleButton({
@@ -171,6 +184,7 @@ function SkillBlock({
         <ActiveSkillDescText
           text={body}
           stageCooldowns={stageCooldowns}
+          skillCdRange={stageCooldowns?.length ? cooldown : null}
           compact={compact}
           className={`whitespace-pre-wrap text-[#e8dcc8] ${
             compact ? "text-[9px] leading-snug" : "text-[10px] leading-relaxed"
@@ -204,6 +218,11 @@ export function MonsterDetailCard({
   onSelectChangeTarget,
   changeTargetLoadingId = null,
   compact = false,
+  artSrc = null,
+  iconSrc = null,
+  showAttributes = false,
+  framedIcon = false,
+  hideUtilityLinks = false,
 }: Props) {
   const id = monsterRowId(row);
   const nameTitle = useTruncatedTitle<HTMLHeadingElement>(
@@ -218,14 +237,20 @@ export function MonsterDetailCard({
     row.sync_awsid
   );
   const monsterTypeIds = parseMonsterTypeIds(row);
+  const attributeIds = parseMonsterAttributeIds(row);
   const hasTypes = monsterTypeIds.length > 0;
+  const hasAttributes = showAttributes && attributeIds.length > 0;
   const hasSuper = prefixedAwkIds.length > 0;
   const hasRegular = regular.length > 0;
-  const hasAssistResonance = monsterHasAwakening(row, ASSIST_RESONANCE_AWAKENING_ID);
+  const hasAssistResonance =
+    !hideUtilityLinks &&
+    monsterHasAwakening(row, ASSIST_RESONANCE_AWAKENING_ID);
   const resonateSearchUrl = hasAssistResonance
     ? buildAssistResonanceSearchUrl(row)
     : null;
-  const googleSearchUrl = buildMonsterGoogleSearchUrl(row);
+  const googleSearchUrl = hideUtilityLinks
+    ? null
+    : buildMonsterGoogleSearchUrl(row);
   const superLabel = hasSuperAwks ? "Super awakening" : "Sync awakening";
 
   const awkColumnRightOffset =
@@ -243,12 +268,11 @@ export function MonsterDetailCard({
     row.active_skill_stage_cooldowns
   );
   const perStageCd = hasEvoStageCooldowns(rawActiveDesc, stageCooldowns);
-  const activeCooldown = perStageCd
-    ? null
-    : formatActiveSkillCooldown(
-        row.active_skill_cooldown_min,
-        row.active_skill_cooldown_max
-      );
+  // Always show overall min–max CD (same as normal cards), even for evo/stage skills.
+  const activeCooldown = formatActiveSkillCooldown(
+    row.active_skill_cooldown_min,
+    row.active_skill_cooldown_max
+  );
 
   return (
     <article
@@ -273,6 +297,7 @@ export function MonsterDetailCard({
           <MonsterPortrait
             monsterId={id}
             alt={row.name_en ?? "Monster artwork"}
+            src={artSrc}
             className="pointer-events-none absolute left-1/2 z-[1] max-w-none -translate-x-1/2 -translate-y-1/2 object-contain"
             style={{
               top: `${PAD_CARD_VISUAL.artAnchorY}%`,
@@ -287,14 +312,27 @@ export function MonsterDetailCard({
         }`}
       >
         <div className="flex items-start gap-2">
-          {compact && (
-            <MonsterPortrait
-              monsterId={id}
-              alt=""
-              variant="icon"
-              className="h-9 w-9 shrink-0 rounded border border-[#8b6914]/60 object-cover"
-            />
-          )}
+          {compact &&
+            (framedIcon ? (
+              <FramedMonsterIcon
+                monsterId={id}
+                iconSrc={iconSrc}
+                attributeIds={[
+                  row.attribute_1_id,
+                  row.attribute_2_id,
+                  row.attribute_3_id,
+                ]}
+                sizePx={36}
+              />
+            ) : (
+              <MonsterPortrait
+                monsterId={id}
+                alt=""
+                variant="icon"
+                src={iconSrc}
+                className="h-9 w-9 shrink-0 rounded border border-[#8b6914]/60 object-cover"
+              />
+            ))}
           <div className="flex min-w-0 flex-1 items-start justify-between gap-2">
             <div className="min-w-0">
               <p
@@ -337,6 +375,14 @@ export function MonsterDetailCard({
               compact ? "w-full" : "min-w-0 flex-1 px-1 pt-1.5"
             }`}
           >
+            {hasAttributes && (
+              <MonsterCardIconGroup
+                variant="type"
+                aria-label={`Attributes: ${attributeIds.join(", ")}`}
+              >
+                <MonsterAttributeStrip attributeIds={attributeIds} bare />
+              </MonsterCardIconGroup>
+            )}
             {hasTypes && (
               <MonsterCardIconGroup
                 variant="type"
@@ -489,14 +535,27 @@ export function MonsterDetailCard({
         }`}
       >
         <div className="flex items-center gap-2">
-          {!compact && (
-            <MonsterPortrait
-              monsterId={id}
-              alt=""
-              variant="icon"
-              className="h-11 w-11 shrink-0 rounded border border-[#8b6914]/60 object-cover"
-            />
-          )}
+          {!compact &&
+            (framedIcon ? (
+              <FramedMonsterIcon
+                monsterId={id}
+                iconSrc={iconSrc}
+                attributeIds={[
+                  row.attribute_1_id,
+                  row.attribute_2_id,
+                  row.attribute_3_id,
+                ]}
+                sizePx={44}
+              />
+            ) : (
+              <MonsterPortrait
+                monsterId={id}
+                alt=""
+                variant="icon"
+                src={iconSrc}
+                className="h-11 w-11 shrink-0 rounded border border-[#8b6914]/60 object-cover"
+              />
+            ))}
           <div className={`min-w-0 flex-1 ${compact ? "space-y-0.5" : "space-y-1"}`}>
             <StatRow label="HP" value={row.hp_max} compact={compact} />
             <StatRow label="ATK" value={row.atk_max} compact={compact} />

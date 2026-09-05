@@ -1,11 +1,14 @@
-import type {
-  CollabGroupResponse,
-  EvoTreeResponse,
-  MonsterFilters,
-  MonsterRecord,
-  MonsterSearchResponse,
-  PatternGroupsManifest,
-  SkillFilters,
+import {
+  serializeAdvancedEffectFilters,
+  type AdvancedEffectFilters,
+  type CollabGroupResponse,
+  type EffectFamiliesManifest,
+  type EvoTreeResponse,
+  type MonsterFilters,
+  type MonsterRecord,
+  type MonsterSearchResponse,
+  type PatternGroupsManifest,
+  type SkillFilters,
 } from "./types";
 
 const base = (import.meta.env.VITE_API_BASE as string | undefined)?.replace(
@@ -93,6 +96,10 @@ export function fetchPatternGroups() {
   return getJson<PatternGroupsManifest>("/patterns/groups");
 }
 
+export function fetchEffectFamilies() {
+  return getJson<EffectFamiliesManifest>("/patterns/effect-families");
+}
+
 function setCsv(q: URLSearchParams, key: string, values: number[] | string[]) {
   if (values.length) q.set(key, values.join(","));
 }
@@ -140,7 +147,8 @@ export async function searchMonstersPage(
   monsterFilters: MonsterFilters,
   skillFilters: SkillFilters,
   limit: number,
-  offset: number
+  offset: number,
+  advancedEffectFilters?: AdvancedEffectFilters
 ): Promise<MonsterSearchResponse> {
   const q = new URLSearchParams({
     limit: String(limit),
@@ -148,13 +156,18 @@ export async function searchMonstersPage(
   });
   monsterParams(q, monsterFilters);
   skillParams(q, skillFilters);
+  if (advancedEffectFilters) {
+    const effect = serializeAdvancedEffectFilters(advancedEffectFilters);
+    if (effect) q.set("effect", effect);
+  }
   return getJson<MonsterSearchResponse>(`/monsters/search?${q}`);
 }
 
 export async function searchAllMonsters(
   monsterFilters: MonsterFilters,
   skillFilters: SkillFilters,
-  onProgress?: (loaded: number, total: number) => void
+  onProgress?: (loaded: number, total: number) => void,
+  advancedEffectFilters?: AdvancedEffectFilters
 ): Promise<{ rows: MonsterRecord[]; total: number }> {
   const limit = 5000;
   const all: MonsterRecord[] = [];
@@ -165,7 +178,8 @@ export async function searchAllMonsters(
       monsterFilters,
       skillFilters,
       limit,
-      offset
+      offset,
+      advancedEffectFilters
     );
     total = page.total;
     all.push(...page.rows);

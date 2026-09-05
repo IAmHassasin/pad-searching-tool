@@ -7,6 +7,7 @@ import { DungeonListPage } from "./dungeon-details/DungeonListPage";
 import { EventDetailPage } from "./event/EventDetailPage";
 import { EventListPage } from "./event/EventListPage";
 import { OneTouchPage } from "./one-touch/OneTouchPage";
+import { CustomCardPage } from "./custom-card/CustomCardPage";
 import { TeamBuildPage } from "./team-build/TeamBuildPage";
 import "./index.css";
 
@@ -37,6 +38,9 @@ function Root() {
   }
   if (path === "/one-touch") {
     return <OneTouchPage />;
+  }
+  if (path === "/custom-card") {
+    return <CustomCardPage />;
   }
   if (path === "/team-build") {
     return <TeamBuildPage />;

@@ -1,6 +1,7 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { PadCategorized } from "../entities/pad-categorized.entity";
+import { EffectValueCatalogService } from "../patterns/effect-value-catalog.service";
 import { PatternCatalogService } from "../patterns/pattern-catalog.service";
 import { AwokenSkillsService } from "./awoken-skills.service";
 import { CategoryBundlesController } from "./category-bundles.controller";
@@ -19,6 +20,7 @@ import { VoidSuperGravityService } from "./void-super-gravity.service";
   controllers: [PadsApiController, CategoryBundlesController, PatternsController],
   providers: [
     PatternCatalogService,
+    EffectValueCatalogService,
     PatternSearchService,
     MonsterRelationsService,
     SourceRowsService,

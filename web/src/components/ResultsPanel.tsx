@@ -46,7 +46,9 @@ export function ResultsPanel({
     <main className="flex min-w-0 flex-1 flex-col overflow-hidden">
       <header className="flex shrink-0 flex-wrap items-center justify-between gap-2 border-b border-[var(--color-border)] bg-[var(--color-panel)] px-3 py-2">
         <div className="flex items-center gap-1">
-          <h2 className="text-sm font-semibold">Results</h2>
+          <h2 className="text-sm font-semibold tracking-wide [font-family:var(--font-mono)]">
+            Results
+          </h2>
           <ResultsQuickFilter
             value={resultQuickFilter}
             onChange={onResultQuickFilterChange}
@@ -63,9 +65,17 @@ export function ResultsPanel({
             awkSettings={awkModifierSettings}
             onAwkSettingsChange={onAwkModifierSettingsChange}
           />
-          <p className="text-xs text-[var(--color-muted)]">
+          <p className="flex items-center gap-1.5 text-xs tabular-nums text-[var(--color-muted)] [font-family:var(--font-mono)]">
+            <span
+              className={`h-1.5 w-1.5 shrink-0 rounded-full ${
+                loading
+                  ? "animate-pulse bg-[var(--color-accent-2)]"
+                  : "bg-[var(--color-accent)]"
+              }`}
+              aria-hidden
+            />
             {loading
-              ? `Loading monsters… ${loadProgress ?? 0}`
+              ? `loading… ${loadProgress ?? 0}`
               : `${rows.length} shown · ${totalLoaded} loaded`}
           </p>
         </div>
@@ -79,7 +89,6 @@ export function ResultsPanel({
             onSelect={onSelect}
             loading={loading}
             resultSort={resultSort}
-            awkModifierSettings={awkModifierSettings}
             displaySections={displaySections}
           />
         </div>

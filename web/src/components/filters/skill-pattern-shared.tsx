@@ -66,8 +66,8 @@ export function PatternTagChip({
         disabled
           ? "cursor-not-allowed border-[var(--color-border)]/50 text-[var(--color-muted)] opacity-40"
           : selected
-            ? "border-[var(--color-accent)] bg-[#1f3a5f] text-white shadow-[inset_0_0_0_1px_rgba(88,166,255,0.25)]"
-            : "border-[var(--color-border)] bg-[#0d1117] text-[#c9d1d9] hover:border-[var(--color-accent)]/60 hover:bg-[#21262d]"
+            ? "border-[var(--color-accent)] bg-[var(--color-accent-muted)] text-white shadow-[inset_0_0_0_1px_rgba(88,166,255,0.25)]"
+            : "border-[var(--color-border)] bg-[var(--color-inset)] text-[#c9d1d9] hover:border-[var(--color-accent)]/60 hover:bg-[var(--color-hover)]"
       }`}
       style={
         selected && !disabled
@@ -96,7 +96,7 @@ export function PatternTagChip({
           className={`shrink-0 rounded px-1 py-px text-[9px] font-medium tabular-nums ${
             selected
               ? "bg-[var(--color-accent)]/20 text-[var(--color-accent)]"
-              : "bg-[#21262d] text-[var(--color-muted)]"
+              : "bg-[var(--color-hover)] text-[var(--color-muted)]"
           }`}
         >
           {count}
@@ -115,7 +115,7 @@ export function PatternMatchToggle({
 }) {
   return (
     <div
-      className="mb-3 flex rounded-lg border border-[var(--color-border)] bg-[#0d1117] p-0.5"
+      className="mb-3 flex rounded-lg border border-[var(--color-border)] bg-[var(--color-inset)] p-0.5"
       role="radiogroup"
       aria-label="Pattern match mode"
     >
@@ -133,7 +133,7 @@ export function PatternMatchToggle({
           onClick={() => onChange(id)}
           className={`flex-1 rounded-md px-2 py-1 text-xs font-medium transition-colors ${
             value === id
-              ? "bg-[var(--color-accent)] text-[#0d1117]"
+              ? "bg-[var(--color-accent)] text-[var(--color-inset)]"
               : "text-[var(--color-muted)] hover:text-white"
           }`}
         >
@@ -379,7 +379,7 @@ export function SkillSelectedPatternChips({
             key={`${p.skillType}-${p.tagKey}`}
             type="button"
             onClick={() => toggleTag(p.skillType, p.tagKey, label)}
-            className={`inline-flex items-center gap-1 rounded-full border border-[var(--color-accent)]/50 bg-[#1f3a5f] ${
+            className={`inline-flex items-center gap-1 rounded-full border border-[var(--color-accent)]/50 bg-[var(--color-accent-muted)] ${
               hasIcon ? "p-0.5" : "px-2 py-0.5 text-[10px] text-[var(--color-accent)]"
             } hover:border-red-500/50 hover:bg-red-950/40 hover:text-red-300`}
             title={`${label} — click to remove`}
@@ -412,7 +412,7 @@ function SkillTextSearchFields({
   return (
     <>
       <select
-        className={`mb-2 w-full rounded border border-[var(--color-border)] bg-[#0d1117] px-2 py-1 ${
+        className={`mb-2 w-full rounded border border-[var(--color-border)] bg-[var(--color-inset)] px-2 py-1 ${
           compact ? "text-[10px]" : "text-xs"
         }`}
         value={filters.skillTextMode}
@@ -435,7 +435,7 @@ function SkillTextSearchFields({
         Active skill description
         <textarea
           rows={compact ? 2 : 3}
-          className={`resize-y rounded border border-[var(--color-border)] bg-[#0d1117] px-2 py-1 text-white ${
+          className={`resize-y rounded border border-[var(--color-border)] bg-[var(--color-inset)] px-2 py-1 text-white ${
             compact ? "text-xs" : "text-sm"
           }`}
           value={filters.activeSkillText}
@@ -453,7 +453,7 @@ function SkillTextSearchFields({
         Leader skill description
         <textarea
           rows={compact ? 2 : 3}
-          className={`resize-y rounded border border-[var(--color-border)] bg-[#0d1117] px-2 py-1 text-white ${
+          className={`resize-y rounded border border-[var(--color-border)] bg-[var(--color-inset)] px-2 py-1 text-white ${
             compact ? "text-xs" : "text-sm"
           }`}
           value={filters.leaderSkillText}

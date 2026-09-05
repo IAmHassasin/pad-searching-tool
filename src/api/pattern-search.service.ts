@@ -9,6 +9,8 @@ import {
   equivalenceRulesAsBase,
   equivalenceRulesAsComposite,
 } from "../awakening-equivalence";
+import { EffectValueCatalogService } from "../patterns/effect-value-catalog.service";
+import type { EffectValueRangeInput } from "../patterns/effect-value-types";
 import { PatternCatalogService } from "../patterns/pattern-catalog.service";
 import type { PatternTagSelection, SkillType } from "../patterns/pattern-types";
 import { VOID_SUPER_GRAVITY_TAG_KEY } from "../patterns/supplement-pattern-tags";
@@ -51,6 +53,8 @@ export type PatternSearchInput = {
   skillTextMode?: "both" | "active" | "leader";
   monster?: MonsterSearchFilters;
   vanish?: VanishSearchFilters;
+  /** Numeric effect-value ranges (shield %, xN HP, charge turns, …). */
+  effectRanges?: EffectValueRangeInput[];
   limit: number;
   offset: number;
 };
@@ -60,6 +64,7 @@ export class PatternSearchService {
   constructor(
     @InjectDataSource() private readonly dataSource: DataSource,
     private readonly patterns: PatternCatalogService,
+    private readonly effectValues: EffectValueCatalogService,
     private readonly vanish: VanishAwokenService,
     private readonly voidSuperGravity: VoidSuperGravityService
   ) {}
@@ -444,6 +449,12 @@ export class PatternSearchService {
     if (patternWhere) parts.push(patternWhere);
     parts.push(...this.buildTextWhere(input, params));
     parts.push(...this.buildMonsterWhere(input.monster, params));
+    const effectWhere = this.effectValues.buildWhere(
+      input.effectRanges,
+      (skillType) => this.skillColumnExpr(skillType),
+      params
+    );
+    if (effectWhere) parts.push(effectWhere);
     if (attach.vanishAttached && hasVanishFilters(input.vanish)) {
       parts.push(...this.vanish.buildVanishWhere(input.vanish, params));
     }

@@ -28,9 +28,9 @@ export function CollapsibleFilterSection({
 
   return (
     <section
-      className={`rounded-lg border border-[var(--color-border)] bg-[#0d1117]/40 ${
-        compact ? "p-1.5" : "p-2"
-      } ${fillHeight && open ? "flex min-h-0 flex-1 flex-col" : ""} ${className ?? ""}`}
+      className={`rounded-lg border bg-[var(--color-inset)]/40 transition-colors ${
+        open ? "border-[var(--color-border)]" : "border-[var(--color-border)]/70"
+      } ${compact ? "p-1.5" : "p-2"} ${fillHeight && open ? "flex min-h-0 flex-1 flex-col" : ""} ${className ?? ""}`}
     >
       <div className="flex items-center gap-1.5">
         <button
