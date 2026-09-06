@@ -43,10 +43,32 @@ export type CustomActiveSkillType =
   | "random";
 
 export type CustomActiveSkillStage = {
+  /** Shown on the stage line (and as the card AS title when it is stage 1). */
+  name: string;
   body: string;
   /** Max-level CD for this stage (shown on the stage line). */
   cd: number | null;
 };
+
+export function emptyActiveSkillStage(): CustomActiveSkillStage {
+  return { name: "", body: "", cd: null };
+}
+
+export function activeSkillStageHasContent(
+  stage: CustomActiveSkillStage
+): boolean {
+  return Boolean((stage.name ?? "").trim() || (stage.body ?? "").trim());
+}
+
+/** One numbered stage: `Name: body` when both are set. */
+export function formatActiveSkillStageText(
+  stage: CustomActiveSkillStage
+): string {
+  const name = (stage.name ?? "").trim();
+  const body = (stage.body ?? "").trim();
+  if (name && body) return `${name}: ${body}`;
+  return name || body;
+}
 
 export const CUSTOM_ACTIVE_SKILL_HEADERS: Record<
   Exclude<CustomActiveSkillType, "normal">,
@@ -115,10 +137,7 @@ export function createEmptyDraft(): CustomCardDraft {
     activeSkillType: "normal",
     activeSkillName: "",
     activeSkillDesc: "",
-    activeSkillStages: [
-      { body: "", cd: null },
-      { body: "", cd: null },
-    ],
+    activeSkillStages: [emptyActiveSkillStage(), emptyActiveSkillStage()],
     activeSkillCdMin: null,
     activeSkillCdMax: null,
     leaderSkillName: "",
@@ -141,6 +160,13 @@ export function formatAwakeningList(ids: number[]): string {
   return ids.map((id) => `(${id})`).join(",");
 }
 
+/** Card header AS name: overall name, or stage 1 name when using evo/random. */
+export function composeActiveSkillName(draft: CustomCardDraft): string {
+  const overall = draft.activeSkillName.trim();
+  if (draft.activeSkillType === "normal") return overall;
+  return (draft.activeSkillStages[0]?.name ?? "").trim() || overall;
+}
+
 /** Build dadguide-style staged active skill description. */
 export function composeActiveSkillDesc(draft: CustomCardDraft): string {
   if (draft.activeSkillType === "normal") {
@@ -148,7 +174,7 @@ export function composeActiveSkillDesc(draft: CustomCardDraft): string {
   }
   const header = CUSTOM_ACTIVE_SKILL_HEADERS[draft.activeSkillType];
   const stages = draft.activeSkillStages
-    .map((s) => s.body.trim())
+    .map(formatActiveSkillStageText)
     .filter(Boolean);
   if (!stages.length) return `${header}:`;
   const body = stages.map((text, i) => `${i + 1}) ${text}`).join(", ");
@@ -162,7 +188,7 @@ export function composeActiveSkillStageCooldowns(
     return null;
   }
   const cds = draft.activeSkillStages
-    .filter((s) => s.body.trim())
+    .filter(activeSkillStageHasContent)
     .map((s) => s.cd)
     .filter((cd): cd is number => cd != null && Number.isFinite(cd) && cd > 0);
   return cds.length ? cds.join(",") : null;

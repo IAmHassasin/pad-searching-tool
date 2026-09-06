@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, type ReactNode } from "react";
 import { AwakeningSpriteIcon } from "../components/AwakeningSpriteIcon";
 import { MonsterTypeSpriteIcon } from "../components/MonsterTypeSpriteIcon";
 import { SkillEffectSpriteIcon } from "../components/SkillEffectSpriteIcon";
@@ -19,6 +19,7 @@ import type {
   CustomActiveSkillType,
   CustomCardDraft,
 } from "./types";
+import { emptyActiveSkillStage } from "./types";
 
 type Props = {
   draft: CustomCardDraft;
@@ -61,6 +62,90 @@ function insertAtCursor(
   const end = el.selectionEnd ?? start;
   const next = value.slice(0, start) + token + value.slice(end);
   return { next, caret: start + token.length };
+}
+
+function CollapsiblePickerSection({
+  title,
+  defaultOpen = true,
+  children,
+}: {
+  title: string;
+  defaultOpen?: boolean;
+  children: ReactNode;
+}) {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <section className="rounded border border-[var(--color-border)] bg-[#0d1117]">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        className="flex w-full items-center justify-between gap-2 px-2 py-1.5 text-left hover:bg-white/5"
+      >
+        <span className="text-[10px] font-semibold uppercase tracking-wide text-[#a8c878]">
+          {title}
+        </span>
+        <span className="text-[10px] text-[var(--color-muted)]" aria-hidden>
+          {open ? "▾" : "▸"}
+        </span>
+      </button>
+      {open && (
+        <div className="space-y-3 border-t border-[var(--color-border)] px-2 py-2">
+          {children}
+        </div>
+      )}
+    </section>
+  );
+}
+
+function TypeInsertRow({ onPickType }: { onPickType: (id: number) => void }) {
+  return (
+    <div className="flex flex-wrap gap-0.5">
+      {SKILL_INSERT_TYPES.map((t) => (
+        <button
+          key={t.id}
+          type="button"
+          title={`Insert type: ${t.label}`}
+          onClick={() => onPickType(t.id)}
+          className="rounded border border-transparent p-0.5 hover:border-[#c9a84a]"
+        >
+          <MonsterTypeSpriteIcon
+            typeId={t.id}
+            size={20}
+            title={monsterTypeLabel(t.id)}
+          />
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function AwakeningGroupRows({
+  rows,
+  onPickAwk,
+}: {
+  rows: number[][];
+  onPickAwk: (id: number) => void;
+}) {
+  return (
+    <div className="space-y-1">
+      {rows.map((row, rowIndex) => (
+        <div key={rowIndex} className="flex flex-wrap gap-0.5">
+          {row.map((id) => (
+            <button
+              key={`${rowIndex}-${id}`}
+              type="button"
+              title={`Insert awakening #${id}`}
+              onClick={() => onPickAwk(id)}
+              className="rounded border border-transparent p-0.5 hover:border-[#c9a84a]"
+            >
+              <AwakeningSpriteIcon awokenSkillId={id} size={20} />
+            </button>
+          ))}
+        </div>
+      ))}
+    </div>
+  );
 }
 
 function DescWithAwkInsert({
@@ -146,93 +231,77 @@ function SkillIconInsertPicker({
       aria-label={
         isLeader
           ? "Insert type or match-style awakening into leader skill"
-          : "Insert type or skill-effect icon into active skill"
+          : "Insert type, effect, or awakening into active skill"
       }
       onClick={onClose}
     >
       <div
-        className="flex max-h-[min(80vh,32rem)] w-full max-w-lg flex-col rounded-xl border border-[#a8842f] bg-[#1a1410] p-4 shadow-xl"
+        className="flex max-h-[min(85vh,40rem)] w-full max-w-lg flex-col rounded-xl border border-[#a8842f] bg-[#1a1410] p-4 shadow-xl"
         onClick={(e) => e.stopPropagation()}
       >
         <h3 className="mb-1 text-sm font-semibold text-[#f5e6c8]">
-          {isLeader ? "Insert type / match icon" : "Insert type / effect icon"}
+          {isLeader ? "Insert type / match icon" : "Insert icon into active skill"}
         </h3>
         <p className="mb-3 text-[11px] text-[var(--color-muted)]">
           {isLeader
             ? "Monster types and Match style awakenings. Renders inline on the card."
-            : "Monster types and active-skill effect icons. Renders inline on the card."}
+            : "Types, skill-effect icons, and any awakening. Collapse a section to find the other faster."}
         </p>
-        <div className="min-h-0 flex-1 space-y-3 overflow-y-auto pr-0.5">
-          <section>
-            <p className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-[#a8c878]">
-              Type
-            </p>
-            <div className="flex flex-wrap gap-0.5">
-              {SKILL_INSERT_TYPES.map((t) => (
-                <button
-                  key={t.id}
-                  type="button"
-                  title={`Insert type: ${t.label}`}
-                  onClick={() => onPickType(t.id)}
-                  className="rounded border border-transparent p-0.5 hover:border-[#c9a84a]"
-                >
-                  <MonsterTypeSpriteIcon
-                    typeId={t.id}
-                    size={20}
-                    title={monsterTypeLabel(t.id)}
+        <div className="min-h-0 flex-1 space-y-2 overflow-y-auto pr-0.5">
+          {isLeader ? (
+            <>
+              <CollapsiblePickerSection title="Types" defaultOpen>
+                <TypeInsertRow onPickType={onPickType} />
+              </CollapsiblePickerSection>
+              {MATCH_STYLE_GROUP && (
+                <CollapsiblePickerSection title="Match style" defaultOpen>
+                  <AwakeningGroupRows
+                    rows={MATCH_STYLE_GROUP.rows}
+                    onPickAwk={onPickAwk}
                   />
-                </button>
-              ))}
-            </div>
-          </section>
-          {isLeader
-            ? MATCH_STYLE_GROUP && (
-                <section>
-                  <p className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-[#a8c878]">
-                    Match style
-                  </p>
-                  <div className="space-y-1">
-                    {MATCH_STYLE_GROUP.rows.map((row, rowIndex) => (
-                      <div key={rowIndex} className="flex flex-wrap gap-0.5">
-                        {row.map((id) => (
-                          <button
-                            key={`match-${rowIndex}-${id}`}
-                            type="button"
-                            title={`Insert awakening #${id}`}
-                            onClick={() => onPickAwk(id)}
-                            className="rounded border border-transparent p-0.5 hover:border-[#c9a84a]"
-                          >
-                            <AwakeningSpriteIcon
-                              awokenSkillId={id}
-                              size={20}
-                            />
-                          </button>
-                        ))}
-                      </div>
-                    ))}
-                  </div>
-                </section>
-              )
-            : SKILL_EFFECT_PICKER_GROUPS.map((group) => (
-                <section key={group.label}>
-                  <p className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-[#a8c878]">
-                    {group.label}
-                  </p>
-                  <div className="flex flex-wrap gap-0.5">
-                    {group.ids.map((id) => (
-                      <button
-                        key={`${group.label}-${id}`}
-                        type="button"
-                        title={`Insert effect #${id}`}
-                        onClick={() => onPickEffect(id)}
-                        className="rounded border border-transparent p-0.5 hover:border-[#c9a84a]"
-                      >
-                        <SkillEffectSpriteIcon effectId={id} size={22} />
-                      </button>
-                    ))}
-                  </div>
-                </section>
-              ))}
+                </CollapsiblePickerSection>
+              )}
+            </>
+          ) : (
+            <>
+              <CollapsiblePickerSection title="Types & effects" defaultOpen>
+                <TypeInsertRow onPickType={onPickType} />
+                {SKILL_EFFECT_PICKER_GROUPS.map((group) => (
+                  <section key={group.label}>
+                    <p className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-[#a8c878]">
+                      {group.label}
+                    </p>
+                    <div className="flex flex-wrap gap-0.5">
+                      {group.ids.map((id) => (
+                        <button
+                          key={`${group.label}-${id}`}
+                          type="button"
+                          title={`Insert effect #${id}`}
+                          onClick={() => onPickEffect(id)}
+                          className="rounded border border-transparent p-0.5 hover:border-[#c9a84a]"
+                        >
+                          <SkillEffectSpriteIcon effectId={id} size={22} />
+                        </button>
+                      ))}
+                    </div>
+                  </section>
+                ))}
+              </CollapsiblePickerSection>
+              <CollapsiblePickerSection title="Awakenings" defaultOpen>
+                {AWAKENING_FILTER_GROUPS.map((group) => (
+                  <section key={group.label}>
+                    <p className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-[#a8c878]">
+                      {group.label}
+                    </p>
+                    <AwakeningGroupRows
+                      rows={group.rows}
+                      onPickAwk={onPickAwk}
+                    />
+                  </section>
+                ))}
+              </CollapsiblePickerSection>
+            </>
+          )}
         </div>
         <div className="mt-3 flex justify-end">
           <button
@@ -263,11 +332,22 @@ export function SkillEditor({ draft, onChange }: Props) {
 
   const addStage = () => {
     onChange({
-      activeSkillStages: [
-        ...draft.activeSkillStages,
-        { body: "", cd: null },
-      ],
+      activeSkillStages: [...draft.activeSkillStages, emptyActiveSkillStage()],
     });
+  };
+
+  const setSkillType = (id: CustomActiveSkillType) => {
+    if (id === "normal" || id === draft.activeSkillType) {
+      onChange({ activeSkillType: id });
+      return;
+    }
+    const overall = draft.activeSkillName.trim();
+    const stages = draft.activeSkillStages.map((stage, i) =>
+      i === 0 && !(stage.name ?? "").trim() && overall
+        ? { ...stage, name: overall }
+        : stage
+    );
+    onChange({ activeSkillType: id, activeSkillStages: stages });
   };
 
   const removeStage = (index: number) => {
@@ -287,20 +367,22 @@ export function SkillEditor({ draft, onChange }: Props) {
           <p className="mb-1 text-[10px] font-semibold uppercase text-[#9ec5ff]">
             Active skill
           </p>
-          <input
-            type="text"
-            value={draft.activeSkillName}
-            onChange={(e) => onChange({ activeSkillName: e.target.value })}
-            placeholder="Skill name"
-            className="mb-1.5 w-full rounded border border-[var(--color-border)] bg-[#161b22] px-2 py-1 text-sm text-white"
-          />
+          {!staged && (
+            <input
+              type="text"
+              value={draft.activeSkillName}
+              onChange={(e) => onChange({ activeSkillName: e.target.value })}
+              placeholder="Skill name"
+              className="mb-1.5 w-full rounded border border-[var(--color-border)] bg-[#161b22] px-2 py-1 text-sm text-white"
+            />
+          )}
 
           <div className="mb-1.5 flex rounded-lg border border-[var(--color-border)] bg-[#0d1117] p-0.5">
             {SKILL_TYPES.map(({ id, label }) => (
               <button
                 key={id}
                 type="button"
-                onClick={() => onChange({ activeSkillType: id })}
+                onClick={() => setSkillType(id)}
                 className={`flex-1 rounded-md px-1.5 py-1 text-[10px] font-medium ${
                   draft.activeSkillType === id
                     ? "bg-[#3d6aa8] text-white"
@@ -320,7 +402,8 @@ export function SkillEditor({ draft, onChange }: Props) {
                 {draft.activeSkillType === "evo-loop" &&
                   "Stages loop back to 1 after the last."}
                 {draft.activeSkillType === "random" &&
-                  "One stage is chosen at random."}
+                  "One stage is chosen at random."}{" "}
+                Each stage has its own skill name; stage 1 is the card header.
               </p>
               {draft.activeSkillStages.map((stage, index) => (
                 <div
@@ -360,6 +443,15 @@ export function SkillEditor({ draft, onChange }: Props) {
                       )}
                     </div>
                   </div>
+                  <input
+                    type="text"
+                    value={stage.name ?? ""}
+                    onChange={(e) =>
+                      updateStage(index, { name: e.target.value })
+                    }
+                    placeholder={`Stage ${index + 1} skill name`}
+                    className="mb-1 w-full rounded border border-[var(--color-border)] bg-[#0d1117] px-2 py-1 text-sm text-white"
+                  />
                   <DescWithAwkInsert
                     mode="active"
                     value={stage.body}

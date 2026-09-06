@@ -1,6 +1,7 @@
 import type { MonsterRecord } from "../types";
 import {
   composeActiveSkillDesc,
+  composeActiveSkillName,
   composeActiveSkillStageCooldowns,
   formatAwakeningList,
   type CustomCardDraft,
@@ -30,7 +31,7 @@ export function draftToPreviewRow(draft: CustomCardDraft): MonsterRecord {
     super_awakenings:
       superIds.length > 0 ? formatAwakeningList(superIds) : null,
     sync_awsid: syncId,
-    active_skill_name_en: draft.activeSkillName.trim() || null,
+    active_skill_name_en: composeActiveSkillName(draft) || null,
     active_skill_desc_en: activeDesc || null,
     active_skill_cooldown_min: draft.activeSkillCdMin,
     active_skill_cooldown_max: draft.activeSkillCdMax,
