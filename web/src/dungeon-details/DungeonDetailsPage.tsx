@@ -291,7 +291,11 @@ export function DungeonDetailsPage({ postId }: { postId: string }) {
                             rowSpan={floor.spawns.length}
                             className="bg-[#1c2128] px-3 py-3 text-center font-semibold"
                           >
-                            <div>{floor.floor}</div>
+                            <div>
+                              {glossary
+                                ? translateLine(floor.floor, glossary)
+                                : floor.floor}
+                            </div>
                             {floor.spawnNote && (
                               <div className="mt-1 text-xs font-normal text-[var(--color-muted)]">
                                 {glossary

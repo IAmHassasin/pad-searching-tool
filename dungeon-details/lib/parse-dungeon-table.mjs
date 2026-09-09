@@ -123,10 +123,14 @@ function parseFloorHeader($td) {
   const text = $td.text().replace(/\s+/g, " ").trim();
   const floorMatch = text.match(/B(\d+)/i);
   const spawnNoteMatch = text.match(/(\d+体出現)/);
-  return {
-    floor: floorMatch ? `B${floorMatch[1]}` : null,
-    spawnNote: spawnNoteMatch?.[1] ?? null,
-  };
+  const spawnNote = spawnNoteMatch?.[1] ?? null;
+  if (floorMatch) {
+    return { floor: `B${floorMatch[1]}`, spawnNote };
+  }
+  if (/乱入/.test(text)) {
+    return { floor: "乱入", spawnNote };
+  }
+  return { floor: null, spawnNote };
 }
 
 /**

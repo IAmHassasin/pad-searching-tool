@@ -139,10 +139,10 @@ export function parseActiveSkillStageCooldowns(
   if (raw == null) return null;
   const text = String(raw).trim();
   if (!text) return null;
-  const nums = text
-    .split(",")
-    .map((part) => Number.parseInt(part.trim(), 10))
-    .filter((n) => !Number.isNaN(n) && n > 0);
+  const nums = text.split(",").map((part) => {
+    const n = Number.parseInt(part.trim(), 10);
+    return Number.isFinite(n) && n > 0 ? n : 0;
+  });
   return nums.length ? nums : null;
 }
 

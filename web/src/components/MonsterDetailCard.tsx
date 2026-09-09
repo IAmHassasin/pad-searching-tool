@@ -19,7 +19,8 @@ import {
   parseChangeToMonsterIds,
 } from "../lib/format-active-skill-desc";
 import { parseMonsterTypeIds } from "../lib/monster-types";
-import { PAD_AWAKENING, PAD_CARD_VISUAL } from "../lib/pad-constants";
+import { PAD_AWAKENING, PAD_CARD_VISUAL, PAD_SKILL_FIT } from "../lib/pad-constants";
+import { useFitFontSize } from "../hooks/useFitFontSize";
 import type { MonsterRecord } from "../types";
 import { AwakeningIconList } from "./AwakeningIconList";
 import { ActiveSkillVanishAddLine } from "./ActiveSkillVanishAddLine";
@@ -39,7 +40,6 @@ import { MonsterChangeTargetStrip } from "./MonsterChangeTargetStrip";
 import { MonsterPortrait } from "./MonsterPortrait";
 import { MonsterTypeStrip } from "./MonsterTypeStrip";
 import { SuperAwakeningStrip } from "./SuperAwakeningStrip";
-import { useTruncatedTitle } from "../hooks/useTruncatedTitle";
 
 const COMPACT_AWAKENING_ICON_SIZE = 16;
 
@@ -145,28 +145,26 @@ function SkillBlock({
   return (
     <section
       className={`relative rounded-md border border-[#8b6914]/70 bg-[#2a1f14]/90 ${
-        compact ? "mt-1 px-2 pb-1.5 pt-3" : "mt-2 px-2.5 pb-2.5 pt-4"
+        compact ? "mt-1 px-2 pb-2 pt-3" : "mt-2 px-2.5 pb-3 pt-4"
       }`}
     >
       <span
         className={`absolute left-2 rounded px-1.5 py-px font-bold uppercase tracking-wide text-white shadow-md ${badge} ${
           compact
-            ? "-top-2 text-[8px]"
-            : "-top-2.5 px-2 py-0.5 text-[10px]"
+            ? "-top-2 text-[0.8em]"
+            : "-top-2.5 px-2 py-0.5 text-[0.9em]"
         }`}
       >
         {kind === "active" ? "Skill" : "Leader Skill"}
       </span>
-      <div className={`flex items-start justify-between gap-1.5 ${compact ? "mb-0.5" : "mb-1"}`}>
-        <h4
-          className={`min-w-0 font-bold text-[#f5e6c8] ${compact ? "text-[10px]" : "text-[11px]"}`}
-        >
+      <div className={`flex items-start justify-between gap-2 ${compact ? "mb-1" : "mb-1.5"}`}>
+        <h4 className="min-w-0 flex-1 wrap-anywhere break-words text-[1.1em] font-bold leading-snug text-[#f5e6c8]">
           {title}
         </h4>
         {kind === "active" && cooldown && (
           <span
-            className={`shrink-0 rounded border border-[#5b8fd4]/40 bg-[#1a2a3f]/80 font-bold tabular-nums text-[#9ec5ff] ${
-              compact ? "px-1 py-px text-[9px]" : "px-1.5 py-0.5 text-[10px]"
+            className={`shrink-0 rounded border border-[#5b8fd4]/40 bg-[#1a2a3f]/80 font-bold tabular-nums leading-none text-[#9ec5ff] ${
+              compact ? "px-1 py-px text-[0.9em]" : "px-1.5 py-0.5 text-[1em]"
             }`}
             title="Active skill cooldown (turns at max level)"
           >
@@ -178,6 +176,7 @@ function SkillBlock({
         <ActiveSkillVoidSuperGravityLine
           turns={voidSuperGravityTurns}
           compact={compact}
+          className="!text-[1em]"
         />
       ) : null}
       {kind === "active" ? (
@@ -186,16 +185,12 @@ function SkillBlock({
           stageCooldowns={stageCooldowns}
           skillCdRange={stageCooldowns?.length ? cooldown : null}
           compact={compact}
-          className={`whitespace-pre-wrap text-[#e8dcc8] ${
-            compact ? "text-[9px] leading-snug" : "text-[10px] leading-relaxed"
-          }`}
+          className="min-w-0 wrap-anywhere break-words whitespace-pre-wrap text-[1em] leading-snug text-[#e8dcc8]"
         />
       ) : (
         <LeaderSkillDescText
           text={body}
-          className={`whitespace-pre-wrap text-[#e8dcc8] ${
-            compact ? "text-[9px] leading-snug" : "text-[10px] leading-relaxed"
-          }`}
+          className="min-w-0 wrap-anywhere break-words whitespace-pre-wrap text-[1em] leading-snug text-[#e8dcc8]"
         />
       )}
       {kind === "active" && vanishGrantedAwokenIds?.length ? (
@@ -225,9 +220,6 @@ export function MonsterDetailCard({
   hideUtilityLinks = false,
 }: Props) {
   const id = monsterRowId(row);
-  const nameTitle = useTruncatedTitle<HTMLHeadingElement>(
-    row.name_en ?? "Unknown"
-  );
   const regular = parseRegularAwakenings(row.awakenings);
   const hasSuperAwks =
     resolveSuperAwakeningIds(row.awakenings, row.super_awakenings).length > 0;
@@ -274,6 +266,23 @@ export function MonsterDetailCard({
     row.active_skill_cooldown_max
   );
 
+  const skillFit = useFitFontSize({
+    minPx: compact ? PAD_SKILL_FIT.compactMinPx : PAD_SKILL_FIT.minPx,
+    maxPx: compact ? PAD_SKILL_FIT.compactMaxPx : PAD_SKILL_FIT.maxPx,
+    maxHeightPx: compact
+      ? PAD_SKILL_FIT.compactMaxHeightPx
+      : PAD_SKILL_FIT.maxHeightPx,
+    resetKey: [
+      compact,
+      activeDesc,
+      leaderDesc,
+      row.active_skill_name_en,
+      row.leader_skill_name_en,
+      activeCooldown,
+      row.active_skill_stage_cooldowns,
+    ].join("|"),
+  });
+
   return (
     <article
       className={`relative w-full overflow-hidden bg-black ${
@@ -282,30 +291,6 @@ export function MonsterDetailCard({
           : "mx-auto max-w-[360px] rounded-xl border-2 border-[#a8842f] shadow-[0_8px_24px_rgba(0,0,0,0.45)]"
       }`}
     >
-      {!compact && (
-        <>
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 z-0"
-            style={{
-              backgroundImage: `url(${cardBackground})`,
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: `center ${PAD_CARD_VISUAL.bgAnchorY}%`,
-              backgroundSize: "contain",
-            }}
-          />
-          <MonsterPortrait
-            monsterId={id}
-            alt={row.name_en ?? "Monster artwork"}
-            src={artSrc}
-            className="pointer-events-none absolute left-1/2 z-[1] max-w-none -translate-x-1/2 -translate-y-1/2 object-contain"
-            style={{
-              top: `${PAD_CARD_VISUAL.artAnchorY}%`,
-              width: `${PAD_CARD_VISUAL.artWidthPct}%`,
-            }}
-          />
-        </>
-      )}
       <header
         className={`relative z-10 border-b border-[#6b4f2a]/80 bg-[#2f2118]/90 ${
           compact ? "px-2 py-1" : "px-3 py-2"
@@ -333,39 +318,62 @@ export function MonsterDetailCard({
                 className="h-9 w-9 shrink-0 rounded border border-[#8b6914]/60 object-cover"
               />
             ))}
-          <div className="flex min-w-0 flex-1 items-start justify-between gap-2">
-            <div className="min-w-0">
+          <div className="min-w-0 flex-1">
+            <div className="flex items-start justify-between gap-2">
               <p
                 className={`font-medium text-[#c9b08a] ${compact ? "text-[9px]" : "text-[10px]"}`}
               >
                 No.{id}
               </p>
-              <h3
-                ref={nameTitle.ref}
-                title={nameTitle.title}
-                className={`truncate font-bold text-white ${compact ? "text-xs" : "text-sm"}`}
-              >
-                {row.name_en ?? "Unknown"}
-              </h3>
+              <div className="flex shrink-0 flex-col items-end gap-1">
+                <StarRow count={row.rarity ?? 0} />
+                {googleSearchUrl && (
+                  <LinkPillButton
+                    href={googleSearchUrl}
+                    title="Search this monster on Google (パズドラ)"
+                  >
+                    Google
+                  </LinkPillButton>
+                )}
+              </div>
             </div>
-            <div className="flex shrink-0 flex-col items-end gap-1">
-              <StarRow count={row.rarity ?? 0} />
-              {googleSearchUrl && (
-                <LinkPillButton
-                  href={googleSearchUrl}
-                  title="Search this monster on Google (パズドラ)"
-                >
-                  Google
-                </LinkPillButton>
-              )}
-            </div>
+            <h3
+              title={row.name_en ?? "Unknown"}
+              className={`wrap-anywhere break-words font-bold leading-snug text-white ${compact ? "text-xs" : "text-sm"}`}
+            >
+              {row.name_en ?? "Unknown"}
+            </h3>
           </div>
         </div>
       </header>
 
-      <div className="relative z-10">
+      <div className={`relative z-10 ${compact ? "" : "overflow-hidden"}`}>
+        {!compact && (
+          <>
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 z-0"
+              style={{
+                backgroundImage: `url(${cardBackground})`,
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: `center ${PAD_CARD_VISUAL.bgAnchorY}%`,
+                backgroundSize: "cover",
+              }}
+            />
+            <MonsterPortrait
+              monsterId={id}
+              alt={row.name_en ?? "Monster artwork"}
+              src={artSrc}
+              className="pointer-events-none absolute left-1/2 z-[1] max-w-none -translate-x-1/2 -translate-y-1/2 object-contain"
+              style={{
+                top: `${PAD_CARD_VISUAL.artAnchorY}%`,
+                width: `${PAD_CARD_VISUAL.artWidthPct}%`,
+              }}
+            />
+          </>
+        )}
         <div
-          className={`relative ${compact ? "flex flex-col gap-1 px-1 py-1" : "flex"}`}
+          className={`relative z-10 ${compact ? "flex flex-col gap-1 px-1 py-1" : "flex"}`}
           style={
             compact ? undefined : { minHeight: PAD_AWAKENING.artAreaMinHeightPx }
           }
@@ -573,7 +581,9 @@ export function MonsterDetailCard({
       </div>
 
       <div
+        ref={skillFit.ref}
         className={`relative z-10 space-y-0 ${compact ? "px-1.5 pb-2 pt-0.5" : "px-2 pb-3 pt-1"}`}
+        style={{ fontSize: skillFit.fontPx }}
       >
         <SkillBlock
           kind="active"

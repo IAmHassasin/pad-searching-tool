@@ -7,9 +7,11 @@ export function formatVoidSuperGravityLine(turns: number): string {
 export function ActiveSkillVoidSuperGravityLine({
   turns,
   compact = false,
+  className = "",
 }: {
   turns: number;
   compact?: boolean;
+  className?: string;
 }) {
   if (!Number.isInteger(turns) || turns <= 0) return null;
 
@@ -17,7 +19,7 @@ export function ActiveSkillVoidSuperGravityLine({
     <p
       className={`mb-1.5 font-medium text-[#c9a84a] ${
         compact ? "text-[9px]" : "text-[10px]"
-      }`}
+      } ${className}`}
     >
       {formatVoidSuperGravityLine(turns)}
     </p>

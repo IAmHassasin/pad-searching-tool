@@ -331,8 +331,14 @@ export function SkillEditor({ draft, onChange }: Props) {
   };
 
   const addStage = () => {
+    const priorCd = [...draft.activeSkillStages]
+      .reverse()
+      .find((stage) => stage.cd != null && stage.cd > 0)?.cd;
     onChange({
-      activeSkillStages: [...draft.activeSkillStages, emptyActiveSkillStage()],
+      activeSkillStages: [
+        ...draft.activeSkillStages,
+        { ...emptyActiveSkillStage(), cd: priorCd ?? 1 },
+      ],
     });
   };
 

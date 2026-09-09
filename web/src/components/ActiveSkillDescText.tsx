@@ -23,6 +23,10 @@ function readLineHeightPx(el: HTMLElement): number | null {
   return Number.isFinite(lineHeight) && lineHeight > 0 ? lineHeight : null;
 }
 
+function capInlineIconSize(lineHeightPx: number): number {
+  return Math.min(14, Math.max(7, Math.round(lineHeightPx * 0.85)));
+}
+
 function StageCdBadge({
   cd,
   compact = false,
@@ -35,7 +39,7 @@ function StageCdBadge({
   return (
     <span
       className={`shrink-0 rounded border border-[#5b8fd4]/40 bg-[#1a2a3f]/80 font-bold tabular-nums text-[#9ec5ff] ${
-        compact ? "px-1 py-px text-[8px]" : "px-1 py-px text-[9px]"
+        compact ? "px-1 py-px text-[0.85em]" : "px-1 py-px text-[0.9em]"
       }`}
       title={title ?? "Active skill cooldown for this stage"}
     >
@@ -52,7 +56,7 @@ export function ActiveSkillDescText({
   compact = false,
 }: Props) {
   const rootRef = useRef<HTMLDivElement>(null);
-  const [iconSize, setIconSize] = useState<number | null>(null);
+  const [iconSize, setIconSize] = useState(() => (compact ? 11 : 12));
   const stageCds = stageCooldowns?.length ? stageCooldowns : null;
   const needsIcons = skillDescNeedsRichRender(text);
 
@@ -62,7 +66,7 @@ export function ActiveSkillDescText({
     if (!el) return;
     const update = () => {
       const lineHeight = readLineHeightPx(el);
-      if (lineHeight != null) setIconSize(Math.round(lineHeight));
+      if (lineHeight != null) setIconSize(capInlineIconSize(lineHeight));
     };
     update();
     const observer = new ResizeObserver(update);
@@ -81,12 +85,11 @@ export function ActiveSkillDescText({
           let cdLabel: string | null = null;
           if (isStageLine) {
             const idx = stageIdx++;
+            const stageCd = idx < stageCds.length ? stageCds[idx] : 0;
             if (idx === 0 && skillCdRange) {
               cdLabel = skillCdRange;
-            } else if (idx < stageCds.length && stageCds[idx] != null) {
-              cdLabel = String(stageCds[idx]);
-            } else if (idx === 0 && stageCds[0] != null) {
-              cdLabel = String(stageCds[0]);
+            } else if (stageCd > 0) {
+              cdLabel = String(stageCd);
             }
           }
 
@@ -94,11 +97,11 @@ export function ActiveSkillDescText({
             return (
               <div
                 key={i}
-                className={`flex items-start justify-between gap-1.5 ${
-                  i > 0 ? (compact ? "mt-0.5" : "mt-1") : ""
+                className={`flex items-start gap-1.5 ${
+                  i > 0 ? (compact ? "mt-1" : "mt-1.5") : ""
                 }`}
               >
-                <span className="min-w-0">
+                <span className="min-w-0 flex-1 wrap-anywhere break-words">
                   <SkillDescRichContent text={line} iconSize={iconSize} />
                 </span>
                 <StageCdBadge
@@ -119,7 +122,10 @@ export function ActiveSkillDescText({
           }
 
           return (
-            <p key={i} className={i > 0 ? (compact ? "mt-0.5" : "mt-1") : ""}>
+            <p
+              key={i}
+              className={`wrap-anywhere break-words ${i > 0 ? (compact ? "mt-1" : "mt-1.5") : ""}`}
+            >
               <SkillDescRichContent text={line} iconSize={iconSize} />
             </p>
           );

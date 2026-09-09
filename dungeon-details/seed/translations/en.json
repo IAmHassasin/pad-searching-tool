@@ -6,12 +6,14 @@
     "79887656": "Crimson Challenge — counters & recommended teams | Abyssal Heavy Realm",
     "79970458": "Underworld Challenge — counters & recommended teams (1.4B dungeon)",
     "80048764": "Misty Rain Challenge — counters & recommended teams | Ethereal Sky Realm",
+    "80128597": "Great Tree Challenge — counters & recommended teams | Abyssal Heavy Realm",
     "冥境チャレンジの攻略や対策とおすすめパーティ｜14億ダンジョン": "Underworld Challenge — counters & recommended teams (1.4B dungeon)",
     "12億ダンジョンの攻略や対策とおすすめパーティ｜銀翼チャレンジ": "Silver Wing Challenge — counters & recommended teams (1.2B dungeon)",
     "13億ダンジョンの攻略や対策とおすすめパーティ｜天境チャレンジ": "Heavenly Realm Challenge — counters & recommended teams (1.3B dungeon)",
     "風雲チャレンジの攻略や対策とおすすめパーティ｜天空の儚域": "Wind & Cloud Challenge — counters & recommended teams | Ethereal Sky Realm",
     "霧雨チャレンジの攻略や対策とおすすめパーティ｜天空の儚域": "Misty Rain Challenge — counters & recommended teams | Ethereal Sky Realm",
-    "紅蓮チャレンジの攻略や対策とおすすめパーティ｜奈落の重界": "Crimson Challenge — counters & recommended teams | Abyssal Heavy Realm"
+    "紅蓮チャレンジの攻略や対策とおすすめパーティ｜奈落の重界": "Crimson Challenge — counters & recommended teams | Abyssal Heavy Realm",
+    "大樹チャレンジの攻略や対策とおすすめパーティ｜奈落の重界": "Great Tree Challenge — counters & recommended teams | Abyssal Heavy Realm"
   },
   "gimmicks": {
     "覚醒無効": "Awoken Skill Bind",
@@ -91,13 +93,21 @@
     "上部位": "Upper body",
     "下部位": "Lower body",
     "左部位": "Left part",
-    "右部位": "Right part"
+    "右部位": "Right part",
+    "部位": "Part"
   },
   "tags": {
     "残り2体以下になると使用": "Used when ≤2 enemies remain",
+    "残り2体以下になると1回使用": "Once when ≤2 enemies remain",
     "残り1体以下になると使用": "Used when ≤1 enemy remains",
+    "残り1体になると1回使用": "Once when 1 enemy remains",
+    "残り1体になると使用": "Used when 1 enemy remains",
     "残り2体になると使用": "Used when 2 enemies remain",
     "初回行動": "First turn action",
+    "5ターン行動": "5-turn action cycle",
+    "2ターン目": "Turn 2",
+    "3ターン目": "Turn 3",
+    "4ターン目": "Turn 4",
     "超根性発動時": "When Super Resolve triggers",
     "HP50%以下で1回使用": "Once below 50% HP",
     "HP50%以下で1回使用?": "Once below 50% HP (?)",
@@ -387,6 +397,14 @@
     [
       "銀翼チャレンジ",
       "Silver Wing Challenge"
+    ],
+    [
+      "大樹チャレンジ",
+      "Great Tree Challenge"
+    ],
+    [
+      "乱入",
+      "Invade"
     ],
     [
       "12億ダンジョン",

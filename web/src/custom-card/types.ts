@@ -187,9 +187,12 @@ export function composeActiveSkillStageCooldowns(
   if (draft.activeSkillType !== "evo" && draft.activeSkillType !== "evo-loop") {
     return null;
   }
-  const cds = draft.activeSkillStages
-    .filter(activeSkillStageHasContent)
-    .map((s) => s.cd)
-    .filter((cd): cd is number => cd != null && Number.isFinite(cd) && cd > 0);
-  return cds.length ? cds.join(",") : null;
+  const stages = draft.activeSkillStages.filter(activeSkillStageHasContent);
+  if (stages.length < 2) return null;
+  // Keep a slot per stage (0 = unset). Dropping blanks misaligns later CDs.
+  return stages
+    .map((s) =>
+      s.cd != null && Number.isFinite(s.cd) && s.cd > 0 ? s.cd : 0
+    )
+    .join(",");
 }

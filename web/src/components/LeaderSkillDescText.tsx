@@ -14,9 +14,13 @@ function readLineHeightPx(el: HTMLElement): number | null {
   return Number.isFinite(lineHeight) && lineHeight > 0 ? lineHeight : null;
 }
 
+function capInlineIconSize(lineHeightPx: number): number {
+  return Math.min(14, Math.max(7, Math.round(lineHeightPx * 0.85)));
+}
+
 export function LeaderSkillDescText({ text, className }: Props) {
   const textRef = useRef<HTMLParagraphElement>(null);
-  const [iconSize, setIconSize] = useState<number | null>(null);
+  const [iconSize, setIconSize] = useState(12);
   const needs = skillDescNeedsRichRender(text);
 
   useLayoutEffect(() => {
@@ -26,7 +30,7 @@ export function LeaderSkillDescText({ text, className }: Props) {
 
     const update = () => {
       const lineHeight = readLineHeightPx(el);
-      if (lineHeight != null) setIconSize(Math.round(lineHeight));
+      if (lineHeight != null) setIconSize(capInlineIconSize(lineHeight));
     };
 
     update();

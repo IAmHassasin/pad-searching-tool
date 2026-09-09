@@ -17,7 +17,7 @@ export const HIDDEN_MODIFIER_AWAKENING_IDS = [
 /** Awakening ids shown in the modifier picker (excludes hidden). */
 export const MODIFIER_AWAKENING_IDS: number[] = [
   128, 129, 138, 139, 130, 132, 106, 30, 127, 142, 143, 131, 63,
-  107, 111, 96, 57, 58, 109, 108, 59, 126, 50, 71,
+  145, 146, 147, 107, 111, 144, 96, 57, 58, 109, 108, 59, 126, 50, 71,
   110, 112, 113, 114, 141, 44, 82, 133, 134, 135,
   ...KILLER_AWAKENING_IDS,
 ];
@@ -132,6 +132,12 @@ export function getAwakeningStatMultipliers(
     }
     case 111:
       return ATK_ONLY(25);
+    case 144:
+      return ATK_ONLY(100);
+    case 145:
+    case 146:
+    case 147:
+      return ALL_STATS(1.5);
     case 27:
       return ATK_ONLY(2.2);
     case 96:

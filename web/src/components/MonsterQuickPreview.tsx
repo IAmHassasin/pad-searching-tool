@@ -107,7 +107,7 @@ function SkillSnippet({
           {kind === "active" ? "AS" : "LS"}
         </span>
         <p
-          className={`min-w-0 flex-1 break-words font-bold text-[#f5e6c8] ${
+          className={`min-w-0 flex-1 wrap-anywhere break-words font-bold leading-snug text-[#f5e6c8] ${
             inline ? "text-[9px]" : "text-[10px]"
           }`}
         >
@@ -135,15 +135,15 @@ function SkillSnippet({
           stageCooldowns={stageCooldowns}
           skillCdRange={stageCooldowns?.length ? cooldown : null}
           compact={inline}
-          className={`text-[#e8dcc8] ${
-            inline ? "text-[8px] leading-tight" : "text-[9px] leading-snug"
+          className={`min-w-0 wrap-anywhere break-words text-[#e8dcc8] ${
+            inline ? "text-[8px] leading-snug" : "text-[9px] leading-snug"
           }`}
         />
       ) : (
         <LeaderSkillDescText
           text={body}
-          className={`text-[#e8dcc8] ${
-            inline ? "text-[8px] leading-tight" : "text-[9px] leading-snug"
+          className={`min-w-0 wrap-anywhere break-words text-[#e8dcc8] ${
+            inline ? "text-[8px] leading-snug" : "text-[9px] leading-snug"
           }`}
         />
       )}

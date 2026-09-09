@@ -12,7 +12,7 @@ import type { MonsterRecord } from "../../types";
  * Battle-only SAs (e.g. 130 Aging) are excluded — they do not change the HP/ATK/RCV shown on the team select screen.
  */
 const RAW_STAT_SUPER_AWAKENING_IDS = new Set([
-  30, 63, 127, 132, 142,
+  30, 63, 127, 132, 142, 145, 146, 147,
 ]);
 
 export function isRawStatSuperAwakening(awkId: number): boolean {

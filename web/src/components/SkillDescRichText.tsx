@@ -40,6 +40,8 @@ export function SkillDescRichContent({
   iconSize?: number | null;
   highlightAfterActivation?: boolean;
 }): ReactNode {
+  const size = iconSize ?? 12;
+  const iconClass = "mx-px inline-block align-text-bottom";
   const parts = text.split(RICH_SKILL_SPLIT_RE);
   const hasRich = parts.some(isRichSegment);
   if (!hasRich) return text;
@@ -52,8 +54,8 @@ export function SkillDescRichContent({
         <AwakeningSpriteIcon
           key={i}
           awokenSkillId={id}
-          size={iconSize ?? undefined}
-          className="mx-0.5 inline-block align-middle"
+          size={size}
+          className={iconClass}
         />
       );
     }
@@ -64,8 +66,8 @@ export function SkillDescRichContent({
         <MonsterTypeSpriteIcon
           key={i}
           typeId={id}
-          size={iconSize ?? undefined}
-          className="mx-0.5 inline-block align-middle"
+          size={size}
+          className={iconClass}
         />
       );
     }
@@ -76,8 +78,8 @@ export function SkillDescRichContent({
         <SkillEffectSpriteIcon
           key={i}
           effectId={id}
-          size={iconSize ?? undefined}
-          className="mx-0.5 inline-block align-middle"
+          size={size}
+          className={iconClass}
         />
       );
     }
