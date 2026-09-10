@@ -3,18 +3,21 @@ import { isAfterActivationMarker } from "../lib/format-active-skill-desc";
 import {
   isAwoskillTemplate,
   isMonsterTypeTemplate,
+  isOrbTemplate,
   isSkillEffectTemplate,
   parseAwoskillTemplateId,
   parseMonsterTypeTemplateId,
+  parseOrbTemplateId,
   parseSkillEffectTemplateId,
 } from "../lib/format-leader-skill-desc";
 import { AwakeningSpriteIcon } from "./AwakeningSpriteIcon";
 import { MonsterTypeSpriteIcon } from "./MonsterTypeSpriteIcon";
+import { OrbSpriteIcon } from "./OrbSpriteIcon";
 import { SkillEffectSpriteIcon } from "./SkillEffectSpriteIcon";
 
-/** Inline awk / type / skill-effect icons + delayed-effect markers. */
+/** Inline awk / type / skill-effect / orb icons + delayed-effect markers. */
 const RICH_SKILL_SPLIT_RE =
-  /(\{\{\s*awoskills\.id\d+(?:\|default\([^)]*\))?\s*\}\}|\{\{\s*types\.id\d+(?:\|default\([^)]*\))?\s*\}\}|\{\{\s*skilleffects\.id\d+(?:\|default\([^)]*\))?\s*\}\}|\[\d+ turns? after activation\])/gi;
+  /(\{\{\s*awoskills\.id\d+(?:\|default\([^)]*\))?\s*\}\}|\{\{\s*types\.id\d+(?:\|default\([^)]*\))?\s*\}\}|\{\{\s*skilleffects\.id\d+(?:\|default\([^)]*\))?\s*\}\}|\{\{\s*orbs\.id\d+(?:\|default\([^)]*\))?\s*\}\}|\[\d+ turns? after activation\])/gi;
 
 export function skillDescNeedsRichRender(text: string): boolean {
   RICH_SKILL_SPLIT_RE.lastIndex = 0;
@@ -26,11 +29,12 @@ function isRichSegment(part: string): boolean {
     isAwoskillTemplate(part) ||
     isMonsterTypeTemplate(part) ||
     isSkillEffectTemplate(part) ||
+    isOrbTemplate(part) ||
     isAfterActivationMarker(part)
   );
 }
 
-/** Render one line/paragraph with inline awakening / type / effect icons. */
+/** Render one line/paragraph with inline awakening / type / effect / orb icons. */
 export function SkillDescRichContent({
   text,
   iconSize,
@@ -78,6 +82,18 @@ export function SkillDescRichContent({
         <SkillEffectSpriteIcon
           key={i}
           effectId={id}
+          size={size}
+          className={iconClass}
+        />
+      );
+    }
+    if (isOrbTemplate(part)) {
+      const id = parseOrbTemplateId(part);
+      if (id == null) return <span key={i}>{part}</span>;
+      return (
+        <OrbSpriteIcon
+          key={i}
+          orbId={id}
           size={size}
           className={iconClass}
         />

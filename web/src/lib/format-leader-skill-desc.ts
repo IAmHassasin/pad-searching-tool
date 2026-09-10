@@ -61,3 +61,25 @@ export function parseSkillEffectTemplateId(segment: string): number | null {
 export function formatSkillEffectToken(effectId: number): string {
   return `{{ skilleffects.id${effectId}|default('???') }}`;
 }
+
+/** Custom-card inline orb / orb-effect icons from sprite.webp. */
+export const ORB_TEMPLATE_SPLIT_RE =
+  /(\{\{\s*orbs\.id\d+(?:\|default\([^)]*\))?\s*\}\})/gi;
+
+const ORB_TEMPLATE_RE =
+  /^\{\{\s*orbs\.id(\d+)(?:\|default\([^)]*\))?\s*\}\}$/i;
+
+export function isOrbTemplate(segment: string): boolean {
+  return ORB_TEMPLATE_RE.test(segment);
+}
+
+export function parseOrbTemplateId(segment: string): number | null {
+  const match = ORB_TEMPLATE_RE.exec(segment);
+  if (!match) return null;
+  return Number.parseInt(match[1], 10);
+}
+
+export function formatOrbToken(orbId: number, label = "???"): string {
+  const safe = label.replace(/'/g, "");
+  return `{{ orbs.id${orbId}|default('${safe}') }}`;
+}

@@ -1,11 +1,13 @@
-import { useRef, useState, type ReactNode } from "react";
+import { useMemo, useRef, useState, type ReactNode } from "react";
 import { AwakeningSpriteIcon } from "../components/AwakeningSpriteIcon";
 import { MonsterTypeSpriteIcon } from "../components/MonsterTypeSpriteIcon";
+import { OrbSpriteIcon } from "../components/OrbSpriteIcon";
 import { SkillEffectSpriteIcon } from "../components/SkillEffectSpriteIcon";
 import { AWAKENING_FILTER_GROUPS } from "../lib/awakening-filter-groups";
 import {
   formatAwoskillToken,
   formatMonsterTypeToken,
+  formatOrbToken,
   formatSkillEffectToken,
 } from "../lib/format-leader-skill-desc";
 import {
@@ -13,6 +15,11 @@ import {
   MONSTER_TYPES,
   monsterTypeLabel,
 } from "../lib/monster-types";
+import {
+  getOrbSpriteDef,
+  ORB_PICKER_GROUPS,
+  orbSearchText,
+} from "../lib/orb-sprite";
 import { SKILL_EFFECT_PICKER_GROUPS } from "../lib/skill-effect-sprite";
 import type {
   CustomActiveSkillStage,
@@ -64,32 +71,41 @@ function insertAtCursor(
   return { next, caret: start + token.length };
 }
 
+function haystackMatches(query: string, parts: string[]): boolean {
+  const q = query.trim().toLowerCase();
+  if (!q) return true;
+  return parts.some((p) => p.toLowerCase().includes(q));
+}
+
 function CollapsiblePickerSection({
   title,
   defaultOpen = true,
+  forcedOpen,
   children,
 }: {
   title: string;
   defaultOpen?: boolean;
+  forcedOpen?: boolean;
   children: ReactNode;
 }) {
   const [open, setOpen] = useState(defaultOpen);
+  const show = forcedOpen || open;
   return (
     <section className="rounded border border-[var(--color-border)] bg-[#0d1117]">
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        aria-expanded={open}
+        aria-expanded={show}
         className="flex w-full items-center justify-between gap-2 px-2 py-1.5 text-left hover:bg-white/5"
       >
         <span className="text-[10px] font-semibold uppercase tracking-wide text-[#a8c878]">
           {title}
         </span>
         <span className="text-[10px] text-[var(--color-muted)]" aria-hidden>
-          {open ? "▾" : "▸"}
+          {show ? "▾" : "▸"}
         </span>
       </button>
-      {open && (
+      {show && (
         <div className="space-y-3 border-t border-[var(--color-border)] px-2 py-2">
           {children}
         </div>
@@ -98,10 +114,20 @@ function CollapsiblePickerSection({
   );
 }
 
-function TypeInsertRow({ onPickType }: { onPickType: (id: number) => void }) {
+function TypeInsertRow({
+  onPickType,
+  visibleIds,
+}: {
+  onPickType: (id: number) => void;
+  visibleIds?: Set<number>;
+}) {
+  const types = SKILL_INSERT_TYPES.filter(
+    (t) => !visibleIds || visibleIds.has(t.id)
+  );
+  if (!types.length) return null;
   return (
     <div className="flex flex-wrap gap-0.5">
-      {SKILL_INSERT_TYPES.map((t) => (
+      {types.map((t) => (
         <button
           key={t.id}
           type="button"
@@ -123,13 +149,19 @@ function TypeInsertRow({ onPickType }: { onPickType: (id: number) => void }) {
 function AwakeningGroupRows({
   rows,
   onPickAwk,
+  visibleIds,
 }: {
   rows: number[][];
   onPickAwk: (id: number) => void;
+  visibleIds?: Set<number>;
 }) {
+  const filtered = rows
+    .map((row) => (visibleIds ? row.filter((id) => visibleIds.has(id)) : row))
+    .filter((row) => row.length > 0);
+  if (!filtered.length) return null;
   return (
     <div className="space-y-1">
-      {rows.map((row, rowIndex) => (
+      {filtered.map((row, rowIndex) => (
         <div key={rowIndex} className="flex flex-wrap gap-0.5">
           {row.map((id) => (
             <button
@@ -144,6 +176,64 @@ function AwakeningGroupRows({
           ))}
         </div>
       ))}
+    </div>
+  );
+}
+
+function EffectInsertRow({
+  groupLabel,
+  ids,
+  onPickEffect,
+}: {
+  groupLabel: string;
+  ids: number[];
+  onPickEffect: (id: number) => void;
+}) {
+  if (!ids.length) return null;
+  return (
+    <div className="flex flex-wrap gap-0.5">
+      {ids.map((id) => (
+        <button
+          key={`${groupLabel}-${id}`}
+          type="button"
+          title={`Insert effect #${id}`}
+          onClick={() => onPickEffect(id)}
+          className="rounded border border-transparent p-0.5 hover:border-[#c9a84a]"
+        >
+          <SkillEffectSpriteIcon effectId={id} size={22} />
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function OrbInsertRow({
+  ids,
+  onPickOrb,
+}: {
+  ids: number[];
+  onPickOrb: (id: number) => void;
+}) {
+  if (!ids.length) return null;
+  return (
+    <div className="flex flex-wrap gap-1">
+      {ids.map((id) => {
+        const def = getOrbSpriteDef(id);
+        return (
+          <button
+            key={id}
+            type="button"
+            title={def ? `Insert ${def.label}` : `Insert orb #${id}`}
+            onClick={() => onPickOrb(id)}
+            className="flex w-11 flex-col items-center gap-0.5 rounded border border-transparent p-0.5 hover:border-[#c9a84a]"
+          >
+            <OrbSpriteIcon orbId={id} size={22} title={def?.label} />
+            <span className="max-w-full truncate text-[8px] leading-tight text-[var(--color-muted)]">
+              {def?.label ?? id}
+            </span>
+          </button>
+        );
+      })}
     </div>
   );
 }
@@ -167,7 +257,7 @@ function DescWithAwkInsert({
   const insertToken = (token: string) => {
     const { next, caret } = insertAtCursor(value, token, ref.current);
     onChange(next);
-    setPickerOpen(false);
+    setPickerOpen(true);
     requestAnimationFrame(() => {
       const el = ref.current;
       if (!el) return;
@@ -201,6 +291,10 @@ function DescWithAwkInsert({
           onPickType={(id) => insertToken(formatMonsterTypeToken(id))}
           onPickEffect={(id) => insertToken(formatSkillEffectToken(id))}
           onPickAwk={(id) => insertToken(formatAwoskillToken(id))}
+          onPickOrb={(id) => {
+            const def = getOrbSpriteDef(id);
+            insertToken(formatOrbToken(id, def?.label ?? "???"));
+          }}
           onClose={() => setPickerOpen(false)}
         />
       )}
@@ -213,15 +307,74 @@ function SkillIconInsertPicker({
   onPickType,
   onPickEffect,
   onPickAwk,
+  onPickOrb,
   onClose,
 }: {
   mode: IconInsertMode;
   onPickType: (id: number) => void;
   onPickEffect: (id: number) => void;
   onPickAwk: (id: number) => void;
+  onPickOrb: (id: number) => void;
   onClose: () => void;
 }) {
   const isLeader = mode === "leader";
+  const [query, setQuery] = useState("");
+  const searching = query.trim().length > 0;
+
+  const visibleOrbsByGroup = useMemo(() => {
+    return ORB_PICKER_GROUPS.map((group) => ({
+      label: group.label,
+      ids: group.ids.filter((id) =>
+        haystackMatches(query, [group.label, "orb", "orbs", orbSearchText(id)])
+      ),
+    })).filter((g) => g.ids.length > 0);
+  }, [query]);
+
+  const visibleTypeIds = useMemo(() => {
+    const ids = new Set<number>();
+    for (const t of SKILL_INSERT_TYPES) {
+      if (haystackMatches(query, [t.label, "type", "types"])) ids.add(t.id);
+    }
+    return ids;
+  }, [query]);
+
+  const visibleEffectGroups = useMemo(() => {
+    return SKILL_EFFECT_PICKER_GROUPS.map((group) => ({
+      label: group.label,
+      ids: group.ids.filter((id) =>
+        haystackMatches(query, [group.label, "effect", "effects", `#${id}`])
+      ),
+    })).filter((g) => g.ids.length > 0);
+  }, [query]);
+
+  const visibleAwkGroups = useMemo(() => {
+    const groups = isLeader
+      ? MATCH_STYLE_GROUP
+        ? [MATCH_STYLE_GROUP]
+        : []
+      : AWAKENING_FILTER_GROUPS;
+    return groups
+      .map((group) => ({
+        label: group.label,
+        rows: group.rows.map((row) =>
+          row.filter((id) =>
+            haystackMatches(query, [
+              group.label,
+              "awakening",
+              "awakenings",
+              `#${id}`,
+            ])
+          )
+        ),
+      }))
+      .filter((g) => g.rows.some((row) => row.length > 0));
+  }, [isLeader, query]);
+
+  const hasAny =
+    visibleOrbsByGroup.length > 0 ||
+    visibleTypeIds.size > 0 ||
+    (!isLeader && visibleEffectGroups.length > 0) ||
+    visibleAwkGroups.length > 0;
 
   return (
     <div
@@ -230,69 +383,121 @@ function SkillIconInsertPicker({
       aria-modal
       aria-label={
         isLeader
-          ? "Insert type or match-style awakening into leader skill"
-          : "Insert type, effect, or awakening into active skill"
+          ? "Insert orb, type, or match-style awakening into leader skill"
+          : "Insert orb, type, effect, or awakening into active skill"
       }
       onClick={onClose}
+      onKeyDown={(e) => {
+        if (e.key === "Escape") onClose();
+      }}
     >
       <div
-        className="flex max-h-[min(85vh,40rem)] w-full max-w-lg flex-col rounded-xl border border-[#a8842f] bg-[#1a1410] p-4 shadow-xl"
+        className="flex max-h-[min(85vh,42rem)] w-full max-w-xl flex-col rounded-xl border border-[#a8842f] bg-[#1a1410] p-4 shadow-xl"
         onClick={(e) => e.stopPropagation()}
       >
         <h3 className="mb-1 text-sm font-semibold text-[#f5e6c8]">
-          {isLeader ? "Insert type / match icon" : "Insert icon into active skill"}
+          {isLeader ? "Insert icon into leader skill" : "Insert icon into active skill"}
         </h3>
-        <p className="mb-3 text-[11px] text-[var(--color-muted)]">
-          {isLeader
-            ? "Monster types and Match style awakenings. Renders inline on the card."
-            : "Types, skill-effect icons, and any awakening. Collapse a section to find the other faster."}
+        <p className="mb-2 text-[11px] text-[var(--color-muted)]">
+          Click to insert at the cursor. Search orbs, locks, nails, types, or
+          awakenings. Picker stays open for sequences like orb changing.
         </p>
+        <label className="mb-3 block">
+          <span className="sr-only">Search icons</span>
+          <input
+            autoFocus
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search: fire, lock, nail, skyfall, dragon…"
+            className="w-full rounded border border-[var(--color-border)] bg-[#161b22] px-2 py-1.5 text-xs text-white placeholder:text-[var(--color-muted)]"
+          />
+        </label>
         <div className="min-h-0 flex-1 space-y-2 overflow-y-auto pr-0.5">
-          {isLeader ? (
-            <>
-              <CollapsiblePickerSection title="Types" defaultOpen>
-                <TypeInsertRow onPickType={onPickType} />
-              </CollapsiblePickerSection>
-              {MATCH_STYLE_GROUP && (
-                <CollapsiblePickerSection title="Match style" defaultOpen>
-                  <AwakeningGroupRows
-                    rows={MATCH_STYLE_GROUP.rows}
-                    onPickAwk={onPickAwk}
+          {!hasAny && (
+            <p className="px-1 py-4 text-center text-xs text-[var(--color-muted)]">
+              No icons match “{query.trim()}”.
+            </p>
+          )}
+          {visibleOrbsByGroup.map((group) => (
+            <CollapsiblePickerSection
+              key={group.label}
+              title={group.label}
+              defaultOpen
+              forcedOpen={searching}
+            >
+              <OrbInsertRow ids={group.ids} onPickOrb={onPickOrb} />
+            </CollapsiblePickerSection>
+          ))}
+          {visibleTypeIds.size > 0 && (
+            <CollapsiblePickerSection
+              title="Types"
+              defaultOpen
+              forcedOpen={searching}
+            >
+              <TypeInsertRow
+                onPickType={onPickType}
+                visibleIds={visibleTypeIds}
+              />
+            </CollapsiblePickerSection>
+          )}
+          {!isLeader && visibleEffectGroups.length > 0 && (
+            searching ? (
+              visibleEffectGroups.map((group) => (
+                <CollapsiblePickerSection
+                  key={group.label}
+                  title={group.label}
+                  defaultOpen
+                  forcedOpen
+                >
+                  <EffectInsertRow
+                    groupLabel={group.label}
+                    ids={group.ids}
+                    onPickEffect={onPickEffect}
                   />
                 </CollapsiblePickerSection>
-              )}
-            </>
-          ) : (
-            <>
-              <CollapsiblePickerSection title="Types & effects" defaultOpen>
-                <TypeInsertRow onPickType={onPickType} />
-                {SKILL_EFFECT_PICKER_GROUPS.map((group) => (
+              ))
+            ) : (
+              <CollapsiblePickerSection title="Skill effects" defaultOpen={false}>
+                {visibleEffectGroups.map((group) => (
                   <section key={group.label}>
                     <p className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-[#a8c878]">
                       {group.label}
                     </p>
-                    <div className="flex flex-wrap gap-0.5">
-                      {group.ids.map((id) => (
-                        <button
-                          key={`${group.label}-${id}`}
-                          type="button"
-                          title={`Insert effect #${id}`}
-                          onClick={() => onPickEffect(id)}
-                          className="rounded border border-transparent p-0.5 hover:border-[#c9a84a]"
-                        >
-                          <SkillEffectSpriteIcon effectId={id} size={22} />
-                        </button>
-                      ))}
-                    </div>
+                    <EffectInsertRow
+                      groupLabel={group.label}
+                      ids={group.ids}
+                      onPickEffect={onPickEffect}
+                    />
                   </section>
                 ))}
               </CollapsiblePickerSection>
-              <CollapsiblePickerSection title="Awakenings" defaultOpen>
-                {AWAKENING_FILTER_GROUPS.map((group) => (
+            )
+          )}
+          {visibleAwkGroups.length > 0 && (
+            searching ? (
+              visibleAwkGroups.map((group) => (
+                <CollapsiblePickerSection
+                  key={group.label}
+                  title={group.label}
+                  defaultOpen
+                  forcedOpen
+                >
+                  <AwakeningGroupRows rows={group.rows} onPickAwk={onPickAwk} />
+                </CollapsiblePickerSection>
+              ))
+            ) : (
+              <CollapsiblePickerSection
+                title={isLeader ? "Match style" : "Awakenings"}
+                defaultOpen={isLeader}
+              >
+                {visibleAwkGroups.map((group) => (
                   <section key={group.label}>
-                    <p className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-[#a8c878]">
-                      {group.label}
-                    </p>
+                    {!isLeader && (
+                      <p className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-[#a8c878]">
+                        {group.label}
+                      </p>
+                    )}
                     <AwakeningGroupRows
                       rows={group.rows}
                       onPickAwk={onPickAwk}
@@ -300,7 +505,7 @@ function SkillIconInsertPicker({
                   </section>
                 ))}
               </CollapsiblePickerSection>
-            </>
+            )
           )}
         </div>
         <div className="mt-3 flex justify-end">
@@ -309,7 +514,7 @@ function SkillIconInsertPicker({
             onClick={onClose}
             className="rounded border border-[var(--color-border)] px-3 py-1.5 text-xs text-[var(--color-muted)] hover:text-white"
           >
-            Cancel
+            Done
           </button>
         </div>
       </div>
