@@ -1,3 +1,5 @@
+import { useVirtualizer } from "@tanstack/react-virtual";
+import { useRef } from "react";
 import { useTruncatedTitle } from "../hooks/useTruncatedTitle";
 import { monsterRowId } from "../lib/filters";
 import {
@@ -55,6 +57,7 @@ export function ResultsList({
   resultSort = "default",
   displaySections,
 }: Props) {
+  const parentRef = useRef<HTMLDivElement>(null);
   const {
     preview,
     previewId,
@@ -67,6 +70,18 @@ export function ResultsList({
     resultSort === "cd_fastest" || resultSort === "cd_longest";
   const showInlineCard =
     displaySections != null && hasAnyDisplaySection(displaySections);
+  const showCdCol = !compact && !minimal && showCd;
+  const showInfoCol = !hoverCapable;
+
+  const estimateSize = showInlineCard ? 140 : compact || minimal ? 28 : 32;
+
+  const virtualizer = useVirtualizer({
+    count: rows.length,
+    getScrollElement: () => parentRef.current,
+    estimateSize: () => estimateSize,
+    overscan: 8,
+    getItemKey: (index) => monsterRowId(rows[index]!),
+  });
 
   const formatCd = (row: MonsterRecord) => {
     const min = row.active_skill_cooldown_min;
@@ -76,40 +91,65 @@ export function ResultsList({
     return String(min ?? max);
   };
 
+  const columns = ["3.5rem", "minmax(0,1fr)"];
+  if (showCdCol) columns.push("4rem");
+  if (showInfoCol) columns.push(minimal ? "1.5rem" : "1.75rem");
+  const gridTemplateColumns = columns.join(" ");
+
+  const headerCell = `py-1.5 text-[var(--color-muted)] ${minimal ? "px-1" : "px-2"}`;
+
   return (
-    <>
-      <table className="w-full text-left text-xs table-fixed">
-        <thead className="sticky top-0 bg-[#21262d] text-[var(--color-muted)]">
-          <tr>
-            <th className="w-14 whitespace-nowrap px-1 py-1.5">ID</th>
-            <th className={`py-1.5 ${minimal ? "px-1" : "px-2"}`}>Name</th>
-            {!compact && !minimal && showCd && (
-              <th className="w-16 px-2 py-1.5">CD</th>
-            )}
-            {!hoverCapable && (
-              <th className={`py-1.5 ${minimal ? "w-6 px-0" : "w-7 px-0.5"}`} />
-            )}
-          </tr>
-        </thead>
-        <tbody>
-          {rows.slice(0, 2000).map((row) => {
+    <div ref={parentRef} className="min-h-0 flex-1 overflow-auto">
+      <div
+        className="sticky top-0 z-10 grid border-b border-[var(--color-border)] bg-[#21262d] text-left text-xs"
+        style={{ gridTemplateColumns }}
+      >
+        <div className="w-14 whitespace-nowrap px-1 py-1.5">ID</div>
+        <div className={headerCell}>Name</div>
+        {showCdCol && <div className="px-2 py-1.5">CD</div>}
+        {showInfoCol && <div />}
+      </div>
+
+      {rows.length > 0 && (
+        <div
+          className="relative w-full text-xs"
+          style={{ height: virtualizer.getTotalSize() }}
+        >
+          {virtualizer.getVirtualItems().map((virtualRow) => {
+            const row = rows[virtualRow.index]!;
             const id = monsterRowId(row);
             const active = selected && monsterRowId(selected) === id;
 
             return (
-              <tr
-                key={id}
+              <div
+                key={virtualRow.key}
+                data-index={virtualRow.index}
+                ref={virtualizer.measureElement}
+                role="button"
+                tabIndex={0}
                 onClick={() => onSelect(row)}
-                className={`cursor-pointer border-t border-[var(--color-border)] hover:bg-[#21262d] ${active ? "bg-[#1f3a5f]" : ""}`}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    onSelect(row);
+                  }
+                }}
+                className={`absolute top-0 left-0 grid w-full cursor-pointer border-t border-[var(--color-border)] hover:bg-[#21262d] ${
+                  active ? "bg-[#1f3a5f]" : ""
+                }`}
+                style={{
+                  gridTemplateColumns,
+                  transform: `translateY(${virtualRow.start}px)`,
+                }}
               >
-                <td
-                  className={`w-14 whitespace-nowrap align-top py-1 font-mono tabular-nums ${minimal ? "px-1 text-[10px]" : "px-1 text-xs"}`}
+                <div
+                  className={`w-14 whitespace-nowrap py-1 font-mono tabular-nums ${
+                    minimal ? "px-1 text-[10px]" : "px-1 text-xs"
+                  }`}
                 >
                   {row.monster_no_na ?? "—"}
-                </td>
-                <td
-                  className={`min-w-0 align-top py-1 ${minimal ? "px-1" : "px-2"}`}
-                >
+                </div>
+                <div className={`min-w-0 py-1 ${minimal ? "px-1" : "px-2"}`}>
                   <div className="min-w-0">
                     {!(
                       showInlineCard &&
@@ -129,12 +169,12 @@ export function ResultsList({
                       />
                     )}
                   </div>
-                </td>
-                {!compact && !minimal && showCd && (
-                  <td className="w-16 px-2 py-1 font-mono">{formatCd(row)}</td>
+                </div>
+                {showCdCol && (
+                  <div className="px-2 py-1 font-mono">{formatCd(row)}</div>
                 )}
-                {!hoverCapable && (
-                  <td className={`py-1 ${minimal ? "px-0" : "px-0.5"}`}>
+                {showInfoCol && (
+                  <div className={`py-1 ${minimal ? "px-0" : "px-0.5"}`}>
                     <MonsterPreviewInfoButton
                       describedBy={
                         preview != null &&
@@ -150,32 +190,31 @@ export function ResultsList({
                         ) {
                           closePreview();
                         } else {
-                          openPinnedPreview(row, e.currentTarget.closest("tr")!);
+                          openPinnedPreview(
+                            row,
+                            e.currentTarget.closest("[data-index]") as HTMLElement
+                          );
                         }
                       }}
                     />
-                  </td>
+                  </div>
                 )}
-              </tr>
+              </div>
             );
           })}
-        </tbody>
-      </table>
+        </div>
+      )}
+
       <MonsterResultPreviewFloating
         preview={preview}
         previewId={previewId}
         onClose={closePreview}
       />
-      {rows.length > 2000 && (
-        <p className="p-2 text-xs text-[var(--color-muted)]">
-          Showing first 2000 of {rows.length} matches.
-        </p>
-      )}
       {!loading && rows.length === 0 && (
         <p className="p-4 text-sm text-[var(--color-muted)]">
           No monsters match the current filters.
         </p>
       )}
-    </>
+    </div>
   );
 }

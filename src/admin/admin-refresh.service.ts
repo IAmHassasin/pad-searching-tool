@@ -1,5 +1,4 @@
 import {
-  ConflictException,
   Injectable,
   Logger,
   ServiceUnavailableException,
@@ -10,20 +9,21 @@ import { VanishAwokenService } from "../api/vanish-awoken.service";
 import { VoidSuperGravityService } from "../api/void-super-gravity.service";
 import { runCommunityDbImport } from "../import/import-external-db.core";
 import { registerDataSourceRegexp } from "../patterns/register-sqlite-regexp";
+import { AdminJobLock } from "./admin-job-lock";
 
 @Injectable()
 export class AdminRefreshService {
   private readonly logger = new Logger(AdminRefreshService.name);
-  private refreshing = false;
 
   constructor(
     @InjectDataSource() private readonly dataSource: DataSource,
     private readonly vanish: VanishAwokenService,
-    private readonly voidSuperGravity: VoidSuperGravityService
+    private readonly voidSuperGravity: VoidSuperGravityService,
+    private readonly jobs: AdminJobLock
   ) {}
 
   isRefreshing(): boolean {
-    return this.refreshing;
+    return this.jobs.isRunning();
   }
 
   async refreshCommunityDb(): Promise<{
@@ -31,11 +31,7 @@ export class AdminRefreshService {
     finishedAt: string;
     import: Awaited<ReturnType<typeof runCommunityDbImport>>;
   }> {
-    if (this.refreshing) {
-      throw new ConflictException("Database refresh is already in progress");
-    }
-
-    this.refreshing = true;
+    this.jobs.begin("Database refresh");
     const started = Date.now();
     this.logger.warn("Admin DB refresh started — closing SQLite connection…");
 
@@ -86,7 +82,7 @@ export class AdminRefreshService {
 
       throw e;
     } finally {
-      this.refreshing = false;
+      this.jobs.end();
     }
   }
 }

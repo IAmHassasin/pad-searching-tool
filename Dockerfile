@@ -40,6 +40,9 @@ COPY exports/patterns ./exports/patterns
 COPY seed/gamewith-vanish.sqlite /seed/gamewith-vanish.sqlite
 COPY seed/void-super-gravity.sqlite /seed/void-super-gravity.sqlite
 COPY dungeon-details/seed ./dungeon-details/seed
+COPY dungeon-details/lib ./dungeon-details/lib
+COPY dungeon-details/scripts ./dungeon-details/scripts
+COPY event/seed ./event/seed
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 RUN sed -i 's/\r$//' /docker-entrypoint.sh && chmod +x /docker-entrypoint.sh
 

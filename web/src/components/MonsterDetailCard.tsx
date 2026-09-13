@@ -16,7 +16,6 @@ import {
   formatActiveSkillDesc,
   hasEvoStageCooldowns,
   parseActiveSkillStageCooldowns,
-  parseChangeToMonsterIds,
 } from "../lib/format-active-skill-desc";
 import { parseMonsterTypeIds } from "../lib/monster-types";
 import { PAD_AWAKENING, PAD_CARD_VISUAL, PAD_SKILL_FIT } from "../lib/pad-constants";
@@ -325,24 +324,25 @@ export function MonsterDetailCard({
               >
                 No.{id}
               </p>
-              <div className="flex shrink-0 flex-col items-end gap-1">
-                <StarRow count={row.rarity ?? 0} />
-                {googleSearchUrl && (
-                  <LinkPillButton
-                    href={googleSearchUrl}
-                    title="Search this monster on Google (パズドラ)"
-                  >
-                    Google
-                  </LinkPillButton>
-                )}
-              </div>
+              <StarRow count={row.rarity ?? 0} />
             </div>
-            <h3
-              title={row.name_en ?? "Unknown"}
-              className={`wrap-anywhere break-words font-bold leading-snug text-white ${compact ? "text-xs" : "text-sm"}`}
-            >
-              {row.name_en ?? "Unknown"}
-            </h3>
+            <div className="flex items-start gap-2">
+              <h3
+                title={row.name_en ?? "Unknown"}
+                className={`min-w-0 flex-1 wrap-anywhere break-words font-bold leading-snug text-white ${compact ? "text-xs" : "text-sm"}`}
+              >
+                {row.name_en ?? "Unknown"}
+              </h3>
+              {googleSearchUrl && (
+                <LinkPillButton
+                  href={googleSearchUrl}
+                  className="shrink-0"
+                  title="Search this monster on Google (パズドラ)"
+                >
+                  Google
+                </LinkPillButton>
+              )}
+            </div>
           </div>
         </div>
       </header>

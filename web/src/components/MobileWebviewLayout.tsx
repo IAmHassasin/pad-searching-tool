@@ -14,6 +14,7 @@ import type {
   SkillFilters,
 } from "../types";
 import { MonsterDetailPanel } from "./MonsterDetailPanel";
+import { ModernOnlySearchHint } from "./ModernOnlySearchHint";
 import { ResultsDisplayControls } from "./ResultsDisplayControls";
 import { ResultsList } from "./ResultsList";
 import { ResultsQuickFilter } from "./ResultsQuickFilter";
@@ -69,6 +70,8 @@ type Props = {
   onDisplaySectionsChange: (next: ResultDisplaySections) => void;
   resultQuickFilter: ResultQuickFilter;
   onResultQuickFilterChange: (next: ResultQuickFilter) => void;
+  modernOnly?: boolean;
+  minMonsterId?: number;
 };
 
 function CollapseButton({
@@ -511,6 +514,8 @@ export function MobileWebviewLayout({
   onDisplaySectionsChange,
   resultQuickFilter,
   onResultQuickFilterChange,
+  modernOnly,
+  minMonsterId,
 }: Props) {
   const [detailCollapsed, setDetailCollapsed] = useState(false);
   const showDetail = selected != null;
@@ -558,8 +563,13 @@ export function MobileWebviewLayout({
           </div>
         </header>
 
+        <ModernOnlySearchHint
+          modernOnly={modernOnly}
+          minMonsterId={minMonsterId}
+        />
+
         <div className="flex min-h-0 flex-1 overflow-hidden">
-          <div className="min-h-0 min-w-0 flex-1 overflow-auto border-r border-[var(--color-border)]">
+          <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden border-r border-[var(--color-border)]">
             <ResultsList
               rows={rows}
               selected={selected}

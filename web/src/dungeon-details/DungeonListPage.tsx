@@ -1,5 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { adminDeleteDungeon } from "../api";
+import { AdminLaunch } from "../components/AdminLaunch";
 import { AppToolsNav } from "../components/AppToolsNav";
+import { CatalogDeleteButton } from "../components/CatalogDeleteButton";
+import { useAdminSession } from "../hooks/useAdminSession";
 import { fetchDungeonList } from "./api";
 
 export function DungeonListPage() {
@@ -7,6 +11,8 @@ export function DungeonListPage() {
     queryKey: ["dungeon-details", "list"],
     queryFn: fetchDungeonList,
   });
+  const admin = useAdminSession();
+  const queryClient = useQueryClient();
 
   return (
     <div className="min-h-full bg-[var(--color-surface)] text-[#e6edf3]">
@@ -18,7 +24,10 @@ export function DungeonListPage() {
               Floor tables parsed from AppMedia (English UI)
             </p>
           </div>
-          <AppToolsNav variant="inline" />
+          <div className="flex flex-wrap items-center gap-2">
+            <AppToolsNav variant="inline" />
+            <AdminLaunch variant="chip" />
+          </div>
         </div>
       </header>
 
@@ -43,19 +52,33 @@ export function DungeonListPage() {
         <ul className="space-y-2">
           {list.data?.dungeons.map((d) => {
             const title = d.titleEn ?? d.titleJa.replace(/^【パズドラ】/, "");
+            const imported = d.importedAt?.slice(0, 10);
             return (
-              <li key={d.appmediaPostId}>
+              <li
+                key={d.appmediaPostId}
+                className="flex items-stretch overflow-hidden rounded-lg border border-[var(--color-border)] bg-[var(--color-panel)]"
+              >
                 <a
                   href={`/dungeon-details/${d.appmediaPostId}`}
-                  className="block rounded-lg border border-[var(--color-border)] bg-[var(--color-panel)] px-4 py-3 hover:border-[var(--color-accent)]"
+                  className="min-w-0 flex-1 px-4 py-3 hover:bg-white/5"
                 >
-                  <div className="font-medium">
-                    {title}
-                  </div>
+                  <div className="font-medium">{title}</div>
                   <div className="mt-1 text-xs text-[var(--color-muted)]">
-                    #{d.appmediaPostId} · imported {d.importedAt.slice(0, 10)}
+                    #{d.appmediaPostId}
+                    {imported ? ` · ${imported}` : ""}
                   </div>
                 </a>
+                {admin.isSuperadmin && admin.token && (
+                  <CatalogDeleteButton
+                    label={title}
+                    onDelete={async () => {
+                      await adminDeleteDungeon(admin.token!, d.appmediaPostId);
+                      await queryClient.invalidateQueries({
+                        queryKey: ["dungeon-details"],
+                      });
+                    }}
+                  />
+                )}
               </li>
             );
           })}

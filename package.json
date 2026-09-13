@@ -14,7 +14,8 @@
     "awakenings:manifest": "node scripts/generate-awakening-manifest.mjs",
     "awakenings:append": "node scripts/append-awoken-from-strip.mjs",
     "start": "npm run build && dotenv -e .env -v RUN_TRANSFORM=true -v START_HTTP=true -- node dist/main.js",
-    "start:dev": "dotenv -e .env -- nest start --watch"
+    "start:dev": "dotenv -e .env -- nest start --watch",
+    "test": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types --test src/api/search-id-query.test.ts src/admin/catalog-fs.test.ts src/admin/catalog-delete.test.ts src/admin/dungeon-catalog-parse.test.ts src/admin/dungeon-catalog-sync.test.ts src/admin/event-catalog-parse.test.ts src/admin/event-catalog-sync.test.ts src/admin/event-seed-merge.test.ts src/event/skip-missing-monster.test.ts src/event/event-group-showcase.test.ts web/src/lib/search-paging.test.ts"
   },
   "engines": {
     "node": ">=20"
@@ -28,13 +29,13 @@
     "dotenv-cli": "^11.0.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
-    "typeorm": "^0.3.20"
+    "typeorm": "^0.3.20",
+    "cheerio": "^1.2.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^11.0.0",
     "@types/better-sqlite3": "^7.6.13",
     "@types/node": "^22.10.0",
-    "cheerio": "^1.2.0",
     "typescript": "^5.7.0"
   }
 }

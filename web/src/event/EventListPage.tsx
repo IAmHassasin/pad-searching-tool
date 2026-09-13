@@ -1,5 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { adminDeleteEvent } from "../api";
+import { AdminLaunch } from "../components/AdminLaunch";
 import { AppToolsNav } from "../components/AppToolsNav";
+import { CatalogDeleteButton } from "../components/CatalogDeleteButton";
+import { useAdminSession } from "../hooks/useAdminSession";
 import { fetchEventList } from "./api";
 
 export function EventListPage() {
@@ -7,6 +11,8 @@ export function EventListPage() {
     queryKey: ["events", "list"],
     queryFn: fetchEventList,
   });
+  const admin = useAdminSession();
+  const queryClient = useQueryClient();
 
   return (
     <div className="min-h-full bg-[var(--color-surface)] text-[#e6edf3]">
@@ -18,7 +24,10 @@ export function EventListPage() {
               New monster & evolution announcements
             </p>
           </div>
-          <AppToolsNav variant="inline" />
+          <div className="flex flex-wrap items-center gap-2">
+            <AppToolsNav variant="inline" />
+            <AdminLaunch variant="chip" />
+          </div>
         </div>
       </header>
 
@@ -36,10 +45,13 @@ export function EventListPage() {
         )}
         <ul className="space-y-2">
           {list.data?.events.map((e) => (
-            <li key={e.eventId}>
+            <li
+              key={e.eventId}
+              className="flex items-stretch overflow-hidden rounded-lg border border-[var(--color-border)] bg-[var(--color-panel)]"
+            >
               <a
                 href={`/event/${e.eventId}`}
-                className="block rounded-lg border border-[var(--color-border)] bg-[var(--color-panel)] px-4 py-3 hover:border-[var(--color-accent)]"
+                className="min-w-0 flex-1 px-4 py-3 hover:bg-white/5"
               >
                 <div className="font-medium">{e.title}</div>
                 {e.subtitle && (
@@ -53,6 +65,15 @@ export function EventListPage() {
                   </div>
                 )}
               </a>
+              {admin.isSuperadmin && admin.token && (
+                <CatalogDeleteButton
+                  label={e.title}
+                  onDelete={async () => {
+                    await adminDeleteEvent(admin.token!, e.eventId);
+                    await queryClient.invalidateQueries({ queryKey: ["events"] });
+                  }}
+                />
+              )}
             </li>
           ))}
         </ul>

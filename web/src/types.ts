@@ -81,6 +81,10 @@ export type MonsterSearchResponse = {
   total: number;
   limit: number;
   offset: number;
+  /** Configured search floor; 0 if disabled. */
+  minMonsterId: number;
+  /** True when this response actually applied the min-ID floor. */
+  modernOnly: boolean;
   rows: MonsterRecord[];
 };
 

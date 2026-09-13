@@ -380,6 +380,27 @@ export class MonsterRelationsService {
       };
     }
 
+    return this.getCollabGroupByGroupId(groupId, monsterId);
+  }
+
+  async getCollabGroupByGroupId(
+    groupId: number,
+    monsterId = 0
+  ): Promise<{
+    monsterId: number;
+    groupId: number;
+    groupName: string | null;
+    byRarity: { rarity: number; monsters: Record<string, unknown>[] }[];
+  }> {
+    if (!Number.isFinite(groupId) || groupId <= 0) {
+      return {
+        monsterId,
+        groupId: 0,
+        groupName: null,
+        byRarity: [],
+      };
+    }
+
     const nameRows = (await this.dataSource.query(
       `SELECT s.name_en
        FROM series s
@@ -425,5 +446,24 @@ export class MonsterRelationsService {
       groupName: nameRows[0]?.name_en?.trim() || null,
       byRarity,
     };
+  }
+
+  async listCollabGroups(): Promise<
+    Array<{ groupId: number; groupName: string | null }>
+  > {
+    return (await this.dataSource.query(
+      `SELECT m.group_id AS groupId, (
+         SELECT s.name_en
+         FROM series s
+         JOIN monster_series ms ON ms.series_id = s.series_id
+         JOIN monsters mm ON mm.monster_id = ms.monster_id
+         WHERE mm.group_id = m.group_id
+         ORDER BY CASE WHEN s.series_type = 'collab' THEN 0 ELSE 1 END, ms.priority
+         LIMIT 1
+       ) AS groupName
+       FROM monsters m
+       WHERE m.group_id IS NOT NULL AND m.group_id != 0
+       GROUP BY m.group_id`
+    )) as Array<{ groupId: number; groupName: string | null }>;
   }
 }

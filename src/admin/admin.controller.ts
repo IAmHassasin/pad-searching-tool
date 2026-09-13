@@ -2,13 +2,18 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Delete,
   Get,
+  Param,
+  ParseIntPipe,
   Post,
   Req,
   UseGuards,
 } from "@nestjs/common";
 import { AdminAuthGuard } from "./admin-auth.guard";
 import { AdminAuthService } from "./admin-auth.service";
+import { DungeonCatalogSyncService } from "./dungeon-catalog-sync.service";
+import { EventCatalogSyncService } from "./event-catalog-sync.service";
 import { AdminRefreshService } from "./admin-refresh.service";
 
 type LoginBody = { username?: string; password?: string };
@@ -17,7 +22,9 @@ type LoginBody = { username?: string; password?: string };
 export class AdminController {
   constructor(
     private readonly auth: AdminAuthService,
-    private readonly refresh: AdminRefreshService
+    private readonly refresh: AdminRefreshService,
+    private readonly dungeons: DungeonCatalogSyncService,
+    private readonly events: EventCatalogSyncService
   ) {}
 
   @Get("config")
@@ -55,6 +62,30 @@ export class AdminController {
   @UseGuards(AdminAuthGuard)
   async refreshDb() {
     return this.refresh.refreshCommunityDb();
+  }
+
+  @Post("refresh-dungeons")
+  @UseGuards(AdminAuthGuard)
+  async refreshDungeons() {
+    return this.dungeons.refreshDungeons();
+  }
+
+  @Post("refresh-events")
+  @UseGuards(AdminAuthGuard)
+  async refreshEvents() {
+    return this.events.refreshEvents();
+  }
+
+  @Delete("events/:eventId")
+  @UseGuards(AdminAuthGuard)
+  deleteEvent(@Param("eventId") eventId: string) {
+    return this.events.deleteEvent(eventId);
+  }
+
+  @Delete("dungeons/:postId")
+  @UseGuards(AdminAuthGuard)
+  deleteDungeon(@Param("postId", ParseIntPipe) postId: number) {
+    return this.dungeons.deleteDungeon(postId);
   }
 
   @Get("refresh-status")

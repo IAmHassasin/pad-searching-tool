@@ -530,7 +530,9 @@ export function MonsterIdFilter({
   onChange: (next: MonsterFilters) => void;
   compact?: boolean;
 }) {
-  const summary = filters.idQuery.trim() ? "search active" : "monster_id, NA#, name";
+  const summary = filters.idQuery.trim()
+    ? "search active"
+    : "exact ID/NA# or name";
 
   return (
     <CollapsibleFilterSection
@@ -541,7 +543,7 @@ export function MonsterIdFilter({
     >
       <input
         type="search"
-        placeholder="monster_id, NA#, name…"
+        placeholder="Exact ID or NA# (older cards), or name…"
         className={`w-full rounded-md border border-[var(--color-border)] bg-[var(--color-inset)] text-white transition-colors focus:border-[var(--color-accent)] focus:outline-none ${
           compact ? "px-2 py-1 text-xs" : "px-2 py-1.5 text-sm"
         }`}

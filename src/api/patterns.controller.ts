@@ -128,7 +128,8 @@ export class PatternsController {
     @Query("excludedVanishAwakeningIds") excludedVanishAwakeningIdsRaw?: string,
     @Query("effect") effectRaw?: string,
     @Query("limit") limitRaw?: string,
-    @Query("offset") offsetRaw?: string
+    @Query("offset") offsetRaw?: string,
+    @Query("skipCount") skipCountRaw?: string
   ) {
     const patternMatch =
       patternMatchRaw?.trim() === "all" ? "all" : ("any" as const);
@@ -239,6 +240,9 @@ export class PatternsController {
       effectRanges: effectRanges.length ? effectRanges : undefined,
       limit,
       offset,
+      skipCount:
+        skipCountRaw?.trim() === "1" ||
+        skipCountRaw?.trim().toLowerCase() === "true",
     });
   }
 

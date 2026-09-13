@@ -1,12 +1,13 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import {
   fetchEffectFamilies,
   fetchHealth,
   fetchPatternGroups,
   searchAllMonsters,
+  type SearchSnapshot,
 } from "./api";
-import { AdminPanel } from "./components/AdminPanel";
+import { AdminLaunch } from "./components/AdminLaunch";
 import { AppBrand } from "./components/AppBrand";
 import { AppToolsNav } from "./components/AppToolsNav";
 import { MobileWebviewLayout } from "./components/MobileWebviewLayout";
@@ -17,7 +18,6 @@ import {
   DEFAULT_AWK_MODIFIER_SETTINGS,
 } from "./components/ResultsSortControls";
 import { DEFAULT_RESULT_DISPLAY_SECTIONS } from "./lib/result-display";
-import { useAdminSession } from "./hooks/useAdminSession";
 import { useDebouncedValue } from "./hooks/useDebouncedValue";
 import { useMobileWebview } from "./hooks/useMobileWebview";
 import type { AwkModifierSettings } from "./lib/awakening-stat-modifier";
@@ -74,11 +74,9 @@ export default function App() {
   const [selected, setSelected] = useState<
     import("./types").MonsterRecord | null
   >(null);
-  const [loadProgress, setLoadProgress] = useState<{
-    loaded: number;
-    total: number;
-  } | null>(null);
-  const [adminOpen, setAdminOpen] = useState(false);
+  const [partialSearch, setPartialSearch] = useState<SearchSnapshot | null>(
+    null
+  );
   const [advancedEffectFilters, setAdvancedEffectFilters] =
     useState<AdvancedEffectFilters>(initialAdvancedEffectFilters);
   const [resultSort, setResultSort] = useState<ResultSortOption>("default");
@@ -89,8 +87,6 @@ export default function App() {
   const [resultQuickFilter, setResultQuickFilter] =
     useState<ResultQuickFilter>(null);
   const [shareMsg, setShareMsg] = useState<string | null>(null);
-  const queryClient = useQueryClient();
-  const admin = useAdminSession();
   const isMobileWebview = useMobileWebview();
 
   const debouncedMonster = useDebouncedValue(monsterFilters, 300);
@@ -168,24 +164,32 @@ export default function App() {
     [debouncedMonster, debouncedSkill, debouncedEffects]
   );
 
+  const [partialKey, setPartialKey] = useState(searchKey);
+  if (partialKey !== searchKey) {
+    setPartialKey(searchKey);
+    setPartialSearch(null);
+  }
+
   const search = useQuery({
     queryKey: ["monsters", "search", searchKey],
     queryFn: () =>
       searchAllMonsters(
         debouncedMonster,
         debouncedSkill,
-        (loaded, total) => setLoadProgress({ loaded, total }),
+        setPartialSearch,
         debouncedEffects
       ),
     retry: 1,
     placeholderData: (prev) => prev,
   });
 
+  const snapshot = partialSearch ?? search.data;
+
   const filtered = useMemo(() => {
-    const rows = search.data?.rows ?? [];
+    const rows = snapshot?.rows ?? [];
     const sorted = sortMonsterRows(rows, resultSort, awkModifierSettings);
     return filterRowsByQuickFilter(sorted, resultQuickFilter);
-  }, [search.data, resultSort, awkModifierSettings, resultQuickFilter]);
+  }, [snapshot, resultSort, awkModifierSettings, resultQuickFilter]);
 
   const apiError = health.error ?? patternGroups.error ?? search.error ?? null;
 
@@ -244,10 +248,10 @@ export default function App() {
           >
             API {health.isLoading ? "…" : health.data?.ok ? "online" : "offline"}
           </span>
-          {search.data && (
+          {snapshot && (
             <span className="tabular-nums">
-              {search.data.total} match
-              {search.data.total === 1 ? "" : "es"}
+              {snapshot.total} match
+              {snapshot.total === 1 ? "" : "es"}
             </span>
           )}
           {patternGroups.data && (
@@ -257,36 +261,11 @@ export default function App() {
               pattern groups
             </span>
           )}
-          {admin.adminEnabled && (
-            <button
-              type="button"
-              className="rounded border border-[var(--color-border)] px-2 py-0.5 text-[var(--color-muted)] hover:border-amber-600 hover:text-amber-300"
-              onClick={() => setAdminOpen(true)}
-            >
-              {admin.isSuperadmin ? "Admin" : "Admin login"}
-            </button>
-          )}
+          <AdminLaunch variant="chip" />
         </div>
       </header>
 
       <AppToolsNav />
-
-      <AdminPanel
-        open={adminOpen}
-        onClose={() => setAdminOpen(false)}
-        adminEnabled={admin.adminEnabled}
-        isSuperadmin={admin.isSuperadmin}
-        checking={admin.checking}
-        username={admin.username}
-        token={admin.token}
-        onLogin={async (u, p) => {
-          await admin.login(u, p);
-        }}
-        onLogout={admin.logout}
-        onRefreshComplete={() => {
-          void queryClient.invalidateQueries({ queryKey: ["monsters", "search"] });
-        }}
-      />
 
       {apiError && (
         <p className="shrink-0 bg-red-950/80 px-4 py-2 text-sm text-red-200">
@@ -306,12 +285,12 @@ export default function App() {
           patternGroups={patternGroups.data}
           patternGroupsLoading={patternGroups.isLoading}
           rows={filtered}
-          totalLoaded={search.data?.total ?? 0}
+          totalLoaded={snapshot?.total ?? 0}
           selected={selected}
           onSelect={setSelected}
           loading={search.isFetching}
           loadProgress={
-            loadProgress && search.isFetching ? loadProgress.loaded : null
+            search.isFetching && snapshot ? snapshot.rows.length : null
           }
           resultSort={resultSort}
           onResultSortChange={setResultSort}
@@ -325,6 +304,8 @@ export default function App() {
           onAdvancedEffectFiltersChange={setAdvancedEffectFilters}
           effectFamilies={effectFamilies.data?.families}
           effectFamiliesLoading={effectFamilies.isLoading}
+          modernOnly={snapshot?.modernOnly}
+          minMonsterId={snapshot?.minMonsterId}
         />
       ) : (
         // Plain flex row, not a grid: below `xl` (1280px) isMobileWebview is
@@ -338,12 +319,12 @@ export default function App() {
           />
           <ResultsPanel
             rows={filtered}
-            totalLoaded={search.data?.total ?? 0}
+            totalLoaded={snapshot?.total ?? 0}
             selected={selected}
             onSelect={setSelected}
             loading={search.isFetching}
             loadProgress={
-              loadProgress && search.isFetching ? loadProgress.loaded : null
+              search.isFetching && snapshot ? snapshot.rows.length : null
             }
             resultSort={resultSort}
             onResultSortChange={setResultSort}
@@ -353,6 +334,8 @@ export default function App() {
             onDisplaySectionsChange={setDisplaySections}
             resultQuickFilter={resultQuickFilter}
             onResultQuickFilterChange={setResultQuickFilter}
+            modernOnly={snapshot?.modernOnly}
+            minMonsterId={snapshot?.minMonsterId}
           />
           <SkillFilterPanel
             filters={skillFilters}
