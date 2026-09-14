@@ -14,9 +14,10 @@ function invalidateCatalogs(
 type Props = {
   /** `chip` matches the Search page status bar; `header` sits next to tool nav. */
   variant?: "chip" | "header";
+  compact?: boolean;
 };
 
-export function AdminLaunch({ variant = "header" }: Props) {
+export function AdminLaunch({ variant = "header", compact = false }: Props) {
   const [open, setOpen] = useState(false);
   const admin = useAdminSession();
   const queryClient = useQueryClient();
@@ -28,10 +29,16 @@ export function AdminLaunch({ variant = "header" }: Props) {
       ? "rounded border border-amber-700/80 px-2 py-0.5 text-xs text-amber-200 hover:border-amber-500 hover:text-amber-100"
       : "rounded border border-amber-700/80 bg-amber-950/40 px-2.5 py-1 text-xs font-medium text-amber-200 hover:border-amber-500 hover:text-amber-50";
 
+  const label = admin.isSuperadmin
+    ? "Admin"
+    : compact
+      ? "Login"
+      : "Admin login";
+
   return (
     <>
       <button type="button" className={buttonClass} onClick={() => setOpen(true)}>
-        {admin.isSuperadmin ? "Admin" : "Admin login"}
+        {label}
       </button>
       <AdminPanel
         variant="modal"

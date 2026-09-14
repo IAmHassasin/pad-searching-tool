@@ -219,7 +219,13 @@ export default function App() {
 
   return (
     <div className="flex h-full flex-col">
-      <header className="relative flex shrink-0 flex-wrap items-center justify-between gap-x-3 gap-y-1 border-b border-[var(--color-border)] bg-[var(--color-inset)] px-4 py-2">
+      <header
+        className={`relative flex shrink-0 items-center justify-between border-b border-[var(--color-border)] bg-[var(--color-inset)] ${
+          isMobileWebview
+            ? "gap-2 px-2 py-1"
+            : "flex-wrap gap-x-3 gap-y-1 px-4 py-2"
+        }`}
+      >
         <div
           className="pointer-events-none absolute inset-0"
           style={{
@@ -229,29 +235,45 @@ export default function App() {
           }}
           aria-hidden
         />
-        <div className="relative z-10">
-          <AppBrand />
+        <div className="relative z-10 shrink-0">
+          <AppBrand
+            size={isMobileWebview ? 22 : 32}
+            title={isMobileWebview ? "PST" : undefined}
+          />
         </div>
-        <div className="relative z-10 flex flex-wrap items-center gap-x-3 gap-y-1 text-[10px] text-[var(--color-muted)] sm:text-xs">
+        <div
+          className={`relative z-10 min-w-0 items-center text-[10px] text-[var(--color-muted)] ${
+            isMobileWebview
+              ? "flex flex-nowrap gap-1.5 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              : "flex flex-wrap gap-x-3 gap-y-1 sm:text-xs"
+          }`}
+        >
           <button
             type="button"
-            className="rounded border border-[var(--color-border)] px-2 py-0.5 text-[var(--color-muted)] hover:border-[var(--color-accent)] hover:text-white"
+            className="shrink-0 rounded border border-[var(--color-border)] px-2 py-0.5 text-[var(--color-muted)] hover:border-[var(--color-accent)] hover:text-white"
             onClick={() => void handleShareFilter()}
           >
-            Share filter
+            {isMobileWebview ? "Share" : "Share filter"}
           </button>
           {shareMsg && <span>{shareMsg}</span>}
           <span
-            className={
+            className={`shrink-0 ${
               health.data?.ok ? "text-emerald-400" : "text-amber-400"
-            }
+            }`}
           >
-            API {health.isLoading ? "…" : health.data?.ok ? "online" : "offline"}
+            {isMobileWebview
+              ? health.isLoading
+                ? "API…"
+                : health.data?.ok
+                  ? "API"
+                  : "API off"
+              : `API ${health.isLoading ? "…" : health.data?.ok ? "online" : "offline"}`}
           </span>
           {snapshot && (
-            <span className="tabular-nums">
-              {snapshot.total} match
-              {snapshot.total === 1 ? "" : "es"}
+            <span className="shrink-0 tabular-nums">
+              {isMobileWebview
+                ? snapshot.total.toLocaleString()
+                : `${snapshot.total} match${snapshot.total === 1 ? "" : "es"}`}
             </span>
           )}
           {patternGroups.data && (
@@ -261,11 +283,11 @@ export default function App() {
               pattern groups
             </span>
           )}
-          <AdminLaunch variant="chip" />
+          <AdminLaunch variant="chip" compact={isMobileWebview} />
         </div>
       </header>
 
-      <AppToolsNav />
+      <AppToolsNav variant={isMobileWebview ? "compact" : "bar"} />
 
       {apiError && (
         <p className="shrink-0 bg-red-950/80 px-4 py-2 text-sm text-red-200">

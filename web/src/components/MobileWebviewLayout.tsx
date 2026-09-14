@@ -22,12 +22,8 @@ import { ResultsSortControls } from "./ResultsSortControls";
 import { AdvancedEffectFilterSection } from "./filters/advanced-effect-filter";
 import {
   MonsterActiveFilterChips,
-  MonsterAttributeFilter,
-  MonsterTypeFilter,
   MonsterFilterClearButton,
-  MonsterIdFilter,
-  MonsterRarityFilter,
-  MonsterStatsFilter,
+  MonsterMoreFiltersGroup,
   hasActiveMonsterFilters,
 } from "./filters/monster-filter-shared";
 import { MonsterAwakeningFilter } from "./filters/awakening-filter-shared";
@@ -108,36 +104,23 @@ function MobileMonsterFilterBar({
   const active = hasActiveMonsterFilters(filters);
 
   return (
-    <section className="flex h-[15vh] min-h-[7rem] max-h-[15vh] shrink-0 flex-col overflow-hidden border-b border-[var(--color-border)] bg-[var(--color-panel)]">
-      <div className="flex shrink-0 items-center justify-between gap-2 px-2 py-1">
-        <h2 className="text-xs font-semibold text-[var(--color-accent)]">
-          Monster
-        </h2>
-        <div className="flex items-center gap-1">
-          {active && (
-            <MonsterFilterClearButton filters={filters} onChange={onChange} />
-          )}
-        </div>
-      </div>
-
-      <div className="min-h-0 flex-1 overflow-y-auto px-2 pb-2">
+    <section className="shrink-0 border-b border-[var(--color-border)] bg-[var(--color-panel)] px-1.5 py-1">
+      {active && (
         <MonsterActiveFilterChips filters={filters} onChange={onChange} />
-        <div className="mt-1 space-y-1.5">
-          <MonsterRarityFilter
-            filters={filters}
-            onChange={onChange}
-            compact
-          />
-          <MonsterAttributeFilter
-            filters={filters}
-            onChange={onChange}
-            compact
-          />
-          <MonsterTypeFilter filters={filters} onChange={onChange} compact />
-          <MonsterStatsFilter filters={filters} onChange={onChange} compact />
-          <MonsterIdFilter filters={filters} onChange={onChange} compact />
-        </div>
-      </div>
+      )}
+      <MonsterMoreFiltersGroup
+        filters={filters}
+        onChange={onChange}
+        compact
+        title="Monster"
+        idleSummary=""
+        headerExtra={
+          active ? (
+            <MonsterFilterClearButton filters={filters} onChange={onChange} />
+          ) : null
+        }
+        contentClassName="max-h-[40vh] space-y-1.5 overflow-y-auto"
+      />
     </section>
   );
 }
@@ -402,11 +385,11 @@ function MobileBottomFilterBar({
         </div>
       )}
 
-      <div className="grid shrink-0 grid-cols-5 gap-1 p-1.5">
+      <div className="grid shrink-0 grid-cols-5 gap-1 px-1.5 py-1">
         <button
           type="button"
           onClick={() => toggleMode("leader_skill")}
-          className={`rounded-md border px-1 py-2 text-xs font-semibold transition-colors ${
+          className={`rounded-md border px-1 py-1 text-[11px] font-semibold transition-colors ${
             openMode === "leader_skill"
               ? "border-[#db6d28] bg-[#3d2814] text-[#f0c090]"
               : "border-[var(--color-border)] bg-[#0d1117] text-[var(--color-muted)]"
@@ -422,7 +405,7 @@ function MobileBottomFilterBar({
         <button
           type="button"
           onClick={() => toggleMode("active_skill")}
-          className={`rounded-md border px-1 py-2 text-xs font-semibold transition-colors ${
+          className={`rounded-md border px-1 py-1 text-[11px] font-semibold transition-colors ${
             openMode === "active_skill"
               ? "border-[#58a6ff] bg-[#1f3a5f] text-[var(--color-accent)]"
               : "border-[var(--color-border)] bg-[#0d1117] text-[var(--color-muted)]"
@@ -438,7 +421,7 @@ function MobileBottomFilterBar({
         <button
           type="button"
           onClick={() => toggleMode("awakening")}
-          className={`rounded-md border px-1 py-2 text-xs font-semibold transition-colors ${
+          className={`rounded-md border px-1 py-1 text-[11px] font-semibold transition-colors ${
             openMode === "awakening"
               ? "border-[#6b8f3c] bg-[#1a2a12] text-[#a8c878]"
               : "border-[var(--color-border)] bg-[#0d1117] text-[var(--color-muted)]"
@@ -454,7 +437,7 @@ function MobileBottomFilterBar({
         <button
           type="button"
           onClick={() => toggleMode("by_text")}
-          className={`rounded-md border px-1 py-2 text-xs font-semibold transition-colors ${
+          className={`rounded-md border px-1 py-1 text-[11px] font-semibold transition-colors ${
             openMode === "by_text"
               ? "border-[#39c5cf] bg-[#12333a] text-[#7ee7ef]"
               : "border-[var(--color-border)] bg-[#0d1117] text-[var(--color-muted)]"
@@ -470,7 +453,7 @@ function MobileBottomFilterBar({
         <button
           type="button"
           onClick={() => toggleMode("advanced")}
-          className={`rounded-md border px-1 py-2 text-xs font-semibold transition-colors ${
+          className={`rounded-md border px-1 py-1 text-[11px] font-semibold transition-colors ${
             openMode === "advanced"
               ? "border-[#a371f7] bg-[#2a1f3d] text-[#d4b8f7]"
               : "border-[var(--color-border)] bg-[var(--color-inset)] text-[var(--color-muted)]"
@@ -533,8 +516,8 @@ export function MobileWebviewLayout({
       />
 
       <main className="flex min-h-0 flex-1 flex-col overflow-hidden">
-        <header className="flex shrink-0 flex-wrap items-center justify-between gap-2 border-b border-[var(--color-border)] bg-[var(--color-panel)] px-2 py-1.5">
-          <div className="flex items-center gap-1">
+        <header className="flex shrink-0 flex-nowrap items-center justify-between gap-1.5 overflow-x-auto border-b border-[var(--color-border)] bg-[var(--color-panel)] px-2 py-1">
+          <div className="flex shrink-0 items-center gap-1">
             <h2 className="text-xs font-semibold">Results</h2>
             <ResultsQuickFilter
               value={resultQuickFilter}
@@ -542,7 +525,7 @@ export function MobileWebviewLayout({
               compact
             />
           </div>
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex shrink-0 items-center gap-1.5">
             <ResultsDisplayControls
               sections={displaySections}
               onSectionsChange={onDisplaySectionsChange}

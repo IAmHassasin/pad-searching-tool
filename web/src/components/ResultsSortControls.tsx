@@ -38,7 +38,7 @@ export function ResultsSortControls({
   return (
     <>
       <div
-        className={`flex items-center gap-2 ${compact ? "flex-wrap" : ""}`}
+        className={`flex items-center gap-1.5 ${compact ? "shrink-0" : "flex-wrap"}`}
       >
         <label className="flex items-center gap-1.5 text-[10px] text-[var(--color-muted)]">
           <span className="shrink-0">Sort</span>
