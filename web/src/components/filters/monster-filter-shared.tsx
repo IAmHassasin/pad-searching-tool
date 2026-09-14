@@ -1,3 +1,4 @@
+import { type ReactNode } from "react";
 import { EMPTY_MONSTER_FILTERS, type MonsterFilters } from "../../types";
 import {
   MONSTER_ATTRIBUTES,
@@ -530,7 +531,9 @@ export function MonsterIdFilter({
   onChange: (next: MonsterFilters) => void;
   compact?: boolean;
 }) {
-  const summary = filters.idQuery.trim() ? "search active" : "monster_id, NA#, name";
+  const summary = filters.idQuery.trim()
+    ? "search active"
+    : "exact ID/NA# or name";
 
   return (
     <CollapsibleFilterSection
@@ -541,7 +544,7 @@ export function MonsterIdFilter({
     >
       <input
         type="search"
-        placeholder="monster_id, NA#, name…"
+        placeholder="Exact ID or NA# (older cards), or name…"
         className={`w-full rounded-md border border-[var(--color-border)] bg-[var(--color-inset)] text-white transition-colors focus:border-[var(--color-accent)] focus:outline-none ${
           compact ? "px-2 py-1 text-xs" : "px-2 py-1.5 text-sm"
         }`}
@@ -561,10 +564,19 @@ export function MonsterMoreFiltersGroup({
   filters,
   onChange,
   compact = false,
+  title = "More filters",
+  idleSummary,
+  headerExtra,
+  contentClassName,
 }: {
   filters: MonsterFilters;
   onChange: (next: MonsterFilters) => void;
   compact?: boolean;
+  title?: string;
+  /** Shown when no filters are active. Empty string hides the idle summary. */
+  idleSummary?: string;
+  headerExtra?: ReactNode;
+  contentClassName?: string;
 }) {
   const activeCount =
     (filters.rarity.size > 0 ? 1 : 0) +
@@ -577,17 +589,22 @@ export function MonsterMoreFiltersGroup({
       : 0) +
     (filters.idQuery.trim() ? 1 : 0);
 
+  const summary =
+    activeCount > 0
+      ? `${activeCount} active`
+      : idleSummary !== undefined
+        ? idleSummary
+        : "rarity · attribute · type · stats · id";
+
   return (
     <CollapsibleFilterSection
-      title="More filters"
-      summary={
-        activeCount > 0
-          ? `${activeCount} active`
-          : "rarity · attribute · type · stats · id"
-      }
+      title={title}
+      summary={summary}
       compact={compact}
       defaultOpen={false}
       className="shrink-0"
+      headerExtra={headerExtra}
+      contentClassName={contentClassName}
     >
       <div className="space-y-2">
         <MonsterRarityFilter filters={filters} onChange={onChange} compact={compact} />

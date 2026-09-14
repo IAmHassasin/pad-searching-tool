@@ -1,0 +1,22 @@
+{
+  "eventId": "pad-x",
+  "title": "PAD X",
+  "subtitle": null,
+  "publishedAt": "2026-09-13",
+  "sourceUrl": "https://www.puzzleanddragons.us/single-post/pad-x-event-2609",
+  "groupId": null,
+  "coverMonsterIds": [
+    3175
+  ],
+  "loading": {
+    "theme": "fade",
+    "minMs": 700
+  },
+  "entries": [
+    {
+      "monsterId": 3175,
+      "role": "new-evolution",
+      "label": "New Evolution"
+    }
+  ]
+}

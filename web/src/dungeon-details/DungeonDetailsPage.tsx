@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { AppToolsNav } from "../components/AppToolsNav";
+import { AdminLaunch } from "../components/AdminLaunch";
 import { MonsterPortrait } from "../components/MonsterPortrait";
 import { fetchDungeon, type EnglishGlossary } from "./api";
 import type { DungeonSpawn, GimmickChip } from "./types";
@@ -208,7 +209,10 @@ export function DungeonDetailsPage({ postId }: { postId: string }) {
             >
               ← All dungeons
             </a>
-            <AppToolsNav variant="inline" />
+            <div className="flex flex-wrap items-center gap-2">
+              <AppToolsNav variant="inline" />
+              <AdminLaunch />
+            </div>
           </div>
           {dungeon.data && (
             <>

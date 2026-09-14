@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { AppToolsNav } from "../components/AppToolsNav";
+import { AdminLaunch } from "../components/AdminLaunch";
 import { monsterRowId } from "../lib/filters";
 import { portraitUrl } from "../lib/portraits";
 import { fetchEvent } from "./api";
@@ -56,7 +57,10 @@ export function EventDetailPage({ eventId }: { eventId: string }) {
             >
               ← All events
             </a>
-            <AppToolsNav variant="inline" />
+            <div className="flex flex-wrap items-center gap-2">
+              <AppToolsNav variant="inline" />
+              <AdminLaunch />
+            </div>
           </div>
         </div>
 

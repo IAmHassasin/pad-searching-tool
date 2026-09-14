@@ -10,6 +10,9 @@ import {
   type PatternGroupsManifest,
   type SkillFilters,
 } from "./types";
+import { nextSearchPage, type SearchSnapshot } from "./lib/search-paging";
+
+export type { SearchSnapshot };
 
 const base = (import.meta.env.VITE_API_BASE as string | undefined)?.replace(
   /\/$/,
@@ -88,6 +91,49 @@ export function adminRefreshDb(token: string) {
   });
 }
 
+export function adminRefreshDungeons(token: string) {
+  return getJson<{
+    ok: true;
+    finishedAt: string;
+    added: number[];
+    failed: Array<{ id: number; error: string }>;
+    candidateCount: number;
+  }>("/admin/refresh-dungeons", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}` },
+  });
+}
+
+export function adminRefreshEvents(token: string) {
+  return getJson<{
+    ok: true;
+    finishedAt: string;
+    created: string[];
+    skippedExisting: string[];
+    unparsedArticles: number;
+  }>("/admin/refresh-events", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}` },
+  });
+}
+
+export function adminDeleteEvent(token: string, eventId: string) {
+  return getJson<{ ok: true; deleted: string }>(
+    `/admin/events/${encodeURIComponent(eventId)}`,
+    {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+}
+
+export function adminDeleteDungeon(token: string, postId: number) {
+  return getJson<{ ok: true; deleted: number }>(`/admin/dungeons/${postId}`, {
+    method: "DELETE",
+    headers: { Authorization: `Bearer ${token}` },
+  });
+}
+
 export function fetchHealth() {
   return getJson<{ ok: boolean }>("/health");
 }
@@ -148,7 +194,8 @@ export async function searchMonstersPage(
   skillFilters: SkillFilters,
   limit: number,
   offset: number,
-  advancedEffectFilters?: AdvancedEffectFilters
+  advancedEffectFilters?: AdvancedEffectFilters,
+  skipCount = false
 ): Promise<MonsterSearchResponse> {
   const q = new URLSearchParams({
     limit: String(limit),
@@ -160,34 +207,48 @@ export async function searchMonstersPage(
     const effect = serializeAdvancedEffectFilters(advancedEffectFilters);
     if (effect) q.set("effect", effect);
   }
+  if (skipCount) q.set("skipCount", "1");
   return getJson<MonsterSearchResponse>(`/monsters/search?${q}`);
 }
 
 export async function searchAllMonsters(
   monsterFilters: MonsterFilters,
   skillFilters: SkillFilters,
-  onProgress?: (loaded: number, total: number) => void,
+  onProgress?: (snapshot: SearchSnapshot) => void,
   advancedEffectFilters?: AdvancedEffectFilters
-): Promise<{ rows: MonsterRecord[]; total: number }> {
-  const limit = 5000;
+): Promise<SearchSnapshot> {
   const all: MonsterRecord[] = [];
-  let offset = 0;
-  let total = 0;
+  let total = Number.POSITIVE_INFINITY;
+  let minMonsterId = 0;
+  let modernOnly = false;
   for (;;) {
+    const req = nextSearchPage(all.length, total);
+    if (!req) break;
     const page = await searchMonstersPage(
       monsterFilters,
       skillFilters,
-      limit,
-      offset,
-      advancedEffectFilters
+      req.limit,
+      req.offset,
+      advancedEffectFilters,
+      req.skipCount
     );
-    total = page.total;
+    if (!req.skipCount) {
+      total = page.total;
+    }
+    minMonsterId = page.minMonsterId ?? minMonsterId;
+    modernOnly = page.modernOnly === true;
     all.push(...page.rows);
-    onProgress?.(all.length, total);
-    if (page.rows.length < limit || all.length >= total) break;
-    offset += limit;
+    const knownTotal = Number.isFinite(total) ? total : all.length;
+    onProgress?.({
+      rows: all.slice(),
+      total: knownTotal,
+      minMonsterId,
+      modernOnly,
+    });
+    if (page.rows.length < req.limit) break;
   }
-  return { rows: all, total };
+  if (!Number.isFinite(total)) total = all.length;
+  return { rows: all, total, minMonsterId, modernOnly };
 }
 
 export function fetchMonstersByIds(ids: number[]) {

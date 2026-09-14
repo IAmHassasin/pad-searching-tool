@@ -4,6 +4,7 @@ import type { ResultQuickFilter } from "../lib/result-quick-filter";
 import type { ResultSortOption } from "../lib/results-sort";
 import type { MonsterRecord } from "../types";
 import { MonsterDetailPanel } from "./MonsterDetailPanel";
+import { ModernOnlySearchHint } from "./ModernOnlySearchHint";
 import { ResultsDisplayControls } from "./ResultsDisplayControls";
 import { ResultsList } from "./ResultsList";
 import { ResultsQuickFilter } from "./ResultsQuickFilter";
@@ -24,6 +25,8 @@ type Props = {
   onDisplaySectionsChange: (next: ResultDisplaySections) => void;
   resultQuickFilter: ResultQuickFilter;
   onResultQuickFilterChange: (next: ResultQuickFilter) => void;
+  modernOnly?: boolean;
+  minMonsterId?: number;
 };
 
 export function ResultsPanel({
@@ -41,6 +44,8 @@ export function ResultsPanel({
   onDisplaySectionsChange,
   resultQuickFilter,
   onResultQuickFilterChange,
+  modernOnly,
+  minMonsterId,
 }: Props) {
   return (
     <main className="flex min-w-0 flex-1 flex-col overflow-hidden">
@@ -81,8 +86,13 @@ export function ResultsPanel({
         </div>
       </header>
 
+      <ModernOnlySearchHint
+        modernOnly={modernOnly}
+        minMonsterId={minMonsterId}
+      />
+
       <div className="grid min-h-0 flex-1 grid-cols-1 lg:grid-cols-2">
-        <div className="min-h-0 overflow-auto border-b border-[var(--color-border)] lg:border-b-0 lg:border-r">
+        <div className="flex min-h-0 flex-col overflow-hidden border-b border-[var(--color-border)] lg:border-b-0 lg:border-r">
           <ResultsList
             rows={rows}
             selected={selected}

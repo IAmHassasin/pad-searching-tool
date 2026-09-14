@@ -102,7 +102,11 @@ export class DungeonDetailsService {
           importedAt: data.importedAt,
         };
       })
-      .sort((a, b) => b.appmediaPostId - a.appmediaPostId);
+      .sort((a, b) => {
+        const byDate = (b.importedAt ?? "").localeCompare(a.importedAt ?? "");
+        if (byDate !== 0) return byDate;
+        return b.appmediaPostId - a.appmediaPostId;
+      });
 
     return { dungeons };
   }

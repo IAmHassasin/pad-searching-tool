@@ -23,6 +23,11 @@ import {
   VanishAwokenService,
   type VanishSearchFilters,
 } from "./vanish-awoken.service";
+import {
+  parseSearchMinMonsterId,
+  resolveSearchIdQuery,
+  type SearchIdQueryResolution,
+} from "./search-id-query";
 import { VoidSuperGravityService } from "./void-super-gravity.service";
 
 const IDENT = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
@@ -57,6 +62,8 @@ export type PatternSearchInput = {
   effectRanges?: EffectValueRangeInput[];
   limit: number;
   offset: number;
+  /** Skip COUNT(*) — used for follow-up pages that already know `total`. */
+  skipCount?: boolean;
 };
 
 @Injectable()
@@ -377,18 +384,6 @@ export class PatternSearchService {
     range("atk_max", monster.atkMin, monster.atkMax);
     range("rcv_max", monster.rcvMin, monster.rcvMax);
 
-    const q = monster.idQuery?.trim();
-    if (q) {
-      params.push(`%${q}%`, `%${q}%`, `%${q}%`);
-      clauses.push(
-        `(` +
-          `CAST(COALESCE(_src.${this.quotedColumn("monster_id")}, _src.__source_pk, '') AS TEXT) LIKE ? OR ` +
-          `CAST(COALESCE(_src.${this.quotedColumn("monster_no_na")}, '') AS TEXT) LIKE ? OR ` +
-          `LOWER(COALESCE(_src.${this.quotedColumn("name_en")}, '')) LIKE LOWER(?)` +
-          `)`
-      );
-    }
-
     const hasAwakeningInclude = (monster.awakeningIds?.length ?? 0) > 0;
     const hasAwakeningExclude = (monster.excludedAwakeningIds?.length ?? 0) > 0;
 
@@ -432,6 +427,7 @@ export class PatternSearchService {
     whereSql: string;
     params: unknown[];
     selections: PatternTagSelection[];
+    idQuery: SearchIdQueryResolution;
   } {
     const params: unknown[] = [];
     const selections = this.patterns.resolveSelections(
@@ -449,6 +445,23 @@ export class PatternSearchService {
     if (patternWhere) parts.push(patternWhere);
     parts.push(...this.buildTextWhere(input, params));
     parts.push(...this.buildMonsterWhere(input.monster, params));
+    const idQuery = resolveSearchIdQuery(
+      input.monster?.idQuery,
+      parseSearchMinMonsterId(process.env.SEARCH_MIN_MONSTER_ID)
+    );
+    if (idQuery.applyMinId && idQuery.minMonsterId > 0) {
+      parts.push(this.minMonsterIdClause());
+      params.push(idQuery.minMonsterId);
+    }
+    if (idQuery.exactId != null) {
+      parts.push(this.exactMonsterIdClause());
+      params.push(idQuery.exactId, idQuery.exactId);
+    }
+    if (idQuery.likeQuery != null) {
+      const q = idQuery.likeQuery;
+      params.push(`%${q}%`, `%${q}%`, `%${q}%`);
+      parts.push(this.likeMonsterIdClause());
+    }
     const effectWhere = this.effectValues.buildWhere(
       input.effectRanges,
       (skillType) => this.skillColumnExpr(skillType),
@@ -460,7 +473,30 @@ export class PatternSearchService {
     }
 
     const whereSql = parts.length ? `WHERE ${parts.join(" AND ")}` : "";
-    return { whereSql, params, selections };
+    return { whereSql, params, selections, idQuery };
+  }
+
+  private minMonsterIdClause(): string {
+    return `CAST(COALESCE(_src.${this.quotedColumn("monster_id")}, _src.__source_pk) AS INTEGER) >= ?`;
+  }
+
+  private exactMonsterIdClause(): string {
+    return (
+      `(` +
+      `CAST(COALESCE(_src.${this.quotedColumn("monster_id")}, _src.__source_pk) AS INTEGER) = ? OR ` +
+      `CAST(COALESCE(_src.${this.quotedColumn("monster_no_na")}, 0) AS INTEGER) = ?` +
+      `)`
+    );
+  }
+
+  private likeMonsterIdClause(): string {
+    return (
+      `(` +
+      `CAST(COALESCE(_src.${this.quotedColumn("monster_id")}, _src.__source_pk, '') AS TEXT) LIKE ? OR ` +
+      `CAST(COALESCE(_src.${this.quotedColumn("monster_no_na")}, '') AS TEXT) LIKE ? OR ` +
+      `LOWER(COALESCE(_src.${this.quotedColumn("name_en")}, '')) LIKE LOWER(?)` +
+      `)`
+    );
   }
 
   async search(input: PatternSearchInput): Promise<{
@@ -472,6 +508,8 @@ export class PatternSearchService {
     total: number;
     limit: number;
     offset: number;
+    minMonsterId: number;
+    modernOnly: boolean;
     rows: Record<string, unknown>[];
   }> {
     const { sql: inner, sourceLabel, mode } = this.buildSourceSubquery();
@@ -480,10 +518,13 @@ export class PatternSearchService {
     const vsgAttached = await this.voidSuperGravity.ensureAttached();
     const vsgTagSelected = input.activeTags.includes(VOID_SUPER_GRAVITY_TAG_KEY);
 
-    const { whereSql, params, selections } = this.compileWhere(input, {
-      vanishAttached,
-      vsgAttached,
-    });
+    const { whereSql, params, selections, idQuery } = this.compileWhere(
+      input,
+      {
+        vanishAttached,
+        vsgAttached,
+      }
+    );
 
     const joinParts: string[] = [];
     if (vanishAttached) {
@@ -499,11 +540,14 @@ export class PatternSearchService {
     const selectExtra = selectParts.length ? `, ${selectParts.join(", ")}` : "";
 
     const baseFrom = `FROM (${inner}) AS _src${joinSql} ${whereSql}`;
-    const countSql = `SELECT COUNT(*) AS cnt ${baseFrom}`;
-    const countRow = (await this.dataSource.query(countSql, params)) as {
-      cnt: number;
-    }[];
-    const total = Number(countRow[0]?.cnt ?? 0);
+    let total = 0;
+    if (!input.skipCount) {
+      const countSql = `SELECT COUNT(*) AS cnt ${baseFrom}`;
+      const countRow = (await this.dataSource.query(countSql, params)) as {
+        cnt: number;
+      }[];
+      total = Number(countRow[0]?.cnt ?? 0);
+    }
 
     const dataParams = [...params, input.limit, input.offset];
     const dataSql =
@@ -533,6 +577,8 @@ export class PatternSearchService {
       total,
       limit: input.limit,
       offset: input.offset,
+      minMonsterId: idQuery.minMonsterId,
+      modernOnly: idQuery.modernOnly,
       rows,
     };
   }

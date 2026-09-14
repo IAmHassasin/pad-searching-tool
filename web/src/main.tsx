@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
+import { AdminSessionProvider } from "./hooks/useAdminSession";
 import { DungeonDetailsPage } from "./dungeon-details/DungeonDetailsPage";
 import { DungeonListPage } from "./dungeon-details/DungeonListPage";
 import { EventDetailPage } from "./event/EventDetailPage";
@@ -51,7 +52,9 @@ function Root() {
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <Root />
+      <AdminSessionProvider>
+        <Root />
+      </AdminSessionProvider>
     </QueryClientProvider>
   </StrictMode>
 );

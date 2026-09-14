@@ -1,13 +1,57 @@
 import { APP_TOOLS, currentAppPath, isAppToolActive } from "../lib/app-tools";
 
 type Props = {
-  /** `bar` — full-width strip on main page; `inline` — compact row in sub-page headers */
-  variant?: "bar" | "inline";
+  /** `bar` — desktop launcher tiles; `compact` — one-row chips for mobile; `inline` — sub-page headers */
+  variant?: "bar" | "compact" | "inline";
   className?: string;
 };
 
 export function AppToolsNav({ variant = "bar", className = "" }: Props) {
   const current = currentAppPath();
+
+  if (variant === "compact") {
+    return (
+      <nav
+        className={`shrink-0 border-b border-[var(--color-border)] bg-[#0d1117] px-1.5 py-1 ${className}`}
+        aria-label="Tools"
+      >
+        <div className="flex flex-nowrap items-center gap-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {APP_TOOLS.map((tool) => {
+            const active = isAppToolActive(tool.href, current);
+            return (
+              <a
+                key={tool.href}
+                href={tool.href}
+                title={tool.description}
+                aria-current={active ? "page" : undefined}
+                className={`flex shrink-0 items-center gap-1 rounded-md border px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide transition-colors ${
+                  active
+                    ? "border-amber-500/80 bg-amber-950/50 text-amber-50"
+                    : "border-[var(--color-border)] bg-[var(--color-panel)] text-[var(--color-muted)]"
+                }`}
+              >
+                {tool.imageUrl ? (
+                  <img
+                    src={tool.imageUrl}
+                    alt=""
+                    width={14}
+                    height={14}
+                    className="rounded-sm"
+                    aria-hidden
+                  />
+                ) : (
+                  <span aria-hidden className="text-xs leading-none">
+                    {tool.icon}
+                  </span>
+                )}
+                <span>{tool.label}</span>
+              </a>
+            );
+          })}
+        </div>
+      </nav>
+    );
+  }
 
   if (variant === "inline") {
     return (

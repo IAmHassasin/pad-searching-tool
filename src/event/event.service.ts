@@ -1,7 +1,13 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
+import { matchGroupByEventName } from "../admin/event-catalog-parse";
 import { MonsterRelationsService } from "../api/monster-relations.service";
+import {
+  buildGroupShowcase,
+  familyIdsFromNodes,
+} from "./event-group-showcase";
+import { loadFamilyOrNull, fallbackMonsterFamily } from "./skip-missing-monster";
 
 export type EventEntryRole = "new-monster" | "new-evolution" | "returning";
 
@@ -26,6 +32,7 @@ type SeedEvent = {
   subtitle?: string;
   publishedAt?: string;
   sourceUrl?: string;
+  groupId?: number | null;
   coverMonsterIds?: number[];
   /** Intro loader — theme id registered on the web client. */
   loading?: { theme: string; minMs?: number; asset?: string };
@@ -100,26 +107,6 @@ export class EventService {
     return { events };
   }
 
-  private sortByIdOrder(
-    rows: Record<string, unknown>[],
-    idOrder: number[]
-  ): Record<string, unknown>[] {
-    const byId = new Map(rows.map((row) => [Number(row.monster_id), row] as const));
-    return idOrder
-      .map((id) => byId.get(id))
-      .filter((row): row is Record<string, unknown> => row != null);
-  }
-
-  private manualToFamily(monsterId: number, manual: Record<string, unknown>): MonsterFamily {
-    return {
-      monsterId,
-      baseId: monsterId,
-      coverMonsterId: monsterId,
-      nodes: [{ monster_id: monsterId, ...manual }],
-      edges: [],
-    };
-  }
-
   async getEvent(eventId: string): Promise<EventDetail> {
     const seed = this.loadSeed(eventId);
     if (!seed) {
@@ -127,39 +114,90 @@ export class EventService {
     }
 
     const seedEntries = this.flattenSeedEntries(seed);
-    const rawEntries: EventEntryDetail[] = [];
-    for (const entry of seedEntries) {
-      let family: MonsterFamily;
-      if (entry.monsterId != null) {
-        family = await this.monsters.getMonsterFamily(entry.monsterId);
-      } else if (entry.manual) {
-        const manualId = Number(entry.manual.monster_id) || 0;
-        family = this.manualToFamily(manualId, entry.manual);
-      } else {
-        continue;
+    const groupId = await this.resolveGroupId(seed, seedEntries);
+    const members: Array<{ monsterId: number; family: MonsterFamily }> = [];
+    const seenBases = new Set<number>();
+
+    if (groupId) {
+      const collab = await this.monsters.getCollabGroupByGroupId(groupId);
+      for (const bucket of collab.byRarity) {
+        for (const row of bucket.monsters) {
+          const id = Number(row.monster_id);
+          if (!Number.isFinite(id) || id <= 0) continue;
+          const family = await this.familyFor(id);
+          if (seenBases.has(family.baseId)) continue;
+          seenBases.add(family.baseId);
+          members.push({
+            monsterId: family.coverMonsterId || family.monsterId,
+            family,
+          });
+        }
       }
-      rawEntries.push({
-        role: entry.role,
-        label: entry.label ?? null,
-        note: entry.note ?? null,
-        family,
-      });
     }
-    // New evo of a new card → one showcase card (same evolution family).
-    const entries = this.mergeEntriesByFamily(rawEntries);
+
+    for (const entry of [...seedEntries].reverse()) {
+      if (entry.monsterId == null) continue;
+      const family = await this.familyFor(entry.monsterId);
+      if (seenBases.has(family.baseId)) continue;
+      seenBases.add(family.baseId);
+      members.unshift({ monsterId: entry.monsterId, family });
+    }
+
+    const showcase = buildGroupShowcase(
+      members.map((member) => ({
+        monsterId: member.monsterId,
+        familyIds: familyIdsFromNodes(
+          member.family.monsterId,
+          member.family.coverMonsterId,
+          member.family.baseId,
+          member.family.nodes
+        ),
+      })),
+      seedEntries
+        .filter((entry) => entry.monsterId != null)
+        .map((entry) => ({
+          monsterId: entry.monsterId as number,
+          role: entry.role,
+          label: entry.label ?? null,
+          note: entry.note ?? null,
+        }))
+    );
+
+    const familyById = new Map(
+      members.map((member) => [member.monsterId, member.family] as const)
+    );
+    const entries: EventEntryDetail[] = showcase.map((card) => ({
+      role: card.role,
+      label: card.label,
+      note: card.note,
+      family: familyById.get(card.monsterId)!,
+    }));
 
     let coverMonsters: Record<string, unknown>[] = [];
-    if (seed.coverMonsterIds?.length) {
-      // Resolve each id to its family's cover form (last stage of the
-      // skill-transform chain), so the hero shows the "final form" art too.
+    const coverIds = seed.coverMonsterIds?.length
+      ? seed.coverMonsterIds
+      : showcase
+          .filter((card) => card.isNew)
+          .concat(showcase)
+          .map((card) => familyById.get(card.monsterId)?.coverMonsterId ?? card.monsterId)
+          .filter((id, i, all) => all.indexOf(id) === i)
+          .slice(0, 6);
+
+    if (coverIds.length) {
       const resolvedIds: number[] = [];
-      for (const id of seed.coverMonsterIds) {
-        const family = await this.monsters.getMonsterFamily(id);
-        resolvedIds.push(family.coverMonsterId);
+      for (const id of coverIds) {
+        const family = await loadFamilyOrNull(
+          (coverId) => this.monsters.getMonsterFamily(coverId),
+          id
+        );
+        resolvedIds.push(family?.coverMonsterId ?? id);
       }
-      coverMonsters = this.sortByIdOrder(
-        await this.monsters.lookupMonstersByIds(resolvedIds),
-        resolvedIds
+      const fetched = await this.monsters.lookupMonstersByIds(resolvedIds);
+      const byId = new Map(
+        fetched.map((row) => [Number(row.monster_id), row] as const)
+      );
+      coverMonsters = resolvedIds.map(
+        (id) => byId.get(id) ?? { monster_id: id }
       );
     }
 
@@ -193,66 +231,49 @@ export class EventService {
     );
   }
 
-  /**
-   * Collapse multiple seed rows that resolve to the same evolution family
-   * (e.g. new monster + its new UE/assist) into a single showcase card.
-   * Keeps first-seen order; prefers the higher-rarity / evo form for display.
-   */
-  private mergeEntriesByFamily(entries: EventEntryDetail[]): EventEntryDetail[] {
-    const byBase = new Map<number, EventEntryDetail>();
-    const order: number[] = [];
-
-    for (const entry of entries) {
-      const key = entry.family.baseId;
-      const existing = byBase.get(key);
-      if (!existing) {
-        byBase.set(key, entry);
-        order.push(key);
-        continue;
-      }
-      byBase.set(key, this.pickMergedEntry(existing, entry));
-    }
-
-    return order.map((key) => byBase.get(key)!);
+  private async familyFor(monsterId: number): Promise<MonsterFamily> {
+    const loaded = await loadFamilyOrNull(
+      (id) => this.monsters.getMonsterFamily(id),
+      monsterId
+    );
+    return loaded ?? fallbackMonsterFamily(monsterId);
   }
 
-  private pickMergedEntry(
-    a: EventEntryDetail,
-    b: EventEntryDetail
-  ): EventEntryDetail {
-    const rarityOf = (e: EventEntryDetail) => {
-      const id = e.family.monsterId;
-      const node = e.family.nodes.find((row) => Number(row.monster_id) === id);
-      return Number(node?.rarity ?? 0);
-    };
-    // Prefer the form the seed pointed at when it's the rarer / evo card.
-    const primary = rarityOf(b) > rarityOf(a) ? b : a;
-    const secondary = primary === a ? b : a;
-    const hasNewMonster =
-      a.role === "new-monster" || b.role === "new-monster";
-    const hasNewEvo =
-      a.role === "new-evolution" || b.role === "new-evolution";
+  private async resolveGroupId(
+    seed: SeedEvent,
+    seedEntries: SeedEntry[]
+  ): Promise<number> {
+    const title = seed.title;
+    const matchesTitle = (groupId: number, groupName: string | null) =>
+      matchGroupByEventName(title, [{ groupId, groupName }])?.groupId ===
+      groupId;
 
-    const richerFamily =
-      primary.family.nodes.length >= secondary.family.nodes.length
-        ? primary.family
-        : secondary.family;
-
-    return {
-      role: hasNewMonster ? "new-monster" : hasNewEvo ? "new-evolution" : primary.role,
-      label: hasNewMonster
-        ? a.label === "New Monster" || b.label === "New Monster"
-          ? "New Monster"
-          : (primary.label ?? "New Monster")
-        : hasNewEvo
-          ? "New Evolution"
-          : primary.label,
-      note: primary.note ?? secondary.note,
-      family: {
-        ...richerFamily,
-        // Keep the preferred form as the headline id for portrait selection.
-        monsterId: primary.family.monsterId,
-      },
-    };
+    if (seed.groupId && seed.groupId > 0) {
+      try {
+        const collab = await this.monsters.getCollabGroupByGroupId(seed.groupId);
+        if (matchesTitle(collab.groupId, collab.groupName)) return collab.groupId;
+      } catch {
+        // fall through to name / seed lookup
+      }
+    }
+    try {
+      const groups = await this.monsters.listCollabGroups();
+      const matched = matchGroupByEventName(title, groups);
+      if (matched?.groupId) return matched.groupId;
+    } catch {
+      // series table may be missing in tests / empty DBs
+    }
+    for (const entry of seedEntries) {
+      if (entry.monsterId == null) continue;
+      try {
+        const collab = await this.monsters.getCollabGroup(entry.monsterId);
+        if (collab.groupId && matchesTitle(collab.groupId, collab.groupName)) {
+          return collab.groupId;
+        }
+      } catch {
+        continue;
+      }
+    }
+    return 0;
   }
 }
