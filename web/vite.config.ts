@@ -1,25 +1,11 @@
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
-import { defineConfig, type Plugin } from "vite";
+import { defineConfig } from "vite";
 
 const apiTarget = process.env.VITE_API_PROXY ?? "http://localhost:3000";
 
-/** Capacitor APK must not ship Monetag vignette / service-worker ads. */
-function omitMonetagOnAndroid(mode: string): Plugin {
-  return {
-    name: "omit-monetag-on-android",
-    transformIndexHtml(html) {
-      if (mode !== "android") return html;
-      return html.replace(
-        /<!-- monetag-vignette -->[\s\S]*?<!-- \/monetag-vignette -->\s*/g,
-        ""
-      );
-    },
-  };
-}
-
-export default defineConfig(({ mode }) => ({
-  plugins: [react(), tailwindcss(), omitMonetagOnAndroid(mode)],
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
   server: {
     port: 5173,
     proxy: {
@@ -35,4 +21,4 @@ export default defineConfig(({ mode }) => ({
       "/api": { target: apiTarget, changeOrigin: true },
     },
   },
-}));
+});
