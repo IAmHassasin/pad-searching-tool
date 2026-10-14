@@ -76,7 +76,7 @@ export function MonsterDetailPanel({
       />
 
       {overlay && (
-        <div className="absolute inset-0 z-30 flex min-h-0 flex-col p-0">
+        <div className="animate-fade-in absolute inset-0 z-30 flex min-h-0 flex-col rounded-xl bg-[var(--color-surface)] p-0">
           {overlay === "evo" ? (
             <MonsterEvoTreePanel
               monsterId={monsterId}

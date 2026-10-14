@@ -53,8 +53,12 @@ export function SkillFilterPanel({
       ariaLabel="skill filters"
     >
       <div className="flex h-full min-w-0 flex-col overflow-hidden">
-        <div className="flex shrink-0 items-center justify-between gap-2 border-b border-[var(--color-border)] px-3 py-2">
-          <h2 className="text-sm font-semibold tracking-wide text-[var(--color-accent)] [font-family:var(--font-mono)]">
+        <div className="glass-bar flex shrink-0 items-center justify-between gap-2 border-b border-white/[0.06] px-3 py-2">
+          <h2 className="flex items-center gap-2 text-[13px] font-bold uppercase tracking-wider text-[var(--color-fg-strong)]">
+            <span
+              aria-hidden
+              className="h-3.5 w-1 rounded-full bg-[var(--color-secondary)] shadow-[var(--shadow-glow-cyan)]"
+            />
             Skill patterns
           </h2>
           <button
@@ -62,7 +66,7 @@ export function SkillFilterPanel({
             onClick={panel.toggleCollapsed}
             title="Collapse skill filters"
             aria-label="Collapse skill filters"
-            className="flex h-7 w-7 shrink-0 items-center justify-center rounded border border-[var(--color-border)] bg-[var(--color-inset)] text-[var(--color-muted)] transition-colors hover:border-[var(--color-accent)] hover:text-white"
+            className="pressable flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-[var(--color-border)] bg-white/5 text-[var(--color-muted)] hover:border-[var(--color-accent)]/60 hover:bg-[var(--color-accent-muted)] hover:text-[var(--color-accent-strong)]"
           >
             <span aria-hidden className="text-sm leading-none">
               ›
@@ -72,7 +76,7 @@ export function SkillFilterPanel({
 
         <div className="shrink-0 px-3 pt-2">
           {patternGroupsLoading && (
-            <p className="mb-2 text-xs text-[var(--color-muted)]">
+            <p className="mb-2 animate-pulse text-xs text-[var(--color-muted)]">
               Loading groups…
             </p>
           )}

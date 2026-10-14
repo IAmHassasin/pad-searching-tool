@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from "react";
-import { AppToolsNav } from "../components/AppToolsNav";
+import { PageHeader } from "../components/PageHeader";
 import { ONE_TOUCH_DUNGEONS, ONE_TOUCH_AWAKENING_EFFECTS } from "./catalog";
 import { AwakeningLookupPanel } from "./AwakeningLookupPanel";
 import { AwakeningSelectionTray } from "./AwakeningSelectionTray";
@@ -63,31 +63,22 @@ export function OneTouchPage() {
   }
 
   return (
-    <div className="flex min-h-full flex-col bg-[var(--color-surface)] text-[#e6edf3]">
-      <header className="border-b border-[var(--color-border)] bg-[var(--color-panel)] px-4 py-3">
-        <div className="mx-auto max-w-7xl">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div>
-              <h1 className="text-lg font-semibold">One-Touch Dungeon</h1>
-              <p className="text-sm text-[var(--color-muted)]">
-                Floor guides &amp; awakening reference (English)
-              </p>
-            </div>
-            <AppToolsNav variant="inline" />
-          </div>
-          <div className="mt-4">
-            <DungeonAttributePicker
-              dungeons={ONE_TOUCH_DUNGEONS}
-              selectedId={dungeon.id}
-              onSelect={selectDungeon}
-            />
-          </div>
-        </div>
-      </header>
+    <div className="flex min-h-full flex-col bg-[var(--color-surface)] text-[var(--color-fg)]">
+      <PageHeader
+        title="One-Touch Dungeon"
+        subtitle="Floor guides & awakening reference (English)"
+        maxWidthClass="max-w-7xl"
+      >
+        <DungeonAttributePicker
+          dungeons={ONE_TOUCH_DUNGEONS}
+          selectedId={dungeon.id}
+          onSelect={selectDungeon}
+        />
+      </PageHeader>
 
       <main
-        className={`mx-auto grid w-full max-w-7xl flex-1 gap-4 px-4 py-4 lg:grid-cols-2 lg:items-stretch ${
-          selection.entries.length ? "pb-24" : ""
+        className={`mx-auto grid w-full max-w-7xl flex-1 gap-4 px-3 py-4 sm:px-4 lg:grid-cols-2 lg:items-stretch ${
+          selection.entries.length ? "pb-40 sm:pb-28" : ""
         }`}
       >
         <AwakeningLookupPanel

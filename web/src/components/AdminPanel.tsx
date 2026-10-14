@@ -145,7 +145,7 @@ export function AdminPanel({
   const fields = (
     <>
       {adminEnabled === false && (
-        <p className="text-sm text-amber-300">
+        <p className="text-sm text-[var(--color-amber-text)]">
           Admin API is disabled on the server. Set ADMIN_USERNAME,
           ADMIN_PASSWORD, and ADMIN_JWT_SECRET in cloud secrets.
         </p>
@@ -163,7 +163,7 @@ export function AdminPanel({
           <label className="flex flex-col gap-1 text-xs text-[var(--color-muted)]">
             Username
             <input
-              className="rounded border border-[var(--color-border)] bg-[#0d1117] px-2 py-1.5 text-sm text-white"
+              className="ds-input min-h-10 px-3 py-2 text-sm"
               value={user}
               onChange={(e) => setUser(e.target.value)}
               autoComplete="username"
@@ -173,7 +173,7 @@ export function AdminPanel({
             Password
             <input
               type="password"
-              className="rounded border border-[var(--color-border)] bg-[#0d1117] px-2 py-1.5 text-sm text-white"
+              className="ds-input min-h-10 px-3 py-2 text-sm"
               value={pass}
               onChange={(e) => setPass(e.target.value)}
               autoComplete="current-password"
@@ -183,7 +183,7 @@ export function AdminPanel({
           <button
             type="submit"
             disabled={loginLoading}
-            className="w-full rounded bg-[#1f6feb] px-3 py-2 text-sm font-medium text-white hover:bg-[#388bfd] disabled:opacity-50"
+            className="ds-btn-primary pressable min-h-11 w-full px-3 py-2.5 text-sm"
           >
             {loginLoading ? "Signing in…" : "Sign in"}
           </button>
@@ -193,17 +193,17 @@ export function AdminPanel({
       {adminEnabled && !checking && isSuperadmin && (
         <div className="space-y-3">
           <p className="text-xs text-[var(--color-muted)]">
-            Signed in as <span className="text-white">{username}</span>
+            Signed in as <span className="font-semibold text-[var(--color-fg-strong)]">{username}</span>
           </p>
           <button
             type="button"
             disabled={refreshLoading}
             onClick={handleRefresh}
-            className="w-full rounded bg-amber-700 px-3 py-2 text-sm font-medium text-white hover:bg-amber-600 disabled:opacity-50"
+            className="ds-btn-primary pressable min-h-11 w-full px-3 py-2.5 text-sm"
           >
             {refreshLoading ? "Refreshing DB…" : "Refresh community DB"}
           </button>
-          <p className="text-[10px] text-[var(--color-muted)]">
+          <p className="text-[10px] leading-relaxed text-[var(--color-faint)]">
             Downloads from COMMUNITY_DB_URL / DB_DOWNLOAD_URL and merges into
             SQLITE_PATH (keeps derived tables per IMPORT_KEEP_LOCAL_TABLES).
           </p>
@@ -211,11 +211,11 @@ export function AdminPanel({
             type="button"
             disabled={refreshLoading}
             onClick={handleRefreshDungeons}
-            className="w-full rounded bg-amber-700 px-3 py-2 text-sm font-medium text-white hover:bg-amber-600 disabled:opacity-50"
+            className="ds-btn-primary pressable min-h-11 w-full px-3 py-2.5 text-sm"
           >
             {refreshLoading ? "Working…" : "Check for new dungeons"}
           </button>
-          <p className="text-[10px] text-[var(--color-muted)]">
+          <p className="text-[10px] leading-relaxed text-[var(--color-faint)]">
             Scrapes AppMedia ゲリラ/ステージ sidebar; imports post ids newer
             than the latest dungeon seed. Deleted dungeons still listed in
             dungeon-urls.txt can be re-imported.
@@ -224,11 +224,11 @@ export function AdminPanel({
             type="button"
             disabled={refreshLoading}
             onClick={handleRefreshEvents}
-            className="w-full rounded bg-amber-700 px-3 py-2 text-sm font-medium text-white hover:bg-amber-600 disabled:opacity-50"
+            className="ds-btn-primary pressable min-h-11 w-full px-3 py-2.5 text-sm"
           >
             {refreshLoading ? "Working…" : "Check for new events"}
           </button>
-          <p className="text-[10px] text-[var(--color-muted)]">
+          <p className="text-[10px] leading-relaxed text-[var(--color-faint)]">
             Reads PAD US news for new event names, matches the collab group in
             SQLite, and showcases that whole group. Assist Evolution names keep
             a New Monster / New Evolution badge.
@@ -242,7 +242,7 @@ export function AdminPanel({
           <button
             type="button"
             onClick={onLogout}
-            className="text-xs text-[var(--color-muted)] underline hover:text-white"
+            className="text-xs text-[var(--color-muted)] underline underline-offset-2 hover:text-[var(--color-fg-strong)]"
           >
             Sign out
           </button>
@@ -253,8 +253,10 @@ export function AdminPanel({
 
   if (variant === "inline") {
     return (
-      <section className="mb-6 rounded-lg border border-amber-800/70 bg-amber-950/25 p-4">
-        <h2 className="mb-3 text-sm font-semibold text-amber-200">Superadmin</h2>
+      <section className="mb-6 rounded-xl border border-[var(--color-amber-border)]/60 bg-[var(--color-amber-bg)] p-4">
+        <h2 className="mb-3 text-[13px] font-bold uppercase tracking-wider text-[var(--color-amber-text)]">
+          Superadmin
+        </h2>
         {fields}
       </section>
     );
@@ -262,20 +264,20 @@ export function AdminPanel({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
+      className="animate-fade-in fixed inset-0 z-50 flex items-end justify-center bg-black/50 sm:items-center sm:p-4"
       onClick={onClose}
     >
       <div
-        className="max-h-[90vh] w-full max-w-md overflow-y-auto rounded-lg border border-[var(--color-border)] bg-[#161b22] p-4 shadow-xl"
+        className="ds-float animate-sheet-in sm:animate-fade-in max-h-[90vh] w-full max-w-md overflow-y-auto rounded-t-3xl p-5 sm:rounded-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="mb-3 flex items-center justify-between">
-          <h2 className="text-sm font-semibold text-[var(--color-accent)]">
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-[var(--color-accent-strong)]">
             Superadmin
           </h2>
           <button
             type="button"
-            className="text-xs text-[var(--color-muted)] hover:text-white"
+            className="ds-btn pressable min-h-9 px-3 py-1 text-xs font-semibold"
             onClick={onClose}
           >
             Close

@@ -13,17 +13,15 @@ const TYPE_KEYS = ["type1", "type2", "type3"] as const;
 
 export function AttributeTypeEditor({ draft, onChange }: Props) {
   return (
-    <section className="rounded-lg border border-[var(--color-border)] bg-[#0d1117] p-3">
-      <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-[#c9a84a]">
-        Attributes &amp; types
-      </h2>
-      <p className="mb-1 text-[10px] font-semibold uppercase text-[#a8c878]">
+    <section className="ds-card p-3">
+      <h2 className="ds-label mb-2">Attributes &amp; types</h2>
+      <p className="mb-1 text-[10px] font-semibold tracking-wide text-slate-300 uppercase">
         Attributes
       </p>
       <div className="mb-3 space-y-2">
         {ATTR_KEYS.map((key, slot) => (
           <div key={key} className="flex flex-wrap items-center gap-1">
-            <span className="w-10 text-[10px] text-[var(--color-muted)]">
+            <span className="w-10 font-mono text-[10px] text-[var(--color-faint)] tabular-nums">
               #{slot + 1}
             </span>
             {MONSTER_ATTRIBUTES.filter((a) => a.id !== 5).map((attr) => {
@@ -39,10 +37,10 @@ export function AttributeTypeEditor({ draft, onChange }: Props) {
                       [key]: active ? null : isNone ? null : attr.id,
                     })
                   }
-                  className={`rounded border p-0.5 ${
+                  className={`pressable rounded-md border p-1 ${
                     active
-                      ? "border-[#c9a84a] bg-[#3a2f12]"
-                      : "border-transparent hover:border-[var(--color-border)]"
+                      ? "border-[var(--color-accent)]/70 bg-[var(--color-accent-muted)] shadow-[var(--shadow-glow)]"
+                      : "border-transparent hover:border-[var(--color-border-strong)] hover:bg-[var(--color-hover)]"
                   }`}
                 >
                   {isNone ? (
@@ -58,7 +56,7 @@ export function AttributeTypeEditor({ draft, onChange }: Props) {
           </div>
         ))}
       </div>
-      <p className="mb-1 text-[10px] font-semibold uppercase text-[#a8c878]">
+      <p className="mb-1 text-[10px] font-semibold tracking-wide text-slate-300 uppercase">
         Types
       </p>
       <div className="space-y-2">
@@ -67,7 +65,9 @@ export function AttributeTypeEditor({ draft, onChange }: Props) {
             key={key}
             className="flex items-center gap-2 text-[11px] text-[var(--color-muted)]"
           >
-            <span className="w-10 shrink-0">#{slot + 1}</span>
+            <span className="w-10 shrink-0 font-mono text-[10px] text-[var(--color-faint)] tabular-nums">
+              #{slot + 1}
+            </span>
             <select
               value={draft[key] ?? ""}
               onChange={(e) => {
@@ -76,7 +76,7 @@ export function AttributeTypeEditor({ draft, onChange }: Props) {
                   [key]: v === "" ? null : Number.parseInt(v, 10),
                 });
               }}
-              className="min-w-0 flex-1 rounded border border-[var(--color-border)] bg-[#161b22] px-2 py-1 text-sm text-white"
+              className="ds-input min-h-9 min-w-0 flex-1 px-2 py-1 text-sm"
             >
               <option value="">None</option>
               {MONSTER_TYPES.map((t) => (

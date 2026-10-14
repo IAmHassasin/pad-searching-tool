@@ -5,8 +5,11 @@ export type MonsterCardIconGroupVariant = "type" | "super" | "regular";
 
 const variantClass: Record<MonsterCardIconGroupVariant, string> = {
   type: "border-[#a8842f]/70 bg-[#2f2118]/85",
-  super: "border-[#6b8f3c]/80 bg-[#2a3d18]/90",
-  regular: "border-[#6b8f3c]/80 bg-[#2a3d18]/90",
+  // Optional `--pst-awk-group-*` overrides; fallbacks keep the in-game card look.
+  super:
+    "border-[var(--pst-awk-group-border,#6b8f3c)]/80 bg-[var(--pst-awk-group-bg,#2a3d18)]/90",
+  regular:
+    "border-[var(--pst-awk-group-border,#6b8f3c)]/80 bg-[var(--pst-awk-group-bg,#2a3d18)]/90",
 };
 
 type Props = {

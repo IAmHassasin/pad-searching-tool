@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useTruncatedTitle } from "../hooks/useTruncatedTitle";
 import type { AwkModifierSettings } from "../lib/awakening-stat-modifier";
 import type { ResultDisplaySections } from "../lib/result-display";
 import type { ResultQuickFilter } from "../lib/result-quick-filter";
 import type { ResultSortOption } from "../lib/results-sort";
-import { countAdvancedEffectFilters } from "../types";
+import {
+  countAdvancedEffectFilters,
+  EMPTY_ADVANCED_EFFECT_FILTERS,
+} from "../types";
 import type {
   AdvancedEffectFilters,
   EffectFamilyDef,
@@ -38,8 +41,7 @@ type BottomPanelMode =
   | "active_skill"
   | "awakening"
   | "by_text"
-  | "advanced"
-  | null;
+  | "advanced";
 
 type Props = {
   monsterFilters: MonsterFilters;
@@ -70,26 +72,52 @@ type Props = {
   minMonsterId?: number;
 };
 
-function CollapseButton({
-  expanded,
-  onToggle,
-  label,
-}: {
-  expanded: boolean;
-  onToggle: () => void;
+const PANEL_TITLES: Record<BottomPanelMode, string> = {
+  leader_skill: "Leader skill",
+  active_skill: "Active skill",
+  awakening: "Awakenings",
+  by_text: "By text",
+  advanced: "Effect values",
+};
+
+const DOCK_ITEMS: {
+  mode: BottomPanelMode;
   label: string;
+  glyph: string;
+  title?: string;
+}[] = [
+  { mode: "leader_skill", label: "Leader", glyph: "♛" },
+  { mode: "active_skill", label: "Active", glyph: "⚡" },
+  { mode: "awakening", label: "Awk", glyph: "✦" },
+  { mode: "by_text", label: "Text", glyph: "Aa" },
+  {
+    mode: "advanced",
+    label: "Values",
+    glyph: "#",
+    title: "Numeric effect-value filters (shield %, xN HP, charge turns…)",
+  },
+];
+
+function IconButton({
+  onClick,
+  label,
+  children,
+  expanded,
+}: {
+  onClick: () => void;
+  label: string;
+  children: ReactNode;
+  expanded?: boolean;
 }) {
   return (
     <button
       type="button"
-      onClick={onToggle}
+      onClick={onClick}
+      aria-label={label}
       aria-expanded={expanded}
-      aria-label={expanded ? `Collapse ${label}` : `Expand ${label}`}
-      className="flex h-7 w-7 shrink-0 items-center justify-center rounded border border-[var(--color-border)] bg-[#0d1117] text-[var(--color-muted)] hover:border-[var(--color-accent)] hover:text-white"
+      className="pressable flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/5 text-sm leading-none text-[var(--color-muted)] hover:bg-white/10 hover:text-[var(--color-fg-strong)]"
     >
-      <span aria-hidden className="text-sm leading-none">
-        {expanded ? "▾" : "▸"}
-      </span>
+      <span aria-hidden>{children}</span>
     </button>
   );
 }
@@ -104,7 +132,7 @@ function MobileMonsterFilterBar({
   const active = hasActiveMonsterFilters(filters);
 
   return (
-    <section className="shrink-0 border-b border-[var(--color-border)] bg-[var(--color-panel)] px-1.5 py-1">
+    <section className="shrink-0 border-b border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2">
       {active && (
         <MonsterActiveFilterChips filters={filters} onChange={onChange} />
       )}
@@ -146,44 +174,38 @@ function MobileDetailPanel({
 
   if (collapsed) {
     return (
-      <aside className="flex w-8 shrink-0 flex-col items-center border-l border-[var(--color-border)] bg-[#0a0e12] py-2">
-        <CollapseButton
-          expanded={false}
-          onToggle={onToggleCollapsed}
-          label="details"
-        />
-        <span className="mt-2 text-[9px] text-[var(--color-muted)] [writing-mode:vertical-rl]">
-          Detail
-        </span>
+      <aside className="flex w-10 shrink-0 flex-col items-center border-l border-[var(--color-border)] bg-[var(--color-inset)] py-2">
+        <IconButton onClick={onToggleCollapsed} label="Expand details" expanded={false}>
+          ‹
+        </IconButton>
+        <span className="ds-label mt-2 [writing-mode:vertical-rl]">Detail</span>
       </aside>
     );
   }
 
   return (
-    <aside className="flex min-h-0 w-[min(22.5rem,58%)] shrink-0 flex-col border-l border-[var(--color-border)] bg-[#0a0e12]">
-      <div className="flex shrink-0 items-center justify-between gap-1 border-b border-[var(--color-border)] px-2 py-1">
+    <aside className="flex min-h-0 w-[min(22.5rem,58%)] shrink-0 flex-col border-l border-[var(--color-border)] bg-[var(--color-inset)]">
+      <div className="flex shrink-0 items-center justify-between gap-1.5 border-b border-[var(--color-border)] px-2 py-1.5">
+        {selected.monster_no_na != null && (
+          <span className="shrink-0 rounded-md bg-[var(--color-panel)] px-1.5 py-0.5 font-mono text-[10px] font-bold tabular-nums text-[var(--color-accent-strong)]">
+            #{selected.monster_no_na}
+          </span>
+        )}
         <p
           ref={nameTitle.ref}
           title={nameTitle.title}
-          className="min-w-0 flex-1 truncate text-[10px] font-semibold text-white"
+          className="min-w-0 flex-1 truncate text-[11px] font-semibold text-[var(--color-fg-strong)]"
         >
           {selected.name_en ?? "Details"}
         </p>
-        <CollapseButton
-          expanded
-          onToggle={onToggleCollapsed}
-          label="details"
-        />
-        <button
-          type="button"
-          onClick={onClose}
-          className="rounded px-1.5 py-0.5 text-[10px] text-[var(--color-muted)] hover:text-white"
-          aria-label="Close details"
-        >
-          ×
-        </button>
+        <IconButton onClick={onToggleCollapsed} label="Collapse details" expanded>
+          ›
+        </IconButton>
+        <IconButton onClick={onClose} label="Close details">
+          ✕
+        </IconButton>
       </div>
-      <div className="relative min-h-0 flex-1 overflow-auto pl-1 pr-2 py-1">
+      <div className="relative min-h-0 flex-1 overflow-auto py-1 pl-1 pr-2">
         <MonsterDetailPanel
           row={selected}
           onSelect={onSelect}
@@ -195,7 +217,7 @@ function MobileDetailPanel({
   );
 }
 
-function MobileBottomFilterBar({
+function MobileFilterDock({
   monsterFilters,
   onMonsterFiltersChange,
   skillFilters,
@@ -206,6 +228,8 @@ function MobileBottomFilterBar({
   onAdvancedEffectFiltersChange,
   effectFamilies,
   effectFamiliesLoading,
+  matchCount,
+  loading,
 }: {
   monsterFilters: MonsterFilters;
   onMonsterFiltersChange: (next: MonsterFilters) => void;
@@ -217,258 +241,268 @@ function MobileBottomFilterBar({
   onAdvancedEffectFiltersChange: (next: AdvancedEffectFilters) => void;
   effectFamilies: EffectFamilyDef[] | undefined;
   effectFamiliesLoading: boolean;
+  matchCount: number;
+  loading: boolean;
 }) {
-  const [openMode, setOpenMode] = useState<BottomPanelMode>(null);
-  const [panelExpanded, setPanelExpanded] = useState(true);
+  const [openMode, setOpenMode] = useState<BottomPanelMode | null>(null);
+  const sheetRef = useRef<HTMLDivElement>(null);
+
+  // Move focus into the sheet when it opens or switches mode so screen
+  // readers announce it; Escape closes it.
+  useEffect(() => {
+    if (openMode) sheetRef.current?.focus({ preventScroll: true });
+  }, [openMode]);
 
   const toggleMode = (mode: BottomPanelMode) => {
     setOpenMode((current) => (current === mode ? null : mode));
-    setPanelExpanded(true);
+  };
+  const closeSheet = () => setOpenMode(null);
+
+  useEffect(() => {
+    if (!openMode) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpenMode(null);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [openMode]);
+
+  const counts: Record<BottomPanelMode, number> = {
+    leader_skill: skillFilters.selectedPatterns.filter(
+      (p) => p.skillType === "leader_skill"
+    ).length,
+    active_skill: skillFilters.selectedPatterns.filter(
+      (p) => p.skillType === "active_skill"
+    ).length,
+    // Same fields MonsterAwakeningClearAllButton treats as active.
+    awakening:
+      monsterFilters.awakeningIds.length +
+      monsterFilters.excludedAwakeningIds.length +
+      monsterFilters.vanishAwakeningIds.length +
+      (monsterFilters.vanishOnly ? 1 : 0),
+    by_text: [
+      skillFilters.activeSkillText.trim(),
+      skillFilters.leaderSkillText.trim(),
+    ].filter(Boolean).length,
+    advanced: countAdvancedEffectFilters(advancedEffectFilters),
   };
 
-  const selectedLeader = skillFilters.selectedPatterns.filter(
-    (p) => p.skillType === "leader_skill"
-  ).length;
-  const selectedActive = skillFilters.selectedPatterns.filter(
-    (p) => p.skillType === "active_skill"
-  ).length;
-  const selectedAwk =
-    monsterFilters.awakeningIds.length +
-    monsterFilters.excludedAwakeningIds.length;
-  const selectedByText = [
-    skillFilters.activeSkillText.trim(),
-    skillFilters.leaderSkillText.trim(),
-  ].filter(Boolean).length;
-  const selectedEffects = countAdvancedEffectFilters(advancedEffectFilters);
-
-  const panelTitle =
-    openMode === "leader_skill"
-      ? "Leader skill"
-      : openMode === "active_skill"
-        ? "Active skill"
-        : openMode === "awakening"
-          ? "Awakenings"
-          : openMode === "by_text"
-            ? "By Text"
-            : openMode === "advanced"
-              ? "Effect values"
-              : "";
+  const resetMode = (mode: BottomPanelMode) => {
+    switch (mode) {
+      case "leader_skill":
+      case "active_skill":
+        onSkillFiltersChange({
+          ...skillFilters,
+          selectedPatterns: skillFilters.selectedPatterns.filter(
+            (p) => p.skillType !== mode
+          ),
+        });
+        return;
+      case "awakening":
+        onMonsterFiltersChange({
+          ...monsterFilters,
+          awakeningIds: [],
+          excludedAwakeningIds: [],
+          vanishOnly: false,
+          vanishAwakeningIds: [],
+        });
+        return;
+      case "by_text":
+        onSkillFiltersChange({
+          ...skillFilters,
+          activeSkillText: "",
+          leaderSkillText: "",
+        });
+        return;
+      case "advanced":
+        onAdvancedEffectFiltersChange(EMPTY_ADVANCED_EFFECT_FILTERS);
+        return;
+    }
+  };
 
   return (
-    <section className="flex shrink-0 flex-col border-t border-[var(--color-border)] bg-[var(--color-panel)]">
-      {openMode && panelExpanded && (
-        <div className="flex max-h-[28vh] min-h-0 flex-col border-b border-[var(--color-border)]">
-          <div className="flex shrink-0 items-center justify-between gap-2 px-2 py-1">
-            <CollapseButton
-              expanded={panelExpanded}
-              onToggle={() => setPanelExpanded(false)}
-              label="filters"
-            />
-            <p className="text-xs font-semibold text-white">{panelTitle}</p>
-            {openMode === "awakening" ? (
-              (monsterFilters.awakeningIds.length > 0 ||
-                monsterFilters.excludedAwakeningIds.length > 0) && (
+    <>
+      {openMode && (
+        // Pointer-only dismiss target; keyboard users have Escape and the ✕ button.
+        <div
+          aria-hidden
+          className="animate-fade-in fixed inset-0 z-[45] bg-black/45"
+          onClick={closeSheet}
+        />
+      )}
+
+      {/* Only lift the dock above page modals (z-50) while its own sheet is open. */}
+      <section
+        className={`relative shrink-0 px-3 pt-1.5 pb-[calc(env(safe-area-inset-bottom)+0.5rem)] ${
+          openMode ? "z-50" : "z-30"
+        }`}
+      >
+        {openMode && (
+          // Non-modal sheet: the dock stays interactive to switch modes.
+          // Height is capped by the space left above the dock (app bar +
+          // tools ribbon + dock ≈ 12rem) so the sheet header never clips.
+          <div
+            ref={sheetRef}
+            role="dialog"
+            tabIndex={-1}
+            aria-label={`${PANEL_TITLES[openMode]} filters`}
+            className="animate-sheet-in absolute inset-x-0 bottom-full flex max-h-[min(70dvh,36rem,calc(100dvh-12rem))] min-h-[min(40dvh,calc(100dvh-12rem))] flex-col rounded-t-3xl border-t border-white/10 bg-[var(--color-surface)] shadow-[0_-12px_32px_-8px_rgba(0,0,0,0.7)] outline-none"
+          >
+            <div className="flex shrink-0 justify-center pt-2 pb-1" aria-hidden>
+              <span className="h-1.5 w-12 rounded-full bg-slate-600" />
+            </div>
+            <div className="flex shrink-0 items-center gap-2 px-4 pb-2">
+              <h2 className="text-base font-bold text-[var(--color-fg-strong)]">
+                {PANEL_TITLES[openMode]}
+              </h2>
+              <span className="inline-flex items-center gap-1 rounded-full border border-[var(--color-secondary)]/40 bg-[var(--color-secondary-muted)] px-1.5 py-0.5 font-mono text-[9px] font-bold uppercase tracking-wider text-[var(--color-secondary-strong)]">
+                <span
+                  aria-hidden
+                  className="h-1.5 w-1.5 animate-pulse rounded-full bg-[var(--color-secondary)]"
+                />
+                Live
+              </span>
+              <span className="flex-1" />
+              {counts[openMode] > 0 && (
                 <button
                   type="button"
-                  onClick={() =>
-                    onMonsterFiltersChange({
-                      ...monsterFilters,
-                      awakeningIds: [],
-                      excludedAwakeningIds: [],
-                    })
-                  }
-                  className="rounded border border-[var(--color-border)] px-2 py-0.5 text-[10px] text-[var(--color-muted)]"
+                  onClick={() => resetMode(openMode)}
+                  className="pressable inline-flex h-8 items-center gap-1 rounded-lg px-2 text-xs font-semibold text-[var(--color-negative)] hover:bg-[var(--color-negative)]/10"
                 >
-                  Clear all
+                  <span aria-hidden>↺</span>
+                  Reset
                 </button>
-              )
-            ) : openMode === "by_text" && selectedByText > 0 ? (
-              <button
-                type="button"
-                onClick={() =>
-                  onSkillFiltersChange({
-                    ...skillFilters,
-                    activeSkillText: "",
-                    leaderSkillText: "",
-                  })
-                }
-                className="rounded border border-[var(--color-border)] px-2 py-0.5 text-[10px] text-[var(--color-muted)]"
-              >
-                Clear
-              </button>
-            ) : (
-              <span className="w-12" aria-hidden />
-            )}
-          </div>
-          <div className="flex min-h-0 flex-1 flex-col">
-            {openMode === "awakening" ? (
-              <div className="min-h-0 flex-1 overflow-y-auto px-2 pb-2">
-                <MonsterAwakeningFilter
-                  filters={monsterFilters}
-                  onChange={onMonsterFiltersChange}
-                  compact
-                />
-              </div>
-            ) : openMode === "by_text" ? (
-              <div className="min-h-0 flex-1 overflow-y-auto px-2 pb-2">
-                <SkillTextSearchSection
-                  filters={skillFilters}
-                  onChange={onSkillFiltersChange}
-                  compact
-                  embedded
-                />
-              </div>
-            ) : openMode === "advanced" ? (
-              <div className="min-h-0 flex-1 overflow-y-auto px-2 pb-2">
-                <AdvancedEffectFilterSection
-                  filters={advancedEffectFilters}
-                  onChange={onAdvancedEffectFiltersChange}
-                  families={effectFamilies}
-                  loading={effectFamiliesLoading}
-                  compact
-                />
-              </div>
-            ) : (
-              <>
-                {patternGroupsLoading && (
-                  <p className="shrink-0 px-2 pt-1 text-xs text-[var(--color-muted)]">
-                    Loading groups…
-                  </p>
-                )}
-                <div className="shrink-0 px-2 pt-1">
-                  <SkillPatternSelectionBar
-                    filters={skillFilters}
-                    onChange={onSkillFiltersChange}
+              )}
+              <IconButton onClick={closeSheet} label="Close filter sheet">
+                ✕
+              </IconButton>
+            </div>
+
+            <div className="flex min-h-0 flex-1 flex-col border-t border-[var(--color-border)]">
+              {openMode === "awakening" ? (
+                <div className="min-h-0 flex-1 overflow-y-auto px-3 py-2">
+                  <MonsterAwakeningFilter
+                    filters={monsterFilters}
+                    onChange={onMonsterFiltersChange}
                     compact
                   />
                 </div>
-                <div className="min-h-0 flex-1 overflow-y-auto px-2 pb-2">
-                  {patternGroups && openMode === "leader_skill" && (
-                    <SkillPatternGroup
-                      title="Leader skill"
-                      skillType="leader_skill"
-                      categories={patternGroups.leader_skill_filters}
-                      filters={skillFilters}
-                      onChange={onSkillFiltersChange}
-                      compact
-                    />
-                  )}
-                  {patternGroups && openMode === "active_skill" && (
-                    <SkillPatternGroup
-                      title="Active skill"
-                      skillType="active_skill"
-                      categories={patternGroups.active_skill_filters}
-                      filters={skillFilters}
-                      onChange={onSkillFiltersChange}
-                      compact
-                      iconOnly={!skillFilters.activeSkillAdvancedFilters}
-                      defaultOpen
-                    />
-                  )}
+              ) : openMode === "by_text" ? (
+                <div className="min-h-0 flex-1 overflow-y-auto px-3 py-2">
+                  <SkillTextSearchSection
+                    filters={skillFilters}
+                    onChange={onSkillFiltersChange}
+                    compact
+                    embedded
+                  />
                 </div>
-              </>
-            )}
+              ) : openMode === "advanced" ? (
+                <div className="min-h-0 flex-1 overflow-y-auto px-3 py-2">
+                  <AdvancedEffectFilterSection
+                    filters={advancedEffectFilters}
+                    onChange={onAdvancedEffectFiltersChange}
+                    families={effectFamilies}
+                    loading={effectFamiliesLoading}
+                    compact
+                  />
+                </div>
+              ) : (
+                <>
+                  {patternGroupsLoading && (
+                    <p className="shrink-0 px-3 pt-2 text-xs text-[var(--color-muted)]">
+                      Loading groups…
+                    </p>
+                  )}
+                  <div className="shrink-0 px-3 pt-2">
+                    <SkillPatternSelectionBar
+                      filters={skillFilters}
+                      onChange={onSkillFiltersChange}
+                      compact
+                    />
+                  </div>
+                  <div className="min-h-0 flex-1 overflow-y-auto px-3 pb-2">
+                    {patternGroups && openMode === "leader_skill" && (
+                      <SkillPatternGroup
+                        title="Leader skill"
+                        skillType="leader_skill"
+                        categories={patternGroups.leader_skill_filters}
+                        filters={skillFilters}
+                        onChange={onSkillFiltersChange}
+                        compact
+                      />
+                    )}
+                    {patternGroups && openMode === "active_skill" && (
+                      <SkillPatternGroup
+                        title="Active skill"
+                        skillType="active_skill"
+                        categories={patternGroups.active_skill_filters}
+                        filters={skillFilters}
+                        onChange={onSkillFiltersChange}
+                        compact
+                        iconOnly={!skillFilters.activeSkillAdvancedFilters}
+                        defaultOpen
+                      />
+                    )}
+                  </div>
+                </>
+              )}
+            </div>
+
+            <div className="flex shrink-0 items-center gap-3 border-t border-white/10 bg-[var(--color-inset)]/80 px-4 py-2.5">
+              <p className="min-w-0 flex-1 text-[11px] leading-tight text-[var(--color-muted)]">
+                Matching database
+                <span className="block font-mono text-xs font-semibold text-[var(--color-fg-strong)]">
+                  {loading ? "Searching…" : `${matchCount.toLocaleString()} found`}
+                </span>
+              </p>
+              <button
+                type="button"
+                onClick={closeSheet}
+                className="ds-btn-primary pressable h-11 shrink-0 px-5 text-sm"
+              >
+                Show results
+              </button>
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {openMode && !panelExpanded && (
-        <div className="flex shrink-0 items-center border-b border-[var(--color-border)] px-2 py-1">
-          <CollapseButton
-            expanded={false}
-            onToggle={() => setPanelExpanded(true)}
-            label="filters"
-          />
-          <span className="ml-2 text-[10px] text-[var(--color-muted)]">
-            {panelTitle} collapsed
-          </span>
-        </div>
-      )}
-
-      <div className="grid shrink-0 grid-cols-5 gap-1 px-1.5 py-1">
-        <button
-          type="button"
-          onClick={() => toggleMode("leader_skill")}
-          className={`rounded-md border px-1 py-1 text-[11px] font-semibold transition-colors ${
-            openMode === "leader_skill"
-              ? "border-[#db6d28] bg-[#3d2814] text-[#f0c090]"
-              : "border-[var(--color-border)] bg-[#0d1117] text-[var(--color-muted)]"
-          }`}
+        <nav
+          aria-label="Filters"
+          className="glass-bar grid h-14 grid-cols-5 gap-0.5 rounded-full border border-white/10 p-1 shadow-[var(--shadow-float)]"
         >
-          Leader
-          {selectedLeader > 0 && (
-            <span className="ml-1 rounded bg-[var(--color-accent)]/20 px-1 text-[10px] tabular-nums">
-              {selectedLeader}
-            </span>
-          )}
-        </button>
-        <button
-          type="button"
-          onClick={() => toggleMode("active_skill")}
-          className={`rounded-md border px-1 py-1 text-[11px] font-semibold transition-colors ${
-            openMode === "active_skill"
-              ? "border-[#58a6ff] bg-[#1f3a5f] text-[var(--color-accent)]"
-              : "border-[var(--color-border)] bg-[#0d1117] text-[var(--color-muted)]"
-          }`}
-        >
-          Active
-          {selectedActive > 0 && (
-            <span className="ml-1 rounded bg-[var(--color-accent)]/20 px-1 text-[10px] tabular-nums">
-              {selectedActive}
-            </span>
-          )}
-        </button>
-        <button
-          type="button"
-          onClick={() => toggleMode("awakening")}
-          className={`rounded-md border px-1 py-1 text-[11px] font-semibold transition-colors ${
-            openMode === "awakening"
-              ? "border-[#6b8f3c] bg-[#1a2a12] text-[#a8c878]"
-              : "border-[var(--color-border)] bg-[#0d1117] text-[var(--color-muted)]"
-          }`}
-        >
-          Awk
-          {selectedAwk > 0 && (
-            <span className="ml-1 rounded bg-[#6b8f3c]/20 px-1 text-[10px] tabular-nums">
-              {selectedAwk}
-            </span>
-          )}
-        </button>
-        <button
-          type="button"
-          onClick={() => toggleMode("by_text")}
-          className={`rounded-md border px-1 py-1 text-[11px] font-semibold transition-colors ${
-            openMode === "by_text"
-              ? "border-[#39c5cf] bg-[#12333a] text-[#7ee7ef]"
-              : "border-[var(--color-border)] bg-[#0d1117] text-[var(--color-muted)]"
-          }`}
-        >
-          By Text
-          {selectedByText > 0 && (
-            <span className="ml-1 rounded bg-[#39c5cf]/20 px-1 text-[10px] tabular-nums">
-              {selectedByText}
-            </span>
-          )}
-        </button>
-        <button
-          type="button"
-          onClick={() => toggleMode("advanced")}
-          className={`rounded-md border px-1 py-1 text-[11px] font-semibold transition-colors ${
-            openMode === "advanced"
-              ? "border-[#a371f7] bg-[#2a1f3d] text-[#d4b8f7]"
-              : "border-[var(--color-border)] bg-[var(--color-inset)] text-[var(--color-muted)]"
-          }`}
-          title="Numeric effect-value filters (shield %, xN HP, charge turns…)"
-        >
-          Values
-          {selectedEffects > 0 && (
-            <span className="ml-1 rounded bg-[#a371f7]/20 px-1 text-[10px] tabular-nums">
-              {selectedEffects}
-            </span>
-          )}
-        </button>
-      </div>
-    </section>
+          {DOCK_ITEMS.map((item) => {
+            const active = openMode === item.mode;
+            const count = counts[item.mode];
+            return (
+              <button
+                key={item.mode}
+                type="button"
+                onClick={() => toggleMode(item.mode)}
+                aria-expanded={active}
+                title={item.title}
+                className={`pressable relative flex min-w-0 flex-col items-center justify-center gap-0.5 rounded-full text-[11px] font-semibold leading-none ${
+                  active
+                    ? "bg-[var(--color-accent-muted)] text-[var(--color-accent-strong)] shadow-[var(--shadow-glow)]"
+                    : count > 0
+                      ? "text-[var(--color-fg-strong)] hover:bg-white/5"
+                      : "text-[var(--color-muted)] hover:bg-white/5"
+                }`}
+              >
+                <span aria-hidden className="font-mono text-sm leading-none">
+                  {item.glyph}
+                </span>
+                <span>{item.label}</span>
+                {count > 0 && (
+                  <span className="absolute top-0.5 right-[18%] min-w-4 rounded-full bg-[var(--color-secondary)] px-1 font-mono text-[9px] font-bold leading-4 tabular-nums text-slate-950 shadow-[var(--shadow-glow-cyan)]">
+                    {count}
+                  </span>
+                )}
+              </button>
+            );
+          })}
+        </nav>
+      </section>
+    </>
   );
 }
 
@@ -516,9 +550,9 @@ export function MobileWebviewLayout({
       />
 
       <main className="flex min-h-0 flex-1 flex-col overflow-hidden">
-        <header className="flex shrink-0 flex-nowrap items-center justify-between gap-1.5 overflow-x-auto border-b border-[var(--color-border)] bg-[var(--color-panel)] px-2 py-1">
-          <div className="flex shrink-0 items-center gap-1">
-            <h2 className="text-xs font-semibold">Results</h2>
+        <header className="flex shrink-0 flex-nowrap items-center justify-between gap-1.5 overflow-x-auto border-b border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-1.5">
+          <div className="flex shrink-0 items-center gap-1.5">
+            <h2 className="ds-label text-[var(--color-fg)]">Results</h2>
             <ResultsQuickFilter
               value={resultQuickFilter}
               onChange={onResultQuickFilterChange}
@@ -538,10 +572,17 @@ export function MobileWebviewLayout({
               onAwkSettingsChange={onAwkModifierSettingsChange}
               compact
             />
-            <p className="text-[10px] text-[var(--color-muted)]">
-              {loading
-                ? `Loading… ${loadProgress ?? 0}`
-                : `${rows.length} · ${totalLoaded}`}
+            <p className="font-mono text-[10px] tabular-nums text-[var(--color-muted)]">
+              {loading ? (
+                `Loading… ${loadProgress ?? 0}`
+              ) : (
+                <>
+                  <span className="text-[var(--color-accent-strong)]">
+                    {rows.length}
+                  </span>
+                  {` / ${totalLoaded}`}
+                </>
+              )}
             </p>
           </div>
         </header>
@@ -552,7 +593,7 @@ export function MobileWebviewLayout({
         />
 
         <div className="flex min-h-0 flex-1 overflow-hidden">
-          <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden border-r border-[var(--color-border)]">
+          <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
             <ResultsList
               rows={rows}
               selected={selected}
@@ -578,7 +619,7 @@ export function MobileWebviewLayout({
         </div>
       </main>
 
-      <MobileBottomFilterBar
+      <MobileFilterDock
         monsterFilters={monsterFilters}
         onMonsterFiltersChange={onMonsterFiltersChange}
         skillFilters={skillFilters}
@@ -589,6 +630,8 @@ export function MobileWebviewLayout({
         onAdvancedEffectFiltersChange={onAdvancedEffectFiltersChange}
         effectFamilies={effectFamilies}
         effectFamiliesLoading={effectFamiliesLoading}
+        matchCount={rows.length}
+        loading={loading}
       />
     </div>
   );

@@ -15,7 +15,7 @@ export function EventHero({ title, coverMonsters }: Props) {
   const step = count <= 3 ? 18 : count <= 6 ? 12 : 9;
 
   return (
-    <section className="relative overflow-hidden border-b-2 border-[#a8842f] bg-[radial-gradient(ellipse_at_30%_20%,#3a2c1a_0%,#0d0a06_55%)]">
+    <section className="relative overflow-hidden border-b-2 border-[var(--color-amber-border)] bg-[radial-gradient(ellipse_at_30%_20%,#3a2c1a_0%,#0d0a06_55%)]">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"

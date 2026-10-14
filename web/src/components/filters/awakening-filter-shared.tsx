@@ -6,7 +6,8 @@ import { CollapsibleFilterSection } from "./collapsible-filter-section";
 import { SupplementFilterCheckbox } from "./supplement-filter-checkbox";
 import { useEffect, useState } from "react";
 
-const AWK_ACCENT = "var(--color-positive)";
+/** Include-mode selected tiles use the cyan "tech" accent; chips stay emerald. */
+const AWK_ACCENT = "var(--color-secondary)";
 const AWK_EXCLUDE_ACCENT = "var(--color-negative)";
 const VANISH_ACCENT = "var(--color-gold)";
 
@@ -93,26 +94,32 @@ function AwakeningPickerIcon({
       }
       aria-pressed={active > 0}
       onClick={() => onAppend(id)}
-      className={`flex shrink-0 items-center justify-center rounded-sm border p-0.5 transition-colors ${
+      className={`pressable relative flex shrink-0 items-center justify-center rounded border p-0.5 ${
         active > 0
           ? pickerMode === "include"
-            ? "border-[var(--color-accent)] bg-[var(--color-accent-muted)] shadow-[inset_0_0_0_1px_rgba(88,166,255,0.35)]"
+            ? "border-[var(--color-secondary)] bg-[var(--color-secondary-muted)] shadow-[var(--shadow-glow-cyan)]"
             : pickerMode === "exclude"
-              ? "border-red-500/70 bg-red-950/40 shadow-[inset_0_0_0_1px_rgba(248,81,73,0.35)]"
-              : "border-[var(--color-gold)]/80 bg-[#3a2f12] shadow-[inset_0_0_0_1px_rgba(201,168,74,0.35)]"
+              ? "border-[var(--color-negative)] bg-[var(--color-negative)]/15 shadow-[0_0_12px_rgba(239,68,68,0.3)]"
+              : "border-[var(--color-gold)] bg-[var(--color-amber-bg)] shadow-[var(--shadow-glow)]"
           : inStack > 0
-            ? "border-[var(--color-positive)]/40 bg-[#1a2a12]/60"
+            ? "border-[var(--color-positive)]/40 bg-emerald-500/10"
             : excludedInStack > 0
-              ? "border-red-500/30 bg-red-950/20"
+              ? "border-[var(--color-negative)]/30 bg-[var(--color-negative)]/10"
               : vanishInStack > 0
-                ? "border-[var(--color-gold)]/30 bg-[#3a2f12]/40"
-                : "border-transparent hover:border-[var(--color-positive)]/50 hover:bg-[var(--color-hover)]"
+                ? "border-[var(--color-gold)]/30 bg-[var(--color-amber-bg)]"
+                : "border-transparent hover:border-[var(--color-border-strong)] hover:bg-[var(--color-hover)]"
       }`}
-      style={
-        active > 0 ? { boxShadow: `inset 0 0 0 1px ${accent}` } : undefined
-      }
     >
       <AwakeningSpriteIcon awokenSkillId={id} size={iconSize} />
+      {active > 0 && (
+        <span
+          aria-hidden
+          className="pointer-events-none absolute right-0 bottom-0 min-w-3 rounded-full px-0.5 text-center font-mono text-[8px] font-bold leading-3 tabular-nums text-slate-950 ring-1 ring-[var(--color-inset)]"
+          style={{ backgroundColor: accent }}
+        >
+          {active}
+        </span>
+      )}
     </button>
   );
 }
@@ -128,7 +135,7 @@ export function AwakeningPickerModeToggle({
 }) {
   return (
     <div
-      className={`flex rounded-lg border border-[var(--color-border)] bg-[var(--color-inset)] p-0.5 ${
+      className={`flex rounded-full border border-[var(--color-border)] bg-[var(--color-inset)] p-0.5 ${
         compact ? "mb-2" : "mb-3"
       }`}
       role="radiogroup"
@@ -147,16 +154,16 @@ export function AwakeningPickerModeToggle({
           role="radio"
           aria-checked={value === id}
           onClick={() => onChange(id)}
-          className={`flex-1 rounded-md px-2 py-1 font-medium transition-colors ${
+          className={`pressable flex-1 rounded-full px-2 py-1 font-semibold ${
             compact ? "text-[10px]" : "text-xs"
           } ${
             value === id
               ? id === "exclude"
-                ? "bg-red-600 text-white"
+                ? "bg-[var(--color-negative)]/15 text-red-300 ring-1 ring-[var(--color-negative)]/60"
                 : id === "vanish"
-                  ? "bg-[#8b6914] text-white"
-                  : "bg-[var(--color-accent)] text-[var(--color-inset)]"
-              : "text-[var(--color-muted)] hover:text-white"
+                  ? "bg-[var(--color-amber-bg)] text-[var(--color-gold)] ring-1 ring-[var(--color-gold)]/60"
+                  : "bg-emerald-500/15 text-emerald-300 ring-1 ring-[var(--color-positive)]/60"
+              : "text-[var(--color-muted)] hover:text-[var(--color-fg-strong)]"
           }`}
         >
           {label}
@@ -194,7 +201,7 @@ export function MonsterAwakeningClearAllButton({
           vanishAwakeningIds: [],
         })
       }
-      className="shrink-0 rounded border border-[var(--color-border)] px-2 py-0.5 text-[10px] text-[var(--color-muted)] hover:border-red-500/50 hover:text-red-300"
+      className="pressable shrink-0 rounded-lg px-2 py-0.5 text-[10px] font-semibold text-[var(--color-muted)] hover:bg-[var(--color-negative)]/10 hover:text-[var(--color-negative)]"
     >
       Clear all
     </button>
@@ -225,7 +232,7 @@ export function MonsterAwakeningSelectedChips({
               awakeningIds: removeOneAwakeningFromStack(filters.awakeningIds, id),
             })
           }
-          className="inline-flex items-center gap-0.5 rounded-full border border-[var(--color-positive)]/60 bg-[#1a2a12] p-0.5 pr-1.5 hover:border-red-500/50"
+          className="pressable inline-flex items-center gap-0.5 rounded-full border border-[var(--color-positive)]/60 bg-emerald-500/10 p-0.5 pr-1.5 hover:border-[var(--color-negative)]/60"
           title={
             count > 1
               ? `Remove one included #${id} (${count} stacked)`
@@ -234,11 +241,11 @@ export function MonsterAwakeningSelectedChips({
         >
           <AwakeningSpriteIcon awokenSkillId={id} size={16} />
           {count > 1 && (
-            <span className="text-[9px] font-bold tabular-nums text-[#a8c878]">
+            <span className="font-mono text-[9px] font-bold tabular-nums text-emerald-300">
               ×{count}
             </span>
           )}
-          <span className="text-[9px] text-[#a8c878]">×</span>
+          <span className="text-[9px] text-emerald-300">×</span>
         </button>
       ))}
       {excluded.map(({ id, count }) => (
@@ -254,7 +261,7 @@ export function MonsterAwakeningSelectedChips({
               ),
             })
           }
-          className="inline-flex items-center gap-0.5 rounded-full border border-red-500/60 bg-red-950/30 p-0.5 pr-1.5 hover:border-red-400"
+          className="pressable inline-flex items-center gap-0.5 rounded-full border border-[var(--color-negative)]/60 bg-[var(--color-negative)]/10 p-0.5 pr-1.5 hover:border-red-400"
           title={
             count > 1
               ? `Remove one excluded #${id} (${count} stacked)`
@@ -264,7 +271,7 @@ export function MonsterAwakeningSelectedChips({
           <AwakeningSpriteIcon awokenSkillId={id} size={16} />
           <span className="text-[9px] font-bold text-red-300">≠</span>
           {count > 1 && (
-            <span className="text-[9px] font-bold tabular-nums text-red-300">
+            <span className="font-mono text-[9px] font-bold tabular-nums text-red-300">
               ×{count}
             </span>
           )}
@@ -284,7 +291,7 @@ export function MonsterAwakeningSelectedChips({
               ),
             })
           }
-          className="inline-flex items-center gap-0.5 rounded-full border border-[var(--color-gold)]/60 bg-[#3a2f12] p-0.5 pr-1.5 hover:border-red-500/50"
+          className="pressable inline-flex items-center gap-0.5 rounded-full border border-[var(--color-gold)]/60 bg-[var(--color-amber-bg)] p-0.5 pr-1.5 hover:border-[var(--color-negative)]/60"
           title={
             count > 1
               ? `Remove one vanish #${id} (${count} stacked)`
@@ -293,7 +300,7 @@ export function MonsterAwakeningSelectedChips({
         >
           <AwakeningSpriteIcon awokenSkillId={id} size={16} />
           {count > 1 && (
-            <span className="text-[9px] font-bold tabular-nums text-[var(--color-gold)]">
+            <span className="font-mono text-[9px] font-bold tabular-nums text-[var(--color-gold)]">
               ×{count}
             </span>
           )}
@@ -333,16 +340,14 @@ function AwakeningFilterGroupSection({
     >
       {!hideLabel && (
         <p
-          className={`mb-1 font-semibold uppercase tracking-wide text-[#a8c878] ${
-            compact ? "text-[9px]" : "text-[10px]"
-          }`}
+          className={`ds-label mb-1 ${compact ? "text-[9px]" : "text-[10px]"}`}
         >
           {label}
         </p>
       )}
       <div className="space-y-1">
         {rows.map((row, rowIndex) => (
-          <div key={rowIndex} className="flex flex-wrap gap-0.5">
+          <div key={rowIndex} className="flex flex-wrap gap-1">
             {row.map((id) => (
               <AwakeningPickerIcon
                 key={`${rowIndex}-${id}`}
@@ -385,7 +390,7 @@ function AwakeningGroupTabBar({
 }) {
   return (
     <div
-      className="mb-1.5 flex shrink-0 flex-wrap gap-0.5"
+      className="mb-1.5 flex shrink-0 flex-wrap gap-1"
       role="tablist"
       aria-label="Awakening groups"
     >
@@ -396,10 +401,8 @@ function AwakeningGroupTabBar({
           role="tab"
           aria-selected={activeIndex === index}
           onClick={() => onChange(index)}
-          className={`rounded border px-1 py-0.5 text-[9px] font-semibold transition-colors ${
-            activeIndex === index
-              ? "border-[var(--color-positive)] bg-[#1a2a12] text-[#a8c878]"
-              : "border-[var(--color-border)] bg-[var(--color-inset)] text-[var(--color-muted)] hover:border-[var(--color-positive)]/50 hover:text-white"
+          className={`ds-pill pressable px-2 py-0.5 text-[10px] font-semibold ${
+            activeIndex === index ? "ds-pill-active" : ""
           }`}
         >
           {AWAKENING_GROUP_SHORT_LABELS[group.label] ?? group.label}
@@ -516,7 +519,7 @@ export function MonsterAwakeningFilter({
       />
 
       {totalSelected > 0 && (
-        <div className="mb-1 flex flex-wrap gap-0.5">
+        <div className="mb-1.5 flex flex-wrap gap-1">
           <MonsterAwakeningSelectedChips filters={filters} onChange={onChange} />
         </div>
       )}

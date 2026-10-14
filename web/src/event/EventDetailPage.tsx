@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
-import { AppToolsNav } from "../components/AppToolsNav";
 import { AdminLaunch } from "../components/AdminLaunch";
+import { PageHeader } from "../components/PageHeader";
 import { monsterRowId } from "../lib/filters";
 import { portraitUrl } from "../lib/portraits";
 import { fetchEvent } from "./api";
@@ -48,27 +48,21 @@ export function EventDetailPage({ eventId }: { eventId: string }) {
       preloadUrls={preloadUrls}
       contentReady={!!event.data}
     >
-      <div className="min-h-full bg-[#0d0a06] text-[#e6edf3]">
-        <div className="border-b border-[var(--color-border)] bg-[var(--color-panel)] px-4 py-2">
-          <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-2">
-            <a
-              href="/event"
-              className="text-sm text-[var(--color-accent)] hover:underline"
-            >
-              ← All events
-            </a>
-            <div className="flex flex-wrap items-center gap-2">
-              <AppToolsNav variant="inline" />
-              <AdminLaunch />
-            </div>
-          </div>
-        </div>
+      <div className="min-h-full bg-[var(--color-surface)] text-[var(--color-fg)]">
+        <PageHeader
+          title={event.data?.title ?? "Event"}
+          back={{ href: "/event", label: "All events" }}
+          actions={<AdminLaunch variant="chip" />}
+          maxWidthClass="max-w-5xl"
+        />
 
         {event.isLoading && !event.data && (
-          <p className="p-6 text-center text-[var(--color-muted)]">Loading…</p>
+          <p className="p-6 text-center text-sm text-[var(--color-muted)]">
+            Loading…
+          </p>
         )}
         {event.isError && (
-          <p className="p-6 text-center text-red-400">
+          <p className="p-6 text-center text-sm text-[var(--color-negative)]">
             {event.error instanceof Error
               ? event.error.message
               : "Failed to load"}
@@ -82,8 +76,8 @@ export function EventDetailPage({ eventId }: { eventId: string }) {
               coverMonsters={event.data.coverMonsters}
             />
 
-            <main className="mx-auto max-w-5xl px-4 py-8">
-              <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 md:gap-5">
+            <main className="mx-auto max-w-5xl px-3 py-6 sm:px-4 sm:py-8">
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 md:grid-cols-4 md:gap-5">
                 {entries.map((entry) => {
                   const headline =
                     entry.family.nodes.find(

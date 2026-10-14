@@ -45,10 +45,12 @@ function DraggableAwakeningStack({
 
   const border =
     accent === "super"
-      ? "border-[#c9a84a]/60 bg-[#3a2f12]"
-      : "border-[#6b8f3c]/60 bg-[#1a2a12]";
+      ? "border-[var(--color-gold)]/60 bg-[var(--color-amber-bg)]"
+      : "border-[var(--color-positive)]/50 bg-emerald-500/10";
   const overRing =
-    accent === "super" ? "ring-1 ring-[#c9a84a]" : "ring-1 ring-[#6b8f3c]";
+    accent === "super"
+      ? "ring-1 ring-[var(--color-gold)]"
+      : "ring-1 ring-[var(--color-positive)]";
 
   return (
     <div className="flex flex-wrap gap-1">
@@ -99,12 +101,12 @@ function DraggableAwakeningStack({
           }`}
         >
           {badge && (
-            <span className="pl-0.5 text-[8px] font-bold text-[#c9a84a]">
+            <span className="pl-0.5 font-mono text-[8px] font-bold text-[var(--color-gold)]">
               {badge}
             </span>
           )}
           <AwakeningSpriteIcon awokenSkillId={id} size={18} />
-          <span className="pr-0.5 text-[8px] tabular-nums text-[var(--color-muted)]">
+          <span className="pr-0.5 font-mono text-[8px] text-[var(--color-muted)] tabular-nums">
             {index + 1}
           </span>
         </button>
@@ -161,12 +163,10 @@ export function AwakeningEditor({ draft, onChange }: Props) {
     draft.syncAwakeningId != null;
 
   return (
-    <section className="rounded-lg border border-[var(--color-border)] bg-[#0d1117] p-3">
-      <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-[#c9a84a]">
-        Awakenings
-      </h2>
+    <section className="ds-card p-3">
+      <h2 className="ds-label mb-2">Awakenings</h2>
 
-      <div className="mb-2 flex rounded-lg border border-[var(--color-border)] bg-[#0d1117] p-0.5">
+      <div className="mb-2 flex gap-0.5 rounded-full border border-[var(--color-border)] bg-[var(--color-inset)] p-0.5">
         {(
           [
             { id: "regular" as const, label: "Regular" },
@@ -182,10 +182,10 @@ export function AwakeningEditor({ draft, onChange }: Props) {
               if (id === "super") setPrefixedMode("super");
               if (id === "sync") setPrefixedMode("sync");
             }}
-            className={`flex-1 rounded-md px-2 py-1 text-[10px] font-medium ${
+            className={`pressable min-h-8 flex-1 rounded-full border px-2 py-1 text-[11px] font-semibold ${
               layer === id
-                ? "bg-[#8b6914] text-white"
-                : "text-[var(--color-muted)] hover:text-white"
+                ? "border-[var(--color-accent)]/70 bg-[var(--color-accent-muted)] text-[var(--color-accent-strong)] shadow-[var(--shadow-glow)]"
+                : "border-transparent text-[var(--color-muted)] hover:text-[var(--color-fg-strong)]"
             }`}
           >
             {label}
@@ -197,7 +197,7 @@ export function AwakeningEditor({ draft, onChange }: Props) {
         <div className="mb-2 space-y-1.5">
           {draft.awakeningIds.length > 0 && (
             <div>
-              <p className="mb-0.5 text-[9px] font-semibold uppercase text-[#a8c878]">
+              <p className="mb-0.5 text-[9px] font-semibold tracking-wide text-emerald-300 uppercase">
                 Regular order — drag to reorder, click to remove
               </p>
               <DraggableAwakeningStack
@@ -210,7 +210,7 @@ export function AwakeningEditor({ draft, onChange }: Props) {
           )}
           {draft.prefixedMode === "super" && draft.superAwakeningIds.length > 0 && (
             <div>
-              <p className="mb-0.5 text-[9px] font-semibold uppercase text-[#c9a84a]">
+              <p className="mb-0.5 text-[9px] font-semibold tracking-wide text-[var(--color-gold)] uppercase">
                 Super order — drag to reorder, click to remove
               </p>
               <DraggableAwakeningStack
@@ -226,16 +226,16 @@ export function AwakeningEditor({ draft, onChange }: Props) {
           )}
           {draft.prefixedMode === "sync" && draft.syncAwakeningId != null && (
             <div>
-              <p className="mb-0.5 text-[9px] font-semibold uppercase text-[#58a6ff]">
+              <p className="mb-0.5 text-[9px] font-semibold tracking-wide text-[var(--color-secondary-strong)] uppercase">
                 Sync
               </p>
               <button
                 type="button"
                 title="Clear sync"
                 onClick={() => onChange({ syncAwakeningId: null })}
-                className="inline-flex items-center gap-0.5 rounded-md border border-[#58a6ff]/60 bg-[#1a2a3f] p-0.5 pr-1.5"
+                className="pressable inline-flex items-center gap-0.5 rounded-md border border-[var(--color-secondary)]/60 bg-[var(--color-secondary-muted)] p-0.5 pr-1.5"
               >
-                <span className="pl-0.5 text-[8px] font-bold text-[#58a6ff]">
+                <span className="pl-0.5 font-mono text-[8px] font-bold text-[var(--color-secondary-strong)]">
                   Y
                 </span>
                 <AwakeningSpriteIcon
@@ -261,7 +261,7 @@ export function AwakeningEditor({ draft, onChange }: Props) {
             key={group.label}
             className="mb-2 break-inside-avoid last:mb-0"
           >
-            <p className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-[#a8c878]">
+            <p className="ds-label mb-1">
               {group.label}
             </p>
             <div className="space-y-1">
@@ -282,10 +282,10 @@ export function AwakeningEditor({ draft, onChange }: Props) {
                         type="button"
                         title={`Add awakening #${id}`}
                         onClick={() => append(id)}
-                        className={`rounded border p-0.5 ${
+                        className={`pressable rounded border p-0.5 ${
                           count > 0
-                            ? "border-[#c9a84a]/80 bg-[#3a2f12]"
-                            : "border-transparent hover:border-[var(--color-border)]"
+                            ? "border-[var(--color-accent)]/80 bg-[var(--color-accent-muted)]"
+                            : "border-transparent hover:border-[var(--color-border-strong)] hover:bg-[var(--color-hover)]"
                         }`}
                       >
                         <AwakeningSpriteIcon awokenSkillId={id} size={18} />

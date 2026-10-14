@@ -36,7 +36,11 @@ function DisplayCheckbox({
   onChange: (checked: boolean) => void;
 }) {
   return (
-    <label className="flex cursor-pointer items-center gap-1.5 text-[10px] text-white">
+    <label
+      className={`-mx-1 flex min-h-7 cursor-pointer items-center gap-2 rounded-md px-1 text-[11px] transition-colors hover:bg-white/5 ${
+        checked ? "text-[var(--color-fg-strong)]" : "text-[var(--color-muted)]"
+      }`}
+    >
       <input
         type="checkbox"
         checked={checked}
@@ -79,10 +83,10 @@ export function ResultsDisplayControls({
         aria-label={`Display sections${activeCount > 0 ? ` (${activeCount} on)` : ""}`}
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
-        className={`rounded border p-1 transition-colors ${
+        className={`pressable rounded-lg border p-1.5 ${
           activeCount > 0
-            ? "border-[var(--color-accent)]/60 bg-[#1f3a5f]/40 text-[var(--color-accent)]"
-            : "border-[var(--color-border)] bg-[#0d1117] text-[var(--color-muted)] hover:text-white"
+            ? "border-[var(--color-accent)]/60 bg-[var(--color-accent-muted)] text-[var(--color-accent-strong)] shadow-[var(--shadow-glow)]"
+            : "border-[var(--color-border)] bg-[var(--color-inset)] text-[var(--color-muted)] hover:border-[var(--color-border-strong)] hover:text-[var(--color-fg-strong)]"
         }`}
       >
         <EyeIcon className="h-3.5 w-3.5" />
@@ -90,10 +94,8 @@ export function ResultsDisplayControls({
       </button>
 
       {open && (
-        <div className="absolute right-0 top-full z-50 mt-1 min-w-[9.5rem] rounded-md border border-[var(--color-border)] bg-[#161b22] p-2 shadow-lg">
-          <p className="mb-1.5 text-[10px] font-semibold text-[var(--color-muted)]">
-            Display
-          </p>
+        <div className="ds-float animate-fade-in absolute right-0 top-full z-50 mt-1.5 min-w-[10rem] rounded-xl p-2">
+          <p className="ds-label mb-1.5">Display</p>
           <div className="space-y-1">
             <DisplayCheckbox
               label="All"

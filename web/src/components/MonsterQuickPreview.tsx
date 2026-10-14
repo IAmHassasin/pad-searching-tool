@@ -39,6 +39,18 @@ type Props = {
 
 const INLINE_AWK_SIZE = 14;
 
+/**
+ * App-tone overrides for the shared skill / stat / awakening leaf components,
+ * which otherwise render their in-game card colors (see monster-card-shared).
+ */
+const APP_TONE_VARS =
+  "[--pst-stat-label:var(--color-muted)] [--pst-stat-value:var(--color-fg-strong)] " +
+  "[--pst-awk-group-border:var(--color-border-strong)] [--pst-awk-group-bg:var(--color-inset)] " +
+  "[--pst-awk-prefix-border:var(--color-border-strong)] [--pst-awk-prefix-bg:var(--color-inset)] " +
+  "[--pst-cd-border:var(--color-accent)] [--pst-cd-bg:var(--color-inset)] [--pst-cd-text:var(--color-accent-strong)] " +
+  "[--pst-skill-strong:var(--color-fg-strong)] [--pst-skill-supplement:var(--color-gold)] " +
+  "[--pst-skill-add:var(--color-positive)]";
+
 function MonsterIconPreview({
   row,
   monsterId,
@@ -52,7 +64,7 @@ function MonsterIconPreview({
   return (
     <div className="relative h-14 w-14 shrink-0">
       <div
-        className={`absolute inset-0 flex items-center justify-center rounded border border-[#6b8f3c]/60 bg-[#2a3d18]/90 transition-opacity ${loaded ? "opacity-0" : "opacity-100"}`}
+        className={`absolute inset-0 flex items-center justify-center rounded-md border border-white/[0.06] bg-[var(--color-inset)] transition-opacity ${loaded ? "opacity-0" : "opacity-100"}`}
         aria-hidden={loaded}
       >
         <MonsterAttributeSpriteIcon attributeId={primaryAttr} size={36} />
@@ -61,7 +73,7 @@ function MonsterIconPreview({
         monsterId={monsterId}
         alt=""
         variant="icon"
-        className={`h-14 w-14 rounded border border-[#8b6914]/60 object-cover transition-opacity ${loaded ? "opacity-100" : "opacity-0"}`}
+        className={`h-14 w-14 rounded-md border border-white/10 object-cover transition-opacity ${loaded ? "opacity-100" : "opacity-0"}`}
         onLoad={() => setLoaded(true)}
       />
     </div>
@@ -89,37 +101,40 @@ function SkillSnippet({
 }) {
   const badgeClass =
     kind === "active"
-      ? "bg-[#3d6aa8] text-[#9ec5ff]"
-      : "bg-[#a85c1a] text-[#f5d4a8]";
+      ? "bg-[var(--color-secondary-muted)] text-[var(--color-secondary-strong)]"
+      : "bg-[var(--color-accent-muted)] text-[var(--color-accent-strong)]";
 
   return (
     <div
-      className={`rounded border border-[#8b6914]/50 bg-[#2a1f14]/90 ${
-        inline ? "px-1.5 py-1" : "mt-1.5 px-2 py-1.5"
+      className={`rounded-lg bg-[var(--color-inset)]/60 ${
+        inline ? "px-1.5 py-1" : "mt-1.5 p-2"
       }`}
     >
       <div className={`flex items-start justify-between gap-1 ${inline ? "" : "mb-0.5"}`}>
         <span
-          className={`shrink-0 rounded px-1 py-px font-bold uppercase ${badgeClass} ${
+          className={`shrink-0 rounded px-1 py-px font-mono font-bold uppercase tracking-wide ${badgeClass} ${
             inline ? "text-[8px]" : "text-[9px]"
           }`}
         >
           {kind === "active" ? "AS" : "LS"}
         </span>
         <p
-          className={`min-w-0 flex-1 wrap-anywhere break-words font-bold leading-snug text-[#f5e6c8] ${
-            inline ? "text-[9px]" : "text-[10px]"
+          className={`min-w-0 flex-1 wrap-anywhere break-words font-bold leading-snug text-[var(--color-fg-strong)] ${
+            inline ? "text-[9px]" : "text-[11px]"
           }`}
         >
           {title}
         </p>
         {kind === "active" && cooldown && (
           <span
-            className={`shrink-0 font-bold tabular-nums text-[#9ec5ff] ${
-              inline ? "text-[8px]" : "text-[9px]"
+            className={`shrink-0 font-semibold text-[var(--color-muted)] ${
+              inline ? "text-[8px]" : "text-[10px]"
             }`}
           >
-            CD {cooldown}
+            CD{" "}
+            <span className="font-mono font-bold tabular-nums text-[var(--color-accent-strong)]">
+              {cooldown}
+            </span>
           </span>
         )}
       </div>
@@ -135,15 +150,15 @@ function SkillSnippet({
           stageCooldowns={stageCooldowns}
           skillCdRange={stageCooldowns?.length ? cooldown : null}
           compact={inline}
-          className={`min-w-0 wrap-anywhere break-words text-[#e8dcc8] ${
-            inline ? "text-[8px] leading-snug" : "text-[9px] leading-snug"
+          className={`min-w-0 wrap-anywhere break-words text-[var(--color-fg)] ${
+            inline ? "text-[8px] leading-snug" : "text-[10px] leading-snug"
           }`}
         />
       ) : (
         <LeaderSkillDescText
           text={body}
-          className={`min-w-0 wrap-anywhere break-words text-[#e8dcc8] ${
-            inline ? "text-[8px] leading-snug" : "text-[9px] leading-snug"
+          className={`min-w-0 wrap-anywhere break-words text-[var(--color-fg)] ${
+            inline ? "text-[8px] leading-snug" : "text-[10px] leading-snug"
           }`}
         />
       )}
@@ -170,7 +185,7 @@ function AwakeningRow({
     return (
       <div className="min-w-0 overflow-x-auto">
         <div
-          className="flex w-max flex-row items-center rounded border border-[#6b8f3c]/80 bg-[#2a3d18]/90 p-0.5"
+          className="flex w-max flex-row items-center rounded bg-[var(--color-inset)]/60 p-0.5"
           style={{ gap: PAD_AWAKENING.iconGapPx }}
         >
           {children}
@@ -181,7 +196,7 @@ function AwakeningRow({
 
   return (
     <div className="mt-1.5 min-w-0">
-      <p className="mb-0.5 text-[8px] font-semibold uppercase tracking-wide text-[#8b9a6b]">
+      <p className="mb-0.5 font-mono text-[8px] font-semibold uppercase tracking-wider text-[var(--color-faint)]">
         {label}
       </p>
       <div className="overflow-x-auto">
@@ -291,7 +306,7 @@ export function MonsterQuickPreview({
 
   if (inline && !showBase) {
     return (
-      <div id={id} className="flex min-w-0 flex-col gap-0.5">
+      <div id={id} className={`flex min-w-0 flex-col gap-0.5 ${APP_TONE_VARS}`}>
         {awkBlock}
         {showActive && (
           <SkillSnippet
@@ -320,17 +335,17 @@ export function MonsterQuickPreview({
   return (
     <article
       id={id}
-      className={
+      className={`${APP_TONE_VARS} ${
         inline
-          ? "w-full rounded border border-[#8b6914]/50 bg-[#1a1410]/80 p-1.5"
-          : "w-[360px] rounded-lg border border-[#8b6914]/80 bg-[#1a1410] p-2.5 shadow-[0_8px_24px_rgba(0,0,0,0.55)]"
-      }
+          ? "w-full pt-0.5"
+          : "ds-float animate-fade-in w-[360px] rounded-xl p-2.5"
+      }`}
     >
       <div className={`flex ${inline ? "gap-1.5" : "gap-2.5"}`}>
         {showBase && (
           <div className="flex shrink-0 flex-col items-center gap-1.5">
             <MonsterIconPreview row={row} monsterId={monsterId} />
-            <div className="w-full space-y-0.5 rounded border border-[#8b6914]/40 bg-[#241a12]/80 px-1.5 py-1">
+            <div className="w-full space-y-0.5 rounded-lg bg-[var(--color-inset)]/60 px-1.5 py-1 font-mono">
               <StatRow label="HP" value={row.hp_max} compact />
               <StatRow label="ATK" value={row.atk_max} compact />
               <StatRow label="RCV" value={row.rcv_max} compact />
@@ -341,10 +356,22 @@ export function MonsterQuickPreview({
         <div className="min-w-0 flex-1">
           {showBase && (
             <>
-              <p className="text-[9px] font-medium text-[#c9b08a]">
-                No.{monsterId}
+              <p
+                className={`flex flex-wrap items-center gap-1.5 font-mono font-bold tabular-nums ${
+                  inline ? "text-[9px]" : "text-[10px]"
+                }`}
+              >
+                <span
+                  className={
+                    inline
+                      ? "text-[var(--color-faint)]"
+                      : "rounded-md bg-[var(--color-inset)] px-1.5 py-0.5 text-[var(--color-accent-strong)] ring-1 ring-[var(--color-accent)]/20"
+                  }
+                >
+                  No.{monsterId}
+                </span>
                 {row.monster_no_na != null && (
-                  <span className="ml-1.5 text-[#9ec5ff]">
+                  <span className="text-[var(--color-secondary-strong)]">
                     NA#{row.monster_no_na}
                   </span>
                 )}
@@ -352,7 +379,7 @@ export function MonsterQuickPreview({
               <h3
                 ref={nameTitle.ref}
                 title={nameTitle.title}
-                className={`truncate font-bold text-white ${inline ? "text-[10px]" : "text-xs"}`}
+                className={`mt-0.5 truncate font-bold text-[var(--color-fg-strong)] ${inline ? "text-[10px]" : "text-[13px]"}`}
               >
                 {row.name_en ?? "Unknown"}
               </h3>

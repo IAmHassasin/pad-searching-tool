@@ -25,15 +25,23 @@ export function DungeonFloorPanel({
   className = "",
 }: Props) {
   return (
-    <section className={`flex min-h-0 flex-col rounded-lg border border-[var(--color-border)] bg-[var(--color-panel)] ${className}`}>
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--color-border)] px-3 py-2">
+    <section className={`ds-card flex min-h-0 flex-col overflow-hidden ${className}`}>
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/[0.06] px-3 py-2.5">
         <div>
-          <h2 className="text-sm font-semibold">{dungeonName} floors</h2>
+          <h2 className="text-[13px] font-bold tracking-wider text-slate-300 uppercase">
+            {dungeonName} floors
+          </h2>
           <p className="text-xs text-[var(--color-muted)]">
             Recommended awakenings per level
           </p>
         </div>
-        <label className="flex cursor-pointer items-center gap-2 text-xs text-[var(--color-muted)]">
+        <label
+          className={`pressable flex min-h-9 cursor-pointer items-center gap-2 rounded-full border px-3 text-xs font-semibold ${
+            showHiddenGlobal
+              ? "border-[var(--color-secondary)]/60 bg-[var(--color-secondary-muted)] text-[var(--color-secondary-strong)]"
+              : "border-[var(--color-border)] bg-[var(--color-panel)] text-[var(--color-muted)] hover:border-[var(--color-border-strong)] hover:text-[var(--color-fg-strong)]"
+          }`}
+        >
           <input
             type="checkbox"
             checked={showHiddenGlobal}
@@ -45,14 +53,14 @@ export function DungeonFloorPanel({
       </div>
       <div className="min-h-0 flex-1 overflow-auto">
         <table className="w-full min-w-[520px] border-collapse text-sm">
-          <thead className="sticky top-0 z-10 bg-[#1c2128] text-left text-xs text-[var(--color-muted)]">
+          <thead className="sticky top-0 z-10 bg-[var(--color-hover)] text-left">
             <tr>
-              <th className="px-2 py-2 font-medium">Lv</th>
-              <th className="px-2 py-2 font-medium">Stamina / time</th>
-              <th className="px-2 py-2 font-medium">Recommended awk</th>
-              <th className="px-2 py-2 font-medium">Rewards</th>
+              <th className="ds-label px-2 py-2">Lv</th>
+              <th className="ds-label px-2 py-2">Stamina / time</th>
+              <th className="ds-label px-2 py-2">Recommended awk</th>
+              <th className="ds-label px-2 py-2">Rewards</th>
               {showHiddenGlobal && (
-                <th className="px-2 py-2 font-medium">Hidden</th>
+                <th className="ds-label px-2 py-2">Hidden</th>
               )}
             </tr>
           </thead>
@@ -63,12 +71,12 @@ export function DungeonFloorPanel({
               return (
                 <tr
                   key={floor.level}
-                  className="border-t border-[var(--color-border)] align-top hover:bg-[#1a1f26]"
+                  className="border-t border-[var(--color-border)] align-top transition-colors hover:bg-[var(--color-hover)]"
                 >
-                  <td className="px-2 py-2 font-medium whitespace-nowrap">
+                  <td className="px-2 py-2 font-mono font-bold whitespace-nowrap text-[var(--color-accent-strong)] tabular-nums">
                     Lv{floor.level}
                   </td>
-                  <td className="px-2 py-2 text-xs text-[var(--color-muted)] whitespace-nowrap">
+                  <td className="px-2 py-2 font-mono text-xs whitespace-nowrap text-[var(--color-muted)] tabular-nums">
                     {floor.stamina != null && floor.durationHours != null
                       ? `${floor.stamina} / ${floor.durationHours}h`
                       : "—"}
@@ -82,7 +90,7 @@ export function DungeonFloorPanel({
                             type="button"
                             title={`Queue ${a.nameEn}`}
                             onClick={() => onAddAwakening(a.id!, a.nameEn)}
-                            className="rounded hover:ring-1 hover:ring-[var(--color-accent)]"
+                            className="pressable rounded hover:ring-1 hover:ring-[var(--color-accent)]"
                           >
                             <AwakeningSpriteIcon
                               awokenSkillId={a.id}
@@ -102,7 +110,7 @@ export function DungeonFloorPanel({
                       )}
                       <button
                         type="button"
-                        className="ml-1 rounded border border-[var(--color-border)] px-1.5 py-0.5 text-[10px] text-[var(--color-accent)] hover:bg-[#21262d]"
+                        className="pressable ml-1 rounded-full border border-[var(--color-accent)]/40 bg-[var(--color-accent-muted)] px-2 py-0.5 text-[10px] font-semibold text-[var(--color-accent-strong)] hover:border-[var(--color-accent)]"
                         onClick={() => onAddFloorAwakenings(floor)}
                       >
                         + all
@@ -111,7 +119,7 @@ export function DungeonFloorPanel({
                   </td>
                   <td className="px-2 py-2 text-xs">
                     {floor.rewards ? (
-                      <div className="space-y-0.5 text-[var(--color-muted)]">
+                      <div className="space-y-0.5 text-[var(--color-muted)] tabular-nums">
                         {floor.rewards.explorationExp != null && (
                           <div>Exp {floor.rewards.explorationExp}</div>
                         )}
@@ -130,7 +138,7 @@ export function DungeonFloorPanel({
                     <td className="px-2 py-2 text-xs">
                       <button
                         type="button"
-                        className="text-left text-[var(--color-accent)] hover:underline"
+                        className="text-left font-semibold text-[var(--color-secondary-strong)] hover:underline"
                         onClick={() => onToggleHiddenLevel(floor.level)}
                       >
                         {hiddenOpen ? "Hide" : "Show"}

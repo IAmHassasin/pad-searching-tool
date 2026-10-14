@@ -49,9 +49,9 @@ export function ResultsPanel({
 }: Props) {
   return (
     <main className="flex min-w-0 flex-1 flex-col overflow-hidden">
-      <header className="flex shrink-0 flex-wrap items-center justify-between gap-2 border-b border-[var(--color-border)] bg-[var(--color-panel)] px-3 py-2">
-        <div className="flex items-center gap-1">
-          <h2 className="text-sm font-semibold tracking-wide [font-family:var(--font-mono)]">
+      <header className="flex shrink-0 flex-wrap items-center justify-between gap-2 border-b border-white/[0.06] bg-[var(--color-panel)] px-3 py-2">
+        <div className="flex items-center gap-1.5">
+          <h2 className="ds-label text-[11px] text-[var(--color-fg)]">
             Results
           </h2>
           <ResultsQuickFilter
@@ -70,18 +70,25 @@ export function ResultsPanel({
             awkSettings={awkModifierSettings}
             onAwkSettingsChange={onAwkModifierSettingsChange}
           />
-          <p className="flex items-center gap-1.5 text-xs tabular-nums text-[var(--color-muted)] [font-family:var(--font-mono)]">
+          <p className="flex items-center gap-1.5 font-mono text-xs tabular-nums text-[var(--color-muted)]">
             <span
               className={`h-1.5 w-1.5 shrink-0 rounded-full ${
                 loading
-                  ? "animate-pulse bg-[var(--color-accent-2)]"
-                  : "bg-[var(--color-accent)]"
+                  ? "animate-pulse bg-[var(--color-secondary)] shadow-[var(--shadow-glow-cyan)]"
+                  : "bg-[var(--color-accent)] shadow-[var(--shadow-glow)]"
               }`}
               aria-hidden
             />
-            {loading
-              ? `loading… ${loadProgress ?? 0}`
-              : `${rows.length} shown · ${totalLoaded} loaded`}
+            {loading ? (
+              `loading… ${loadProgress ?? 0}`
+            ) : (
+              <>
+                <span className="font-semibold text-[var(--color-accent-strong)]">
+                  {rows.length}
+                </span>
+                {` shown · ${totalLoaded} loaded`}
+              </>
+            )}
           </p>
         </div>
       </header>
@@ -103,7 +110,7 @@ export function ResultsPanel({
           />
         </div>
 
-        <div className="relative flex min-h-0 items-stretch justify-center overflow-auto bg-[#0a0e12] p-3">
+        <div className="relative flex min-h-0 items-stretch justify-center overflow-auto bg-[var(--color-inset)] p-3">
           {selected ? (
             <MonsterDetailPanel row={selected} onSelect={onSelect} />
           ) : (

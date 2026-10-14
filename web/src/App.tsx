@@ -220,69 +220,78 @@ export default function App() {
   return (
     <div className="flex h-full flex-col">
       <header
-        className={`relative flex shrink-0 items-center justify-between border-b border-[var(--color-border)] bg-[var(--color-inset)] ${
-          isMobileWebview
-            ? "gap-2 px-2 py-1"
-            : "flex-wrap gap-x-3 gap-y-1 px-4 py-2"
+        className={`glass-bar relative z-40 flex h-[52px] shrink-0 items-center justify-between border-b border-white/[0.08] ${
+          isMobileWebview ? "gap-2 px-3" : "gap-x-4 px-4"
         }`}
       >
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(90deg, rgba(88,166,255,0.08), transparent 40%), linear-gradient(90deg, transparent 60%, rgba(227,179,65,0.06))",
-            zIndex: 0,
-          }}
-          aria-hidden
-        />
-        <div className="relative z-10 shrink-0">
+        <div className="flex min-w-0 shrink-0 items-center gap-2">
           <AppBrand
-            size={isMobileWebview ? 22 : 32}
+            size={isMobileWebview ? 30 : 36}
             title={isMobileWebview ? "PST" : undefined}
           />
-        </div>
-        <div
-          className={`relative z-10 min-w-0 items-center text-[10px] text-[var(--color-muted)] ${
-            isMobileWebview
-              ? "flex flex-nowrap gap-1.5 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-              : "flex flex-wrap gap-x-3 gap-y-1 sm:text-xs"
-          }`}
-        >
-          <button
-            type="button"
-            className="shrink-0 rounded border border-[var(--color-border)] px-2 py-0.5 text-[var(--color-muted)] hover:border-[var(--color-accent)] hover:text-white"
-            onClick={() => void handleShareFilter()}
-          >
-            {isMobileWebview ? "Share" : "Share filter"}
-          </button>
-          {shareMsg && <span>{shareMsg}</span>}
           <span
-            className={`shrink-0 ${
-              health.data?.ok ? "text-emerald-400" : "text-amber-400"
+            className={`inline-flex shrink-0 items-center gap-1 rounded-full border px-2 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wider ${
+              health.data?.ok
+                ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-300"
+                : "border-[var(--color-accent)]/30 bg-[var(--color-accent-muted)] text-[var(--color-accent-strong)]"
             }`}
           >
-            {isMobileWebview
-              ? health.isLoading
-                ? "API…"
-                : health.data?.ok
+            <span
+              aria-hidden
+              className={`h-1.5 w-1.5 rounded-full ${
+                health.isLoading
+                  ? "animate-pulse bg-[var(--color-muted)]"
+                  : health.data?.ok
+                    ? "bg-emerald-400"
+                    : "bg-[var(--color-accent)]"
+              }`}
+            />
+            {health.isLoading
+              ? "API…"
+              : health.data?.ok
+                ? isMobileWebview
                   ? "API"
-                  : "API off"
-              : `API ${health.isLoading ? "…" : health.data?.ok ? "online" : "offline"}`}
+                  : "API online"
+                : isMobileWebview
+                  ? "Off"
+                  : "API offline"}
           </span>
+        </div>
+        <div
+          className={`flex min-w-0 items-center text-[11px] text-[var(--color-muted)] ${
+            isMobileWebview
+              ? "flex-nowrap gap-1.5 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              : "flex-wrap justify-end gap-x-3 gap-y-1 text-xs"
+          }`}
+        >
           {snapshot && (
-            <span className="shrink-0 tabular-nums">
-              {isMobileWebview
-                ? snapshot.total.toLocaleString()
-                : `${snapshot.total} match${snapshot.total === 1 ? "" : "es"}`}
+            <span className="shrink-0 font-mono tabular-nums text-[var(--color-fg)]">
+              <span className="text-[var(--color-accent-strong)]">
+                {snapshot.total.toLocaleString()}
+              </span>
+              {!isMobileWebview &&
+                ` match${snapshot.total === 1 ? "" : "es"}`}
             </span>
           )}
           {patternGroups.data && (
-            <span className="hidden tabular-nums sm:inline">
+            <span className="hidden font-mono tabular-nums sm:inline">
               {patternGroups.data.active_skill_filters.length +
                 patternGroups.data.leader_skill_filters.length}{" "}
               pattern groups
             </span>
           )}
+          {shareMsg && (
+            <span className="shrink-0 text-[var(--color-secondary-strong)]">
+              {shareMsg}
+            </span>
+          )}
+          <button
+            type="button"
+            className="ds-btn pressable shrink-0 px-2.5 py-1 text-[11px] font-semibold"
+            onClick={() => void handleShareFilter()}
+          >
+            {isMobileWebview ? "Share" : "Share filter"}
+          </button>
           <AdminLaunch variant="chip" compact={isMobileWebview} />
         </div>
       </header>
@@ -290,7 +299,7 @@ export default function App() {
       <AppToolsNav variant={isMobileWebview ? "compact" : "bar"} />
 
       {apiError && (
-        <p className="shrink-0 bg-red-950/80 px-4 py-2 text-sm text-red-200">
+        <p className="shrink-0 border-b border-[var(--color-negative)]/30 bg-[var(--color-negative)]/10 px-4 py-2 text-sm text-red-200">
           {apiError instanceof Error ? apiError.message : String(apiError)}
           <span className="block text-xs opacity-80">
             Start backend: npm run pad -- serve

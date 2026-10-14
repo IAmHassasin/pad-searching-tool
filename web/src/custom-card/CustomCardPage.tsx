@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { AppToolsNav } from "../components/AppToolsNav";
+import { PageHeader } from "../components/PageHeader";
 import { ArtCropModal, applyArtCropFromUrl } from "./ArtCropModal";
 import { ArtUploadPanel } from "./ArtUploadPanel";
 import { AttributeTypeEditor } from "./AttributeTypeEditor";
@@ -162,36 +162,34 @@ export function CustomCardPage() {
   }, [draft.name, draft.number]);
 
   return (
-    <div className="flex min-h-full flex-col bg-[var(--color-surface)] text-[#e6edf3]">
-      <header className="border-b border-[var(--color-border)] bg-[var(--color-panel)] px-4 py-3">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3">
-          <div>
-            <h1 className="text-lg font-semibold">Custom Card</h1>
-            <p className="text-sm text-[var(--color-muted)]">
-              Build a PAD-style detail card and download as PNG
-            </p>
-          </div>
-          <div className="flex flex-wrap items-center gap-2">
-            <button
-              type="button"
-              onClick={() => void handleDownload()}
-              disabled={exporting}
-              className="rounded-lg border border-[#c9a84a] bg-[#3a2f12] px-3 py-1.5 text-sm font-semibold text-[#f5e6c8] hover:border-[#ffd54f] disabled:opacity-50"
-            >
-              {exporting ? "Exporting…" : "Download PNG"}
-            </button>
-            <AppToolsNav variant="inline" />
-          </div>
-        </div>
+    <div className="flex min-h-full flex-col bg-[var(--color-surface)] text-[var(--color-fg)]">
+      <PageHeader
+        title="Custom Card"
+        subtitle="Build a PAD-style detail card and download as PNG"
+        maxWidthClass="max-w-7xl"
+        actions={
+          <button
+            type="button"
+            onClick={() => void handleDownload()}
+            disabled={exporting}
+            className="ds-btn-primary pressable min-h-9 px-3 text-sm whitespace-nowrap disabled:cursor-not-allowed"
+          >
+            {exporting ? "Exporting…" : "Download PNG"}
+          </button>
+        }
+      >
         {exportMsg && (
-          <p className="mx-auto mt-2 max-w-7xl text-xs text-[var(--color-muted)]">
+          <p
+            className="font-mono text-xs text-[var(--color-muted)]"
+            role="status"
+          >
             {exportMsg}
           </p>
         )}
-      </header>
+      </PageHeader>
 
-      <div className="mx-auto grid w-full max-w-7xl flex-1 gap-4 p-4 lg:grid-cols-2">
-        <div className="min-h-0 overflow-auto rounded-xl border border-[var(--color-border)] bg-[#0a0e12] p-4">
+      <div className="mx-auto grid w-full max-w-7xl flex-1 gap-4 p-3 sm:p-4 lg:grid-cols-2">
+        <div className="min-h-0 overflow-auto rounded-xl border border-white/[0.06] bg-[var(--color-inset)] p-4">
           <CustomCardPreview ref={previewRef} draft={draft} />
         </div>
 

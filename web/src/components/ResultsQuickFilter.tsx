@@ -35,10 +35,10 @@ function FilterIconButton({
       aria-pressed={active}
       aria-label={label}
       title={label}
-      className={`flex shrink-0 items-center justify-center rounded border p-0.5 transition-colors ${
+      className={`pressable flex shrink-0 items-center justify-center rounded-md border p-0.5 ${
         active
-          ? "border-[var(--color-accent)] bg-[#1f3a5f] ring-1 ring-[var(--color-accent)]/40"
-          : "border-[var(--color-border)] bg-[#0d1117] hover:border-[var(--color-accent)]/50"
+          ? "border-[var(--color-accent)] bg-[var(--color-accent-muted)] shadow-[var(--shadow-glow)]"
+          : "border-[var(--color-border)] bg-[var(--color-inset)] hover:border-[var(--color-accent)]/50"
       }`}
       style={{ width: iconSize + 6, height: iconSize + 6 }}
     >
@@ -55,7 +55,7 @@ export function ResultsQuickFilter({ value, onChange, compact = false }: Props) 
   };
 
   return (
-    <div className="flex items-center gap-0.5">
+    <div className="flex items-center gap-1">
       <FilterIconButton
         label="Monsters only"
         active={value === "monster"}

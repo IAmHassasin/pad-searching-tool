@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { AppToolsNav } from "../components/AppToolsNav";
 import { AdminLaunch } from "../components/AdminLaunch";
 import { MonsterPortrait } from "../components/MonsterPortrait";
+import { PageHeader } from "../components/PageHeader";
 import { fetchDungeon, type EnglishGlossary } from "./api";
 import type { DungeonSpawn, GimmickChip } from "./types";
 import {
@@ -28,7 +28,7 @@ function GimmickSection({
   if (!chips.length) return null;
   return (
     <section className="mb-6">
-      <h2 className="mb-2 text-sm font-semibold text-[var(--color-muted)]">
+      <h2 className="ds-label mb-2">
         {title}
       </h2>
       <div className="flex flex-wrap gap-2">
@@ -39,7 +39,7 @@ function GimmickSection({
           return (
           <span
             key={g.id}
-            className="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-panel)] px-2.5 py-1 text-xs"
+            className="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-panel)] px-2.5 py-1 text-xs text-[var(--color-fg)]"
             title={label}
           >
             <img
@@ -81,11 +81,18 @@ function SpawnCell({
           className="mx-auto h-12 w-12 object-contain"
         />
       )}
-      <div className="font-medium" title={displayName}>
+      <div
+        className="font-semibold text-[var(--color-fg-strong)]"
+        title={displayName}
+      >
         {displayName}
       </div>
       {spawn.monsterId != null && (
-        <div className="text-xs text-[var(--color-muted)]">#{spawn.monsterId}</div>
+        <div>
+          <span className="inline-block rounded-md bg-[var(--color-inset)] px-1.5 py-0.5 font-mono text-[11px] font-bold text-[var(--color-accent-strong)] ring-1 ring-[var(--color-accent)]/20">
+            #{spawn.monsterId}
+          </span>
+        </div>
       )}
       {spawn.types.length > 0 && (
         <div className="text-xs text-[var(--color-muted)]">
@@ -95,7 +102,7 @@ function SpawnCell({
         </div>
       )}
       {(hp || def) && (
-        <div className="text-xs">
+        <div className="font-mono text-xs tabular-nums text-[var(--color-fg)]">
           {hp && <div>HP: {hp}</div>}
           {def && <div>DEF: {def}</div>}
         </div>
@@ -104,7 +111,10 @@ function SpawnCell({
         const partHp = p.hp ? formatPadStatM(p.hp) : null;
         const partDef = p.defense ? formatPadStatM(p.defense) : null;
         return (
-        <div key={p.label} className="text-xs text-[var(--color-muted)]">
+        <div
+          key={p.label}
+          className="font-mono text-xs tabular-nums text-[var(--color-muted)]"
+        >
           [{glossary ? translatePartLabel(p.label, glossary) : p.label}]{" "}
           {partHp && `HP: ${partHp}`} {partDef && `DEF: ${partDef}`}
         </div>
@@ -137,7 +147,7 @@ function EffectLines({
                   return (
                   <span
                     key={tag}
-                    className="rounded bg-blue-950/60 px-1.5 py-0.5 text-[10px] text-blue-200"
+                    className="rounded bg-[var(--color-secondary-muted)] px-1.5 py-0.5 text-[10px] text-[var(--color-secondary-strong)]"
                     title={tagEn}
                   >
                     {tagEn}
@@ -153,7 +163,7 @@ function EffectLines({
                   return (
                     <span
                       key={id}
-                      className="inline-flex items-center gap-1.5 rounded bg-amber-950/50 px-2 py-1 text-xs text-amber-100"
+                      className="inline-flex items-center gap-1.5 rounded bg-[var(--color-amber-bg)] px-2 py-1 text-xs text-[var(--color-amber-text)] ring-1 ring-[var(--color-amber-border)]/40"
                       title={gimmickLabel}
                     >
                       {g?.iconUrl && (
@@ -199,55 +209,50 @@ export function DungeonDetailsPage({ postId }: { postId: string }) {
       : dungeon.data?.titleJa.replace(/^【パズドラ】/, ""));
 
   return (
-    <div className="min-h-full bg-[var(--color-surface)] text-[#e6edf3]">
-      <header className="border-b border-[var(--color-border)] bg-[var(--color-panel)] px-4 py-3">
-        <div className="mx-auto max-w-6xl">
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <a
-              href="/dungeon-details"
-              className="text-sm text-[var(--color-accent)] hover:underline"
-            >
-              ← All dungeons
-            </a>
-            <div className="flex flex-wrap items-center gap-2">
-              <AppToolsNav variant="inline" />
-              <AdminLaunch />
-            </div>
+    <div className="min-h-full bg-[var(--color-surface)] text-[var(--color-fg)]">
+      <PageHeader
+        title={title || "Dungeon details"}
+        subtitle={title ? "Dungeon details" : undefined}
+        back={{ href: "/dungeon-details", label: "All dungeons" }}
+        actions={<AdminLaunch variant="chip" />}
+        maxWidthClass="max-w-6xl"
+      >
+        {dungeon.data && (
+          <div className="space-y-1">
+            {/* Full title on mobile, where the app bar truncates it. */}
+            <p className="text-sm leading-snug font-semibold text-[var(--color-fg-strong)] sm:hidden">
+              {title}
+            </p>
+            <p className="font-mono text-xs text-[var(--color-muted)]">
+              <a
+                href={dungeon.data.sourceUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="font-sans font-semibold text-[var(--color-accent-strong)] hover:underline"
+              >
+                AppMedia source
+              </a>
+              {" · "}
+              imported {dungeon.data.importedAt.slice(0, 10)}
+            </p>
           </div>
-          {dungeon.data && (
-            <>
-              <h1 className="mt-2 text-lg font-semibold leading-snug">
-                {title}
-              </h1>
-              <p className="mt-1 text-xs text-[var(--color-muted)]">
-                <a
-                  href={dungeon.data.sourceUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-[var(--color-accent)] hover:underline"
-                >
-                  AppMedia source
-                </a>
-                {" · "}
-                imported {dungeon.data.importedAt.slice(0, 10)}
-              </p>
-            </>
-          )}
-        </div>
-      </header>
+        )}
+      </PageHeader>
 
-      <main className="mx-auto max-w-6xl px-4 py-6">
+      <main className="mx-auto max-w-6xl px-3 py-4 sm:px-4 sm:py-6">
         {dungeon.isLoading && (
-          <p className="text-[var(--color-muted)]">Loading…</p>
+          <p className="text-sm text-[var(--color-muted)]">Loading…</p>
         )}
         {dungeon.data && glossaryQuery.isLoading && (
-          <p className="text-[var(--color-muted)]">Loading translations…</p>
+          <p className="text-sm text-[var(--color-muted)]">Loading translations…</p>
         )}
         {dungeon.data && glossaryQuery.isError && (
-          <p className="text-red-400">Failed to load English translations.</p>
+          <p className="text-sm text-[var(--color-negative)]">
+            Failed to load English translations.
+          </p>
         )}
         {dungeon.isError && (
-          <p className="text-red-400">
+          <p className="text-sm text-[var(--color-negative)]">
             {dungeon.error instanceof Error
               ? dungeon.error.message
               : "Failed to load"}
@@ -267,18 +272,20 @@ export function DungeonDetailsPage({ postId }: { postId: string }) {
               glossary={glossary}
             />
 
-            <h2 className="mb-3 text-base font-semibold">Preemptive / floor reference</h2>
-            <div className="overflow-x-auto rounded-lg border border-[var(--color-border)]">
+            <h2 className="mb-3 text-[13px] font-bold tracking-wider text-slate-300 uppercase">
+              Preemptive / floor reference
+            </h2>
+            <div className="ds-card overflow-x-auto">
               <table className="w-full min-w-[720px] border-collapse text-left text-sm">
-                <thead className="bg-[var(--color-panel)] text-xs text-[var(--color-muted)]">
+                <thead className="bg-[var(--color-inset)]">
                   <tr>
-                    <th className="border-b border-[var(--color-border)] px-3 py-2 w-[12%]">
+                    <th className="ds-label border-b border-[var(--color-border)] px-3 py-2 w-[12%]">
                       Floor
                     </th>
-                    <th className="border-b border-[var(--color-border)] px-3 py-2 w-[28%]">
+                    <th className="ds-label border-b border-[var(--color-border)] px-3 py-2 w-[28%]">
                       Spawn
                     </th>
-                    <th className="border-b border-[var(--color-border)] px-3 py-2">
+                    <th className="ds-label border-b border-[var(--color-border)] px-3 py-2">
                       Effects
                     </th>
                   </tr>
@@ -288,12 +295,12 @@ export function DungeonDetailsPage({ postId }: { postId: string }) {
                     floor.spawns.map((spawn, spawnIdx) => (
                       <tr
                         key={`${floor.floor}-${spawnIdx}`}
-                        className="border-b border-[var(--color-border)]/70 align-top"
+                        className="border-b border-[var(--color-border)] align-top transition-colors duration-150 last:border-b-0 hover:bg-[var(--color-hover)]/50"
                       >
                         {spawnIdx === 0 && (
                           <td
                             rowSpan={floor.spawns.length}
-                            className="bg-[#1c2128] px-3 py-3 text-center font-semibold"
+                            className="border-r border-b border-[var(--color-border)] bg-[var(--color-hover)]/60 px-3 py-3 text-center font-semibold text-[var(--color-fg-strong)]"
                           >
                             <div>
                               {glossary

@@ -52,7 +52,7 @@ function FilterSectionTabBar({
 }) {
   return (
     <div
-      className="flex shrink-0 flex-wrap gap-0.5"
+      className="flex shrink-0 flex-wrap gap-1"
       role="tablist"
       aria-label="Monster filter sections"
     >
@@ -63,10 +63,8 @@ function FilterSectionTabBar({
           role="tab"
           aria-selected={active === id}
           onClick={() => onChange(id)}
-          className={`rounded border px-1.5 py-0.5 text-[10px] font-semibold transition-colors ${
-            active === id
-              ? "border-[var(--color-accent)] bg-[#1f3a5f] text-[var(--color-accent)]"
-              : "border-[var(--color-border)] bg-[#0d1117] text-[var(--color-muted)] hover:border-[var(--color-accent)]/50 hover:text-white"
+          className={`ds-pill pressable px-2.5 py-1 text-[11px] font-semibold ${
+            active === id ? "ds-pill-active" : ""
           }`}
         >
           {label}
@@ -138,7 +136,11 @@ export function MonsterFilterPanel({ filters, onChange }: Props) {
       <div className="flex h-full min-w-0 flex-col overflow-hidden p-3">
         <div className="shrink-0">
           <div className="flex items-center justify-between gap-2">
-            <h2 className="text-sm font-semibold tracking-wide text-[var(--color-accent)] [font-family:var(--font-mono)]">
+            <h2 className="flex items-center gap-2 text-[13px] font-bold uppercase tracking-wider text-[var(--color-fg-strong)]">
+              <span
+                aria-hidden
+                className="h-3.5 w-1 rounded-full bg-[var(--color-accent)] shadow-[var(--shadow-glow)]"
+              />
               Monster
             </h2>
             <button
@@ -146,7 +148,7 @@ export function MonsterFilterPanel({ filters, onChange }: Props) {
               onClick={panel.toggleCollapsed}
               title="Collapse monster filters"
               aria-label="Collapse monster filters"
-              className="flex h-6 w-6 shrink-0 items-center justify-center rounded border border-[var(--color-border)] bg-[var(--color-inset)] text-[var(--color-muted)] transition-colors hover:border-[var(--color-accent)] hover:text-white"
+              className="pressable flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-[var(--color-border)] bg-white/5 text-[var(--color-muted)] hover:border-[var(--color-accent)]/60 hover:bg-[var(--color-accent-muted)] hover:text-[var(--color-accent-strong)]"
             >
               <span aria-hidden className="text-sm leading-none">
                 ‹
@@ -155,7 +157,7 @@ export function MonsterFilterPanel({ filters, onChange }: Props) {
           </div>
 
           <div className="mt-2 flex items-start justify-between gap-2">
-            <p className="text-[10px] text-[var(--color-muted)]/80">
+            <p className="text-[10px] text-[var(--color-faint)]">
               Tap chips to filter stats & attributes
             </p>
             {active && (

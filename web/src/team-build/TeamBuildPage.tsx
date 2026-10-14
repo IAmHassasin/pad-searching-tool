@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import { fetchMonstersByIds } from "../api";
-import { AppToolsNav } from "../components/AppToolsNav";
 import { AwakeningSpriteIcon } from "../components/AwakeningSpriteIcon";
 import { AwkModifierModal } from "../components/AwkModifierModal";
 import { MonsterPortrait } from "../components/MonsterPortrait";
+import { PageHeader } from "../components/PageHeader";
 import { DEFAULT_AWK_MODIFIER_SETTINGS } from "../components/ResultsSortControls";
 import { useTruncatedTitle } from "../hooks/useTruncatedTitle";
 import { computeTeamStats } from "../lib/team-build/compute-stats";
@@ -44,8 +44,18 @@ function totalPlusPoints(member: TeamMemberConfig): number {
 function slotLabel(index: number): string {
   if (index === 0) return "Leader";
   if (index === 5) return "Helper";
-  return "";
+  return `Sub ${index}`;
 }
+
+/** Stat accent colors shared by slot lines and team totals. */
+const STAT_TEXT = {
+  hp: "text-pink-300",
+  atk: "text-[var(--color-fg)]",
+  rcv: "text-sky-300",
+} as const;
+
+const FIELD_INPUT =
+  "ds-input min-h-9 px-2 py-1 font-mono text-sm tabular-nums";
 
 function TeamStatLine({
   kind,
@@ -56,15 +66,15 @@ function TeamStatLine({
 }) {
   const icon =
     kind === "hp" ? (
-      <span className="text-[#f48fb1]" aria-hidden>
+      <span className={STAT_TEXT.hp} aria-hidden>
         ♥
       </span>
     ) : kind === "atk" ? (
-      <span className="text-[#e0e0e0]" aria-hidden>
+      <span className={STAT_TEXT.atk} aria-hidden>
         ⚔
       </span>
     ) : (
-      <span className="text-[#81d4fa]" aria-hidden>
+      <span className={STAT_TEXT.rcv} aria-hidden>
         ✚
       </span>
     );
@@ -72,7 +82,7 @@ function TeamStatLine({
   return (
     <div className="flex items-center gap-1 text-[11px] leading-tight">
       <span className="w-3 shrink-0 text-center">{icon}</span>
-      <span className="min-w-0 flex-1 truncate font-semibold tabular-nums text-white">
+      <span className="min-w-0 flex-1 truncate font-mono font-semibold tabular-nums text-[var(--color-fg-strong)]">
         {value > 0 ? value.toLocaleString() : "—"}
       </span>
     </div>
@@ -101,20 +111,27 @@ function TeamSlotCard({
     <button
       type="button"
       onClick={onSelect}
-      className={`flex w-[96px] shrink-0 flex-col items-center rounded-sm p-1 text-left transition-colors ${
+      aria-pressed={selected}
+      className={`pressable flex w-[96px] shrink-0 flex-col items-center rounded-xl border p-1.5 text-left ${
         selected
-          ? "bg-amber-950/50 ring-1 ring-amber-500/70"
-          : "hover:bg-amber-950/30"
+          ? "border-[var(--color-accent)]/70 bg-[var(--color-accent-muted)] shadow-[var(--shadow-glow)]"
+          : "border-white/[0.06] bg-[var(--color-panel)]/90 hover:border-[var(--color-border-strong)] hover:bg-[var(--color-hover)]"
       }`}
     >
       {label && (
-        <span className="mb-0.5 text-[9px] font-medium uppercase tracking-wide text-amber-200/80">
+        <span
+          className={`ds-label mb-1 ${
+            selected || index === 0 || index === 5
+              ? "text-[var(--color-accent-strong)]"
+              : ""
+          }`}
+        >
           {label}
         </span>
       )}
 
       <div className="relative">
-        <div className="h-[72px] w-[72px] overflow-hidden rounded border border-[#8b6914]/70 bg-[#1a1208]">
+        <div className="h-[72px] w-[72px] overflow-hidden rounded-lg border border-white/10 bg-[var(--color-inset)]">
           {monsterId ? (
             <MonsterPortrait
               monsterId={monsterId}
@@ -123,15 +140,15 @@ function TeamSlotCard({
               className="h-full w-full object-cover"
             />
           ) : (
-            <div className="flex h-full w-full items-center justify-center text-[10px] text-[var(--color-muted)]">
+            <div className="flex h-full w-full items-center justify-center text-[10px] text-[var(--color-faint)]">
               —
             </div>
           )}
         </div>
 
         {monsterId && (
-          <div className="absolute bottom-0 left-0 right-0 flex items-center justify-between gap-0.5 bg-black/75 px-0.5 py-px">
-            <span className="font-mono text-[8px] leading-none text-amber-100/90">
+          <div className="absolute bottom-0 left-0 right-0 flex items-center justify-between gap-0.5 rounded-b-lg bg-black/75 px-0.5 py-px">
+            <span className="font-mono text-[8px] font-bold leading-none tabular-nums text-[var(--color-accent-strong)]">
               {monsterId}
             </span>
             {member.selectedSuperAwakening != null && (
@@ -145,7 +162,7 @@ function TeamSlotCard({
         )}
 
         {plusTotal > 0 && (
-          <span className="absolute -right-1 -top-1 rounded bg-[#f9a825] px-1 text-[9px] font-bold leading-none text-[#3e2723] shadow">
+          <span className="absolute -right-1 -top-1 rounded bg-[var(--color-accent)] px-1 py-px font-mono text-[9px] font-bold leading-none tabular-nums text-slate-950 shadow-[var(--shadow-glow)]">
             +{plusTotal}
           </span>
         )}
@@ -153,14 +170,14 @@ function TeamSlotCard({
 
       {eqId && (
         <div className="mt-1 flex w-full justify-end pr-0.5">
-          <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded border border-[#6b8f3c]/90 bg-[#1a1208]">
+          <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-lg border border-emerald-500/50 bg-[var(--color-inset)]">
             <MonsterPortrait
               monsterId={eqId}
               variant="icon"
               alt=""
               className="h-full w-full object-cover"
             />
-            <span className="absolute bottom-0 left-0 max-w-[85%] truncate rounded-tr bg-black/75 px-0.5 py-px font-mono text-[8px] leading-none text-emerald-100/95">
+            <span className="absolute bottom-0 left-0 max-w-[85%] truncate rounded-tr bg-black/75 px-0.5 py-px font-mono text-[8px] font-bold leading-none tabular-nums text-emerald-300">
               {eqId}
             </span>
           </div>
@@ -174,7 +191,7 @@ function TeamSlotCard({
       </div>
 
       {result?.error && (
-        <span className="mt-0.5 max-w-full truncate text-[8px] text-red-400">
+        <span className="mt-0.5 max-w-full truncate text-[8px] text-[var(--color-negative)]">
           {result.error}
         </span>
       )}
@@ -204,47 +221,54 @@ function SlotEditor({
     index === 0 ? "Leader" : index === 5 ? "Helper" : `Sub ${index}`;
 
   return (
-    <div className="rounded border border-[var(--color-border)] bg-[var(--color-panel)] p-3">
+    <div className="ds-card p-3">
       <div className="mb-3 flex items-center justify-between gap-2">
-        <span className="text-xs font-semibold text-[var(--color-muted)]">
+        <span className="ds-label shrink-0 text-[var(--color-accent-strong)]">
           {roleLabel}
         </span>
         {monster && (
-          <span
-            ref={nameTitle.ref}
-            title={nameTitle.title}
-            className="truncate text-xs text-[var(--color-accent)]"
-          >
-            {monster.name_en ?? `#${monster.monster_id}`}
+          <span className="flex min-w-0 items-center gap-1.5">
+            {monster.monster_id != null && (
+              <span className="shrink-0 rounded-md bg-[var(--color-inset)] px-1.5 py-0.5 font-mono text-[11px] font-bold tabular-nums text-[var(--color-accent-strong)] ring-1 ring-[var(--color-accent)]/20">
+                #{monster.monster_id}
+              </span>
+            )}
+            <span
+              ref={nameTitle.ref}
+              title={nameTitle.title}
+              className="truncate text-xs font-semibold text-[var(--color-fg-strong)]"
+            >
+              {monster.name_en ?? `#${monster.monster_id}`}
+            </span>
           </span>
         )}
       </div>
 
       <div className="grid grid-cols-2 gap-2 text-sm sm:grid-cols-3 lg:grid-cols-4">
         <label className="flex flex-col gap-0.5">
-          <span className="text-[10px] text-[var(--color-muted)]">Monster ID</span>
+          <span className="ds-label">Monster ID</span>
           <input
             type="text"
             inputMode="numeric"
             value={member.monsterId}
             onChange={(e) => onChange({ ...member, monsterId: e.target.value })}
-            className="rounded border border-[var(--color-border)] bg-[#0d1117] px-2 py-1"
+            className={FIELD_INPUT}
             placeholder="e.g. 12806"
           />
         </label>
         <label className="flex flex-col gap-0.5">
-          <span className="text-[10px] text-[var(--color-muted)]">Eq ID</span>
+          <span className="ds-label">Eq ID</span>
           <input
             type="text"
             inputMode="numeric"
             value={member.eqId}
             onChange={(e) => onChange({ ...member, eqId: e.target.value })}
-            className="rounded border border-[var(--color-border)] bg-[#0d1117] px-2 py-1"
+            className={FIELD_INPUT}
             placeholder="Assist"
           />
         </label>
         <label className="flex flex-col gap-0.5">
-          <span className="text-[10px] text-[var(--color-muted)]">Level</span>
+          <span className="ds-label">Level</span>
           <select
             value={member.level}
             onChange={(e) =>
@@ -253,7 +277,7 @@ function SlotEditor({
                 level: Number(e.target.value) as MonsterLevelTarget,
               })
             }
-            className="rounded border border-[var(--color-border)] bg-[#0d1117] px-2 py-1"
+            className={FIELD_INPUT}
           >
             <option value={99}>99</option>
             {levelCap >= 110 && <option value={110}>110 (LB)</option>}
@@ -261,7 +285,7 @@ function SlotEditor({
           </select>
         </label>
         <label className="flex flex-col gap-0.5">
-          <span className="text-[10px] text-[var(--color-muted)]">+HP</span>
+          <span className="ds-label">+HP</span>
           <input
             type="number"
             min={0}
@@ -270,11 +294,11 @@ function SlotEditor({
             onChange={(e) =>
               onChange({ ...member, plusHp: Number(e.target.value) || 0 })
             }
-            className="rounded border border-[var(--color-border)] bg-[#0d1117] px-2 py-1"
+            className={FIELD_INPUT}
           />
         </label>
         <label className="flex flex-col gap-0.5">
-          <span className="text-[10px] text-[var(--color-muted)]">+ATK</span>
+          <span className="ds-label">+ATK</span>
           <input
             type="number"
             min={0}
@@ -283,11 +307,11 @@ function SlotEditor({
             onChange={(e) =>
               onChange({ ...member, plusAtk: Number(e.target.value) || 0 })
             }
-            className="rounded border border-[var(--color-border)] bg-[#0d1117] px-2 py-1"
+            className={FIELD_INPUT}
           />
         </label>
         <label className="flex flex-col gap-0.5">
-          <span className="text-[10px] text-[var(--color-muted)]">+RCV</span>
+          <span className="ds-label">+RCV</span>
           <input
             type="number"
             min={0}
@@ -296,11 +320,11 @@ function SlotEditor({
             onChange={(e) =>
               onChange({ ...member, plusRcv: Number(e.target.value) || 0 })
             }
-            className="rounded border border-[var(--color-border)] bg-[#0d1117] px-2 py-1"
+            className={FIELD_INPUT}
           />
         </label>
         <label className="flex flex-col gap-0.5">
-          <span className="text-[10px] text-[var(--color-muted)]">Eq +HP</span>
+          <span className="ds-label">Eq +HP</span>
           <input
             type="number"
             min={0}
@@ -309,11 +333,11 @@ function SlotEditor({
             onChange={(e) =>
               onChange({ ...member, eqPlusHp: Number(e.target.value) || 0 })
             }
-            className="rounded border border-[var(--color-border)] bg-[#0d1117] px-2 py-1"
+            className={FIELD_INPUT}
           />
         </label>
         <label className="flex flex-col gap-0.5">
-          <span className="text-[10px] text-[var(--color-muted)]">Eq +RCV</span>
+          <span className="ds-label">Eq +RCV</span>
           <input
             type="number"
             min={0}
@@ -322,14 +346,14 @@ function SlotEditor({
             onChange={(e) =>
               onChange({ ...member, eqPlusRcv: Number(e.target.value) || 0 })
             }
-            className="rounded border border-[var(--color-border)] bg-[#0d1117] px-2 py-1"
+            className={FIELD_INPUT}
           />
         </label>
       </div>
 
       {saOptions.length > 0 && (
         <div className="mt-3">
-          <span className="mb-1.5 block text-[10px] text-[var(--color-muted)]">
+          <span className="ds-label mb-1.5 block">
             Super awakening
           </span>
           <div className="flex flex-wrap gap-1.5">
@@ -343,10 +367,11 @@ function SlotEditor({
                   onClick={() =>
                     onChange({ ...member, selectedSuperAwakening: awkId })
                   }
-                  className={`rounded border p-0.5 transition-colors ${
+                  aria-pressed={selected}
+                  className={`pressable rounded border p-1 ${
                     selected
-                      ? "border-amber-500 bg-amber-950/50 ring-1 ring-amber-500/60"
-                      : "border-[var(--color-border)] hover:border-[var(--color-accent)]"
+                      ? "border-[var(--color-accent)] bg-[var(--color-accent-muted)] shadow-[var(--shadow-glow)]"
+                      : "border-[var(--color-border)] bg-[var(--color-inset)] hover:border-[var(--color-border-strong)]"
                   }`}
                 >
                   <AwakeningSpriteIcon awokenSkillId={awkId} size={22} />
@@ -358,10 +383,9 @@ function SlotEditor({
               onClick={() =>
                 onChange({ ...member, selectedSuperAwakening: null })
               }
-              className={`rounded border px-2 py-1 text-[10px] ${
-                member.selectedSuperAwakening == null
-                  ? "border-amber-500/70 bg-amber-950/40 text-amber-200"
-                  : "border-[var(--color-border)] text-[var(--color-muted)] hover:border-[var(--color-accent)]"
+              aria-pressed={member.selectedSuperAwakening == null}
+              className={`ds-pill pressable min-h-8 px-3 text-[11px] font-semibold ${
+                member.selectedSuperAwakening == null ? "ds-pill-active" : ""
               }`}
             >
               None
@@ -371,7 +395,7 @@ function SlotEditor({
       )}
 
       {monster && (
-        <p className="mt-2 text-[10px] text-[var(--color-muted)]">
+        <p className="mt-3 border-t border-[var(--color-border)] pt-2 font-mono text-[10px] tabular-nums text-[var(--color-muted)]">
           {transformForm ? (
             <>Transform form — max Lv.99</>
           ) : (
@@ -397,11 +421,11 @@ function TeamTotalBox({
   accent: string;
 }) {
   return (
-    <div className="rounded-lg border border-[#5d4a2a]/80 bg-[#1a1408]/90 px-4 py-2 text-center">
-      <div className="text-[10px] uppercase tracking-wide text-amber-200/70">
-        {label}
-      </div>
-      <div className={`text-lg font-bold tabular-nums ${accent}`}>
+    <div className="ds-card min-w-0 px-2 py-2 text-center sm:px-4">
+      <div className="ds-label truncate">{label}</div>
+      <div
+        className={`truncate font-mono text-sm font-bold tabular-nums sm:text-lg ${accent}`}
+      >
         {value.toLocaleString()}
       </div>
     </div>
@@ -539,126 +563,129 @@ export function TeamBuildPage() {
     : null;
 
   return (
-    <div className="flex h-full flex-col">
-      <header className="flex shrink-0 flex-wrap items-center justify-between gap-2 border-b border-[var(--color-border)] bg-[#0d1117] px-4 py-2">
-        <h1 className="text-base font-semibold">Team Build</h1>
-        <div className="flex flex-wrap items-center gap-2">
-          <AppToolsNav variant="inline" />
+    <div className="flex h-full flex-col bg-[var(--color-surface)] text-[var(--color-fg)]">
+      <PageHeader
+        title="Team Build"
+        subtitle="Team stat calculator"
+        maxWidthClass="max-w-4xl"
+        actions={
           <button
             type="button"
-            className="rounded border border-[var(--color-border)] px-2 py-1 hover:border-[var(--color-accent)]"
+            className="ds-btn pressable min-h-9 px-3 text-xs font-semibold"
             onClick={() => setAwkOpen(true)}
           >
             Dungeon awk
           </button>
-        </div>
-      </header>
+        }
+      />
 
-      <div className="min-h-0 flex-1 overflow-auto p-4">
+      <div className="min-h-0 flex-1 overflow-auto p-3 sm:p-4">
         <div className="mx-auto max-w-4xl">
-          {/* Team row — PAD layout: Leader | 4 subs | Helper */}
-          <div className="flex items-end justify-center gap-2 overflow-x-auto pb-2">
-            <div className="shrink-0 rounded border-2 border-[#c9a227]/80 bg-[#2a1f0a]/60 p-1">
-              <TeamSlotCard
-                index={0}
-                member={config.members[0]}
-                result={resultBySlot.get(0)}
-                selected={selectedSlot === 0}
-                onSelect={() => setSelectedSlot(0)}
-              />
-            </div>
-
-            <div className="flex shrink-0 gap-0.5 rounded border border-[#8b6914]/50 bg-[#1a1408]/50 p-1">
-              {[1, 2, 3, 4].map((i) => (
+          {/* Team row — PAD layout: Leader | 4 subs | Helper (scrolls horizontally on narrow screens) */}
+          <div className="-mx-3 overflow-x-auto px-3 pb-2 sm:mx-0 sm:px-0">
+            <div className="mx-auto flex w-max items-end gap-2">
+              <div className="shrink-0 rounded-2xl bg-[var(--color-accent)]/[0.06] p-1 ring-1 ring-[var(--color-accent)]/25">
                 <TeamSlotCard
-                  key={i}
-                  index={i}
-                  member={config.members[i]}
-                  result={resultBySlot.get(i)}
-                  selected={selectedSlot === i}
-                  onSelect={() => setSelectedSlot(i)}
+                  index={0}
+                  member={config.members[0]}
+                  result={resultBySlot.get(0)}
+                  selected={selectedSlot === 0}
+                  onSelect={() => setSelectedSlot(0)}
                 />
-              ))}
-            </div>
+              </div>
 
-            <div className="shrink-0 rounded border-2 border-[#c9a227]/80 bg-[#2a1f0a]/60 p-1">
-              <TeamSlotCard
-                index={5}
-                member={config.members[5]}
-                result={resultBySlot.get(5)}
-                selected={selectedSlot === 5}
-                onSelect={() => setSelectedSlot(5)}
-              />
+              <div className="flex shrink-0 gap-1 rounded-2xl bg-white/[0.02] p-1 ring-1 ring-white/[0.06]">
+                {[1, 2, 3, 4].map((i) => (
+                  <TeamSlotCard
+                    key={i}
+                    index={i}
+                    member={config.members[i]}
+                    result={resultBySlot.get(i)}
+                    selected={selectedSlot === i}
+                    onSelect={() => setSelectedSlot(i)}
+                  />
+                ))}
+              </div>
+
+              <div className="shrink-0 rounded-2xl bg-[var(--color-accent)]/[0.06] p-1 ring-1 ring-[var(--color-accent)]/25">
+                <TeamSlotCard
+                  index={5}
+                  member={config.members[5]}
+                  result={resultBySlot.get(5)}
+                  selected={selectedSlot === 5}
+                  onSelect={() => setSelectedSlot(5)}
+                />
+              </div>
             </div>
           </div>
 
-          <p className="mb-4 text-center text-[10px] text-[var(--color-muted)]">
+          <p className="mb-4 text-center text-[10px] text-[var(--color-faint)]">
             Raw stats: level, +points, super awakening, assist. No badge,
             leader skill, or dungeon awk.
           </p>
 
           {/* Team raw totals */}
-          <div className="mb-6 grid grid-cols-3 gap-3">
+          <div className="mb-6 grid grid-cols-3 gap-2 sm:gap-3">
             <TeamTotalBox
               label="Total HP"
               value={summary.teamRawHp}
-              accent="text-[#f48fb1]"
+              accent={STAT_TEXT.hp}
             />
             <TeamTotalBox
               label="Total ATK"
               value={summary.teamRawAtk}
-              accent="text-[#e0e0e0]"
+              accent={STAT_TEXT.atk}
             />
             <TeamTotalBox
               label="Total RCV"
               value={summary.teamRawRcv}
-              accent="text-[#81d4fa]"
+              accent={STAT_TEXT.rcv}
             />
           </div>
 
-          <div className="mb-4 rounded border border-[var(--color-border)] bg-[var(--color-panel)] p-3">
+          <div className="ds-card mb-4 p-3">
             <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
-              <h2 className="text-xs font-semibold uppercase text-[var(--color-muted)]">
-                Team IDs
-              </h2>
+              <h2 className="ds-label">Team IDs</h2>
               {copyMsg && (
-                <span className="text-[10px] text-emerald-400">{copyMsg}</span>
+                <span className="text-[10px] font-semibold text-[var(--color-positive)]">
+                  {copyMsg}
+                </span>
               )}
             </div>
 
             <div className="mb-3 space-y-2">
               <div>
                 <div className="mb-1 flex items-center justify-between gap-2">
-                  <span className="text-[10px] font-medium text-[var(--color-muted)]">
+                  <span className="ds-label text-[var(--color-faint)]">
                     Monsters
                   </span>
                   <button
                     type="button"
                     onClick={() => copyToClipboard(exportedMonsters, "Monsters")}
-                    className="rounded border border-[var(--color-border)] px-2 py-0.5 text-[10px] hover:border-[var(--color-accent)]"
+                    className="ds-btn pressable min-h-8 px-3 text-[11px] font-semibold"
                   >
                     Copy
                   </button>
                 </div>
-                <output className="block break-all rounded bg-[#0d1117] px-2 py-1.5 font-mono text-xs text-[var(--color-accent)]">
+                <output className="block break-all rounded-lg bg-[var(--color-inset)] px-2 py-1.5 font-mono text-xs tabular-nums text-[var(--color-accent-strong)] ring-1 ring-white/[0.04]">
                   {exportedMonsters}
                 </output>
               </div>
 
               <div>
                 <div className="mb-1 flex items-center justify-between gap-2">
-                  <span className="text-[10px] font-medium text-[var(--color-muted)]">
+                  <span className="ds-label text-[var(--color-faint)]">
                     Equipment
                   </span>
                   <button
                     type="button"
                     onClick={() => copyToClipboard(exportedEquipment, "Equipment")}
-                    className="rounded border border-[var(--color-border)] px-2 py-0.5 text-[10px] hover:border-[var(--color-accent)]"
+                    className="ds-btn pressable min-h-8 px-3 text-[11px] font-semibold"
                   >
                     Copy
                   </button>
                 </div>
-                <output className="block break-all rounded bg-[#0d1117] px-2 py-1.5 font-mono text-xs text-emerald-300/90">
+                <output className="block break-all rounded-lg bg-[var(--color-inset)] px-2 py-1.5 font-mono text-xs tabular-nums text-emerald-300 ring-1 ring-white/[0.04]">
                   {exportedEquipment}
                 </output>
               </div>
@@ -666,25 +693,25 @@ export function TeamBuildPage() {
 
             <div className="mb-3 border-t border-[var(--color-border)] pt-3">
               <div className="mb-1 flex flex-wrap items-center justify-between gap-2">
-                <span className="text-[10px] font-medium text-[var(--color-muted)]">
+                <span className="ds-label text-[var(--color-faint)]">
                   Tsubaki
                 </span>
                 <button
                   type="button"
                   onClick={() => copyToClipboard(exportedTsubaki, "Tsubaki")}
-                  className="rounded border border-amber-700/60 bg-amber-950/30 px-2 py-0.5 text-[10px] text-amber-200/90 hover:border-amber-500"
+                  className="pressable min-h-8 rounded-lg border border-[var(--color-secondary)]/40 bg-[var(--color-secondary-muted)] px-3 text-[11px] font-semibold text-[var(--color-secondary-strong)] hover:border-[var(--color-secondary)]"
                 >
                   Copy for Tsubaki
                 </button>
               </div>
-              <output className="block break-all rounded bg-[#0d1117] px-2 py-1.5 font-mono text-xs text-amber-200/90">
+              <output className="block break-all rounded-lg bg-[var(--color-inset)] px-2 py-1.5 font-mono text-xs tabular-nums text-[var(--color-secondary-strong)] ring-1 ring-white/[0.04]">
                 {exportedTsubaki}
               </output>
             </div>
 
             <p className="mb-2 text-[10px] text-[var(--color-muted)]">
               Order: leader · 4 subs · helper. Empty slot ={" "}
-              <code className="text-[var(--color-accent)]">1</code>. Import: line 1
+              <code className="font-mono font-bold text-[var(--color-accent-strong)]">1</code>. Import: line 1
               monsters, line 2 equipment.
             </p>
             <div className="flex flex-col gap-2 sm:flex-row">
@@ -693,19 +720,19 @@ export function TeamBuildPage() {
                 value={importText}
                 onChange={(e) => setImportText(e.target.value)}
                 placeholder="Paste monster IDs (line 1) and optional eq IDs (line 2)…"
-                className="min-w-0 flex-1 resize-y rounded border border-[var(--color-border)] bg-[#0d1117] px-2 py-1 font-mono text-xs"
+                className="ds-input min-w-0 flex-1 resize-y px-2 py-1.5 font-mono text-xs"
               />
               <button
                 type="button"
                 onClick={handleImport}
                 disabled={!importText.trim()}
-                className="shrink-0 rounded border border-[var(--color-border)] px-3 py-1 text-xs hover:border-[var(--color-accent)] disabled:opacity-40"
+                className="ds-btn-primary pressable min-h-10 shrink-0 px-4 text-xs disabled:cursor-not-allowed"
               >
                 Import
               </button>
             </div>
             {importMsg && (
-              <p className="mt-2 text-[10px] text-amber-300/90">{importMsg}</p>
+              <p className="mt-2 text-[10px] text-[var(--color-amber-text)]">{importMsg}</p>
             )}
           </div>
 
@@ -718,10 +745,8 @@ export function TeamBuildPage() {
             />
 
             <aside className="flex flex-col gap-3">
-              <div className="rounded border border-[var(--color-border)] bg-[var(--color-panel)] p-3">
-                <h2 className="mb-2 text-xs font-semibold uppercase text-[var(--color-muted)]">
-                  Team settings
-                </h2>
+              <div className="ds-card p-3">
+                <h2 className="ds-label mb-2">Team settings</h2>
                 <label className="flex flex-col gap-1 text-sm">
                   <span className="text-xs text-[var(--color-muted)]">Badge</span>
                   <select
@@ -732,7 +757,7 @@ export function TeamBuildPage() {
                         badge: e.target.value as TeamBadgeId,
                       }))
                     }
-                    className="rounded border border-[var(--color-border)] bg-[#0d1117] px-2 py-1"
+                    className="ds-input min-h-9 px-2 py-1"
                   >
                     {BADGE_OPTIONS.map((b) => (
                       <option key={b.id} value={b.id}>
@@ -746,22 +771,22 @@ export function TeamBuildPage() {
                 </p>
               </div>
 
-              <div className="rounded border border-emerald-800/60 bg-emerald-950/30 p-3">
-                <h2 className="mb-2 text-xs font-semibold uppercase text-emerald-200/80">
+              <div className="rounded-xl border border-[var(--color-positive)]/25 bg-[var(--color-positive)]/[0.06] p-3">
+                <h2 className="ds-label mb-2 text-emerald-300">
                   With badge + LS
                 </h2>
-                <div className="space-y-1 text-sm tabular-nums">
-                  <div className="flex justify-between text-[#f48fb1]">
-                    <span>HP</span>
-                    <span>{summary.teamHp.toLocaleString()}</span>
+                <div className="space-y-1 text-sm">
+                  <div className={`flex justify-between ${STAT_TEXT.hp}`}>
+                    <span className="font-semibold">HP</span>
+                    <span className="font-mono font-bold tabular-nums">{summary.teamHp.toLocaleString()}</span>
                   </div>
-                  <div className="flex justify-between text-[#e0e0e0]">
-                    <span>ATK</span>
-                    <span>{summary.teamAtk.toLocaleString()}</span>
+                  <div className={`flex justify-between ${STAT_TEXT.atk}`}>
+                    <span className="font-semibold">ATK</span>
+                    <span className="font-mono font-bold tabular-nums">{summary.teamAtk.toLocaleString()}</span>
                   </div>
-                  <div className="flex justify-between text-[#81d4fa]">
-                    <span>RCV</span>
-                    <span>{summary.teamRcv.toLocaleString()}</span>
+                  <div className={`flex justify-between ${STAT_TEXT.rcv}`}>
+                    <span className="font-semibold">RCV</span>
+                    <span className="font-mono font-bold tabular-nums">{summary.teamRcv.toLocaleString()}</span>
                   </div>
                 </div>
               </div>

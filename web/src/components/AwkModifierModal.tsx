@@ -62,10 +62,10 @@ function AwkToggle({
         }
         onChange(withAwkEnabled(next, id, true));
       }}
-      className={`rounded-sm border p-px transition-colors ${
+      className={`pressable rounded border p-0.5 ${
         on
-          ? "border-[var(--color-accent)] bg-[#1f3a5f]"
-          : "border-[#6b8f3c]/40 bg-[#1a2a12]/50 opacity-75 hover:opacity-100"
+          ? "border-[var(--color-secondary)] bg-[var(--color-secondary-muted)] shadow-[var(--shadow-glow-cyan)]"
+          : "border-[var(--color-border)] bg-[var(--color-inset)] opacity-60 hover:border-[var(--color-border-strong)] hover:opacity-100"
       }`}
     >
       <AwakeningSpriteIcon awokenSkillId={id} size={18} />
@@ -86,10 +86,10 @@ function MiniBtn({
     <button
       type="button"
       onClick={onClick}
-      className={`rounded border px-1 py-px text-[9px] leading-tight ${
+      className={`pressable min-w-6 rounded-full border px-1.5 py-0.5 font-mono text-[10px] leading-tight tabular-nums ${
         active
-          ? "border-[var(--color-accent)] bg-[#1f3a5f] text-white"
-          : "border-[var(--color-border)] text-[var(--color-muted)] hover:bg-[#21262d]"
+          ? "border-[var(--color-accent)]/70 bg-[var(--color-accent-muted)] text-[var(--color-accent-strong)] shadow-[var(--shadow-glow)]"
+          : "border-[var(--color-border)] bg-[var(--color-panel)] text-[var(--color-muted)] hover:border-[var(--color-border-strong)] hover:text-[var(--color-fg-strong)]"
       }`}
     >
       {children}
@@ -116,18 +116,18 @@ export function AwkModifierModal({ open, stat, settings, onChange, onClose }: Pr
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-3"
+      className="animate-fade-in fixed inset-0 z-50 flex items-end justify-center bg-black/50 sm:items-center sm:p-3"
       onClick={onClose}
     >
       <div
-        className="flex max-h-[85vh] w-full max-w-lg flex-col rounded border border-[var(--color-border)] bg-[#161b22] shadow-xl"
+        className="ds-float animate-sheet-in flex max-h-[85vh] w-full max-w-lg flex-col rounded-t-3xl pb-[env(safe-area-inset-bottom)] sm:animate-none sm:rounded-2xl sm:pb-0"
         onClick={(e) => e.stopPropagation()}
       >
-        <header className="flex shrink-0 items-center gap-2 border-b border-[var(--color-border)] px-2 py-1.5">
-          <h2 className="text-xs font-semibold text-white">
+        <header className="flex shrink-0 items-center gap-2 border-b border-white/[0.06] px-3 py-2">
+          <h2 className="text-sm font-bold text-[var(--color-fg-strong)]">
             Awk modifier — {stat.toUpperCase()}
           </h2>
-          <span className="text-[9px] text-[var(--color-muted)]">
+          <span className="rounded-full border border-[var(--color-secondary)]/40 bg-[var(--color-secondary-muted)] px-1.5 py-px font-mono text-[9px] font-bold tabular-nums text-[var(--color-secondary-strong)]">
             {settings.enabled.length} sel
           </span>
           <div className="ml-auto flex gap-1">
@@ -141,7 +141,7 @@ export function AwkModifierModal({ open, stat, settings, onChange, onClose }: Pr
                   }
                   onChange(next);
                 }}
-                className="rounded border border-[var(--color-border)] px-1.5 py-px text-[9px] text-[var(--color-muted)] hover:bg-[#21262d]"
+                className="ds-btn pressable h-7 px-2 text-[10px] font-semibold"
               >
                 {allKillersOn ? "−Kill" : "+Kill"}
               </button>
@@ -149,22 +149,23 @@ export function AwkModifierModal({ open, stat, settings, onChange, onClose }: Pr
             <button
               type="button"
               onClick={() => onChange({ ...DEFAULT_AWK_MODIFIER_SETTINGS })}
-              className="rounded border border-[var(--color-border)] px-1.5 py-px text-[9px] text-[var(--color-muted)] hover:bg-[#21262d]"
+              className="pressable h-7 rounded-lg px-2 text-[10px] font-semibold text-[var(--color-muted)] hover:bg-[var(--color-negative)]/10 hover:text-[var(--color-negative)]"
             >
               Reset
             </button>
             <button
               type="button"
               onClick={onClose}
-              className="rounded border border-[var(--color-border)] px-1.5 py-px text-[9px] text-[var(--color-muted)] hover:bg-[#21262d]"
+              aria-label="Close"
+              className="pressable flex h-7 w-7 items-center justify-center rounded-lg bg-white/5 text-sm leading-none text-[var(--color-muted)] hover:bg-white/10 hover:text-[var(--color-fg-strong)]"
             >
               ×
             </button>
           </div>
         </header>
 
-        <div className="min-h-0 flex-1 overflow-y-auto px-2 py-1.5">
-          <div className="flex flex-wrap gap-0.5">
+        <div className="min-h-0 flex-1 overflow-y-auto px-3 py-2">
+          <div className="flex flex-wrap gap-1">
             {modifierAwks.map((id) => (
               <AwkToggle
                 key={id}
@@ -176,10 +177,10 @@ export function AwkModifierModal({ open, stat, settings, onChange, onClose }: Pr
           </div>
 
           {hasOptions && (
-            <div className="mt-1.5 flex flex-wrap items-center gap-1 border-t border-[var(--color-border)]/60 pt-1.5">
+            <div className="mt-2 flex flex-wrap items-center gap-1 border-t border-white/[0.06] pt-2">
               {showAging && (
                 <>
-                  <span className="text-[9px] text-[var(--color-muted)]">#130</span>
+                  <span className="font-mono text-[9px] tabular-nums text-[var(--color-faint)]">#130</span>
                   <MiniBtn
                     active={settings.agingBattle === 5}
                     onClick={() => onChange({ ...settings, agingBattle: 5 })}
@@ -196,7 +197,7 @@ export function AwkModifierModal({ open, stat, settings, onChange, onClose }: Pr
               )}
               {showParts && (
                 <>
-                  <span className="text-[9px] text-[var(--color-muted)]">#131</span>
+                  <span className="font-mono text-[9px] tabular-nums text-[var(--color-faint)]">#131</span>
                   <MiniBtn
                     onClick={() =>
                       onChange({
@@ -207,7 +208,7 @@ export function AwkModifierModal({ open, stat, settings, onChange, onClose }: Pr
                   >
                     −
                   </MiniBtn>
-                  <span className="text-[9px] tabular-nums text-white">
+                  <span className="min-w-4 text-center font-mono text-[10px] font-semibold tabular-nums text-[var(--color-fg-strong)]">
                     {settings.parts131}
                   </span>
                   <MiniBtn
@@ -224,7 +225,7 @@ export function AwkModifierModal({ open, stat, settings, onChange, onClose }: Pr
               )}
               {showCombo && (
                 <>
-                  <span className="text-[9px] text-[var(--color-muted)]">#107</span>
+                  <span className="font-mono text-[9px] tabular-nums text-[var(--color-faint)]">#107</span>
                   <MiniBtn
                     active={settings.combo43 === 7}
                     onClick={() => onChange({ ...settings, combo43: 7 })}
@@ -241,7 +242,7 @@ export function AwkModifierModal({ open, stat, settings, onChange, onClose }: Pr
               )}
               {showBattle && (
                 <>
-                  <span className="text-[9px] text-[var(--color-muted)]">#143</span>
+                  <span className="font-mono text-[9px] tabular-nums text-[var(--color-faint)]">#143</span>
                   {([3, 6, 9, 12, 15] as const).map((b) => (
                     <MiniBtn
                       key={b}

@@ -57,7 +57,7 @@ function BoundInput({
 }) {
   return (
     <label
-      className={`flex min-w-0 flex-1 flex-col gap-0.5 font-medium uppercase tracking-wide text-[var(--color-muted)] ${
+      className={`flex min-w-0 flex-1 flex-col gap-0.5 font-mono font-semibold uppercase tracking-wide text-[var(--color-faint)] ${
         compact ? "text-[8px]" : "text-[9px]"
       }`}
     >
@@ -67,7 +67,7 @@ function BoundInput({
         inputMode="decimal"
         step={step ?? "any"}
         placeholder={placeholder}
-        className={`w-full rounded-md border border-[var(--color-border)] bg-[var(--color-inset)] px-1.5 tabular-nums text-white transition-colors placeholder:text-[var(--color-muted)]/50 focus:border-[var(--color-accent)] focus:outline-none ${
+        className={`ds-input w-full px-1.5 font-mono font-medium normal-case tabular-nums tracking-normal transition-colors ${
           compact ? "py-0.5 text-[11px]" : "py-1 text-xs"
         }`}
         value={value ?? ""}
@@ -106,10 +106,10 @@ function FamilyRow({
 
   return (
     <div
-      className={`rounded-md border p-1.5 transition-colors ${
+      className={`rounded-lg border p-1.5 transition-colors ${
         active
-          ? "border-[var(--color-accent)]/70 bg-[var(--color-accent-muted)]/30"
-          : "border-[var(--color-border)]/70"
+          ? "border-[var(--color-accent)]/70 bg-[var(--color-accent-muted)]"
+          : "border-white/[0.06] bg-[var(--color-inset)]/50 hover:border-white/10"
       }`}
       style={{ boxShadow: `inset 3px 0 0 0 ${accent}` }}
     >
@@ -124,7 +124,7 @@ function FamilyRow({
         <div className="flex shrink-0 items-baseline gap-1.5">
           {observed && (
             <span
-              className={`tabular-nums text-[var(--color-muted)] ${compact ? "text-[8px]" : "text-[9px]"}`}
+              className={`font-mono tabular-nums text-[var(--color-faint)] ${compact ? "text-[8px]" : "text-[9px]"}`}
               title={
                 family.cards_observed != null
                   ? `${family.cards_observed} cards have this effect`
@@ -138,7 +138,7 @@ function FamilyRow({
             <button
               type="button"
               onClick={() => onChange(setRange(filters, family.id, { min: null, max: null }))}
-              className="rounded px-1 text-[9px] text-[var(--color-muted)] hover:text-red-300"
+              className="pressable rounded px-1 text-[10px] text-[var(--color-muted)] hover:bg-[var(--color-negative)]/10 hover:text-[var(--color-negative)]"
               title={`Clear ${family.label}`}
               aria-label={`Clear ${family.label}`}
             >
@@ -157,7 +157,7 @@ function FamilyRow({
           onChange={(min) => onChange(setRange(filters, family.id, { min }))}
         />
         <span
-          className={`pb-1 text-[var(--color-muted)] ${compact ? "text-[9px]" : "text-[10px]"}`}
+          className={`pb-1 text-[var(--color-faint)] ${compact ? "text-[9px]" : "text-[10px]"}`}
           aria-hidden
         >
           –
@@ -215,7 +215,7 @@ export function AdvancedEffectFilterSection({
           <button
             type="button"
             onClick={() => onChange(EMPTY_ADVANCED_EFFECT_FILTERS)}
-            className="shrink-0 rounded border border-[var(--color-border)] px-2 py-0.5 text-[10px] text-[var(--color-muted)] hover:border-red-500/50 hover:text-red-300"
+            className="pressable shrink-0 rounded-lg px-2 py-0.5 text-[10px] font-semibold text-[var(--color-muted)] hover:bg-[var(--color-negative)]/10 hover:text-[var(--color-negative)]"
           >
             Clear all
           </button>
@@ -223,7 +223,7 @@ export function AdvancedEffectFilterSection({
       }
     >
       {loading && (
-        <p className="text-[10px] text-[var(--color-muted)]">Loading families…</p>
+        <p className="animate-pulse text-[10px] text-[var(--color-muted)]">Loading families…</p>
       )}
       {!loading && list.length === 0 && (
         <p className="text-[10px] text-[var(--color-muted)]">
@@ -242,11 +242,11 @@ export function AdvancedEffectFilterSection({
             {grouped.map(({ group, families: groupFamilies }) => (
               <div key={group}>
                 <p
-                  className={`mb-1 flex items-center gap-1.5 font-semibold uppercase tracking-wide ${compact ? "text-[9px]" : "text-[10px]"}`}
+                  className={`ds-label mb-1 flex items-center gap-1.5 ${compact ? "text-[9px]" : "text-[10px]"}`}
                   style={{ color: GROUP_ACCENT[group] }}
                 >
                   <span
-                    className="h-px w-2 shrink-0"
+                    className="h-1.5 w-1.5 shrink-0 rounded-full"
                     style={{ backgroundColor: GROUP_ACCENT[group] }}
                     aria-hidden
                   />

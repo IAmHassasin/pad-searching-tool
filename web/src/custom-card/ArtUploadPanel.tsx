@@ -35,10 +35,8 @@ export function ArtUploadPanel({
   };
 
   return (
-    <section className="rounded-lg border border-[var(--color-border)] bg-[#0d1117] p-3">
-      <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-[#c9a84a]">
-        Art &amp; icon
-      </h2>
+    <section className="ds-card p-3">
+      <h2 className="ds-label mb-2">Art &amp; icon</h2>
       <div
         onDragOver={(e) => {
           e.preventDefault();
@@ -50,17 +48,17 @@ export function ArtUploadPanel({
           setDragOver(false);
           takeFile(e.dataTransfer.files?.[0]);
         }}
-        className={`flex flex-col items-center justify-center gap-2 rounded-md border border-dashed px-3 py-4 text-center transition-colors ${
+        className={`flex flex-col items-center justify-center gap-2 rounded-lg border border-dashed px-3 py-4 text-center transition-colors ${
           dragOver
-            ? "border-[#c9a84a] bg-[#3a2f12]/40"
-            : "border-[var(--color-border)] bg-[#161b22]"
+            ? "border-[var(--color-accent)] bg-[var(--color-accent-muted)]"
+            : "border-[var(--color-border-strong)] bg-[var(--color-inset)]"
         }`}
       >
         {previewUrl ? (
           <img
             src={previewUrl}
             alt="Card art"
-            className="max-h-48 w-auto rounded object-contain"
+            className="max-h-48 w-auto rounded-lg object-contain ring-1 ring-white/10"
           />
         ) : (
           <p className="text-xs text-[var(--color-muted)]">
@@ -75,7 +73,9 @@ export function ArtUploadPanel({
           <button
             type="button"
             onClick={() => inputRef.current?.click()}
-            className="rounded border border-[var(--color-border)] bg-[#21262d] px-2 py-1 text-xs hover:border-[#c9a84a]"
+            className={`pressable min-h-9 px-3 text-xs ${
+              sourceArtObjectUrl ? "ds-btn" : "ds-btn-primary"
+            }`}
           >
             {sourceArtObjectUrl ? "Replace PNG" : "Upload PNG"}
           </button>
@@ -84,21 +84,21 @@ export function ArtUploadPanel({
               <button
                 type="button"
                 onClick={onOpenArtCrop}
-                className="rounded border border-[#c9a84a]/60 bg-[#3a2f12] px-2 py-1 text-xs text-[#f5e6c8] hover:border-[#c9a84a]"
+                className="ds-btn pressable min-h-9 px-3 text-xs font-semibold"
               >
                 {hasArtCrop ? "Recrop art" : "Crop art"}
               </button>
               <button
                 type="button"
                 onClick={onOpenIconCrop}
-                className="rounded border border-[#c9a84a]/60 bg-[#3a2f12] px-2 py-1 text-xs text-[#f5e6c8] hover:border-[#c9a84a]"
+                className="ds-btn pressable min-h-9 px-3 text-xs font-semibold"
               >
                 {hasIcon ? "Recrop icon" : "Crop icon"}
               </button>
               <button
                 type="button"
                 onClick={onClearArt}
-                className="rounded border border-red-500/40 px-2 py-1 text-xs text-red-300 hover:border-red-400"
+                className="pressable min-h-9 rounded-lg border border-[var(--color-negative)]/40 bg-[var(--color-negative)]/10 px-3 text-xs font-semibold text-red-300 hover:border-[var(--color-negative)]"
               >
                 Clear
               </button>
@@ -117,7 +117,7 @@ export function ArtUploadPanel({
         />
       </div>
       {error && (
-        <p className="mt-2 text-[11px] text-red-300" role="alert">
+        <p className="mt-2 text-[11px] text-[var(--color-negative)]" role="alert">
           {error}
         </p>
       )}

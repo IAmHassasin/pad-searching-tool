@@ -12,7 +12,7 @@ export function ActiveSkillVanishAddLine({
 
   return (
     <div className="mt-1.5 flex flex-wrap items-center gap-1">
-      <span className="text-[10px] font-semibold uppercase tracking-wide text-[#a8c878]">
+      <span className="text-[10px] font-semibold uppercase tracking-wide text-[var(--pst-skill-add,#a8c878)]">
         Add
       </span>
       {ids.map((id, index) => (

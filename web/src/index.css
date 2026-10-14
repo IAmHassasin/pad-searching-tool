@@ -1,30 +1,55 @@
 @import "tailwindcss";
 
 @theme {
-  /* Type — a technical/data-terminal pairing: monospace for brand + numerals,
-     a warm humanist sans for reading. Neither is a stock system font. */
-  --font-sans: "Public Sans", "Segoe UI", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  /* Type — Public Sans for names/labels, JetBrains Mono for ids, cooldowns,
+     stats and other numerals (PST "Dragon Forge" design system). */
+  --font-sans: "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas,
+    monospace;
 
-  /* Base surfaces */
-  --color-surface: #0f1419;
-  --color-panel: #161b22;
-  --color-border: #30363d;
-  --color-accent: #58a6ff;
-  --color-accent-2: #e3b341; /* amber terminal glow — brand + preview accents */
-  --color-muted: #8b949e;
+  /* Surfaces — deep navy layering instead of shadows. */
+  --color-surface: #0b1326; /* level 0 page canvas */
+  --color-panel: #131b2e; /* level 1 cards / panels */
+  --color-inset: #060e20; /* inputs, tracks, inset wells */
+  --color-hover: #1e293b; /* card hover / active row */
+  --color-elevated: #222a3d; /* level 2 popovers, menus, modals */
+  --color-border: #243047; /* hairline dividers, control outlines */
+  --color-border-strong: #334155; /* input outline, hover outline */
 
-  /* Promoted from ad hoc literals sprinkled across filter components —
-     keeps the redesign on a real token backbone instead of more magic hex. */
-  --color-inset: #0d1117; /* input / chip / header well background */
-  --color-accent-muted: #1f3a5f; /* selected-chip accent-tinted background */
-  --color-hover: #21262d; /* unselected-chip hover background */
-  --color-positive: #6b8f3c; /* awakening include / positive accent */
-  --color-negative: #f85149; /* awakening exclude / negative accent */
-  --color-gold: #c9a84a; /* vanish / supplemental-data accent */
-  --color-amber-border: #8b6914;
-  --color-amber-bg: #2a1f14;
-  --color-amber-text: #e8dcc8;
+  /* Text */
+  --color-fg: #e2e8f0;
+  --color-fg-strong: #f8fafc;
+  --color-muted: #94a3b8;
+  --color-faint: #64748b;
+
+  /* Brand accents — amber gold primary, glacial cyan secondary. */
+  --color-accent: #f59e0b;
+  --color-accent-strong: #fbbf24;
+  --color-accent-muted: rgba(245, 158, 11, 0.15); /* selected-chip tint */
+  --color-accent-2: #fbbf24;
+  --color-secondary: #06b6d4;
+  --color-secondary-strong: #4cd7f6;
+  --color-secondary-muted: rgba(6, 182, 212, 0.15);
+
+  /* Semantic */
+  --color-positive: #10b981; /* awakening include / positive accent */
+  --color-negative: #ef4444; /* awakening exclude / reset / negative */
+  --color-gold: #fbbf24; /* vanish / supplemental-data accent */
+  --color-amber-border: #b45309;
+  --color-amber-bg: rgba(245, 158, 11, 0.12);
+  --color-amber-text: #fde68a;
+
+  /* PAD element tokens */
+  --color-pad-fire: #ef4444;
+  --color-pad-water: #38bdf8;
+  --color-pad-wood: #22c55e;
+  --color-pad-light: #fbbf24;
+  --color-pad-dark: #c084fc;
+
+  --shadow-glow: 0 0 12px rgba(245, 158, 11, 0.25);
+  --shadow-glow-cyan: 0 0 12px rgba(6, 182, 212, 0.25);
+  --shadow-float: 0 8px 24px -4px rgba(0, 0, 0, 0.6);
 }
 
 html,
@@ -36,19 +61,19 @@ body,
 body {
   margin: 0;
   font-family: var(--font-sans);
-  color: #e6edf3;
+  color: var(--color-fg);
   background:
-    radial-gradient(ellipse 1200px 600px at 12% -10%, rgba(88, 166, 255, 0.05), transparent 60%),
-    radial-gradient(ellipse 900px 500px at 100% 0%, rgba(227, 179, 65, 0.035), transparent 55%),
+    radial-gradient(ellipse 1200px 600px at 10% -10%, rgba(245, 158, 11, 0.05), transparent 60%),
+    radial-gradient(ellipse 900px 500px at 100% 0%, rgba(6, 182, 212, 0.04), transparent 55%),
     var(--color-surface);
   background-attachment: fixed;
+  -webkit-tap-highlight-color: transparent;
 }
 
-input,
-select,
-textarea,
-button {
-  font: inherit;
+/* Native form controls pick up the dark scheme (date pickers, selects). */
+:root {
+  color-scheme: dark;
+  accent-color: var(--color-accent);
 }
 
 /* Numerals (ids, stats, coordinates) read better tabular + monospaced. */
@@ -58,14 +83,14 @@ button {
 }
 
 ::selection {
-  background: rgba(88, 166, 255, 0.35);
+  background: rgba(245, 158, 11, 0.35);
   color: #fff;
 }
 
 /* Slim dark scrollbars everywhere instead of the OS default light chrome. */
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--color-border) transparent;
+  scrollbar-color: var(--color-border-strong) transparent;
 }
 *::-webkit-scrollbar {
   width: 10px;
@@ -75,15 +100,167 @@ button {
   background: transparent;
 }
 *::-webkit-scrollbar-thumb {
-  background-color: var(--color-border);
+  background-color: var(--color-border-strong);
   border-radius: 999px;
   border: 2px solid var(--color-surface);
 }
 *::-webkit-scrollbar-thumb:hover {
-  background-color: var(--color-muted);
+  background-color: var(--color-faint);
 }
 
 :focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 1px;
+}
+
+/* ---- Shared design-system utilities ---------------------------------- */
+
+/* Sticky header / bottom dock: 85% navy over a 12px blur. */
+@utility glass-bar {
+  background-color: rgba(11, 19, 38, 0.85);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+/* Tactile press feedback for buttons and cards. */
+@utility pressable {
+  transition-property: transform, background-color, border-color, color,
+    box-shadow;
+  transition-duration: 150ms;
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+/* Level-1 card shell. */
+@utility ds-card {
+  background-color: color-mix(in srgb, var(--color-panel) 90%, transparent);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 0.75rem;
+}
+
+/* Level-2 floating surface (popovers, menus, modals). */
+@utility ds-float {
+  background-color: var(--color-elevated);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: var(--shadow-float);
+}
+
+/* Uppercase mono section label. */
+@utility ds-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 14px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+/* Pill segment (view-mode switchers, filter chips). */
+@utility ds-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  border-radius: 9999px;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-panel);
+  color: var(--color-muted);
+  &:hover {
+    border-color: var(--color-border-strong);
+    color: var(--color-fg-strong);
+  }
+}
+
+@utility ds-pill-active {
+  border-color: rgba(245, 158, 11, 0.7);
+  background-color: var(--color-accent-muted);
+  color: var(--color-accent-strong);
+  box-shadow: var(--shadow-glow);
+  &:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent-strong);
+  }
+}
+
+/* Text input / select well. */
+@utility ds-input {
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-border-strong);
+  background-color: var(--color-inset);
+  color: var(--color-fg-strong);
+  &::placeholder {
+    color: var(--color-faint);
+  }
+  &:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
+  }
+}
+
+/* Primary amber CTA. */
+@utility ds-btn-primary {
+  border-radius: 0.75rem;
+  background-color: var(--color-accent);
+  color: #020617;
+  font-weight: 700;
+  &:hover {
+    background-color: var(--color-accent-strong);
+  }
+  &:disabled {
+    opacity: 0.5;
+  }
+}
+
+/* Neutral secondary button. */
+@utility ds-btn {
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-border);
+  background-color: rgba(255, 255, 255, 0.04);
+  color: var(--color-fg);
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+    border-color: var(--color-border-strong);
+    color: var(--color-fg-strong);
+  }
+}
+
+@keyframes ds-sheet-in {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes ds-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@utility animate-sheet-in {
+  animation: ds-sheet-in 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@utility animate-fade-in {
+  animation: ds-fade-in 160ms ease-out;
+}
+
+/* Global so responsive variants (e.g. `sm:animate-fade-in`) are covered too. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+  .pressable:active {
+    transform: none;
+  }
 }

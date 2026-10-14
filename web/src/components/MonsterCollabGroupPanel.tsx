@@ -26,19 +26,23 @@ export function MonsterCollabGroupPanel({
     query.data?.byRarity.reduce((sum, g) => sum + g.monsters.length, 0) ?? 0;
 
   return (
-    <div className="flex h-full min-h-0 flex-col rounded-xl border-2 border-[#a8842f] bg-[#0f0c0a]/98 shadow-[0_8px_32px_rgba(0,0,0,0.65)]">
-      <header className="flex shrink-0 items-start justify-between gap-2 border-b border-[#6b4f2a]/80 bg-[#2f2118]/95 px-3 py-2">
+    <div className="ds-card flex h-full min-h-0 flex-col overflow-hidden">
+      <header className="flex shrink-0 items-start justify-between gap-2 border-b border-white/[0.06] px-3 py-2">
         <div className="min-w-0">
-          <p className="text-[10px] font-semibold text-[#c9b08a]">Group</p>
-          <h3 className="truncate text-xs font-bold text-white">
+          <p className="ds-label">Group</p>
+          <h3 className="truncate text-xs font-bold text-[var(--color-fg-strong)]">
             {query.data?.groupName ??
               (query.data?.groupId
                 ? `Group #${query.data.groupId}`
                 : "No group")}
           </h3>
           {query.data && query.data.groupId > 0 && (
-            <p className="text-[10px] text-[#9ec5ff]">
-              Group #{query.data.groupId} · {totalMonsters} monster
+            <p className="text-[10px] text-[var(--color-muted)]">
+              Group{" "}
+              <span className="font-mono font-bold tabular-nums text-[var(--color-accent-strong)]">
+                #{query.data.groupId}
+              </span>{" "}
+              · <span className="font-mono tabular-nums">{totalMonsters}</span> monster
               {totalMonsters === 1 ? "" : "s"}
             </p>
           )}
@@ -46,7 +50,7 @@ export function MonsterCollabGroupPanel({
         <button
           type="button"
           onClick={onClose}
-          className="shrink-0 rounded border border-[#6b4f2a]/80 px-2 py-0.5 text-[10px] text-[#c9b08a] hover:border-[#c9a84a] hover:text-white"
+          className="ds-btn pressable min-h-8 shrink-0 px-2.5 py-1 text-[11px] font-semibold"
         >
           Close
         </button>
@@ -54,7 +58,7 @@ export function MonsterCollabGroupPanel({
 
       <div className="min-h-0 flex-1 overflow-auto p-3">
         {query.isLoading && (
-          <p className="text-xs text-[#c9b08a]">Loading collab group…</p>
+          <p className="text-xs text-[var(--color-muted)]">Loading collab group…</p>
         )}
         {query.error && (
           <p className="text-xs text-red-300">
@@ -64,7 +68,7 @@ export function MonsterCollabGroupPanel({
           </p>
         )}
         {query.data && query.data.groupId === 0 && (
-          <p className="text-xs text-[#c9b08a]">
+          <p className="text-xs text-[var(--color-muted)]">
             This monster is not part of a collab group.
           </p>
         )}
@@ -72,10 +76,10 @@ export function MonsterCollabGroupPanel({
           <section key={rarity} className="mb-4 last:mb-0">
             <div className="mb-2 flex items-center gap-2">
               <StarRow count={rarity} />
-              <span className="text-[10px] font-semibold text-[#c9b08a]">
+              <span className="font-mono text-[10px] font-semibold tabular-nums text-[var(--color-muted)]">
                 {rarity}★
               </span>
-              <span className="text-[10px] text-[#8b9a6b]">
+              <span className="font-mono text-[10px] tabular-nums text-[var(--color-faint)]">
                 ({monsters.length})
               </span>
             </div>

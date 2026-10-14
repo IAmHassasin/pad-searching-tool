@@ -45,13 +45,13 @@ export function ResizableSidePanel({
           onClick={onExpandToggle}
           title={`Expand ${ariaLabel}`}
           aria-label={`Expand ${ariaLabel}`}
-          className="flex h-8 w-8 shrink-0 items-center justify-center rounded border border-[var(--color-border)] bg-[var(--color-inset)] text-[var(--color-muted)] transition-colors hover:border-[var(--color-accent)] hover:text-white"
+          className="pressable flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-[var(--color-border)] bg-white/5 text-[var(--color-muted)] hover:border-[var(--color-accent)]/60 hover:bg-[var(--color-accent-muted)] hover:text-[var(--color-accent-strong)]"
         >
           <span aria-hidden className="text-sm leading-none">
             {side === "left" ? "›" : "‹"}
           </span>
         </button>
-        <span className="mt-3 text-[10px] font-semibold tracking-wide text-[var(--color-muted)] [writing-mode:vertical-rl]">
+        <span className="ds-label mt-3 [writing-mode:vertical-rl]">
           {collapsedLabel}
         </span>
       </aside>
@@ -63,7 +63,7 @@ export function ResizableSidePanel({
       {...dragHandleProps}
       className="group relative w-1.5 shrink-0 cursor-col-resize touch-none select-none"
     >
-      <div className="absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-[var(--color-border)] transition-colors group-hover:bg-[var(--color-accent)] group-focus-visible:bg-[var(--color-accent)]" />
+      <div className="absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-[var(--color-border)] transition-colors group-hover:bg-[var(--color-accent)] group-hover:shadow-[var(--shadow-glow)] group-focus-visible:bg-[var(--color-accent)]" />
       <div className="absolute inset-y-0 left-1/2 w-3 -translate-x-1/2" />
     </div>
   );

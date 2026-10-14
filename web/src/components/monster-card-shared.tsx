@@ -23,6 +23,11 @@ export function StarRow({
   );
 }
 
+/**
+ * Colors read optional `--pst-stat-*` custom properties; the fallbacks are the
+ * in-game card colors (used by the PNG-exported card), so only app chrome that
+ * sets the properties (e.g. MonsterQuickPreview) changes tone.
+ */
 export function StatRow({
   label,
   value,
@@ -36,10 +41,12 @@ export function StatRow({
     <div
       className={`flex items-baseline gap-1.5 leading-none ${compact ? "text-[10px]" : "text-[11px]"}`}
     >
-      <span className={`font-bold text-[#f0d9b5] ${compact ? "w-6" : "w-7"}`}>
+      <span
+        className={`font-bold text-[var(--pst-stat-label,#f0d9b5)] ${compact ? "w-6" : "w-7"}`}
+      >
         {label}
       </span>
-      <span className="font-bold tabular-nums text-white">
+      <span className="font-bold tabular-nums text-[var(--pst-stat-value,#fff)]">
         {value?.toLocaleString() ?? "—"}
       </span>
     </div>

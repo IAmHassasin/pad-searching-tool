@@ -15,10 +15,26 @@ export { MONSTER_TYPES };
 
 export const RARITIES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-export const RARITY_ACCENT = "#d29922";
+export const RARITY_ACCENT = "var(--color-gold)";
 
 const ATTRIBUTE_SLOT_LABELS = ["Attr 1", "Attr 2", "Attr 3"] as const;
 const ATTRIBUTE_ICON_SIZE = 24;
+
+/** Element-colored selected state for attribute tiles (ids per MONSTER_ATTRIBUTES). */
+const ATTRIBUTE_ACTIVE_CLASS: Record<number, string> = {
+  0: "border-[var(--color-pad-fire)] bg-[var(--color-pad-fire)]/15 shadow-[0_0_10px_rgba(239,68,68,0.4)]",
+  1: "border-[var(--color-pad-water)] bg-[var(--color-pad-water)]/15 shadow-[0_0_10px_rgba(56,189,248,0.4)]",
+  2: "border-[var(--color-pad-wood)] bg-[var(--color-pad-wood)]/15 shadow-[0_0_10px_rgba(34,197,94,0.4)]",
+  3: "border-[var(--color-pad-light)] bg-[var(--color-pad-light)]/15 shadow-[0_0_10px_rgba(251,191,36,0.4)]",
+  4: "border-[var(--color-pad-dark)] bg-[var(--color-pad-dark)]/15 shadow-[0_0_10px_rgba(192,132,252,0.4)]",
+  5: "border-pink-400 bg-pink-400/15 shadow-[0_0_10px_rgba(244,114,182,0.4)]",
+};
+const ATTRIBUTE_ACTIVE_FALLBACK_CLASS =
+  "border-[var(--color-accent)] bg-[var(--color-accent-muted)] shadow-[var(--shadow-glow)]";
+
+/** Shared look for removable "active filter" pills (hover hints removal). */
+const ACTIVE_FILTER_PILL_CLASS =
+  "pressable inline-flex items-center rounded-full border border-[var(--color-accent)]/50 bg-[var(--color-accent-muted)] hover:border-[var(--color-negative)]/60 hover:bg-[var(--color-negative)]/10";
 
 export function toggleSet(set: Set<number>, n: number): Set<number> {
   const next = new Set(set);
@@ -63,19 +79,17 @@ export function FilterChip({
     <button
       type="button"
       onClick={onToggle}
-      className={`group inline-flex max-w-full items-center gap-1 rounded-md border transition-colors ${
-        compact ? "px-1.5 py-0.5 text-[10px] leading-tight" : "px-2 py-1 text-[11px] leading-tight"
+      aria-pressed={selected}
+      className={`group pressable inline-flex max-w-full items-center gap-1.5 rounded-full border font-semibold ${
+        compact ? "px-2 py-0.5 text-[10px] leading-tight" : "px-2.5 py-1 text-[11px] leading-tight"
       } ${
         selected
-          ? "border-[var(--color-accent)] bg-[var(--color-accent-muted)] text-white shadow-[inset_0_0_0_1px_rgba(88,166,255,0.25)]"
-          : "border-[var(--color-border)] bg-[var(--color-inset)] text-[#c9d1d9] hover:border-[var(--color-accent)]/60 hover:bg-[var(--color-hover)]"
+          ? "border-[var(--color-accent)]/70 bg-[var(--color-accent-muted)] text-[var(--color-accent-strong)] shadow-[var(--shadow-glow)]"
+          : "border-[var(--color-border)] bg-[var(--color-panel)] text-[var(--color-muted)] hover:border-[var(--color-border-strong)] hover:text-[var(--color-fg-strong)]"
       }`}
-      style={
-        selected ? { boxShadow: `inset 3px 0 0 0 ${accent}` } : undefined
-      }
     >
       <span
-        className={`h-1.5 w-1.5 shrink-0 rounded-full ${selected ? "opacity-100" : "opacity-60 group-hover:opacity-100"}`}
+        className={`h-1.5 w-1.5 shrink-0 rounded-full ${selected ? "opacity-100 shadow-[0_0_6px_currentColor]" : "opacity-50 group-hover:opacity-90"}`}
         style={{ backgroundColor: accent }}
         aria-hidden
       />
@@ -104,10 +118,10 @@ function AttributeFilterIconChip({
       title={label}
       aria-label={label}
       aria-pressed={selected}
-      className={`shrink-0 rounded-md border p-0.5 transition-colors ${
+      className={`pressable shrink-0 rounded-lg border p-1 ${
         selected
-          ? "border-[var(--color-accent)] bg-[var(--color-accent-muted)] shadow-[inset_0_0_0_1px_rgba(88,166,255,0.25)]"
-          : "border-[var(--color-border)] bg-[var(--color-inset)] hover:border-[var(--color-accent)]/60 hover:bg-[var(--color-hover)]"
+          ? (ATTRIBUTE_ACTIVE_CLASS[attributeId] ?? ATTRIBUTE_ACTIVE_FALLBACK_CLASS)
+          : "border-[var(--color-border)] bg-[var(--color-inset)] opacity-80 hover:border-[var(--color-border-strong)] hover:bg-[var(--color-hover)] hover:opacity-100"
       }`}
     >
       <MonsterAttributeSpriteIcon
@@ -128,7 +142,7 @@ function AttributeMatchToggle({
 }) {
   return (
     <div
-      className="mb-2 flex rounded-lg border border-[var(--color-border)] bg-[var(--color-inset)] p-0.5"
+      className="mb-2 flex rounded-full border border-[var(--color-border)] bg-[var(--color-inset)] p-0.5"
       role="radiogroup"
       aria-label="Attribute slot match mode"
     >
@@ -144,10 +158,10 @@ function AttributeMatchToggle({
           role="radio"
           aria-checked={value === id}
           onClick={() => onChange(id)}
-          className={`flex-1 rounded-md px-2 py-1 text-xs font-medium transition-colors ${
+          className={`pressable flex-1 rounded-full px-2 py-1 text-xs font-semibold ${
             value === id
-              ? "bg-[var(--color-accent)] text-[var(--color-inset)]"
-              : "text-[var(--color-muted)] hover:text-white"
+              ? "bg-[var(--color-accent-muted)] text-[var(--color-accent-strong)] shadow-[var(--shadow-glow)]"
+              : "text-[var(--color-muted)] hover:text-[var(--color-fg-strong)]"
           }`}
         >
           {label}
@@ -177,10 +191,10 @@ function TypeFilterIconChip({
       title={label}
       aria-label={label}
       aria-pressed={selected}
-      className={`shrink-0 rounded-md border p-0.5 transition-colors ${
+      className={`pressable shrink-0 rounded-lg border p-0.5 ${
         selected
-          ? "border-[var(--color-accent)] bg-[var(--color-accent-muted)] shadow-[inset_0_0_0_1px_rgba(88,166,255,0.25)]"
-          : "border-[var(--color-border)] bg-[var(--color-inset)] hover:border-[var(--color-accent)]/60 hover:bg-[var(--color-hover)]"
+          ? "border-[var(--color-accent)] bg-[var(--color-accent-muted)] shadow-[var(--shadow-glow)]"
+          : "border-[var(--color-border)] bg-[var(--color-inset)] opacity-80 hover:border-[var(--color-border-strong)] hover:bg-[var(--color-hover)] hover:opacity-100"
       }`}
     >
       <MonsterTypeSpriteIcon typeId={typeId} size={size} title={label} />
@@ -197,12 +211,12 @@ export function numInput(
   disabled = false
 ) {
   return (
-    <label className="flex flex-col gap-0.5 text-[10px] font-medium uppercase tracking-wide text-[var(--color-muted)]">
+    <label className="ds-label flex flex-col gap-1">
       {label}
       <input
         type="number"
         disabled={disabled}
-        className="rounded-md border border-[var(--color-border)] bg-[var(--color-inset)] px-2 py-1 text-sm tabular-nums text-white transition-colors focus:border-[var(--color-accent)] focus:outline-none disabled:cursor-not-allowed disabled:opacity-40"
+        className="ds-input px-2 py-1 font-mono text-sm font-medium normal-case tabular-nums tracking-normal transition-colors disabled:cursor-not-allowed disabled:opacity-40"
         value={value ?? ""}
         onChange={(e) => {
           const v = e.target.value;
@@ -241,7 +255,7 @@ export function MonsterActiveFilterChips({
                 rarity: toggleSet(filters.rarity, r),
               })
             }
-            className="inline-flex items-center gap-1 rounded-full border border-[var(--color-accent)]/50 bg-[var(--color-accent-muted)] px-2 py-0.5 text-[10px] text-[var(--color-accent)] hover:border-red-500/50 hover:bg-red-950/40 hover:text-red-300"
+            className={`${ACTIVE_FILTER_PILL_CLASS} gap-1 px-2 py-0.5 font-mono text-[10px] font-semibold text-[var(--color-accent-strong)] hover:text-red-300`}
             title="Click to remove"
           >
             {r}★
@@ -269,7 +283,7 @@ export function MonsterActiveFilterChips({
                     ),
                   })
                 }
-                className="inline-flex items-center gap-0.5 rounded-full border border-[var(--color-accent)]/50 bg-[var(--color-accent-muted)] p-0.5 hover:border-red-500/50 hover:bg-red-950/40"
+                className={`${ACTIVE_FILTER_PILL_CLASS} group gap-0.5 p-0.5`}
                 title={`${ATTRIBUTE_SLOT_LABELS[slotIndex]}: ${label} — click to remove`}
                 aria-label={`Remove ${ATTRIBUTE_SLOT_LABELS[slotIndex]} ${label} filter`}
               >
@@ -279,7 +293,7 @@ export function MonsterActiveFilterChips({
                   title={label}
                 />
                 <span
-                  className="px-0.5 text-[10px] text-[var(--color-accent)]"
+                  className="px-0.5 text-[10px] text-[var(--color-accent-strong)] group-hover:text-red-300"
                   aria-hidden
                 >
                   ×
@@ -299,13 +313,13 @@ export function MonsterActiveFilterChips({
                 types: toggleSet(filters.types, id),
               })
             }
-            className="inline-flex items-center gap-0.5 rounded-full border border-[var(--color-accent)]/50 bg-[var(--color-accent-muted)] p-0.5 hover:border-red-500/50 hover:bg-red-950/40"
+            className={`${ACTIVE_FILTER_PILL_CLASS} group gap-0.5 p-0.5`}
             title={`${label} — click to remove`}
             aria-label={`Remove ${label} filter`}
           >
             <MonsterTypeSpriteIcon typeId={id} size={16} title={label} />
             <span
-              className="px-0.5 text-[10px] text-[var(--color-accent)]"
+              className="px-0.5 text-[10px] text-[var(--color-accent-strong)] group-hover:text-red-300"
               aria-hidden
             >
               ×
@@ -393,7 +407,7 @@ export function MonsterAttributeFilter({
         {ATTRIBUTE_SLOT_LABELS.map((slotLabel, slotIndex) => (
           <div key={slotLabel}>
             {!compact && (
-              <p className="mb-1 text-[10px] font-medium text-[var(--color-muted)]">
+              <p className="ds-label mb-1">
                 {slotLabel}
               </p>
             )}
@@ -545,7 +559,7 @@ export function MonsterIdFilter({
       <input
         type="search"
         placeholder="Exact ID or NA# (older cards), or name…"
-        className={`w-full rounded-md border border-[var(--color-border)] bg-[var(--color-inset)] text-white transition-colors focus:border-[var(--color-accent)] focus:outline-none ${
+        className={`ds-input w-full transition-colors ${
           compact ? "px-2 py-1 text-xs" : "px-2 py-1.5 text-sm"
         }`}
         value={filters.idQuery}
@@ -630,7 +644,7 @@ export function MonsterFilterClearButton({
     <button
       type="button"
       onClick={() => onChange(EMPTY_MONSTER_FILTERS)}
-      className="shrink-0 rounded border border-[var(--color-border)] px-2 py-0.5 text-[10px] text-[var(--color-muted)] hover:border-red-500/50 hover:text-red-300"
+      className="pressable shrink-0 rounded-lg px-2 py-0.5 text-[10px] font-semibold text-[var(--color-muted)] hover:bg-[var(--color-negative)]/10 hover:text-[var(--color-negative)]"
     >
       Clear all
     </button>

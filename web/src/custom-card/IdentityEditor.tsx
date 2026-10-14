@@ -7,10 +7,8 @@ type Props = {
 
 export function IdentityEditor({ draft, onChange }: Props) {
   return (
-    <section className="rounded-lg border border-[var(--color-border)] bg-[#0d1117] p-3">
-      <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-[#c9a84a]">
-        Identity
-      </h2>
+    <section className="ds-card p-3">
+      <h2 className="ds-label mb-2">Identity</h2>
       <div className="grid gap-2 sm:grid-cols-2">
         <label className="block text-[11px] text-[var(--color-muted)]">
           Name
@@ -18,7 +16,7 @@ export function IdentityEditor({ draft, onChange }: Props) {
             type="text"
             value={draft.name}
             onChange={(e) => onChange({ name: e.target.value })}
-            className="mt-0.5 w-full rounded border border-[var(--color-border)] bg-[#161b22] px-2 py-1 text-sm text-white"
+            className="ds-input mt-0.5 min-h-9 w-full px-2.5 py-1 text-sm"
             placeholder="Monster name"
           />
         </label>
@@ -33,19 +31,22 @@ export function IdentityEditor({ draft, onChange }: Props) {
                 number: v === "" ? null : Number.parseInt(v, 10) || null,
               });
             }}
-            className="mt-0.5 w-full rounded border border-[var(--color-border)] bg-[#161b22] px-2 py-1 text-sm text-white"
+            className="ds-input mt-0.5 min-h-9 w-full px-2.5 py-1 font-mono text-sm tabular-nums"
             placeholder="e.g. 99999"
           />
         </label>
         <label className="block text-[11px] text-[var(--color-muted)] sm:col-span-2">
-          Rarity (stars): {draft.rarity}
+          Rarity (stars):{" "}
+          <span className="font-mono font-bold text-[var(--color-accent-strong)] tabular-nums">
+            {draft.rarity}
+          </span>
           <input
             type="range"
             min={0}
             max={10}
             value={draft.rarity}
             onChange={(e) => onChange({ rarity: Number(e.target.value) })}
-            className="mt-1 w-full accent-[#c9a84a]"
+            className="mt-1 w-full accent-[var(--color-accent)]"
           />
         </label>
       </div>

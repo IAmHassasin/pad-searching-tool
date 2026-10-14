@@ -60,7 +60,7 @@ function MonsterPreviewFloating({ state, previewId, onClose }: FloatingPreviewPr
       <button
         type="button"
         aria-label="Close preview"
-        className="fixed inset-0 z-[99] cursor-default bg-black/20"
+        className="animate-fade-in fixed inset-0 z-[99] cursor-default bg-black/40"
         onClick={onClose}
       />
       <div
@@ -87,7 +87,7 @@ export function MonsterPreviewInfoButton({
       onClick={onClick}
       aria-label="Quick preview"
       aria-describedby={describedBy}
-      className="shrink-0 rounded px-1 py-0.5 text-[10px] leading-none text-[var(--color-muted)] hover:bg-[#21262d] hover:text-[var(--color-accent)]"
+      className="pressable flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-white/5 text-xs leading-none text-[var(--color-muted)] hover:bg-white/10 hover:text-[var(--color-accent-strong)]"
     >
       ⓘ
     </button>
