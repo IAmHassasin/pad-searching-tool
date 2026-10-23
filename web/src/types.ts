@@ -137,6 +137,9 @@ export type SkillFilters = {
   patternMatch: "any" | "all";
   /** Show all active-skill pattern tags; when false, only tags with icons. */
   activeSkillAdvancedFilters: boolean;
+  /** Active skill CD (max skill level). One bound alone means "equals". */
+  activeCdMin: number | null;
+  activeCdMax: number | null;
 };
 
 export const EMPTY_MONSTER_FILTERS: MonsterFilters = {
@@ -165,10 +168,34 @@ export const EMPTY_SKILL_FILTERS: SkillFilters = {
   selectedPatterns: [],
   patternMatch: "all",
   activeSkillAdvancedFilters: false,
+  activeCdMin: null,
+  activeCdMax: null,
 };
 
-/** Inclusive numeric bound pair for one advanced effect-value filter. */
-export type EffectValueRange = { min: number | null; max: number | null };
+/**
+ * Inclusive bounds for one effect-value filter: the effect's number and its
+ * "For N turns," duration. `null` = unbounded on that side.
+ */
+export type EffectValueRange = {
+  min: number | null;
+  max: number | null;
+  turnMin: number | null;
+  turnMax: number | null;
+};
+
+export const EMPTY_EFFECT_VALUE_RANGE: EffectValueRange = {
+  min: null,
+  max: null,
+  turnMin: null,
+  turnMax: null,
+};
+
+function isRangeActive(r: EffectValueRange | undefined): r is EffectValueRange {
+  return (
+    r != null &&
+    (r.min != null || r.max != null || r.turnMin != null || r.turnMax != null)
+  );
+}
 
 /** Family ids come from the server manifest (`GET /patterns/effect-families`). */
 export type EffectFamilyId = string;
@@ -182,6 +209,12 @@ export type EffectFamilyDef = {
   unit: string;
   value_type: "int" | "float";
   step?: number;
+  /** False when the family only filters by turns. Default true. */
+  supports_value?: boolean;
+  /** True when the effect has a "For N turns," duration (by-turn input). */
+  supports_turns?: boolean;
+  /** Effect chips (tag keys per skill type) this family tunes. */
+  tags?: Partial<Record<SelectedPatternTag["skillType"], string[]>>;
   /** Measured against the current DB snapshot — shown as an input hint. */
   min_observed?: number;
   max_observed?: number;
@@ -193,13 +226,43 @@ export type EffectFamiliesManifest = {
 };
 
 /**
- * Advanced numeric effect-value filters (shield %, xN HP, charge turns, …).
- * Sent to `GET /monsters/search` as `effect=familyId:min:max,…`; the server
- * extracts the number out of the skill description with the family's regex
- * (see exports/patterns/effect_value_families.json).
+ * Range key: `familyId@a` / `familyId@l` tunes the active / leader chips the
+ * family maps to; a bare `familyId` (old share links) applies globally.
+ */
+export type EffectRangeKey = string;
+
+const SCOPE_SUFFIX: Record<SelectedPatternTag["skillType"], string> = {
+  active_skill: "a",
+  leader_skill: "l",
+};
+
+export function effectRangeKey(
+  familyId: EffectFamilyId,
+  skillType: SelectedPatternTag["skillType"]
+): EffectRangeKey {
+  return `${familyId}@${SCOPE_SUFFIX[skillType]}`;
+}
+
+/** Families that tune one effect chip. */
+export function familiesForTag(
+  families: EffectFamilyDef[] | undefined,
+  skillType: SelectedPatternTag["skillType"],
+  tagKey: string
+): EffectFamilyDef[] {
+  return (families ?? []).filter((f) =>
+    (f.tags?.[skillType] ?? []).includes(tagKey)
+  );
+}
+
+/**
+ * Effect-value filters (shield %, xN HP, charge turns, …) plus their duration.
+ * Sent to `GET /monsters/search` as
+ * `effect=familyId[@a|@l]:min:max:turnMin:turnMax,…`; the server extracts the
+ * numbers out of the skill description with the family's regex (see
+ * exports/patterns/effect_value_families.json).
  */
 export type AdvancedEffectFilters = {
-  ranges: Partial<Record<EffectFamilyId, EffectValueRange>>;
+  ranges: Partial<Record<EffectRangeKey, EffectValueRange>>;
 };
 
 export const EMPTY_ADVANCED_EFFECT_FILTERS: AdvancedEffectFilters = {
@@ -209,29 +272,60 @@ export const EMPTY_ADVANCED_EFFECT_FILTERS: AdvancedEffectFilters = {
 export function hasAdvancedEffectFilters(
   filters: AdvancedEffectFilters
 ): boolean {
-  return Object.values(filters.ranges).some(
-    (r) => r != null && (r.min != null || r.max != null)
-  );
+  return Object.values(filters.ranges).some(isRangeActive);
 }
 
 export function countAdvancedEffectFilters(
-  filters: AdvancedEffectFilters
+  filters: AdvancedEffectFilters,
+  skillType?: SelectedPatternTag["skillType"]
 ): number {
-  return Object.values(filters.ranges).filter(
-    (r) => r != null && (r.min != null || r.max != null)
+  return Object.entries(filters.ranges).filter(
+    ([key, r]) =>
+      isRangeActive(r) &&
+      (!skillType || key.endsWith(`@${SCOPE_SUFFIX[skillType]}`))
   ).length;
 }
 
-/** `familyId:min:max` pairs for the `effect` query param / share URL. */
+/**
+ * Drops scoped ranges whose family no longer tunes any selected chip, so a
+ * deselected effect never leaves a hidden filter behind.
+ */
+export function pruneEffectRanges(
+  filters: AdvancedEffectFilters,
+  selected: SelectedPatternTag[],
+  families: EffectFamilyDef[] | undefined
+): AdvancedEffectFilters {
+  if (!families) return filters;
+  const live = new Set<EffectRangeKey>();
+  for (const p of selected) {
+    for (const f of familiesForTag(families, p.skillType, p.tagKey)) {
+      live.add(effectRangeKey(f.id, p.skillType));
+    }
+  }
+  let changed = false;
+  const ranges: AdvancedEffectFilters["ranges"] = {};
+  for (const [key, range] of Object.entries(filters.ranges)) {
+    if (key.includes("@") && !live.has(key)) {
+      changed = true;
+      continue;
+    }
+    ranges[key] = range;
+  }
+  return changed ? { ranges } : filters;
+}
+
+/** `key:min:max:turnMin:turnMax` specs for the `effect` param / share URL. */
 export function serializeAdvancedEffectFilters(
   filters: AdvancedEffectFilters
 ): string {
   const parts: string[] = [];
-  for (const [familyId, range] of Object.entries(filters.ranges)) {
-    if (!range || (range.min == null && range.max == null)) continue;
-    parts.push(
-      `${familyId}:${range.min ?? ""}:${range.max ?? ""}`
-    );
+  for (const [key, range] of Object.entries(filters.ranges)) {
+    if (!isRangeActive(range)) continue;
+    const bounds = [range.min, range.max];
+    if (range.turnMin != null || range.turnMax != null) {
+      bounds.push(range.turnMin, range.turnMax);
+    }
+    parts.push([key, ...bounds.map((b) => b ?? "")].join(":"));
   }
   return parts.join(",");
 }
@@ -241,16 +335,24 @@ export function parseAdvancedEffectFilters(
 ): AdvancedEffectFilters {
   if (!raw?.trim()) return EMPTY_ADVANCED_EFFECT_FILTERS;
   const ranges: AdvancedEffectFilters["ranges"] = {};
+  const num = (s: string | undefined) => {
+    if (!s?.trim()) return null;
+    const n = Number(s);
+    return Number.isFinite(n) ? n : null;
+  };
   for (const spec of raw.split(",")) {
-    const [familyId, minRaw, maxRaw] = spec.trim().split(":");
-    if (!familyId) continue;
-    const min = minRaw?.trim() ? Number(minRaw) : null;
-    const max = maxRaw?.trim() ? Number(maxRaw) : null;
-    if (min == null && max == null) continue;
-    ranges[familyId] = {
-      min: min != null && Number.isFinite(min) ? min : null,
-      max: max != null && Number.isFinite(max) ? max : null,
+    const [key, minRaw, maxRaw, turnMinRaw, turnMaxRaw] = spec
+      .trim()
+      .split(":");
+    // Hand-edited links: an invalid scope would make every search a 400.
+    if (!key || !/^[^@]+(@[al])?$/.test(key)) continue;
+    const range: EffectValueRange = {
+      min: num(minRaw),
+      max: num(maxRaw),
+      turnMin: num(turnMinRaw),
+      turnMax: num(turnMaxRaw),
     };
+    if (isRangeActive(range)) ranges[key] = range;
   }
   return { ranges };
 }

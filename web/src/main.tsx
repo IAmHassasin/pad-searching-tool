@@ -10,6 +10,7 @@ import { EventListPage } from "./event/EventListPage";
 import { OneTouchPage } from "./one-touch/OneTouchPage";
 import { CustomCardPage } from "./custom-card/CustomCardPage";
 import { TeamBuildPage } from "./team-build/TeamBuildPage";
+import { TierMakerPage } from "./tier-maker/TierMakerPage";
 import "./index.css";
 
 const queryClient = new QueryClient({
@@ -45,6 +46,9 @@ function Root() {
   }
   if (path === "/team-build") {
     return <TeamBuildPage />;
+  }
+  if (path === "/tier-maker") {
+    return <TierMakerPage />;
   }
   return <App />;
 }

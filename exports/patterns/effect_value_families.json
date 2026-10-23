@@ -7,7 +7,11 @@
     "yields a value inside [min, max]. min_observed/max_observed/cards_observed are",
     "documentation only (measured against the dadguide snapshot) and drive UI hints.",
     "Regexes deliberately use [^.;]*? rather than [^.]*? so a matcher cannot jump",
-    "across clause boundaries and capture a number belonging to a different effect."
+    "across clause boundaries and capture a number belonging to a different effect.",
+    "tags: effect chips (pattern tag keys per skill type) each family tunes; a selected chip shows",
+    "the family inputs and its range is AND'ed into that chip's clause. supports_turns: the effect",
+    "has a 'For N turns,' duration (by-turn filter). supports_value false + value_group 0: presence-only",
+    "matcher, the family filters by turns only."
   ],
   "families": [
     {
@@ -17,6 +21,11 @@
       "unit": "turns",
       "value_type": "int",
       "step": 1,
+      "tags": {
+        "active_skill": [
+          "110"
+        ]
+      },
       "min_observed": 1,
       "max_observed": 8,
       "cards_observed": 2223,
@@ -35,6 +44,19 @@
       "unit": "%",
       "value_type": "int",
       "step": 5,
+      "supports_turns": true,
+      "tags": {
+        "active_skill": [
+          "11",
+          "12"
+        ],
+        "leader_skill": [
+          "32",
+          "enhanced_atk_combo_reduce_damage",
+          "enhanced_atk_connected_orbs_reduce_damage",
+          "reduce_damage_combo_condition"
+        ]
+      },
       "min_observed": 1,
       "max_observed": 100,
       "cards_observed": 5588,
@@ -58,6 +80,13 @@
       "unit": "x",
       "value_type": "float",
       "step": 0.5,
+      "tags": {
+        "leader_skill": [
+          "25",
+          "28",
+          "29"
+        ]
+      },
       "min_observed": 0.5,
       "max_observed": 6,
       "cards_observed": 3123,
@@ -76,6 +105,21 @@
       "unit": "x",
       "value_type": "float",
       "step": 1,
+      "tags": {
+        "leader_skill": [
+          "26",
+          "28",
+          "30",
+          "enhanced_atk_multi_attribute_match",
+          "enhanced_atk_combo_reduce_damage",
+          "enhanced_atk_hp_type_attribute",
+          "enhanced_atk_type_attribute",
+          "enhanced_atk_rcv_type_attribute",
+          "enhanced_atk_connected_orbs_reduce_damage",
+          "enhanced_atk_connected_orbs",
+          "enhanced_atk_skill_use"
+        ]
+      },
       "min_observed": 0.5,
       "max_observed": 500,
       "cards_observed": 8040,
@@ -94,6 +138,14 @@
       "unit": "x",
       "value_type": "float",
       "step": 0.5,
+      "tags": {
+        "leader_skill": [
+          "27",
+          "29",
+          "30",
+          "enhanced_atk_rcv_type_attribute"
+        ]
+      },
       "min_observed": 0.25,
       "max_observed": 20,
       "cards_observed": 1050,
@@ -112,6 +164,12 @@
       "unit": "x",
       "value_type": "float",
       "step": 0.5,
+      "tags": {
+        "leader_skill": [
+          "31",
+          "enhanced_all_stats_type_attribute"
+        ]
+      },
       "min_observed": 1.1,
       "max_observed": 6,
       "cards_observed": 1305,
@@ -130,6 +188,11 @@
       "unit": "turns",
       "value_type": "int",
       "step": 1,
+      "tags": {
+        "active_skill": [
+          "9"
+        ]
+      },
       "min_observed": 1,
       "max_observed": 6,
       "cards_observed": 1049,
@@ -148,6 +211,13 @@
       "unit": "%",
       "value_type": "int",
       "step": 5,
+      "supports_turns": true,
+      "tags": {
+        "active_skill": [
+          "18",
+          "recover_max_hp_percent"
+        ]
+      },
       "min_observed": 8,
       "max_observed": 100,
       "cards_observed": 640,
@@ -166,6 +236,13 @@
       "unit": "x",
       "value_type": "float",
       "step": 5,
+      "tags": {
+        "active_skill": [
+          "13",
+          "14",
+          "24"
+        ]
+      },
       "min_observed": 1,
       "max_observed": 800,
       "cards_observed": 413,
@@ -184,6 +261,13 @@
       "unit": "x",
       "value_type": "float",
       "step": 0.5,
+      "supports_turns": true,
+      "tags": {
+        "active_skill": [
+          "3",
+          "enhanced_attack_self"
+        ]
+      },
       "min_observed": 0.01,
       "max_observed": 100,
       "cards_observed": 3543,
@@ -202,6 +286,12 @@
       "unit": "%",
       "value_type": "int",
       "step": 25,
+      "supports_turns": true,
+      "tags": {
+        "active_skill": [
+          "4"
+        ]
+      },
       "min_observed": 25,
       "max_observed": 100,
       "cards_observed": 278,
@@ -220,6 +310,11 @@
       "unit": "turns",
       "value_type": "int",
       "step": 1,
+      "tags": {
+        "active_skill": [
+          "41"
+        ]
+      },
       "min_observed": 1,
       "max_observed": 5,
       "cards_observed": 101,
@@ -238,6 +333,11 @@
       "unit": "turns",
       "value_type": "int",
       "step": 1,
+      "tags": {
+        "active_skill": [
+          "215"
+        ]
+      },
       "min_observed": 1,
       "max_observed": 7,
       "cards_observed": 50,
@@ -256,6 +356,12 @@
       "unit": "sec",
       "value_type": "float",
       "step": 1,
+      "supports_turns": true,
+      "tags": {
+        "active_skill": [
+          "80"
+        ]
+      },
       "min_observed": 1,
       "max_observed": 29.5,
       "cards_observed": 122,
@@ -264,6 +370,235 @@
           "skill_type": "active_skill",
           "regex": "(?:increase|extend)[^.;]*?move time by (\\d+\\.?\\d*) second",
           "value_group": 1
+        }
+      ]
+    },
+    {
+      "id": "movetime_multiplier",
+      "label": "Orb Move Time (xN)",
+      "group": "active",
+      "unit": "x",
+      "value_type": "float",
+      "step": 0.5,
+      "supports_turns": true,
+      "tags": {
+        "active_skill": [
+          "80"
+        ]
+      },
+      "min_observed": 0.25,
+      "max_observed": 5,
+      "cards_observed": 1490,
+      "matchers": [
+        {
+          "skill_type": "active_skill",
+          "regex": "(?<![+\\d.])(\\d+\\.?\\d*)x orb move time",
+          "value_group": 1
+        }
+      ]
+    },
+    {
+      "id": "rcv_burst_multiplier",
+      "label": "RCV Buff (AS)",
+      "group": "active",
+      "unit": "x",
+      "value_type": "float",
+      "step": 0.5,
+      "supports_turns": true,
+      "tags": {
+        "active_skill": [
+          "21"
+        ]
+      },
+      "min_observed": 0,
+      "max_observed": 10,
+      "cards_observed": 1270,
+      "matchers": [
+        {
+          "skill_type": "active_skill",
+          "regex": "(?<![+\\d.])(\\d+\\.?\\d*)x RCV(?! as)",
+          "value_group": 1
+        }
+      ]
+    },
+    {
+      "id": "hp_burst_multiplier",
+      "label": "HP Buff (AS)",
+      "group": "active",
+      "unit": "x",
+      "value_type": "float",
+      "step": 0.5,
+      "supports_turns": true,
+      "tags": {
+        "active_skill": [
+          "enhanced_hp_burst"
+        ]
+      },
+      "min_observed": 0.5,
+      "max_observed": 5,
+      "cards_observed": 573,
+      "matchers": [
+        {
+          "skill_type": "active_skill",
+          "regex": "(?<![+\\d.])(\\d+\\.?\\d*)x HP\\b",
+          "value_group": 1
+        }
+      ]
+    },
+    {
+      "id": "combo_increase",
+      "label": "Add Combo",
+      "group": "active",
+      "unit": "combo",
+      "value_type": "int",
+      "step": 1,
+      "supports_turns": true,
+      "tags": {
+        "active_skill": [
+          "160"
+        ]
+      },
+      "min_observed": 1,
+      "max_observed": 15,
+      "cards_observed": 899,
+      "matchers": [
+        {
+          "skill_type": "active_skill",
+          "regex": "increase combo count by (\\d+)",
+          "value_group": 1
+        }
+      ]
+    },
+    {
+      "id": "bypass_void_damage",
+      "label": "Pierce Damage Void",
+      "group": "active",
+      "unit": "",
+      "value_type": "int",
+      "supports_value": false,
+      "supports_turns": true,
+      "tags": {
+        "active_skill": [
+          "282"
+        ]
+      },
+      "cards_observed": 1108,
+      "matchers": [
+        {
+          "skill_type": "active_skill",
+          "regex": "bypass void damage shield",
+          "value_group": 0
+        }
+      ]
+    },
+    {
+      "id": "bypass_att_absorb",
+      "label": "Bypass Att. Absorb",
+      "group": "active",
+      "unit": "",
+      "value_type": "int",
+      "supports_value": false,
+      "supports_turns": true,
+      "tags": {
+        "active_skill": [
+          "bypass_att_absorb"
+        ]
+      },
+      "cards_observed": 1365,
+      "matchers": [
+        {
+          "skill_type": "active_skill",
+          "regex": "bypass att\\. absorb",
+          "value_group": 0
+        }
+      ]
+    },
+    {
+      "id": "bypass_dmg_absorb",
+      "label": "Bypass Dmg Absorb",
+      "group": "active",
+      "unit": "",
+      "value_type": "int",
+      "supports_value": false,
+      "supports_turns": true,
+      "tags": {
+        "active_skill": [
+          "bypass_dmg_absorb"
+        ]
+      },
+      "cards_observed": 1240,
+      "matchers": [
+        {
+          "skill_type": "active_skill",
+          "regex": "(?:bypass |and )damage absorb shield",
+          "value_group": 0
+        }
+      ]
+    },
+    {
+      "id": "bypass_combo_absorb",
+      "label": "Bypass Combo Absorb",
+      "group": "active",
+      "unit": "",
+      "value_type": "int",
+      "supports_value": false,
+      "supports_turns": true,
+      "tags": {
+        "active_skill": [
+          "bypass_combo_absorb"
+        ]
+      },
+      "cards_observed": 123,
+      "matchers": [
+        {
+          "skill_type": "active_skill",
+          "regex": "(?:bypass |and )combo absorb shield",
+          "value_group": 0
+        }
+      ]
+    },
+    {
+      "id": "damage_cap_buff",
+      "label": "Damage Cap Break",
+      "group": "active",
+      "unit": "",
+      "value_type": "int",
+      "supports_value": false,
+      "supports_turns": true,
+      "tags": {
+        "active_skill": [
+          "damage_cap_increase_self",
+          "damage_cap_increase_allies"
+        ]
+      },
+      "cards_observed": 2034,
+      "matchers": [
+        {
+          "skill_type": "active_skill",
+          "regex": "damage cap",
+          "value_group": 0
+        }
+      ]
+    },
+    {
+      "id": "attribute_change",
+      "label": "Attribute Change",
+      "group": "active",
+      "unit": "",
+      "value_type": "int",
+      "supports_value": false,
+      "supports_turns": true,
+      "tags": {
+        "active_skill": [
+          "100"
+        ]
+      },
+      "cards_observed": 234,
+      "matchers": [
+        {
+          "skill_type": "active_skill",
+          "regex": "change (?:own att\\.|all enemies) to",
+          "value_group": 0
         }
       ]
     }

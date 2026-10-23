@@ -65,7 +65,7 @@ export class EffectValueCatalogService implements OnModuleInit {
 
   /**
    * One family's range clause: OR across its matchers (any matcher hitting a
-   * value inside the range qualifies the monster).
+   * value — and duration — inside the range qualifies the monster).
    */
   buildRangeClause(
     range: EffectValueRangeInput,
@@ -78,24 +78,55 @@ export class EffectValueCatalogService implements OnModuleInit {
         `Unknown effect value family: ${range.familyId}`
       );
     }
-    const hasMin = range.min != null && Number.isFinite(range.min);
-    const hasMax = range.max != null && Number.isFinite(range.max);
-    if (!hasMin && !hasMax) return null;
-    if (!family.matchers?.length) return null;
+    const finite = (n: number | null | undefined): n is number =>
+      n != null && Number.isFinite(n);
+    const valueOn = family.supports_value !== false;
+    const turnsOn = family.supports_turns === true;
+    const min = valueOn && finite(range.min) ? range.min : null;
+    const max = valueOn && finite(range.max) ? range.max : null;
+    const turnMin = turnsOn && finite(range.turnMin) ? range.turnMin : null;
+    const turnMax = turnsOn && finite(range.turnMax) ? range.turnMax : null;
+    if (min == null && max == null && turnMin == null && turnMax == null) {
+      return null;
+    }
 
-    const parts = family.matchers.map((matcher) => {
+    const matchers = (family.matchers ?? []).filter(
+      (m) => !range.skillType || m.skill_type === range.skillType
+    );
+    if (!matchers.length) return null;
+
+    const parts = matchers.map((matcher) => {
       params.push(
         matcher.regex,
-        matcher.value_group ?? 1,
-        hasMin ? range.min : null,
-        hasMax ? range.max : null
+        valueOn ? (matcher.value_group ?? 1) : 0,
+        min,
+        max,
+        turnMin,
+        turnMax
       );
-      return `effect_value_in_range(?, ?, ${columnExprFor(
+      return `effect_match(?, ?, ${columnExprFor(
         matcher.skill_type
-      )}, ?, ?) = 1`;
+      )}, ?, ?, ?, ?) = 1`;
     });
 
     return `(${parts.join(" OR ")})`;
+  }
+
+  /**
+   * Ranges that tune one selected effect chip: the family lists the chip's
+   * tag key for that skill text, and the range is scoped to it.
+   */
+  rangesForTag(
+    skillType: SkillType,
+    tagKey: string,
+    ranges: EffectValueRangeInput[] | undefined
+  ): EffectValueRangeInput[] {
+    if (!ranges?.length) return [];
+    return ranges.filter(
+      (r) =>
+        r.skillType === skillType &&
+        (this.byId.get(r.familyId)?.tags?.[skillType] ?? []).includes(tagKey)
+    );
   }
 
   /** All families AND'ed together (each is an independent requirement). */

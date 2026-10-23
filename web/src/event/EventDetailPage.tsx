@@ -31,15 +31,20 @@ export function EventDetailPage({ eventId }: { eventId: string }) {
   const preloadUrls = useMemo(() => {
     if (!event.data) return [];
     const ids = new Set<number>();
-    for (const row of event.data.coverMonsters) {
-      const id = Number(row.monster_id);
-      if (id > 0) ids.add(id);
+    if (!event.data.bannerArt) {
+      for (const row of event.data.coverMonsters) {
+        const id = Number(row.monster_id);
+        if (id > 0) ids.add(id);
+      }
     }
     for (const entry of entries) {
       if (entry.family.coverMonsterId > 0) ids.add(entry.family.coverMonsterId);
       if (entry.family.monsterId > 0) ids.add(entry.family.monsterId);
     }
-    return [...ids].map(portraitUrl).filter(Boolean);
+    const heroUrls = [event.data.banner, event.data.bannerArt].filter(
+      (url): url is string => !!url
+    );
+    return [...heroUrls, ...[...ids].map(portraitUrl).filter(Boolean)];
   }, [event.data, entries]);
 
   return (
@@ -74,6 +79,8 @@ export function EventDetailPage({ eventId }: { eventId: string }) {
             <EventHero
               title={event.data.title}
               coverMonsters={event.data.coverMonsters}
+              banner={event.data.banner}
+              bannerArt={event.data.bannerArt}
             />
 
             <main className="mx-auto max-w-5xl px-3 py-6 sm:px-4 sm:py-8">

@@ -187,6 +187,8 @@ function skillParams(q: URLSearchParams, f: SkillFilters) {
   q.set("skillTextMode", f.skillTextMode);
   if (f.activeSkillText.trim()) q.set("activeSkillText", f.activeSkillText.trim());
   if (f.leaderSkillText.trim()) q.set("leaderSkillText", f.leaderSkillText.trim());
+  if (f.activeCdMin != null) q.set("activeCdMin", String(f.activeCdMin));
+  if (f.activeCdMax != null) q.set("activeCdMax", String(f.activeCdMax));
 }
 
 export async function searchMonstersPage(

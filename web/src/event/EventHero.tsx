@@ -4,18 +4,30 @@ import type { MonsterRecord } from "../types";
 type Props = {
   title: string;
   coverMonsters: MonsterRecord[];
+  /** Official key-visual background; fills the whole hero when set. */
+  banner?: string | null;
+  /** Official character art (transparent PNG); replaces the cover art stack when set. */
+  bannerArt?: string | null;
 };
 
 /**
  * Steam-style event banner: simple BG, title, all cover arts stacked/cropped on the right.
  */
-export function EventHero({ title, coverMonsters }: Props) {
-  const count = coverMonsters.length;
+export function EventHero({ title, coverMonsters, banner, bannerArt }: Props) {
+  const count = bannerArt ? 0 : coverMonsters.length;
   // Spread characters across the right half; overlap more when many.
   const step = count <= 3 ? 18 : count <= 6 ? 12 : 9;
 
   return (
     <section className="relative overflow-hidden border-b-2 border-[var(--color-amber-border)] bg-[radial-gradient(ellipse_at_30%_20%,#3a2c1a_0%,#0d0a06_55%)]">
+      {banner && (
+        <img
+          src={banner}
+          alt=""
+          aria-hidden
+          className="pointer-events-none absolute inset-0 h-full w-full object-cover object-top"
+        />
+      )}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
@@ -35,6 +47,19 @@ export function EventHero({ title, coverMonsters }: Props) {
             {title}
           </h1>
         </div>
+
+        {bannerArt && (
+          <div
+            className="pointer-events-none absolute inset-y-0 right-0 z-10 w-[62%] sm:w-[58%]"
+            aria-hidden
+          >
+            <img
+              src={bannerArt}
+              alt=""
+              className="h-full w-full object-contain object-right-bottom drop-shadow-[0_12px_28px_rgba(0,0,0,0.65)]"
+            />
+          </div>
+        )}
 
         {/* Characters — right, Steam-like crop */}
         {count > 0 && (

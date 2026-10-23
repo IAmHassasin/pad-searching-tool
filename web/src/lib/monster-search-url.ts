@@ -152,6 +152,8 @@ export function parseSkillFiltersFromSearch(
     ...fallback,
     activeSkillText: parseStringParam(search, "activeSkillText"),
     leaderSkillText: parseStringParam(search, "leaderSkillText"),
+    activeCdMin: parseOptionalNumberParam(search, "activeCdMin"),
+    activeCdMax: parseOptionalNumberParam(search, "activeCdMax"),
     skillTextMode:
       skillTextMode === "active" || skillTextMode === "leader"
         ? skillTextMode
@@ -252,6 +254,12 @@ export function buildSearchParamsFromFilters(
   }
   if (skillFilters.leaderSkillText.trim()) {
     q.set("leaderSkillText", skillFilters.leaderSkillText.trim());
+  }
+  if (skillFilters.activeCdMin != null) {
+    q.set("activeCdMin", String(skillFilters.activeCdMin));
+  }
+  if (skillFilters.activeCdMax != null) {
+    q.set("activeCdMax", String(skillFilters.activeCdMax));
   }
 
   if (advancedEffectFilters) {

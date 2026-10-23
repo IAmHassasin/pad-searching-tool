@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import {
   DEFAULT_RESULT_DISPLAY_SECTIONS,
   isAllSectionsEnabled,
@@ -52,13 +53,34 @@ function DisplayCheckbox({
   );
 }
 
+type MenuPosition = { top: number; left: number };
+
+function placeDisplayMenu(
+  button: HTMLButtonElement,
+  menu: HTMLElement | null
+): MenuPosition {
+  const rect = button.getBoundingClientRect();
+  const width = menu?.offsetWidth || 176;
+  const height = menu?.offsetHeight || 220;
+  let left = rect.right - width;
+  left = Math.max(8, Math.min(left, window.innerWidth - width - 8));
+  let top = rect.bottom + 6;
+  if (top + height > window.innerHeight - 8) {
+    top = Math.max(8, rect.top - height - 6);
+  }
+  return { top, left };
+}
+
 export function ResultsDisplayControls({
   sections,
   onSectionsChange,
   compact = false,
 }: Props) {
   const [open, setOpen] = useState(false);
+  const [menuPos, setMenuPos] = useState<MenuPosition | null>(null);
   const rootRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
   const allEnabled = isAllSectionsEnabled(sections);
   const activeCount =
     Number(sections.awk) +
@@ -68,21 +90,105 @@ export function ResultsDisplayControls({
 
   useEffect(() => {
     if (!open) return;
-    const onPointerDown = (e: MouseEvent) => {
-      if (!rootRef.current?.contains(e.target as Node)) setOpen(false);
+    const place = () => {
+      const button = buttonRef.current;
+      if (!button) return;
+      setMenuPos(placeDisplayMenu(button, menuRef.current));
     };
-    document.addEventListener("mousedown", onPointerDown);
-    return () => document.removeEventListener("mousedown", onPointerDown);
-  }, [open]);
+    place();
+    const onPointerDown = (e: PointerEvent) => {
+      const target = e.target as Node;
+      if (rootRef.current?.contains(target)) return;
+      if (menuRef.current?.contains(target)) return;
+      setOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("pointerdown", onPointerDown);
+    document.addEventListener("keydown", onKey);
+    window.addEventListener("resize", place);
+    window.addEventListener("scroll", place, true);
+    return () => {
+      document.removeEventListener("pointerdown", onPointerDown);
+      document.removeEventListener("keydown", onKey);
+      window.removeEventListener("resize", place);
+      window.removeEventListener("scroll", place, true);
+    };
+  }, [open, compact]);
+
+  const menu =
+    open && menuPos
+      ? createPortal(
+          <div
+            ref={menuRef}
+            role="group"
+            aria-label="Display"
+            className="ds-float animate-fade-in fixed z-[80] max-h-[70vh] min-w-[10.5rem] overflow-y-auto rounded-xl p-2"
+            style={{ top: menuPos.top, left: menuPos.left }}
+          >
+            <p className="ds-label mb-1.5">Display</p>
+            <div className="space-y-1">
+              <DisplayCheckbox
+                label="All"
+                checked={allEnabled}
+                onChange={(checked) =>
+                  onSectionsChange(setAllDisplaySections(sections, checked))
+                }
+              />
+              <DisplayCheckbox
+                label="Awk"
+                checked={sections.awk}
+                onChange={(checked) =>
+                  onSectionsChange({ ...sections, awk: checked })
+                }
+              />
+              <DisplayCheckbox
+                label="Active skill"
+                checked={sections.activeSkill}
+                onChange={(checked) =>
+                  onSectionsChange({ ...sections, activeSkill: checked })
+                }
+              />
+              <DisplayCheckbox
+                label="Leader skill"
+                checked={sections.leaderSkill}
+                onChange={(checked) =>
+                  onSectionsChange({ ...sections, leaderSkill: checked })
+                }
+              />
+              {compact && (
+                <DisplayCheckbox
+                  label="Show full art"
+                  checked={sections.fullArt}
+                  onChange={(checked) =>
+                    onSectionsChange({ ...sections, fullArt: checked })
+                  }
+                />
+              )}
+            </div>
+          </div>,
+          document.body
+        )
+      : null;
 
   return (
     <div ref={rootRef} className="relative">
       <button
+        ref={buttonRef}
         type="button"
         title="Display"
         aria-label={`Display sections${activeCount > 0 ? ` (${activeCount} on)` : ""}`}
         aria-expanded={open}
-        onClick={() => setOpen((v) => !v)}
+        onClick={() => {
+          setOpen((v) => {
+            const next = !v;
+            if (next && buttonRef.current) {
+              setMenuPos(placeDisplayMenu(buttonRef.current, null));
+            }
+            return next;
+          });
+        }}
         className={`pressable rounded-lg border p-1.5 ${
           activeCount > 0
             ? "border-[var(--color-accent)]/60 bg-[var(--color-accent-muted)] text-[var(--color-accent-strong)] shadow-[var(--shadow-glow)]"
@@ -92,51 +198,7 @@ export function ResultsDisplayControls({
         <EyeIcon className="h-3.5 w-3.5" />
         {!compact && <span className="sr-only">Display</span>}
       </button>
-
-      {open && (
-        <div className="ds-float animate-fade-in absolute right-0 top-full z-50 mt-1.5 min-w-[10rem] rounded-xl p-2">
-          <p className="ds-label mb-1.5">Display</p>
-          <div className="space-y-1">
-            <DisplayCheckbox
-              label="All"
-              checked={allEnabled}
-              onChange={(checked) =>
-                onSectionsChange(setAllDisplaySections(sections, checked))
-              }
-            />
-            <DisplayCheckbox
-              label="Awk"
-              checked={sections.awk}
-              onChange={(checked) =>
-                onSectionsChange({ ...sections, awk: checked })
-              }
-            />
-            <DisplayCheckbox
-              label="Active skill"
-              checked={sections.activeSkill}
-              onChange={(checked) =>
-                onSectionsChange({ ...sections, activeSkill: checked })
-              }
-            />
-            <DisplayCheckbox
-              label="Leader skill"
-              checked={sections.leaderSkill}
-              onChange={(checked) =>
-                onSectionsChange({ ...sections, leaderSkill: checked })
-              }
-            />
-            {compact && (
-              <DisplayCheckbox
-                label="Show full art"
-                checked={sections.fullArt}
-                onChange={(checked) =>
-                  onSectionsChange({ ...sections, fullArt: checked })
-                }
-              />
-            )}
-          </div>
-        </div>
-      )}
+      {menu}
     </div>
   );
 }

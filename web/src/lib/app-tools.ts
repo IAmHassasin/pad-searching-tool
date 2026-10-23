@@ -24,6 +24,12 @@ export const APP_TOOLS: AppTool[] = [
     icon: "🛡",
   },
   {
+    href: "/tier-maker",
+    label: "Tier Maker",
+    description: "Tier tables with cards & effects",
+    icon: "🏆",
+  },
+  {
     href: "/one-touch",
     label: "One-touch",
     description: "Floor guides & awakenings",

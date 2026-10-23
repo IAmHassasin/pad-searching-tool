@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { EffectFilterSpriteIcon } from "../EffectFilterSpriteIcon";
 import { hasEffectFilterIcon } from "../../lib/effect-filter-sprite";
 import type { PatternGroupsManifest, SkillFilters } from "../../types";
@@ -150,12 +151,21 @@ export function SkillPatternGroup({
   iconOnly = false,
   showAdvancedToggle = false,
   defaultOpen,
+  beforeTags,
+  afterTags,
+  extraActiveCount = 0,
 }: {
   title: string;
   skillType: "active_skill" | "leader_skill";
   categories: PatternGroupsManifest["active_skill_filters"];
   filters: SkillFilters;
   onChange: (next: SkillFilters) => void;
+  /** Rendered above the chip grid (e.g. the active skill CD field). */
+  beforeTags?: ReactNode;
+  /** Rendered below the chip grid (e.g. selected-effect value inputs). */
+  afterTags?: ReactNode;
+  /** Non-chip filters active in this section — keeps it open on load. */
+  extraActiveCount?: number;
   compact?: boolean;
   /** When true, only show filters that have effect icons. */
   iconOnly?: boolean;
@@ -210,7 +220,7 @@ export function SkillPatternGroup({
       : `${totalTags} tags`;
 
   const sectionDefaultOpen =
-    defaultOpen ?? selectedInGroup > 0;
+    defaultOpen ?? selectedInGroup + extraActiveCount > 0;
 
   return (
     <CollapsibleFilterSection
@@ -242,6 +252,7 @@ export function SkillPatternGroup({
         ) : undefined
       }
     >
+      {beforeTags}
       <div className={`space-y-3 ${compact ? "" : ""}`}>
         {visibleCategories.map((cat) => {
           const accent =
@@ -281,6 +292,7 @@ export function SkillPatternGroup({
           );
         })}
       </div>
+      {afterTags}
     </CollapsibleFilterSection>
   );
 }
@@ -423,6 +435,15 @@ function SkillTextSearchFields({
         <option value="active">Active only</option>
         <option value="leader">Leader only</option>
       </select>
+      <p
+        className={`mb-2 text-[var(--color-faint)] ${
+          compact ? "text-[9px]" : "text-[10px]"
+        }`}
+      >
+        Separate terms with <code>|</code> (all must match). <code>*</code>{" "}
+        matches anything within one effect — <code>by * turn</code> finds
+        "by 1 turn", "by 3 turns", …
+      </p>
       <label
         className={`mb-2 flex flex-col gap-1 font-medium text-[var(--color-muted)] ${
           compact ? "text-[10px]" : "text-xs"
@@ -438,7 +459,7 @@ function SkillTextSearchFields({
           onChange={(e) =>
             onChange({ ...filters, activeSkillText: e.target.value })
           }
-          placeholder="Substring filter (AND with patterns)…"
+          placeholder="e.g. by * turn | reduce damage"
         />
       </label>
       <label
@@ -456,7 +477,7 @@ function SkillTextSearchFields({
           onChange={(e) =>
             onChange({ ...filters, leaderSkillText: e.target.value })
           }
-          placeholder="Substring filter (AND with patterns)…"
+          placeholder="e.g. by * turn | reduce damage"
         />
       </label>
     </>
@@ -496,7 +517,7 @@ export function SkillTextSearchSection({
       summary={
         activeFields > 0
           ? `${activeFields} field${activeFields === 1 ? "" : "s"} active`
-          : "substring filter"
+          : "multi-term · wildcard"
       }
       compact={compact}
       defaultOpen={activeFields > 0}

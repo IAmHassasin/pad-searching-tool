@@ -1,5 +1,6 @@
 import type Database from "better-sqlite3";
 import type { DataSource } from "typeorm";
+import { skillGlobMatch } from "./skill-search-sql.ts";
 
 const FLAG = "__padRegexpRegistered";
 
@@ -30,12 +31,114 @@ function parseCapturedNumber(raw: string | undefined): number {
   return Number(raw.replace(/,/g, ""));
 }
 
+function toBound(raw: unknown): number | null {
+  if (raw == null) return null;
+  const n = Number(raw);
+  return Number.isFinite(n) ? n : null;
+}
+
+function inBounds(num: number, min: number | null, max: number | null): boolean {
+  return (min == null || num >= min) && (max == null || num <= max);
+}
+
+/**
+ * Effect clause separators in dadguide text: `;` between effects, `N) ` for
+ * evolving / random skill lists, `: ` after a condition ("If HP >= 50%: …").
+ */
+const CLAUSE_BOUNDARY = /;\s*|\b\d+\)\s|:\s/g;
+const DURATION = /\bfor ([\d,]+) turns?\b/gi;
+
+/**
+ * Duration ("For N turns, …" or "… for N turns") of the effect clause holding
+ * text[start, end). Prefers the nearest prefix, then the first suffix; null
+ * when the clause has no duration.
+ */
+export function effectClauseTurns(
+  text: string,
+  start: number,
+  end: number
+): number | null {
+  let segStart = 0;
+  let segEnd = text.length;
+  CLAUSE_BOUNDARY.lastIndex = 0;
+  for (;;) {
+    const b = CLAUSE_BOUNDARY.exec(text);
+    if (!b) break;
+    const bEnd = b.index + b[0].length;
+    if (bEnd <= start) segStart = bEnd;
+    else if (b.index >= end) {
+      segEnd = b.index;
+      break;
+    }
+    if (b[0].length === 0) CLAUSE_BOUNDARY.lastIndex++;
+  }
+
+  let prefix: number | null = null;
+  const before = text.slice(segStart, start);
+  DURATION.lastIndex = 0;
+  for (;;) {
+    const d = DURATION.exec(before);
+    if (!d) break;
+    prefix = parseCapturedNumber(d[1]);
+  }
+  if (prefix != null && Number.isFinite(prefix)) return prefix;
+
+  DURATION.lastIndex = 0;
+  const after = DURATION.exec(text.slice(end, segEnd));
+  if (!after) return null;
+  const suffix = parseCapturedNumber(after[1]);
+  return Number.isFinite(suffix) ? suffix : null;
+}
+
 /**
  * True when any occurrence of `pattern` in `value` yields a captured number
- * inside [min, max]. NULL bounds are unbounded. Used by the advanced
- * effect-value search (shield %, xN HP, charge turns, …) — the boolean
- * `regexp()` below can only say "this effect exists", not "how much".
+ * inside [min, max] and its clause duration inside [turnMin, turnMax]. NULL
+ * bounds are unbounded; group 0 skips the value check (presence-only
+ * matcher). Used by the effect-value search (shield %, xN HP, charge turns,
+ * …) — the boolean `regexp()` below can only say "this effect exists".
  */
+export function effectMatch(
+  pattern: unknown,
+  groupIndex: unknown,
+  value: unknown,
+  min: unknown,
+  max: unknown,
+  turnMin: unknown,
+  turnMax: unknown
+): 0 | 1 {
+  if (pattern == null || value == null) return 0;
+  const re = compile(String(pattern), "gi");
+  if (!re) return 0;
+
+  const group = Number(groupIndex);
+  const groupNo = Number.isFinite(group) && group >= 0 ? Math.trunc(group) : 1;
+  const minNum = toBound(min);
+  const maxNum = toBound(max);
+  const turnMinNum = toBound(turnMin);
+  const turnMaxNum = toBound(turnMax);
+  const checkTurns = turnMinNum != null || turnMaxNum != null;
+  const text = String(value);
+
+  re.lastIndex = 0;
+  for (;;) {
+    const m = re.exec(text);
+    if (!m) return 0;
+    let ok = true;
+    if (groupNo > 0) {
+      const num = parseCapturedNumber(m[groupNo]);
+      ok = Number.isFinite(num) && inBounds(num, minNum, maxNum);
+    }
+    if (ok && checkTurns) {
+      const turns = effectClauseTurns(text, m.index, m.index + m[0].length);
+      ok = turns != null && inBounds(turns, turnMinNum, turnMaxNum);
+    }
+    if (ok) return 1;
+    // Zero-length match guard — otherwise exec() would spin on the same index.
+    if (m.index === re.lastIndex) re.lastIndex++;
+  }
+}
+
+/** Value-only form of {@link effectMatch} (kept for existing SQL callers). */
 export function effectValueInRange(
   pattern: unknown,
   groupIndex: unknown,
@@ -43,29 +146,7 @@ export function effectValueInRange(
   min: unknown,
   max: unknown
 ): 0 | 1 {
-  if (pattern == null || value == null) return 0;
-  const re = compile(String(pattern), "gi");
-  if (!re) return 0;
-
-  const group = Number(groupIndex);
-  const groupNo = Number.isFinite(group) && group > 0 ? Math.trunc(group) : 1;
-  const minNum = min == null ? null : Number(min);
-  const maxNum = max == null ? null : Number(max);
-  const text = String(value);
-
-  re.lastIndex = 0;
-  for (;;) {
-    const m = re.exec(text);
-    if (!m) return 0;
-    const num = parseCapturedNumber(m[groupNo]);
-    if (Number.isFinite(num)) {
-      const okMin = minNum == null || !Number.isFinite(minNum) || num >= minNum;
-      const okMax = maxNum == null || !Number.isFinite(maxNum) || num <= maxNum;
-      if (okMin && okMax) return 1;
-    }
-    // Zero-length match guard — otherwise exec() would spin on the same index.
-    if (m.index === re.lastIndex) re.lastIndex++;
-  }
+  return effectMatch(pattern, groupIndex, value, min, max, null, null);
 }
 
 export function registerSqliteRegexp(db: Database.Database): void {
@@ -77,7 +158,8 @@ export function registerSqliteRegexp(db: Database.Database): void {
     { deterministic: true },
     (pattern: unknown, value: unknown) => {
       if (pattern == null || value == null) return 0;
-      const re = compile(String(pattern), "");
+      // Skill text is not consistent about capitalization ("Recover" / "recover").
+      const re = compile(String(pattern), "i");
       if (!re) return 0;
       return re.test(String(value)) ? 1 : 0;
     }
@@ -88,6 +170,10 @@ export function registerSqliteRegexp(db: Database.Database): void {
     { deterministic: true },
     effectValueInRange
   );
+
+  db.function("effect_match", { deterministic: true }, effectMatch);
+
+  db.function("skill_glob", { deterministic: true }, skillGlobMatch);
 
   marked[FLAG] = true;
 }

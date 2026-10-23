@@ -85,15 +85,29 @@ function MonsterFilterSectionContent({
 }) {
   switch (section) {
     case "rarity":
-      return <MonsterRarityFilter filters={filters} onChange={onChange} />;
+      return (
+        <MonsterRarityFilter filters={filters} onChange={onChange} defaultOpen />
+      );
     case "attribute":
-      return <MonsterAttributeFilter filters={filters} onChange={onChange} />;
+      return (
+        <MonsterAttributeFilter
+          filters={filters}
+          onChange={onChange}
+          defaultOpen
+        />
+      );
     case "type":
-      return <MonsterTypeFilter filters={filters} onChange={onChange} />;
+      return (
+        <MonsterTypeFilter filters={filters} onChange={onChange} defaultOpen />
+      );
     case "stats":
-      return <MonsterStatsFilter filters={filters} onChange={onChange} />;
+      return (
+        <MonsterStatsFilter filters={filters} onChange={onChange} defaultOpen />
+      );
     case "id":
-      return <MonsterIdFilter filters={filters} onChange={onChange} />;
+      return (
+        <MonsterIdFilter filters={filters} onChange={onChange} defaultOpen />
+      );
     case "awakening":
       return (
         <MonsterAwakeningFilter
@@ -177,6 +191,7 @@ export function MonsterFilterPanel({ filters, onChange }: Props) {
             />
             <div className="min-h-0 flex-1 overflow-y-auto">
               <MonsterFilterSectionContent
+                key={activeSection}
                 section={activeSection}
                 filters={filters}
                 onChange={onChange}

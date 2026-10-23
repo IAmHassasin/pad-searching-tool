@@ -41,6 +41,7 @@ import {
 import {
   EMPTY_MONSTER_FILTERS,
   EMPTY_SKILL_FILTERS,
+  pruneEffectRanges,
   serializeAdvancedEffectFilters,
   type AdvancedEffectFilters,
   type MonsterFilters,
@@ -131,6 +132,18 @@ export default function App() {
     });
   }, [initialPatternKeys, patternGroups.data]);
 
+  // Deselecting an effect chip drops the value / turn ranges it was tuning.
+  const handleSkillFiltersChange = (next: SkillFilters) => {
+    setSkillFilters(next);
+    setAdvancedEffectFilters((current) =>
+      pruneEffectRanges(
+        current,
+        next.selectedPatterns,
+        effectFamilies.data?.families
+      )
+    );
+  };
+
   const searchKey = useMemo(
     () => ({
       rarity: [...debouncedMonster.rarity].sort(),
@@ -154,6 +167,8 @@ export default function App() {
       activeSkillText: debouncedSkill.activeSkillText,
       leaderSkillText: debouncedSkill.leaderSkillText,
       skillTextMode: debouncedSkill.skillTextMode,
+      activeCdMin: debouncedSkill.activeCdMin,
+      activeCdMax: debouncedSkill.activeCdMax,
       patternMatch: debouncedSkill.patternMatch,
       selectedPatterns: debouncedSkill.selectedPatterns.map((p) => ({
         skillType: p.skillType,
@@ -312,7 +327,7 @@ export default function App() {
           monsterFilters={monsterFilters}
           onMonsterFiltersChange={setMonsterFilters}
           skillFilters={skillFilters}
-          onSkillFiltersChange={setSkillFilters}
+          onSkillFiltersChange={handleSkillFiltersChange}
           patternGroups={patternGroups.data}
           patternGroupsLoading={patternGroups.isLoading}
           rows={filtered}
@@ -334,7 +349,6 @@ export default function App() {
           advancedEffectFilters={advancedEffectFilters}
           onAdvancedEffectFiltersChange={setAdvancedEffectFilters}
           effectFamilies={effectFamilies.data?.families}
-          effectFamiliesLoading={effectFamilies.isLoading}
           modernOnly={snapshot?.modernOnly}
           minMonsterId={snapshot?.minMonsterId}
         />
@@ -370,13 +384,12 @@ export default function App() {
           />
           <SkillFilterPanel
             filters={skillFilters}
-            onChange={setSkillFilters}
+            onChange={handleSkillFiltersChange}
             patternGroups={patternGroups.data}
             patternGroupsLoading={patternGroups.isLoading}
             advancedEffectFilters={advancedEffectFilters}
             onAdvancedEffectFiltersChange={setAdvancedEffectFilters}
             effectFamilies={effectFamilies.data?.families}
-            effectFamiliesLoading={effectFamilies.isLoading}
           />
         </div>
       )}

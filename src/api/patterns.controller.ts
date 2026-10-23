@@ -46,9 +46,15 @@ function parseOptionalNumber(raw: string | undefined): number | null {
   return n;
 }
 
+const EFFECT_SCOPES: Record<string, EffectValueRangeInput["skillType"]> = {
+  a: "active_skill",
+  l: "leader_skill",
+};
+
 /**
- * `effect=familyId:min:max,...` — either bound may be empty for unbounded,
- * e.g. `effect=shield_percent:50:,skill_charge_turns:2:3`.
+ * `effect=familyId[@a|@l]:min:max[:turnMin:turnMax],...` — any bound may be
+ * empty for unbounded; `@a` / `@l` scope the range to the active / leader
+ * chip it tunes, e.g. `effect=shield_percent@a:50::2:,skill_charge_turns:2:3`.
  */
 function parseEffectRanges(raw: string | undefined): EffectValueRangeInput[] {
   if (!raw?.trim()) return [];
@@ -56,20 +62,38 @@ function parseEffectRanges(raw: string | undefined): EffectValueRangeInput[] {
   for (const part of raw.split(",")) {
     const spec = part.trim();
     if (!spec) continue;
-    const [familyId, minRaw, maxRaw] = spec.split(":");
-    const id = familyId?.trim();
-    if (!id) {
+    const [idRaw, minRaw, maxRaw, turnMinRaw, turnMaxRaw] = spec.split(":");
+    const idParts = (idRaw ?? "").split("@");
+    const id = idParts[0]?.trim();
+    const scope = idParts[1]?.trim();
+    if (!id || idParts.length > 2 || (scope != null && !EFFECT_SCOPES[scope])) {
       throw new BadRequestException(`Invalid effect filter: ${spec}`);
     }
     const min = parseOptionalNumber(minRaw);
     const max = parseOptionalNumber(maxRaw);
-    if (min == null && max == null) continue;
+    const turnMin = parseOptionalNumber(turnMinRaw);
+    const turnMax = parseOptionalNumber(turnMaxRaw);
+    if (min == null && max == null && turnMin == null && turnMax == null) {
+      continue;
+    }
     if (min != null && max != null && min > max) {
       throw new BadRequestException(
         `Effect filter "${id}": min (${min}) is greater than max (${max}).`
       );
     }
-    out.push({ familyId: id, min, max });
+    if (turnMin != null && turnMax != null && turnMin > turnMax) {
+      throw new BadRequestException(
+        `Effect filter "${id}": turn min (${turnMin}) is greater than turn max (${turnMax}).`
+      );
+    }
+    out.push({
+      familyId: id,
+      skillType: scope ? EFFECT_SCOPES[scope] : undefined,
+      min,
+      max,
+      turnMin,
+      turnMax,
+    });
   }
   return out;
 }
@@ -95,8 +119,9 @@ export class PatternsController {
   }
 
   /**
-   * Dynamic monster search: selected pattern tags are OR'd per tag, then
-   * combined with patternMatch (any/all). Regex runs in SQLite via regexp().
+   * Dynamic monster search: selected pattern tags are combined with
+   * patternMatch (any/all). Official tag ids match dadguide skill tags;
+   * custom tags still use regexp() on the skill description.
    */
   @Get("monsters/search")
   async monsterSearch(
@@ -106,6 +131,8 @@ export class PatternsController {
     @Query("activeSkillText") activeSkillText?: string,
     @Query("leaderSkillText") leaderSkillText?: string,
     @Query("skillTextMode") skillTextMode?: string,
+    @Query("activeCdMin") activeCdMinRaw?: string,
+    @Query("activeCdMax") activeCdMaxRaw?: string,
     @Query("rarity") rarityRaw?: string,
     @Query("attributeSlot1") attributeSlot1Raw?: string,
     @Query("attributeSlot2") attributeSlot2Raw?: string,
@@ -227,6 +254,13 @@ export class PatternsController {
     const activeTags = parseCsv(activeTagsRaw);
     const leaderTags = parseCsv(leaderTagsRaw);
     const effectRanges = parseEffectRanges(effectRaw);
+    const activeCdMin = parseOptionalNumber(activeCdMinRaw);
+    const activeCdMax = parseOptionalNumber(activeCdMaxRaw);
+    if (activeCdMin != null && activeCdMax != null && activeCdMin > activeCdMax) {
+      throw new BadRequestException(
+        `Active skill CD: min (${activeCdMin}) is greater than max (${activeCdMax}).`
+      );
+    }
 
     return this.search.search({
       activeTags,
@@ -235,6 +269,8 @@ export class PatternsController {
       activeSkillText,
       leaderSkillText,
       skillTextMode: skillTextModeParsed,
+      activeCdMin,
+      activeCdMax,
       monster: hasMonsterFilters ? monster : undefined,
       vanish,
       effectRanges: effectRanges.length ? effectRanges : undefined,

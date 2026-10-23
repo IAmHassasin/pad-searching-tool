@@ -11,7 +11,15 @@ import {
 } from "../awakening-equivalence";
 import { EffectValueCatalogService } from "../patterns/effect-value-catalog.service";
 import type { EffectValueRangeInput } from "../patterns/effect-value-types";
+import {
+  appendEffectTagClause,
+  DEFAULT_EFFECT_TAG_COLUMNS,
+  joinEffectClauses,
+  skillTagIdFromKey,
+  type EffectColumnExprs,
+} from "../patterns/effect-filter-sql";
 import { PatternCatalogService } from "../patterns/pattern-catalog.service";
+import { cooldownSql, skillTextTermsSql } from "../patterns/skill-search-sql";
 import type { PatternTagSelection, SkillType } from "../patterns/pattern-types";
 import { VOID_SUPER_GRAVITY_TAG_KEY } from "../patterns/supplement-pattern-tags";
 import {
@@ -56,6 +64,9 @@ export type PatternSearchInput = {
   activeSkillText?: string;
   leaderSkillText?: string;
   skillTextMode?: "both" | "active" | "leader";
+  /** Active skill CD at max skill level; one bound alone means "equals". */
+  activeCdMin?: number | null;
+  activeCdMax?: number | null;
   monster?: MonsterSearchFilters;
   vanish?: VanishSearchFilters;
   /** Numeric effect-value ranges (shield %, xN HP, charge turns, …). */
@@ -153,14 +164,36 @@ export class PatternSearchService {
     return `_src.${this.quotedColumn(col)}`;
   }
 
+  private effectColumnExprs(): EffectColumnExprs {
+    const activeCol =
+      process.env.FILTER_TAGS_COLUMN?.trim() ||
+      DEFAULT_EFFECT_TAG_COLUMNS.active;
+    const leaderCol =
+      process.env.FILTER_LEADER_TAGS_COLUMN?.trim() ||
+      DEFAULT_EFFECT_TAG_COLUMNS.leader;
+    return {
+      activeTags: `_src.${this.quotedColumn(activeCol)}`,
+      leaderTags: `_src.${this.quotedColumn(leaderCol)}`,
+      monsterId: `_src.${this.quotedColumn(DEFAULT_EFFECT_TAG_COLUMNS.monsterId)}`,
+    };
+  }
+
+  /**
+   * Chip clauses, each AND'ed with the value / turn ranges that tune it, then
+   * joined with patternMatch. Returns the ranges it consumed so the rest can
+   * still be applied as standalone requirements.
+   */
   private buildPatternWhere(
     selections: PatternTagSelection[],
     patternMatch: "any" | "all",
     params: unknown[],
-    vsgAttached: boolean
-  ): string | null {
-    if (!selections.length) return null;
+    vsgAttached: boolean,
+    effectRanges: EffectValueRangeInput[] | undefined
+  ): { where: string | null; usedRanges: Set<EffectValueRangeInput> } {
+    const usedRanges = new Set<EffectValueRangeInput>();
+    if (!selections.length) return { where: null, usedRanges };
 
+    const exprs = this.effectColumnExprs();
     const tagClauses: string[] = [];
     for (const sel of selections) {
       if (sel.tagKey === VOID_SUPER_GRAVITY_TAG_KEY) {
@@ -169,18 +202,38 @@ export class PatternSearchService {
         );
         continue;
       }
-      const clause = this.patterns.buildTagOrClause(
+      const tagId = skillTagIdFromKey(sel.tagKey);
+      const clause =
+        tagId != null
+          ? appendEffectTagClause(sel.skillType, tagId, exprs, params)
+          : this.patterns.buildTagOrClause(
+              sel.skillType,
+              sel.tagKey,
+              this.skillColumnExpr(sel.skillType),
+              params
+            );
+      if (!clause) continue;
+
+      const tuning: string[] = [];
+      for (const range of this.effectValues.rangesForTag(
         sel.skillType,
         sel.tagKey,
-        this.skillColumnExpr(sel.skillType),
-        params
+        effectRanges
+      )) {
+        usedRanges.add(range);
+        const rangeClause = this.effectValues.buildRangeClause(
+          range,
+          (skillType) => this.skillColumnExpr(skillType),
+          params
+        );
+        if (rangeClause) tuning.push(rangeClause);
+      }
+      tagClauses.push(
+        tuning.length ? `(${[clause, ...tuning].join(" AND ")})` : clause
       );
-      if (clause) tagClauses.push(clause);
     }
 
-    if (!tagClauses.length) return null;
-    const joiner = patternMatch === "all" ? " AND " : " OR ";
-    return `(${tagClauses.join(joiner)})`;
+    return { where: joinEffectClauses(tagClauses, patternMatch), usedRanges };
   }
 
   private buildTextWhere(
@@ -192,21 +245,31 @@ export class PatternSearchService {
     const activeText = input.activeSkillText?.trim() ?? "";
     const leaderText = input.leaderSkillText?.trim() ?? "";
 
-    const likeOn = (col: string, text: string) => {
-      params.push(`%${text}%`);
-      return `LOWER(COALESCE(_src.${this.quotedColumn(col)}, '')) LIKE LOWER(?)`;
+    const termsOn = (col: string, text: string) => {
+      const clause = skillTextTermsSql(
+        text,
+        `_src.${this.quotedColumn(col)}`,
+        params
+      );
+      if (clause) clauses.push(clause);
     };
 
     if (mode === "active") {
-      const text = activeText || leaderText;
-      if (text) clauses.push(likeOn(this.activeDescColumn(), text));
+      termsOn(this.activeDescColumn(), activeText || leaderText);
     } else if (mode === "leader") {
-      const text = leaderText || activeText;
-      if (text) clauses.push(likeOn(this.leaderDescColumn(), text));
+      termsOn(this.leaderDescColumn(), leaderText || activeText);
     } else {
-      if (activeText) clauses.push(likeOn(this.activeDescColumn(), activeText));
-      if (leaderText) clauses.push(likeOn(this.leaderDescColumn(), leaderText));
+      termsOn(this.activeDescColumn(), activeText);
+      termsOn(this.leaderDescColumn(), leaderText);
     }
+
+    const cdClause = cooldownSql(
+      input.activeCdMin,
+      input.activeCdMax,
+      `_src.${this.quotedColumn("active_skill_cooldown_min")}`,
+      params
+    );
+    if (cdClause) clauses.push(cdClause);
 
     return clauses;
   }
@@ -436,11 +499,12 @@ export class PatternSearchService {
     );
 
     const parts: string[] = [];
-    const patternWhere = this.buildPatternWhere(
+    const { where: patternWhere, usedRanges } = this.buildPatternWhere(
       selections,
       input.patternMatch,
       params,
-      attach.vsgAttached
+      attach.vsgAttached,
+      input.effectRanges
     );
     if (patternWhere) parts.push(patternWhere);
     parts.push(...this.buildTextWhere(input, params));
@@ -462,8 +526,9 @@ export class PatternSearchService {
       params.push(`%${q}%`, `%${q}%`, `%${q}%`);
       parts.push(this.likeMonsterIdClause());
     }
+    // Ranges not tied to a selected chip (e.g. old share links) stay global.
     const effectWhere = this.effectValues.buildWhere(
-      input.effectRanges,
+      input.effectRanges?.filter((r) => !usedRanges.has(r)),
       (skillType) => this.skillColumnExpr(skillType),
       params
     );

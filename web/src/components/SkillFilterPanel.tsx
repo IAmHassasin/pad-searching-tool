@@ -4,9 +4,14 @@ import type {
   PatternGroupsManifest,
   SkillFilters,
 } from "../types";
+import { countAdvancedEffectFilters } from "../types";
 import { useResizablePanel } from "../hooks/useResizablePanel";
 import { ResizableSidePanel } from "./ResizableSidePanel";
-import { AdvancedEffectFilterSection } from "./filters/advanced-effect-filter";
+import {
+  ActiveSkillCooldownField,
+  SelectedEffectTuning,
+  UnscopedEffectRangeChips,
+} from "./filters/effect-tuning";
 import {
   SkillPatternGroup,
   SkillPatternSelectionBar,
@@ -21,7 +26,6 @@ type Props = {
   advancedEffectFilters: AdvancedEffectFilters;
   onAdvancedEffectFiltersChange: (next: AdvancedEffectFilters) => void;
   effectFamilies: EffectFamilyDef[] | undefined;
-  effectFamiliesLoading: boolean;
 };
 
 export function SkillFilterPanel({
@@ -32,7 +36,6 @@ export function SkillFilterPanel({
   advancedEffectFilters,
   onAdvancedEffectFiltersChange,
   effectFamilies,
-  effectFamiliesLoading,
 }: Props) {
   const panel = useResizablePanel({
     storageKey: "skill",
@@ -81,6 +84,12 @@ export function SkillFilterPanel({
             </p>
           )}
           <SkillPatternSelectionBar filters={filters} onChange={onChange} />
+          <UnscopedEffectRangeChips
+            effectFilters={advancedEffectFilters}
+            onEffectFiltersChange={onAdvancedEffectFiltersChange}
+            families={effectFamilies}
+            selectedPatterns={filters.selectedPatterns}
+          />
         </div>
 
         <div className="min-h-0 flex-1 overflow-y-auto px-3 pb-3">
@@ -94,6 +103,24 @@ export function SkillFilterPanel({
                 onChange={onChange}
                 iconOnly={!filters.activeSkillAdvancedFilters}
                 showAdvancedToggle
+                extraActiveCount={
+                  (filters.activeCdMin != null || filters.activeCdMax != null
+                    ? 1
+                    : 0) +
+                  countAdvancedEffectFilters(advancedEffectFilters, "active_skill")
+                }
+                beforeTags={
+                  <ActiveSkillCooldownField filters={filters} onChange={onChange} />
+                }
+                afterTags={
+                  <SelectedEffectTuning
+                    skillType="active_skill"
+                    skillFilters={filters}
+                    effectFilters={advancedEffectFilters}
+                    onEffectFiltersChange={onAdvancedEffectFiltersChange}
+                    families={effectFamilies}
+                  />
+                }
               />
               <SkillPatternGroup
                 title="Leader skill"
@@ -101,17 +128,24 @@ export function SkillFilterPanel({
                 categories={patternGroups.leader_skill_filters}
                 filters={filters}
                 onChange={onChange}
+                extraActiveCount={countAdvancedEffectFilters(
+                  advancedEffectFilters,
+                  "leader_skill"
+                )}
+                afterTags={
+                  <SelectedEffectTuning
+                    skillType="leader_skill"
+                    skillFilters={filters}
+                    effectFilters={advancedEffectFilters}
+                    onEffectFiltersChange={onAdvancedEffectFiltersChange}
+                    families={effectFamilies}
+                  />
+                }
               />
             </div>
           )}
 
           <div className="mt-2 space-y-2">
-            <AdvancedEffectFilterSection
-              filters={advancedEffectFilters}
-              onChange={onAdvancedEffectFiltersChange}
-              families={effectFamilies}
-              loading={effectFamiliesLoading}
-            />
             <SkillTextSearchSection filters={filters} onChange={onChange} />
           </div>
         </div>

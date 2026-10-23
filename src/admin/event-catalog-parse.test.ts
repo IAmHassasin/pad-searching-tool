@@ -36,6 +36,12 @@ describe("extractEventNameFromArticle", () => {
     assert.equal(extractEventNameFromArticle(text), "GungHo Collab");
   });
 
+  it("reads Halloween when the sentence has no 'as well'", () => {
+    const text =
+      "have received Assist Evolutions! In addition, select Halloween monsters have received upgrades! See here";
+    assert.equal(extractEventNameFromArticle(text), "Halloween");
+  });
+
   it("returns null when the sentence is missing", () => {
     assert.equal(extractEventNameFromArticle("PAD X Super Godfest arrives"), null);
   });
@@ -48,6 +54,14 @@ describe("extractUpgradeMonsterNames", () => {
     assert.deepEqual(extractUpgradeMonsterNames(text), [
       "Primordial God of the Underworld, Izanagi X",
       "Abyssal Dragon of Purple Light, Apocalypse X",
+    ]);
+  });
+
+  it("drops the post header and 'Newly added monsters such as' lead-in", () => {
+    const text =
+      "New Evolutions & Upgrades! 20 hours ago 1 min read Newly added monsters such as Moonlit Pranksters, Euchs & Miya have received Assist Evolutions! In addition, select Halloween monsters have received upgrades!";
+    assert.deepEqual(extractUpgradeMonsterNames(text), [
+      "Moonlit Pranksters, Euchs & Miya",
     ]);
   });
 

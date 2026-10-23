@@ -4,10 +4,7 @@ import type { AwkModifierSettings } from "../lib/awakening-stat-modifier";
 import type { ResultDisplaySections } from "../lib/result-display";
 import type { ResultQuickFilter } from "../lib/result-quick-filter";
 import type { ResultSortOption } from "../lib/results-sort";
-import {
-  countAdvancedEffectFilters,
-  EMPTY_ADVANCED_EFFECT_FILTERS,
-} from "../types";
+import { countAdvancedEffectFilters } from "../types";
 import type {
   AdvancedEffectFilters,
   EffectFamilyDef,
@@ -22,7 +19,11 @@ import { ResultsDisplayControls } from "./ResultsDisplayControls";
 import { ResultsList } from "./ResultsList";
 import { ResultsQuickFilter } from "./ResultsQuickFilter";
 import { ResultsSortControls } from "./ResultsSortControls";
-import { AdvancedEffectFilterSection } from "./filters/advanced-effect-filter";
+import {
+  ActiveSkillCooldownField,
+  SelectedEffectTuning,
+  UnscopedEffectRangeChips,
+} from "./filters/effect-tuning";
 import {
   MonsterActiveFilterChips,
   MonsterFilterClearButton,
@@ -40,8 +41,7 @@ type BottomPanelMode =
   | "leader_skill"
   | "active_skill"
   | "awakening"
-  | "by_text"
-  | "advanced";
+  | "by_text";
 
 type Props = {
   monsterFilters: MonsterFilters;
@@ -53,7 +53,6 @@ type Props = {
   advancedEffectFilters: AdvancedEffectFilters;
   onAdvancedEffectFiltersChange: (next: AdvancedEffectFilters) => void;
   effectFamilies: EffectFamilyDef[] | undefined;
-  effectFamiliesLoading: boolean;
   rows: MonsterRecord[];
   totalLoaded: number;
   selected: MonsterRecord | null;
@@ -77,7 +76,6 @@ const PANEL_TITLES: Record<BottomPanelMode, string> = {
   active_skill: "Active skill",
   awakening: "Awakenings",
   by_text: "By text",
-  advanced: "Effect values",
 };
 
 const DOCK_ITEMS: {
@@ -90,12 +88,6 @@ const DOCK_ITEMS: {
   { mode: "active_skill", label: "Active", glyph: "⚡" },
   { mode: "awakening", label: "Awk", glyph: "✦" },
   { mode: "by_text", label: "Text", glyph: "Aa" },
-  {
-    mode: "advanced",
-    label: "Values",
-    glyph: "#",
-    title: "Numeric effect-value filters (shield %, xN HP, charge turns…)",
-  },
 ];
 
 function IconButton({
@@ -227,7 +219,6 @@ function MobileFilterDock({
   advancedEffectFilters,
   onAdvancedEffectFiltersChange,
   effectFamilies,
-  effectFamiliesLoading,
   matchCount,
   loading,
 }: {
@@ -240,7 +231,6 @@ function MobileFilterDock({
   advancedEffectFilters: AdvancedEffectFilters;
   onAdvancedEffectFiltersChange: (next: AdvancedEffectFilters) => void;
   effectFamilies: EffectFamilyDef[] | undefined;
-  effectFamiliesLoading: boolean;
   matchCount: number;
   loading: boolean;
 }) {
@@ -267,13 +257,20 @@ function MobileFilterDock({
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [openMode]);
 
+  const hasCd =
+    skillFilters.activeCdMin != null || skillFilters.activeCdMax != null;
   const counts: Record<BottomPanelMode, number> = {
-    leader_skill: skillFilters.selectedPatterns.filter(
-      (p) => p.skillType === "leader_skill"
-    ).length,
-    active_skill: skillFilters.selectedPatterns.filter(
-      (p) => p.skillType === "active_skill"
-    ).length,
+    leader_skill:
+      skillFilters.selectedPatterns.filter(
+        (p) => p.skillType === "leader_skill"
+      ).length +
+      countAdvancedEffectFilters(advancedEffectFilters, "leader_skill"),
+    active_skill:
+      skillFilters.selectedPatterns.filter(
+        (p) => p.skillType === "active_skill"
+      ).length +
+      countAdvancedEffectFilters(advancedEffectFilters, "active_skill") +
+      (hasCd ? 1 : 0),
     // Same fields MonsterAwakeningClearAllButton treats as active.
     awakening:
       monsterFilters.awakeningIds.length +
@@ -284,18 +281,21 @@ function MobileFilterDock({
       skillFilters.activeSkillText.trim(),
       skillFilters.leaderSkillText.trim(),
     ].filter(Boolean).length,
-    advanced: countAdvancedEffectFilters(advancedEffectFilters),
   };
 
   const resetMode = (mode: BottomPanelMode) => {
     switch (mode) {
       case "leader_skill":
       case "active_skill":
+        // Dropping the chips also prunes their value / turn ranges (App).
         onSkillFiltersChange({
           ...skillFilters,
           selectedPatterns: skillFilters.selectedPatterns.filter(
             (p) => p.skillType !== mode
           ),
+          ...(mode === "active_skill"
+            ? { activeCdMin: null, activeCdMax: null }
+            : {}),
         });
         return;
       case "awakening":
@@ -313,9 +313,6 @@ function MobileFilterDock({
           activeSkillText: "",
           leaderSkillText: "",
         });
-        return;
-      case "advanced":
-        onAdvancedEffectFiltersChange(EMPTY_ADVANCED_EFFECT_FILTERS);
         return;
     }
   };
@@ -396,16 +393,6 @@ function MobileFilterDock({
                     embedded
                   />
                 </div>
-              ) : openMode === "advanced" ? (
-                <div className="min-h-0 flex-1 overflow-y-auto px-3 py-2">
-                  <AdvancedEffectFilterSection
-                    filters={advancedEffectFilters}
-                    onChange={onAdvancedEffectFiltersChange}
-                    families={effectFamilies}
-                    loading={effectFamiliesLoading}
-                    compact
-                  />
-                </div>
               ) : (
                 <>
                   {patternGroupsLoading && (
@@ -419,6 +406,12 @@ function MobileFilterDock({
                       onChange={onSkillFiltersChange}
                       compact
                     />
+                    <UnscopedEffectRangeChips
+                      effectFilters={advancedEffectFilters}
+                      onEffectFiltersChange={onAdvancedEffectFiltersChange}
+                      families={effectFamilies}
+                      selectedPatterns={skillFilters.selectedPatterns}
+                    />
                   </div>
                   <div className="min-h-0 flex-1 overflow-y-auto px-3 pb-2">
                     {patternGroups && openMode === "leader_skill" && (
@@ -429,6 +422,16 @@ function MobileFilterDock({
                         filters={skillFilters}
                         onChange={onSkillFiltersChange}
                         compact
+                        afterTags={
+                          <SelectedEffectTuning
+                            skillType="leader_skill"
+                            skillFilters={skillFilters}
+                            effectFilters={advancedEffectFilters}
+                            onEffectFiltersChange={onAdvancedEffectFiltersChange}
+                            families={effectFamilies}
+                            compact
+                          />
+                        }
                       />
                     )}
                     {patternGroups && openMode === "active_skill" && (
@@ -441,6 +444,23 @@ function MobileFilterDock({
                         compact
                         iconOnly={!skillFilters.activeSkillAdvancedFilters}
                         defaultOpen
+                        beforeTags={
+                          <ActiveSkillCooldownField
+                            filters={skillFilters}
+                            onChange={onSkillFiltersChange}
+                            compact
+                          />
+                        }
+                        afterTags={
+                          <SelectedEffectTuning
+                            skillType="active_skill"
+                            skillFilters={skillFilters}
+                            effectFilters={advancedEffectFilters}
+                            onEffectFiltersChange={onAdvancedEffectFiltersChange}
+                            families={effectFamilies}
+                            compact
+                          />
+                        }
                       />
                     )}
                   </div>
@@ -468,7 +488,7 @@ function MobileFilterDock({
 
         <nav
           aria-label="Filters"
-          className="glass-bar grid h-14 grid-cols-5 gap-0.5 rounded-full border border-white/10 p-1 shadow-[var(--shadow-float)]"
+          className="glass-bar grid h-14 grid-cols-4 gap-0.5 rounded-full border border-white/10 p-1 shadow-[var(--shadow-float)]"
         >
           {DOCK_ITEMS.map((item) => {
             const active = openMode === item.mode;
@@ -516,7 +536,6 @@ export function MobileWebviewLayout({
   advancedEffectFilters,
   onAdvancedEffectFiltersChange,
   effectFamilies,
-  effectFamiliesLoading,
   rows,
   totalLoaded,
   selected,
@@ -629,7 +648,6 @@ export function MobileWebviewLayout({
         advancedEffectFilters={advancedEffectFilters}
         onAdvancedEffectFiltersChange={onAdvancedEffectFiltersChange}
         effectFamilies={effectFamilies}
-        effectFamiliesLoading={effectFamiliesLoading}
         matchCount={rows.length}
         loading={loading}
       />

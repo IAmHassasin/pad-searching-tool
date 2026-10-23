@@ -335,10 +335,13 @@ export function MonsterRarityFilter({
   filters,
   onChange,
   compact = false,
+  defaultOpen = false,
 }: {
   filters: MonsterFilters;
   onChange: (next: MonsterFilters) => void;
   compact?: boolean;
+  /** Open the section on first render. Tab mode passes true so the chosen chip is usable immediately. */
+  defaultOpen?: boolean;
 }) {
   const summary =
     filters.rarity.size > 0
@@ -350,7 +353,7 @@ export function MonsterRarityFilter({
       title="Rarity"
       summary={summary}
       compact={compact}
-      defaultOpen={false}
+      defaultOpen={defaultOpen}
     >
       <div className={`flex flex-wrap ${compact ? "gap-1" : "gap-1.5"}`}>
         {RARITIES.map((r) => (
@@ -377,10 +380,12 @@ export function MonsterAttributeFilter({
   filters,
   onChange,
   compact = false,
+  defaultOpen = false,
 }: {
   filters: MonsterFilters;
   onChange: (next: MonsterFilters) => void;
   compact?: boolean;
+  defaultOpen?: boolean;
 }) {
   const activeSlots = filters.attributeSlots.filter((s) => s.size > 0).length;
   const summary =
@@ -393,7 +398,7 @@ export function MonsterAttributeFilter({
       title="Attribute"
       summary={summary}
       compact={compact}
-      defaultOpen={false}
+      defaultOpen={defaultOpen}
     >
       {activeSlots > 0 && (
         <AttributeMatchToggle
@@ -444,10 +449,12 @@ export function MonsterTypeFilter({
   filters,
   onChange,
   compact = false,
+  defaultOpen = false,
 }: {
   filters: MonsterFilters;
   onChange: (next: MonsterFilters) => void;
   compact?: boolean;
+  defaultOpen?: boolean;
 }) {
   const summary =
     filters.types.size > 0
@@ -459,7 +466,7 @@ export function MonsterTypeFilter({
       title="Type"
       summary={summary}
       compact={compact}
-      defaultOpen={false}
+      defaultOpen={defaultOpen}
     >
       <div
         className={`flex flex-nowrap overflow-x-auto pb-0.5 ${compact ? "gap-1" : "gap-1.5"}`}
@@ -487,10 +494,12 @@ export function MonsterStatsFilter({
   filters,
   onChange,
   compact = false,
+  defaultOpen = false,
 }: {
   filters: MonsterFilters;
   onChange: (next: MonsterFilters) => void;
   compact?: boolean;
+  defaultOpen?: boolean;
 }) {
   const activeCount = [
     filters.hpMin,
@@ -510,7 +519,7 @@ export function MonsterStatsFilter({
           : "HP / ATK / RCV"
       }
       compact={compact}
-      defaultOpen={false}
+      defaultOpen={defaultOpen}
     >
       <div className="grid grid-cols-2 gap-2">
         {numInput("HP min", filters.hpMin, (hpMin) =>
@@ -540,10 +549,12 @@ export function MonsterIdFilter({
   filters,
   onChange,
   compact = false,
+  defaultOpen = false,
 }: {
   filters: MonsterFilters;
   onChange: (next: MonsterFilters) => void;
   compact?: boolean;
+  defaultOpen?: boolean;
 }) {
   const summary = filters.idQuery.trim()
     ? "search active"
@@ -554,7 +565,7 @@ export function MonsterIdFilter({
       title="ID / NA# / name"
       summary={summary}
       compact={compact}
-      defaultOpen={false}
+      defaultOpen={defaultOpen}
     >
       <input
         type="search"
