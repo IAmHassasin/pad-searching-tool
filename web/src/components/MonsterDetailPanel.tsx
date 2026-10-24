@@ -16,6 +16,8 @@ type Props = {
   sidebar?: boolean;
   /** When true with sidebar, show full card art instead of compact layout. */
   showFullArt?: boolean;
+  /** Desktop results column: stretch the card to the pane. */
+  fill?: boolean;
 };
 
 export function MonsterDetailPanel({
@@ -23,6 +25,7 @@ export function MonsterDetailPanel({
   onSelect,
   sidebar = false,
   showFullArt = false,
+  fill = false,
 }: Props) {
   const [overlay, setOverlay] = useState<Overlay>(null);
   const [changeTargetLoadingId, setChangeTargetLoadingId] = useState<
@@ -58,11 +61,16 @@ export function MonsterDetailPanel({
   return (
     <div
       className={`relative flex h-full w-full flex-col ${
-        sidebar ? "min-h-0" : "mx-auto min-h-[min(100%,720px)] max-w-[360px]"
+        fill
+          ? "min-h-0 flex-1"
+          : sidebar
+            ? "min-h-0"
+            : "mx-auto min-h-[min(100%,720px)] max-w-[360px]"
       }`}
     >
       <MonsterDetailCard
         row={row}
+        fill={fill}
         evoActive={overlay === "evo"}
         collabActive={overlay === "collab"}
         onOpenEvo={() => setOverlay((v) => (v === "evo" ? null : "evo"))}

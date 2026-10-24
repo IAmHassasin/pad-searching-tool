@@ -98,7 +98,7 @@ export function ResultsPanel({
         minMonsterId={minMonsterId}
       />
 
-      <div className="grid min-h-0 flex-1 grid-cols-1 lg:grid-cols-2">
+      <div className="grid min-h-0 flex-1 grid-cols-1 lg:grid-cols-2 lg:grid-rows-1">
         <div className="flex min-h-0 flex-col overflow-hidden border-b border-[var(--color-border)] lg:border-b-0 lg:border-r">
           <ResultsList
             rows={rows}
@@ -110,11 +110,11 @@ export function ResultsPanel({
           />
         </div>
 
-        <div className="relative flex min-h-0 items-stretch justify-center overflow-auto bg-[var(--color-inset)] p-3">
+        <div className="flex h-full min-h-0 min-w-0 flex-col overflow-hidden bg-[var(--color-inset)] p-2">
           {selected ? (
-            <MonsterDetailPanel row={selected} onSelect={onSelect} />
+            <MonsterDetailPanel row={selected} onSelect={onSelect} fill />
           ) : (
-            <p className="text-sm text-[var(--color-muted)]">
+            <p className="m-auto text-sm text-[var(--color-muted)]">
               Select a row to view details.
             </p>
           )}
