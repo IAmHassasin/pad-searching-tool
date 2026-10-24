@@ -1,6 +1,7 @@
 import type { CSSProperties, ReactNode } from "react";
 import cardBackground from "../assets/pad/background.png";
 import { monsterRowId } from "../lib/filters";
+import { listedMonsterId } from "../lib/result-id-scope";
 import {
   ASSIST_RESONANCE_AWAKENING_ID,
   monsterHasAwakening,
@@ -219,6 +220,7 @@ export function MonsterDetailCard({
   hideUtilityLinks = false,
 }: Props) {
   const id = monsterRowId(row);
+  const listedId = listedMonsterId(row);
   const regular = parseRegularAwakenings(row.awakenings);
   const hasSuperAwks =
     resolveSuperAwakeningIds(row.awakenings, row.super_awakenings).length > 0;
@@ -569,11 +571,13 @@ export function MonsterDetailCard({
             <StatRow label="ATK" value={row.atk_max} compact={compact} />
             <StatRow label="RCV" value={row.rcv_max} compact={compact} />
           </div>
-          {row.monster_no_na != null && (
+          {listedId.region !== "none" && (
             <div className="shrink-0 rounded border border-[#3d2e1f] bg-black/50 px-1.5 py-1 text-center">
-              <p className="text-[9px] text-[#c9b08a]">NA#</p>
+              <p className="text-[9px] text-[#c9b08a]">
+                {listedId.region === "jp" ? "JP#" : "NA#"}
+              </p>
               <p className="text-[11px] font-bold tabular-nums text-white">
-                {row.monster_no_na}
+                {listedId.value}
               </p>
             </div>
           )}

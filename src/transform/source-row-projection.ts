@@ -1,6 +1,6 @@
 /**
  * Optional SOURCE_COLUMN_WHITELIST: comma-separated result column names (after JOIN aliases).
- * Internal keys __source_pk / __rowid are always preserved for transform id resolution.
+ * Internal keys (__source_pk / __rowid) and search annotations are always kept.
  */
 
 const IDENT = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
@@ -11,6 +11,8 @@ const INTERNAL_KEYS = new Set([
   "vanish_granted_awoken_ids",
   "void_super_gravity_turns",
   "active_skill_stage_cooldowns",
+  "matched_group_name",
+  "matched_group_kind",
 ]);
 
 export function parseSourceColumnWhitelist(

@@ -3,6 +3,7 @@ import {
   computeModifiedStat,
   type AwkModifierSettings,
 } from "./awakening-stat-modifier";
+import { compareNaIdTiebreak, compareNewestCatalog } from "./result-id-scope";
 import { leaderSkillEhp } from "./leader-ehp";
 
 export type ResultSortOption =
@@ -19,7 +20,7 @@ export const RESULT_SORT_OPTIONS: {
   label: string;
   needsAwkModifier: boolean;
 }[] = [
-  { value: "default", label: "Default (NA ID)", needsAwkModifier: false },
+  { value: "default", label: "Default (newest)", needsAwkModifier: false },
   { value: "cd_fastest", label: "Fastest CD", needsAwkModifier: false },
   { value: "cd_longest", label: "Longest CD", needsAwkModifier: false },
   { value: "hp_modified", label: "HP (awk modifier)", needsAwkModifier: true },
@@ -36,15 +37,6 @@ export const RESULT_SORT_OPTIONS: {
   { value: "ls_ehp", label: "eHP (leader skill)", needsAwkModifier: false },
 ];
 
-function defaultTiebreak(a: MonsterRecord, b: MonsterRecord): number {
-  const naA = a.monster_no_na;
-  const naB = b.monster_no_na;
-  if (naA == null && naB == null) return 0;
-  if (naA == null) return 1;
-  if (naB == null) return -1;
-  return naB - naA;
-}
-
 function compareCooldown(
   a: MonsterRecord,
   b: MonsterRecord,
@@ -59,23 +51,23 @@ function compareCooldown(
       ? b.active_skill_cooldown_min ?? b.active_skill_cooldown_max
       : b.active_skill_cooldown_max ?? b.active_skill_cooldown_min;
 
-  if (valA == null && valB == null) return defaultTiebreak(a, b);
+  if (valA == null && valB == null) return compareNaIdTiebreak(a, b);
   if (valA == null) return 1;
   if (valB == null) return -1;
   if (valA !== valB) {
     return mode === "fastest" ? valA - valB : valB - valA;
   }
-  return defaultTiebreak(a, b);
+  return compareNaIdTiebreak(a, b);
 }
 
 function compareLeaderEhp(a: MonsterRecord, b: MonsterRecord): number {
   const va = leaderSkillEhp(a);
   const vb = leaderSkillEhp(b);
-  if (va == null && vb == null) return defaultTiebreak(a, b);
+  if (va == null && vb == null) return compareNaIdTiebreak(a, b);
   if (va == null) return 1;
   if (vb == null) return -1;
   if (va !== vb) return vb - va;
-  return defaultTiebreak(a, b);
+  return compareNaIdTiebreak(a, b);
 }
 
 export function sortMonsterRows(
@@ -84,7 +76,7 @@ export function sortMonsterRows(
   awkSettings: AwkModifierSettings
 ): MonsterRecord[] {
   if (sort === "default") {
-    return [...rows].sort(defaultTiebreak);
+    return [...rows].sort(compareNewestCatalog);
   }
 
   const statKey =
@@ -105,7 +97,7 @@ export function sortMonsterRows(
       const vb = computeModifiedStat(b, awkSettings, statKey);
       if (va !== vb) return vb - va;
     }
-    return defaultTiebreak(a, b);
+    return compareNaIdTiebreak(a, b);
   });
 }
 

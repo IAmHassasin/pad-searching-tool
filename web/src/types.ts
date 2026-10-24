@@ -8,6 +8,9 @@ export type MonsterRecord = {
   base_id?: number | null;
   group_id?: number | null;
   collab_id?: number | null;
+  /** Set when the name query matched this card's group or collab title. */
+  matched_group_name?: string | null;
+  matched_group_kind?: "collab" | "group" | null;
   hp_max?: number | null;
   atk_max?: number | null;
   rcv_max?: number | null;

@@ -23,6 +23,10 @@ import { useMobileWebview } from "./hooks/useMobileWebview";
 import type { AwkModifierSettings } from "./lib/awakening-stat-modifier";
 import type { ResultDisplaySections } from "./lib/result-display";
 import {
+  filterRowsByIdScope,
+  type ResultIdScope,
+} from "./lib/result-id-scope";
+import {
   filterRowsByQuickFilter,
   type ResultQuickFilter,
 } from "./lib/result-quick-filter";
@@ -87,6 +91,7 @@ export default function App() {
     useState<ResultDisplaySections>(DEFAULT_RESULT_DISPLAY_SECTIONS);
   const [resultQuickFilter, setResultQuickFilter] =
     useState<ResultQuickFilter>(null);
+  const [resultIdScope, setResultIdScope] = useState<ResultIdScope>("all");
   const [shareMsg, setShareMsg] = useState<string | null>(null);
   const isMobileWebview = useMobileWebview();
 
@@ -203,8 +208,11 @@ export default function App() {
   const filtered = useMemo(() => {
     const rows = snapshot?.rows ?? [];
     const sorted = sortMonsterRows(rows, resultSort, awkModifierSettings);
-    return filterRowsByQuickFilter(sorted, resultQuickFilter);
-  }, [snapshot, resultSort, awkModifierSettings, resultQuickFilter]);
+    return filterRowsByIdScope(
+      filterRowsByQuickFilter(sorted, resultQuickFilter),
+      resultIdScope
+    );
+  }, [snapshot, resultSort, awkModifierSettings, resultQuickFilter, resultIdScope]);
 
   const apiError = health.error ?? patternGroups.error ?? search.error ?? null;
 
@@ -346,6 +354,8 @@ export default function App() {
           onDisplaySectionsChange={setDisplaySections}
           resultQuickFilter={resultQuickFilter}
           onResultQuickFilterChange={setResultQuickFilter}
+          resultIdScope={resultIdScope}
+          onResultIdScopeChange={setResultIdScope}
           advancedEffectFilters={advancedEffectFilters}
           onAdvancedEffectFiltersChange={setAdvancedEffectFilters}
           effectFamilies={effectFamilies.data?.families}
@@ -379,6 +389,8 @@ export default function App() {
             onDisplaySectionsChange={setDisplaySections}
             resultQuickFilter={resultQuickFilter}
             onResultQuickFilterChange={setResultQuickFilter}
+            resultIdScope={resultIdScope}
+            onResultIdScopeChange={setResultIdScope}
             modernOnly={snapshot?.modernOnly}
             minMonsterId={snapshot?.minMonsterId}
           />

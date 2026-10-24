@@ -1,10 +1,12 @@
 import type { AwkModifierSettings } from "../lib/awakening-stat-modifier";
 import type { ResultDisplaySections } from "../lib/result-display";
+import type { ResultIdScope } from "../lib/result-id-scope";
 import type { ResultQuickFilter } from "../lib/result-quick-filter";
 import type { ResultSortOption } from "../lib/results-sort";
 import type { MonsterRecord } from "../types";
 import { MonsterDetailPanel } from "./MonsterDetailPanel";
 import { ModernOnlySearchHint } from "./ModernOnlySearchHint";
+import { ResultIdScopeSwitcher } from "./ResultIdScopeSwitcher";
 import { ResultsDisplayControls } from "./ResultsDisplayControls";
 import { ResultsList } from "./ResultsList";
 import { ResultsQuickFilter } from "./ResultsQuickFilter";
@@ -25,6 +27,8 @@ type Props = {
   onDisplaySectionsChange: (next: ResultDisplaySections) => void;
   resultQuickFilter: ResultQuickFilter;
   onResultQuickFilterChange: (next: ResultQuickFilter) => void;
+  resultIdScope: ResultIdScope;
+  onResultIdScopeChange: (next: ResultIdScope) => void;
   modernOnly?: boolean;
   minMonsterId?: number;
 };
@@ -44,6 +48,8 @@ export function ResultsPanel({
   onDisplaySectionsChange,
   resultQuickFilter,
   onResultQuickFilterChange,
+  resultIdScope,
+  onResultIdScopeChange,
   modernOnly,
   minMonsterId,
 }: Props) {
@@ -57,6 +63,10 @@ export function ResultsPanel({
           <ResultsQuickFilter
             value={resultQuickFilter}
             onChange={onResultQuickFilterChange}
+          />
+          <ResultIdScopeSwitcher
+            value={resultIdScope}
+            onChange={onResultIdScopeChange}
           />
         </div>
         <div className="flex flex-wrap items-center gap-3">

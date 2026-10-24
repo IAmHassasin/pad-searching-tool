@@ -36,6 +36,11 @@ import {
   resolveSearchIdQuery,
   type SearchIdQueryResolution,
 } from "./search-id-query";
+import {
+  buildNameSearchMatchSql,
+  escapeLikeContains,
+  GROUP_NAME_MATCH_TABLES,
+} from "./search-group-match";
 import { VoidSuperGravityService } from "./void-super-gravity.service";
 
 const IDENT = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
@@ -79,6 +84,9 @@ export type PatternSearchInput = {
 
 @Injectable()
 export class PatternSearchService {
+  /** Null until the first search checks that series tables exist. */
+  private groupSeriesReady: boolean | null = null;
+
   constructor(
     @InjectDataSource() private readonly dataSource: DataSource,
     private readonly patterns: PatternCatalogService,
@@ -485,12 +493,15 @@ export class PatternSearchService {
 
   private compileWhere(
     input: PatternSearchInput,
-    attach: { vanishAttached: boolean; vsgAttached: boolean }
+    attach: { vanishAttached: boolean; vsgAttached: boolean },
+    groupSeriesReady: boolean
   ): {
     whereSql: string;
     params: unknown[];
     selections: PatternTagSelection[];
     idQuery: SearchIdQueryResolution;
+    groupJoinSql: string;
+    groupSelectSql: string;
   } {
     const params: unknown[] = [];
     const selections = this.patterns.resolveSelections(
@@ -513,7 +524,12 @@ export class PatternSearchService {
       input.monster?.idQuery,
       parseSearchMinMonsterId(process.env.SEARCH_MIN_MONSTER_ID)
     );
-    if (idQuery.applyMinId && idQuery.minMonsterId > 0) {
+    const floorGroupRoster =
+      groupSeriesReady &&
+      idQuery.likeQuery != null &&
+      idQuery.applyMinId &&
+      idQuery.minMonsterId > 0;
+    if (idQuery.applyMinId && idQuery.minMonsterId > 0 && !floorGroupRoster) {
       parts.push(this.minMonsterIdClause());
       params.push(idQuery.minMonsterId);
     }
@@ -521,10 +537,22 @@ export class PatternSearchService {
       parts.push(this.exactMonsterIdClause());
       params.push(idQuery.exactId, idQuery.exactId);
     }
+    let groupJoinSql = "";
+    let groupSelectSql = "";
+    const leadingParams: unknown[] = [];
     if (idQuery.likeQuery != null) {
-      const q = idQuery.likeQuery;
-      params.push(`%${q}%`, `%${q}%`, `%${q}%`);
-      parts.push(this.likeMonsterIdClause());
+      const pattern = escapeLikeContains(idQuery.likeQuery);
+      const match = buildNameSearchMatchSql(
+        (column) => this.quotedColumn(column),
+        groupSeriesReady,
+        floorGroupRoster
+      );
+      if (match.joinConsumesPattern) leadingParams.push(pattern);
+      params.push(pattern, pattern, pattern);
+      if (match.textMatchConsumesMinId) params.push(idQuery.minMonsterId);
+      groupJoinSql = match.joinSql;
+      groupSelectSql = match.selectSql;
+      parts.push(match.whereSql);
     }
     // Ranges not tied to a selected chip (e.g. old share links) stay global.
     const effectWhere = this.effectValues.buildWhere(
@@ -538,7 +566,31 @@ export class PatternSearchService {
     }
 
     const whereSql = parts.length ? `WHERE ${parts.join(" AND ")}` : "";
-    return { whereSql, params, selections, idQuery };
+    return {
+      whereSql,
+      params: leadingParams.length ? [...leadingParams, ...params] : params,
+      selections,
+      idQuery,
+      groupJoinSql,
+      groupSelectSql,
+    };
+  }
+
+  /**
+   * Series tables are missing on some local/test databases. Name and ID search
+   * still run; group matching stays off until those tables are present.
+   */
+  private async groupSeriesTablesReady(): Promise<boolean> {
+    if (this.groupSeriesReady != null) return this.groupSeriesReady;
+    const rows = (await this.dataSource.query(
+      `SELECT name FROM sqlite_master WHERE type = 'table' AND name IN (${GROUP_NAME_MATCH_TABLES.map(() => "?").join(", ")})`,
+      [...GROUP_NAME_MATCH_TABLES]
+    )) as { name: string }[];
+    const found = new Set(rows.map((row) => row.name));
+    this.groupSeriesReady = GROUP_NAME_MATCH_TABLES.every((name) =>
+      found.has(name)
+    );
+    return this.groupSeriesReady;
   }
 
   private minMonsterIdClause(): string {
@@ -550,16 +602,6 @@ export class PatternSearchService {
       `(` +
       `CAST(COALESCE(_src.${this.quotedColumn("monster_id")}, _src.__source_pk) AS INTEGER) = ? OR ` +
       `CAST(COALESCE(_src.${this.quotedColumn("monster_no_na")}, 0) AS INTEGER) = ?` +
-      `)`
-    );
-  }
-
-  private likeMonsterIdClause(): string {
-    return (
-      `(` +
-      `CAST(COALESCE(_src.${this.quotedColumn("monster_id")}, _src.__source_pk, '') AS TEXT) LIKE ? OR ` +
-      `CAST(COALESCE(_src.${this.quotedColumn("monster_no_na")}, '') AS TEXT) LIKE ? OR ` +
-      `LOWER(COALESCE(_src.${this.quotedColumn("name_en")}, '')) LIKE LOWER(?)` +
       `)`
     );
   }
@@ -583,12 +625,21 @@ export class PatternSearchService {
     const vsgAttached = await this.voidSuperGravity.ensureAttached();
     const vsgTagSelected = input.activeTags.includes(VOID_SUPER_GRAVITY_TAG_KEY);
 
-    const { whereSql, params, selections, idQuery } = this.compileWhere(
+    const groupSeriesReady = await this.groupSeriesTablesReady();
+    const {
+      whereSql,
+      params,
+      selections,
+      idQuery,
+      groupJoinSql,
+      groupSelectSql,
+    } = this.compileWhere(
       input,
       {
         vanishAttached,
         vsgAttached,
-      }
+      },
+      groupSeriesReady
     );
 
     const joinParts: string[] = [];
@@ -604,7 +655,8 @@ export class PatternSearchService {
     if (vsgAttached) selectParts.push(this.voidSuperGravity.selectSql());
     const selectExtra = selectParts.length ? `, ${selectParts.join(", ")}` : "";
 
-    const baseFrom = `FROM (${inner}) AS _src${joinSql} ${whereSql}`;
+    const groupJoin = groupJoinSql ? ` ${groupJoinSql}` : "";
+    const baseFrom = `FROM (${inner}) AS _src${joinSql}${groupJoin} ${whereSql}`;
     let total = 0;
     if (!input.skipCount) {
       const countSql = `SELECT COUNT(*) AS cnt ${baseFrom}`;
@@ -615,8 +667,9 @@ export class PatternSearchService {
     }
 
     const dataParams = [...params, input.limit, input.offset];
+    const groupSelect = groupSelectSql ? `, ${groupSelectSql}` : "";
     const dataSql =
-      `SELECT _src.*${selectExtra} ${baseFrom} LIMIT ? OFFSET ?`;
+      `SELECT _src.*${selectExtra}${groupSelect} ${baseFrom} LIMIT ? OFFSET ?`;
     let rows = (await this.dataSource.query(dataSql, dataParams)) as Record<
       string,
       unknown

@@ -41,7 +41,7 @@ export const AWAKENING_FILTER_GROUPS: AwakeningFilterGroup[] = [
   },
   {
     label: "Resist",
-    rows: [[52, 28, 136, 68, 69, 70, 141, 10, 11, 12, 13, 54, 55, 140, 53, 71, 72]],
+    rows: [[52, 28, 136, 68, 69, 70, 141, 10, 11, 12, 13, 54, 55, 140, 53, 71, 72, 148]],
   },
   {
     label: "Killer",

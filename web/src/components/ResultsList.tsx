@@ -2,6 +2,7 @@ import { useVirtualizer } from "@tanstack/react-virtual";
 import { useRef } from "react";
 import { useTruncatedTitle } from "../hooks/useTruncatedTitle";
 import { monsterRowId } from "../lib/filters";
+import { listedMonsterId } from "../lib/result-id-scope";
 import { formatLeaderSkillEhp } from "../lib/leader-ehp";
 import {
   hasAnyDisplaySection,
@@ -16,6 +17,43 @@ import {
   MonsterResultPreviewFloating,
   useMonsterResultPreview,
 } from "./MonsterResultPreviewPopover";
+
+function groupMatchMark(row: MonsterRecord): {
+  name: string;
+  kind: "collab" | "group";
+} | null {
+  const name = row.matched_group_name?.trim() ?? "";
+  if (!name) return null;
+  return {
+    name,
+    kind: row.matched_group_kind === "collab" ? "collab" : "group",
+  };
+}
+
+function GroupMatchMark({
+  name,
+  kind,
+  minimal,
+}: {
+  name: string;
+  kind: "collab" | "group";
+  minimal?: boolean;
+}) {
+  const kindLabel = kind === "collab" ? "Collab" : "Group";
+  return (
+    <p
+      className={`mt-0.5 flex min-w-0 items-center gap-1 ${
+        minimal ? "text-[9px]" : "text-[10px]"
+      }`}
+      title={`${kindLabel}: ${name}`}
+    >
+      <span className="shrink-0 rounded bg-[var(--color-accent-muted)] px-1 py-px font-mono font-semibold uppercase tracking-wide text-[var(--color-accent-strong)]">
+        {kindLabel}
+      </span>
+      <span className="truncate text-[var(--color-muted)]">{name}</span>
+    </p>
+  );
+}
 
 function MonsterNameCell({
   name,
@@ -95,7 +133,7 @@ export function ResultsList({
     return String(min ?? max);
   };
 
-  const columns = [minimal ? "3.25rem" : "4rem", "minmax(0,1fr)"];
+  const columns = [minimal ? "4.75rem" : "5.5rem", "minmax(0,1fr)"];
   if (showCdCol) columns.push("4rem");
   if (showEhpCol) columns.push("4rem");
   if (showInfoCol) columns.push("2rem");
@@ -125,7 +163,9 @@ export function ResultsList({
           {virtualizer.getVirtualItems().map((virtualRow) => {
             const row = rows[virtualRow.index]!;
             const id = monsterRowId(row);
+            const listedId = listedMonsterId(row);
             const active = selected && monsterRowId(selected) === id;
+            const groupMark = groupMatchMark(row);
 
             return (
               <div
@@ -155,11 +195,15 @@ export function ResultsList({
                 >
                   <div className={`self-start ${minimal ? "py-1.5 pl-1" : "py-2 pl-1.5"}`}>
                     <span
-                      className={`inline-block whitespace-nowrap rounded-md bg-[var(--color-inset)] font-mono font-bold tabular-nums tracking-wide text-[var(--color-accent-strong)] ring-1 ring-[var(--color-accent)]/20 ${
+                      className={`inline-block whitespace-nowrap rounded-md bg-[var(--color-inset)] font-mono font-bold tabular-nums tracking-wide ring-1 ${
+                        listedId.region === "jp"
+                          ? "text-[var(--color-secondary-strong)] ring-[var(--color-secondary)]/30"
+                          : "text-[var(--color-accent-strong)] ring-[var(--color-accent)]/20"
+                      } ${
                         minimal ? "px-1 py-0.5 text-[10px]" : "px-1.5 py-0.5 text-[11px]"
                       }`}
                     >
-                      {row.monster_no_na != null ? `#${row.monster_no_na}` : "—"}
+                      {listedId.text}
                     </span>
                   </div>
                   <div className={`min-w-0 ${minimal ? "px-1 py-1.5" : "px-2 py-2"}`}>
@@ -179,6 +223,13 @@ export function ResultsList({
                           row={row}
                           variant="inline"
                           sections={displaySections}
+                        />
+                      )}
+                      {groupMark && (
+                        <GroupMatchMark
+                          name={groupMark.name}
+                          kind={groupMark.kind}
+                          minimal={minimal}
                         />
                       )}
                     </div>

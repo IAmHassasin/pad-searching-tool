@@ -2,6 +2,8 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useTruncatedTitle } from "../hooks/useTruncatedTitle";
 import type { AwkModifierSettings } from "../lib/awakening-stat-modifier";
 import type { ResultDisplaySections } from "../lib/result-display";
+import type { ResultIdScope } from "../lib/result-id-scope";
+import { listedMonsterId } from "../lib/result-id-scope";
 import type { ResultQuickFilter } from "../lib/result-quick-filter";
 import type { ResultSortOption } from "../lib/results-sort";
 import { countAdvancedEffectFilters } from "../types";
@@ -15,6 +17,7 @@ import type {
 } from "../types";
 import { MonsterDetailPanel } from "./MonsterDetailPanel";
 import { ModernOnlySearchHint } from "./ModernOnlySearchHint";
+import { ResultIdScopeSwitcher } from "./ResultIdScopeSwitcher";
 import { ResultsDisplayControls } from "./ResultsDisplayControls";
 import { ResultsList } from "./ResultsList";
 import { ResultsQuickFilter } from "./ResultsQuickFilter";
@@ -67,6 +70,8 @@ type Props = {
   onDisplaySectionsChange: (next: ResultDisplaySections) => void;
   resultQuickFilter: ResultQuickFilter;
   onResultQuickFilterChange: (next: ResultQuickFilter) => void;
+  resultIdScope: ResultIdScope;
+  onResultIdScopeChange: (next: ResultIdScope) => void;
   modernOnly?: boolean;
   minMonsterId?: number;
 };
@@ -163,6 +168,7 @@ function MobileDetailPanel({
   const nameTitle = useTruncatedTitle<HTMLParagraphElement>(
     selected.name_en ?? "Details"
   );
+  const listedId = listedMonsterId(selected);
 
   if (collapsed) {
     return (
@@ -178,9 +184,15 @@ function MobileDetailPanel({
   return (
     <aside className="flex min-h-0 w-[min(22.5rem,58%)] shrink-0 flex-col border-l border-[var(--color-border)] bg-[var(--color-inset)]">
       <div className="flex shrink-0 items-center justify-between gap-1.5 border-b border-[var(--color-border)] px-2 py-1.5">
-        {selected.monster_no_na != null && (
-          <span className="shrink-0 rounded-md bg-[var(--color-panel)] px-1.5 py-0.5 font-mono text-[10px] font-bold tabular-nums text-[var(--color-accent-strong)]">
-            #{selected.monster_no_na}
+        {listedId.region !== "none" && (
+          <span
+            className={`shrink-0 rounded-md bg-[var(--color-panel)] px-1.5 py-0.5 font-mono text-[10px] font-bold tabular-nums ${
+              listedId.region === "jp"
+                ? "text-[var(--color-secondary-strong)]"
+                : "text-[var(--color-accent-strong)]"
+            }`}
+          >
+            {listedId.text}
           </span>
         )}
         <p
@@ -550,6 +562,8 @@ export function MobileWebviewLayout({
   onDisplaySectionsChange,
   resultQuickFilter,
   onResultQuickFilterChange,
+  resultIdScope,
+  onResultIdScopeChange,
   modernOnly,
   minMonsterId,
 }: Props) {
@@ -575,6 +589,11 @@ export function MobileWebviewLayout({
             <ResultsQuickFilter
               value={resultQuickFilter}
               onChange={onResultQuickFilterChange}
+              compact
+            />
+            <ResultIdScopeSwitcher
+              value={resultIdScope}
+              onChange={onResultIdScopeChange}
               compact
             />
           </div>
