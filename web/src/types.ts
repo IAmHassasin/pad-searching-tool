@@ -41,6 +41,10 @@ export type MonsterRecord = {
   leader_skill_desc_en?: string | null;
   active_skill_tags?: string | null;
   leader_skill_tags?: string | null;
+  /** dadguide `leader_skills.max_hp` — max HP multiplier of the leader skill. */
+  leader_skill_max_hp?: number | null;
+  /** dadguide `leader_skills.max_shield` — max damage reduction (0..1). */
+  leader_skill_max_shield?: number | null;
   /** Awoken skill ids granted when this assist vanishes (GameWith supplement DB). */
   vanish_granted_awoken_ids?: number[] | null;
   /** Void super gravity duration in turns (Altema supplement DB). */

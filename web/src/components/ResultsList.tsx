@@ -2,6 +2,7 @@ import { useVirtualizer } from "@tanstack/react-virtual";
 import { useRef } from "react";
 import { useTruncatedTitle } from "../hooks/useTruncatedTitle";
 import { monsterRowId } from "../lib/filters";
+import { formatLeaderSkillEhp } from "../lib/leader-ehp";
 import {
   hasAnyDisplaySection,
   isAllSectionsEnabled,
@@ -73,6 +74,7 @@ export function ResultsList({
   const showInlineCard =
     displaySections != null && hasAnyDisplaySection(displaySections);
   const showCdCol = !compact && !minimal && showCd;
+  const showEhpCol = !compact && !minimal && resultSort === "ls_ehp";
   const showInfoCol = !hoverCapable;
 
   const estimateSize = showInlineCard ? 152 : compact || minimal ? 40 : 44;
@@ -95,6 +97,7 @@ export function ResultsList({
 
   const columns = [minimal ? "3.25rem" : "4rem", "minmax(0,1fr)"];
   if (showCdCol) columns.push("4rem");
+  if (showEhpCol) columns.push("4rem");
   if (showInfoCol) columns.push("2rem");
   const gridTemplateColumns = columns.join(" ");
 
@@ -110,6 +113,7 @@ export function ResultsList({
         <div className="whitespace-nowrap px-1.5 py-1.5">ID</div>
         <div className={headerCell}>Name</div>
         {showCdCol && <div className="px-2 py-1.5">CD</div>}
+        {showEhpCol && <div className="px-2 py-1.5">eHP</div>}
         {showInfoCol && <div />}
       </div>
 
@@ -182,6 +186,11 @@ export function ResultsList({
                   {showCdCol && (
                     <div className="px-2 py-2 font-mono font-semibold text-[var(--color-secondary-strong)]">
                       {formatCd(row)}
+                    </div>
+                  )}
+                  {showEhpCol && (
+                    <div className="px-2 py-2 font-mono font-semibold text-[var(--color-secondary-strong)]">
+                      {formatLeaderSkillEhp(row)}
                     </div>
                   )}
                   {showInfoCol && (

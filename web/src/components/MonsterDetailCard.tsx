@@ -63,8 +63,6 @@ type Props = {
   framedIcon?: boolean;
   /** Hide Google / Assist Resonance links (export / custom card). */
   hideUtilityLinks?: boolean;
-  /** Stretch to the parent pane (desktop results column). */
-  fill?: boolean;
 };
 
 function RelationToggleButton({
@@ -219,7 +217,6 @@ export function MonsterDetailCard({
   showAttributes = false,
   framedIcon = false,
   hideUtilityLinks = false,
-  fill = false,
 }: Props) {
   const id = monsterRowId(row);
   const regular = parseRegularAwakenings(row.awakenings);
@@ -287,18 +284,16 @@ export function MonsterDetailCard({
 
   return (
     <article
-      className={`relative bg-black ${
+      className={`relative w-full overflow-hidden bg-black ${
         compact
-          ? "w-full overflow-hidden rounded-lg border border-[#a8842f]/80"
-          : fill
-            ? "flex h-full min-h-0 w-full flex-col overflow-y-auto rounded-xl border-2 border-[#a8842f] shadow-[0_8px_24px_rgba(0,0,0,0.45)]"
-            : "mx-auto w-full max-w-[360px] overflow-hidden rounded-xl border-2 border-[#a8842f] shadow-[0_8px_24px_rgba(0,0,0,0.45)]"
+          ? "rounded-lg border border-[#a8842f]/80"
+          : "mx-auto max-w-[360px] rounded-xl border-2 border-[#a8842f] shadow-[0_8px_24px_rgba(0,0,0,0.45)]"
       }`}
     >
       <header
         className={`relative z-10 border-b border-[#6b4f2a]/80 bg-[#2f2118]/90 ${
-          fill ? "shrink-0" : ""
-        } ${compact ? "px-2 py-1" : "px-3 py-2"}`}
+          compact ? "px-2 py-1" : "px-3 py-2"
+        }`}
       >
         <div className="flex items-start gap-2">
           {compact &&
@@ -352,12 +347,7 @@ export function MonsterDetailCard({
         </div>
       </header>
 
-      <div
-        className={`relative z-10 ${fill ? "flex-1" : ""} ${compact ? "" : "overflow-hidden"}`}
-        style={
-          fill ? { minHeight: PAD_AWAKENING.artAreaMinHeightPx } : undefined
-        }
-      >
+      <div className={`relative z-10 ${compact ? "" : "overflow-hidden"}`}>
         {!compact && (
           <>
             <div
@@ -383,7 +373,7 @@ export function MonsterDetailCard({
           </>
         )}
         <div
-          className={`relative z-10 ${compact ? "flex flex-col gap-1 px-1 py-1" : "flex"} ${fill ? "h-full" : ""}`}
+          className={`relative z-10 ${compact ? "flex flex-col gap-1 px-1 py-1" : "flex"}`}
           style={
             compact ? undefined : { minHeight: PAD_AWAKENING.artAreaMinHeightPx }
           }
@@ -549,8 +539,8 @@ export function MonsterDetailCard({
 
       <div
         className={`relative z-10 rounded-md border border-[#8b6914]/80 bg-[#241a12]/95 shadow-inner ${
-          fill ? "shrink-0" : ""
-        } ${compact ? "mx-1.5 px-1.5 py-1" : "mx-2 -mt-1 px-2 py-2"}`}
+          compact ? "mx-1.5 px-1.5 py-1" : "mx-2 -mt-1 px-2 py-2"
+        }`}
       >
         <div className="flex items-center gap-2">
           {!compact &&
@@ -592,7 +582,7 @@ export function MonsterDetailCard({
 
       <div
         ref={skillFit.ref}
-        className={`relative z-10 space-y-0 ${fill ? "shrink-0" : ""} ${compact ? "px-1.5 pb-2 pt-0.5" : "px-2 pb-3 pt-1"}`}
+        className={`relative z-10 space-y-0 ${compact ? "px-1.5 pb-2 pt-0.5" : "px-2 pb-3 pt-1"}`}
         style={{ fontSize: skillFit.fontPx }}
       >
         <SkillBlock

@@ -3,6 +3,7 @@ import {
   computeModifiedStat,
   type AwkModifierSettings,
 } from "./awakening-stat-modifier";
+import { leaderSkillEhp } from "./leader-ehp";
 
 export type ResultSortOption =
   | "default"
@@ -10,7 +11,8 @@ export type ResultSortOption =
   | "cd_longest"
   | "hp_modified"
   | "atk_modified"
-  | "rcv_modified";
+  | "rcv_modified"
+  | "ls_ehp";
 
 export const RESULT_SORT_OPTIONS: {
   value: ResultSortOption;
@@ -31,6 +33,7 @@ export const RESULT_SORT_OPTIONS: {
     label: "RCV (awk modifier)",
     needsAwkModifier: true,
   },
+  { value: "ls_ehp", label: "eHP (leader skill)", needsAwkModifier: false },
 ];
 
 function defaultTiebreak(a: MonsterRecord, b: MonsterRecord): number {
@@ -65,6 +68,16 @@ function compareCooldown(
   return defaultTiebreak(a, b);
 }
 
+function compareLeaderEhp(a: MonsterRecord, b: MonsterRecord): number {
+  const va = leaderSkillEhp(a);
+  const vb = leaderSkillEhp(b);
+  if (va == null && vb == null) return defaultTiebreak(a, b);
+  if (va == null) return 1;
+  if (vb == null) return -1;
+  if (va !== vb) return vb - va;
+  return defaultTiebreak(a, b);
+}
+
 export function sortMonsterRows(
   rows: MonsterRecord[],
   sort: ResultSortOption,
@@ -86,6 +99,7 @@ export function sortMonsterRows(
   return [...rows].sort((a, b) => {
     if (sort === "cd_fastest") return compareCooldown(a, b, "fastest");
     if (sort === "cd_longest") return compareCooldown(a, b, "longest");
+    if (sort === "ls_ehp") return compareLeaderEhp(a, b);
     if (statKey) {
       const va = computeModifiedStat(a, awkSettings, statKey);
       const vb = computeModifiedStat(b, awkSettings, statKey);
