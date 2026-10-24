@@ -5,6 +5,7 @@ import { DataSource } from "typeorm";
 import {
   type CachedMonsterName,
   type MonsterNameSource,
+  translateJapaneseLabels,
   translateMonsterNameRows,
 } from "./japanese-name";
 
@@ -35,6 +36,7 @@ async function translateJapaneseBatch(texts: string[]): Promise<string[]> {
 export class NameTranslationService {
   private readonly logger = new Logger(NameTranslationService.name);
   private readonly cache = new Map<number, CachedMonsterName>();
+  private readonly labelCache = new Map<string, string>();
   /** One upstream batch at a time so a fast scroll does not stampede Google. */
   private chain: Promise<void> = Promise.resolve();
 
@@ -46,6 +48,22 @@ export class NameTranslationService {
     ].slice(0, MAX_LOOKUP_IDS);
     if (!unique.length) return Promise.resolve({});
     return this.enqueue(() => this.resolve(unique));
+  }
+
+  /** Same Japanese-to-English batch path as monster names on the search screen. */
+  translateLabels(labels: string[]): Promise<string[]> {
+    if (!labels.length) return Promise.resolve([]);
+    return this.enqueue(() =>
+      translateJapaneseLabels(labels, this.labelCache, async (texts) => {
+        try {
+          return await translateJapaneseBatch(texts);
+        } catch (error) {
+          const message = error instanceof Error ? error.message : "unknown error";
+          this.logger.warn(`Label translation failed: ${message}`);
+          throw error;
+        }
+      })
+    );
   }
 
   private enqueue<T>(job: () => Promise<T>): Promise<T> {

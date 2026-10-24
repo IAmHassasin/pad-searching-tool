@@ -2,6 +2,8 @@ import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import {
   containsJapanese,
+  titleCaseTranslatedName,
+  translateJapaneseLabels,
   translateMonsterNameRows,
   type CachedMonsterName,
 } from "./japanese-name.ts";
@@ -76,5 +78,73 @@ describe("translateMonsterNameRows", () => {
       async (texts) => texts.map(() => "Storm Dragon")
     );
     assert.equal(names["3"], "Storm Dragon");
+  });
+});
+
+describe("translateJapaneseLabels", () => {
+  it("keeps Latin labels and translates each Japanese label once", async () => {
+    const cache = new Map<string, string>();
+    const seen: string[][] = [];
+    const translateBatch = async (texts: string[]) => {
+      seen.push(texts);
+      return texts.map((text) => `EN:${text}`);
+    };
+    const labels = ["Halloween Egg Machine", "BLEACHガチャ", "BLEACHガチャ"];
+
+    const first = await translateJapaneseLabels(labels, cache, translateBatch);
+    const second = await translateJapaneseLabels(labels, cache, translateBatch);
+
+    assert.deepEqual(first, [
+      "Halloween Egg Machine",
+      "EN:BLEACHガチャ",
+      "EN:BLEACHガチャ",
+    ]);
+    assert.deepEqual(second, first);
+    assert.equal(seen.length, 1);
+    assert.deepEqual(seen[0], ["BLEACHガチャ"]);
+  });
+
+  it("keeps the Japanese label when translation throws and does not cache the failure", async () => {
+    const cache = new Map<string, string>();
+    let calls = 0;
+    const translateBatch = async () => {
+      calls += 1;
+      throw new Error("upstream down");
+    };
+
+    const first = await translateJapaneseLabels(
+      ["コードギアスガチャ"],
+      cache,
+      translateBatch
+    );
+    assert.deepEqual(first, ["コードギアスガチャ"]);
+    assert.equal(cache.size, 0);
+
+    await translateJapaneseLabels(["コードギアスガチャ"], cache, translateBatch);
+    assert.equal(calls, 2);
+  });
+
+  it("title-cases a lowercase translation and keeps existing capitals", async () => {
+    assert.equal(titleCaseTranslatedName("code geass gacha"), "Code Geass Gacha");
+    assert.equal(
+      titleCaseTranslatedName("14th anniversary! super god fest"),
+      "14th Anniversary! Super God Fest"
+    );
+    assert.equal(titleCaseTranslatedName("BLEACH gacha"), "BLEACH Gacha");
+    assert.equal(
+      titleCaseTranslatedName("THE IDOLM@STER CINDERELLA GIRLS"),
+      "THE IDOLM@STER CINDERELLA GIRLS"
+    );
+    assert.equal(
+      titleCaseTranslatedName("Butler and Maid and Puzzle and Dragons"),
+      "Butler and Maid and Puzzle and Dragons"
+    );
+
+    const names = await translateJapaneseLabels(
+      ["コードギアスガチャ"],
+      new Map(),
+      async () => ["code geass gacha"]
+    );
+    assert.deepEqual(names, ["Code Geass Gacha"]);
   });
 });

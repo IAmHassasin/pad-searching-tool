@@ -5,6 +5,7 @@ import App from "./App";
 import { AdminSessionProvider } from "./hooks/useAdminSession";
 import { DungeonDetailsPage } from "./dungeon-details/DungeonDetailsPage";
 import { DungeonListPage } from "./dungeon-details/DungeonListPage";
+import { EggMachinesPage } from "./egg-machines/EggMachinesPage";
 import { EventDetailPage } from "./event/EventDetailPage";
 import { EventListPage } from "./event/EventListPage";
 import { OneTouchPage } from "./one-touch/OneTouchPage";
@@ -34,6 +35,9 @@ function Root() {
   }
   if (path === "/event") {
     return <EventListPage />;
+  }
+  if (path === "/egg-machines") {
+    return <EggMachinesPage />;
   }
   if (eventDetailMatch) {
     return <EventDetailPage eventId={eventDetailMatch[1]} />;

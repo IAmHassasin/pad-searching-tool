@@ -32,6 +32,11 @@ import { VoidSuperGravityService } from "./void-super-gravity.service";
     VanishAwokenService,
     VoidSuperGravityService,
   ],
-  exports: [MonsterRelationsService, VanishAwokenService, VoidSuperGravityService],
+  exports: [
+    MonsterRelationsService,
+    NameTranslationService,
+    VanishAwokenService,
+    VoidSuperGravityService,
+  ],
 })
 export class ApiModule {}

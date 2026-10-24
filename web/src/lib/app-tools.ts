@@ -53,6 +53,12 @@ export const APP_TOOLS: AppTool[] = [
     description: "New monster & evolution announcements",
     icon: "📰",
   },
+  {
+    href: "/egg-machines",
+    label: "Egg Machines",
+    description: "JP and NA egg machine pools",
+    icon: "🥚",
+  },
 ];
 
 export function currentAppPath(): string {

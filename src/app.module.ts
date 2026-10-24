@@ -4,6 +4,7 @@ import { AdminModule } from "./admin/admin.module";
 import { ApiModule } from "./api/api.module";
 import { DungeonDetailsModule } from "./dungeon-details/dungeon-details.module";
 import { PadCategorized } from "./entities/pad-categorized.entity";
+import { EggMachinesModule } from "./egg-machines/egg-machines.module";
 import { EventModule } from "./event/event.module";
 import { TransformModule } from "./transform/transform.module";
 
@@ -22,6 +23,7 @@ const sqlitePath = process.env.SQLITE_PATH ?? "./pad.db";
     ApiModule,
     DungeonDetailsModule,
     EventModule,
+    EggMachinesModule,
     AdminModule,
   ],
 })
