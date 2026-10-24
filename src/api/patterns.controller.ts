@@ -1,13 +1,16 @@
 import {
   BadRequestException,
+  Body,
   Controller,
   Get,
+  Post,
   Query,
 } from "@nestjs/common";
 import { EffectValueCatalogService } from "../patterns/effect-value-catalog.service";
 import type { EffectValueRangeInput } from "../patterns/effect-value-types";
 import { PatternCatalogService } from "../patterns/pattern-catalog.service";
 import { MonsterRelationsService } from "./monster-relations.service";
+import { NameTranslationService } from "./name-translation.service";
 import {
   MonsterSearchFilters,
   PatternSearchService,
@@ -20,6 +23,22 @@ function parseCsv(raw: string | undefined): string[] {
     .split(",")
     .map((s) => s.trim())
     .filter(Boolean);
+}
+
+function parseMonsterIdList(raw: unknown): number[] {
+  if (raw == null) return [];
+  if (!Array.isArray(raw)) {
+    throw new BadRequestException("ids must be an array of numbers.");
+  }
+  const ids: number[] = [];
+  for (const item of raw) {
+    const n = typeof item === "number" ? item : Number(item);
+    if (!Number.isInteger(n) || n <= 0) {
+      throw new BadRequestException("ids must be positive integers.");
+    }
+    ids.push(n);
+  }
+  return [...new Set(ids)];
 }
 
 function parseIntCsv(raw: string | undefined): number[] {
@@ -104,7 +123,8 @@ export class PatternsController {
     private readonly catalog: PatternCatalogService,
     private readonly effectValues: EffectValueCatalogService,
     private readonly search: PatternSearchService,
-    private readonly relations: MonsterRelationsService
+    private readonly relations: MonsterRelationsService,
+    private readonly names: NameTranslationService
   ) {}
 
   @Get("patterns/groups")
@@ -280,6 +300,19 @@ export class PatternsController {
         skipCountRaw?.trim() === "1" ||
         skipCountRaw?.trim().toLowerCase() === "true",
     });
+  }
+
+  /**
+   * English display names for monsters whose stored name is still Japanese.
+   * Looks up names by id; does not accept free text.
+   */
+  @Post("monsters/translate-names")
+  translateNames(@Body() body: { ids?: unknown }) {
+    const ids = parseMonsterIdList(body?.ids);
+    if (ids.length > 40) {
+      throw new BadRequestException("Too many ids (max 40).");
+    }
+    return this.names.translateByIds(ids).then((names) => ({ names }));
   }
 
   @Get("monsters/lookup")

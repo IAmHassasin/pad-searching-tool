@@ -1,4 +1,5 @@
 import { useState, type ReactNode } from "react";
+import { useMonsterNameTranslation } from "../hooks/useLiveMonsterNames";
 import { useTruncatedTitle } from "../hooks/useTruncatedTitle";
 import { monsterRowId } from "../lib/filters";
 import {
@@ -215,9 +216,8 @@ export function MonsterQuickPreview({
   sections,
 }: Props) {
   const monsterId = monsterRowId(row);
-  const nameTitle = useTruncatedTitle<HTMLHeadingElement>(
-    row.name_en ?? "Unknown"
-  );
+  const displayName = useMonsterNameTranslation().nameFor(row, "Unknown");
+  const nameTitle = useTruncatedTitle<HTMLHeadingElement>(displayName);
   const attributeIds = parseMonsterAttributeIds(row);
   const regular = parseRegularAwakenings(row.awakenings);
   const hasSuperAwks =
@@ -381,7 +381,7 @@ export function MonsterQuickPreview({
                 title={nameTitle.title}
                 className={`mt-0.5 truncate font-bold text-[var(--color-fg-strong)] ${inline ? "text-[10px]" : "text-[13px]"}`}
               >
-                {row.name_en ?? "Unknown"}
+                {displayName}
               </h3>
               {attributeIds.length > 0 && (
                 <div className="mt-1">

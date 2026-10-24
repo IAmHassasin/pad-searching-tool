@@ -1,5 +1,9 @@
 import { useVirtualizer } from "@tanstack/react-virtual";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
+import {
+  monsterNameNeedsTranslation,
+  useMonsterNameTranslation,
+} from "../hooks/useLiveMonsterNames";
 import { useTruncatedTitle } from "../hooks/useTruncatedTitle";
 import { monsterRowId } from "../lib/filters";
 import { listedMonsterId } from "../lib/result-id-scope";
@@ -99,6 +103,7 @@ export function ResultsList({
   displaySections,
 }: Props) {
   const parentRef = useRef<HTMLDivElement>(null);
+  const { requestIds, nameFor } = useMonsterNameTranslation();
   const {
     preview,
     previewId,
@@ -124,6 +129,20 @@ export function ResultsList({
     overscan: 8,
     getItemKey: (index) => monsterRowId(rows[index]!),
   });
+
+  const virtualItems = virtualizer.getVirtualItems();
+  const visibleIndexKey = virtualItems.map((item) => item.index).join(",");
+  useEffect(() => {
+    const ids: number[] = [];
+    for (const item of virtualItems) {
+      const row = rows[item.index];
+      if (row && monsterNameNeedsTranslation(row)) ids.push(monsterRowId(row));
+    }
+    if (selected && monsterNameNeedsTranslation(selected)) {
+      ids.push(monsterRowId(selected));
+    }
+    requestIds(ids);
+  }, [visibleIndexKey, rows, selected, requestIds, virtualItems]);
 
   const formatCd = (row: MonsterRecord) => {
     const min = row.active_skill_cooldown_min;
@@ -160,7 +179,7 @@ export function ResultsList({
           className="relative w-full text-xs"
           style={{ height: virtualizer.getTotalSize() }}
         >
-          {virtualizer.getVirtualItems().map((virtualRow) => {
+          {virtualItems.map((virtualRow) => {
             const row = rows[virtualRow.index]!;
             const id = monsterRowId(row);
             const listedId = listedMonsterId(row);
@@ -214,7 +233,7 @@ export function ResultsList({
                         isAllSectionsEnabled(displaySections)
                       ) && (
                         <MonsterNameCell
-                          name={row.name_en ?? "—"}
+                          name={nameFor(row)}
                           minimal={minimal}
                         />
                       )}

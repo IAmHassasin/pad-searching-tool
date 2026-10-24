@@ -253,6 +253,19 @@ export async function searchAllMonsters(
   return { rows: all, total, minMonsterId, modernOnly };
 }
 
+export function translateMonsterNames(ids: number[]) {
+  const unique = [...new Set(ids.filter((id) => Number.isInteger(id) && id > 0))].slice(
+    0,
+    40
+  );
+  if (!unique.length) return Promise.resolve({ names: {} as Record<string, string> });
+  return getJson<{ names: Record<string, string> }>("/monsters/translate-names", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ ids: unique }),
+  });
+}
+
 export function fetchMonstersByIds(ids: number[]) {
   const unique = [...new Set(ids.filter((id) => Number.isFinite(id) && id > 0))];
   if (!unique.length) {

@@ -8,6 +8,7 @@ import { CategoryBundlesController } from "./category-bundles.controller";
 import { CategoryBundlesService } from "./category-bundles.service";
 import { FilterCategoriesService } from "./filter-categories.service";
 import { MonsterRelationsService } from "./monster-relations.service";
+import { NameTranslationService } from "./name-translation.service";
 import { PatternSearchService } from "./pattern-search.service";
 import { PatternsController } from "./patterns.controller";
 import { PadsApiController } from "./pads-api.controller";
@@ -23,6 +24,7 @@ import { VoidSuperGravityService } from "./void-super-gravity.service";
     EffectValueCatalogService,
     PatternSearchService,
     MonsterRelationsService,
+    NameTranslationService,
     SourceRowsService,
     AwokenSkillsService,
     CategoryBundlesService,

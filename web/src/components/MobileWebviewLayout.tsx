@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useMonsterNameTranslation } from "../hooks/useLiveMonsterNames";
 import { useTruncatedTitle } from "../hooks/useTruncatedTitle";
 import type { AwkModifierSettings } from "../lib/awakening-stat-modifier";
 import type { ResultDisplaySections } from "../lib/result-display";
@@ -165,9 +166,8 @@ function MobileDetailPanel({
   onSelect: (row: MonsterRecord) => void;
   showFullArt: boolean;
 }) {
-  const nameTitle = useTruncatedTitle<HTMLParagraphElement>(
-    selected.name_en ?? "Details"
-  );
+  const displayName = useMonsterNameTranslation().nameFor(selected, "Details");
+  const nameTitle = useTruncatedTitle<HTMLParagraphElement>(displayName);
   const listedId = listedMonsterId(selected);
 
   if (collapsed) {
@@ -200,7 +200,7 @@ function MobileDetailPanel({
           title={nameTitle.title}
           className="min-w-0 flex-1 truncate text-[11px] font-semibold text-[var(--color-fg-strong)]"
         >
-          {selected.name_en ?? "Details"}
+          {displayName}
         </p>
         <IconButton onClick={onToggleCollapsed} label="Collapse details" expanded>
           ›

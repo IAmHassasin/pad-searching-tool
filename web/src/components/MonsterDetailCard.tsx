@@ -1,5 +1,6 @@
 import type { CSSProperties, ReactNode } from "react";
 import cardBackground from "../assets/pad/background.png";
+import { useMonsterNameTranslation } from "../hooks/useLiveMonsterNames";
 import { monsterRowId } from "../lib/filters";
 import { listedMonsterId } from "../lib/result-id-scope";
 import {
@@ -220,6 +221,7 @@ export function MonsterDetailCard({
   hideUtilityLinks = false,
 }: Props) {
   const id = monsterRowId(row);
+  const displayName = useMonsterNameTranslation().nameFor(row, "Unknown");
   const listedId = listedMonsterId(row);
   const regular = parseRegularAwakenings(row.awakenings);
   const hasSuperAwks =
@@ -330,10 +332,10 @@ export function MonsterDetailCard({
             </div>
             <div className="flex items-start gap-2">
               <h3
-                title={row.name_en ?? "Unknown"}
+                title={displayName}
                 className={`min-w-0 flex-1 wrap-anywhere break-words font-bold leading-snug text-white ${compact ? "text-xs" : "text-sm"}`}
               >
-                {row.name_en ?? "Unknown"}
+                {displayName}
               </h3>
               {googleSearchUrl && (
                 <LinkPillButton
@@ -364,7 +366,7 @@ export function MonsterDetailCard({
             />
             <MonsterPortrait
               monsterId={id}
-              alt={row.name_en ?? "Monster artwork"}
+              alt={displayName}
               src={artSrc}
               className="pointer-events-none absolute left-1/2 z-[1] max-w-none -translate-x-1/2 -translate-y-1/2 object-contain"
               style={{

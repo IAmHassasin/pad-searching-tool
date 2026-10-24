@@ -19,6 +19,7 @@ import {
 } from "./components/ResultsSortControls";
 import { DEFAULT_RESULT_DISPLAY_SECTIONS } from "./lib/result-display";
 import { useDebouncedValue } from "./hooks/useDebouncedValue";
+import { MonsterNameTranslationProvider } from "./hooks/useLiveMonsterNames";
 import { useMobileWebview } from "./hooks/useMobileWebview";
 import type { AwkModifierSettings } from "./lib/awakening-stat-modifier";
 import type { ResultDisplaySections } from "./lib/result-display";
@@ -241,6 +242,7 @@ export default function App() {
   };
 
   return (
+    <MonsterNameTranslationProvider>
     <div className="flex h-full flex-col">
       <header
         className={`glass-bar relative z-40 flex h-[52px] shrink-0 items-center justify-between border-b border-white/[0.08] ${
@@ -406,5 +408,6 @@ export default function App() {
         </div>
       )}
     </div>
+    </MonsterNameTranslationProvider>
   );
 }
