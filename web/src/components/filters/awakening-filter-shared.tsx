@@ -144,7 +144,6 @@ export function AwakeningPickerModeToggle({
       {(
         [
           { id: "include" as const, label: "Include" },
-          { id: "exclude" as const, label: "Exclude" },
           { id: "vanish" as const, label: "Vanish" },
         ] as const
       ).map(({ id, label }) => (
@@ -158,11 +157,9 @@ export function AwakeningPickerModeToggle({
             compact ? "text-[10px]" : "text-xs"
           } ${
             value === id
-              ? id === "exclude"
-                ? "bg-[var(--color-negative)]/15 text-red-300 ring-1 ring-[var(--color-negative)]/60"
-                : id === "vanish"
-                  ? "bg-[var(--color-amber-bg)] text-[var(--color-gold)] ring-1 ring-[var(--color-gold)]/60"
-                  : "bg-emerald-500/15 text-emerald-300 ring-1 ring-[var(--color-positive)]/60"
+              ? id === "vanish"
+                ? "bg-[var(--color-amber-bg)] text-[var(--color-gold)] ring-1 ring-[var(--color-gold)]/60"
+                : "bg-emerald-500/15 text-emerald-300 ring-1 ring-[var(--color-positive)]/60"
               : "text-[var(--color-muted)] hover:text-[var(--color-fg-strong)]"
           }`}
         >

@@ -10,6 +10,9 @@ import type { OneTouchFloor } from "./types";
 
 const DEFAULT_DUNGEON_ID = ONE_TOUCH_DUNGEONS[0]?.id ?? "volcano";
 
+/** Awakening lookup stays wired; flip to show the column again. */
+const SHOW_AWAKENING_LOOKUP = false;
+
 function readDungeonFromHash(): string | null {
   const m = window.location.hash.match(/^#([a-z]+)$/);
   return m ? m[1] : null;
@@ -66,7 +69,7 @@ export function OneTouchPage() {
     <div className="flex min-h-full flex-col bg-[var(--color-surface)] text-[var(--color-fg)]">
       <PageHeader
         title="One-Touch Dungeon"
-        subtitle="Floor guides & awakening reference (English)"
+        subtitle="Floor guides (English)"
         maxWidthClass="max-w-7xl"
       >
         <DungeonAttributePicker
@@ -77,15 +80,17 @@ export function OneTouchPage() {
       </PageHeader>
 
       <main
-        className={`mx-auto grid w-full max-w-7xl flex-1 gap-4 px-3 py-4 sm:px-4 lg:grid-cols-2 lg:items-stretch ${
-          selection.entries.length ? "pb-40 sm:pb-28" : ""
-        }`}
+        className={`mx-auto grid w-full max-w-7xl flex-1 gap-4 px-3 py-4 sm:px-4 lg:items-stretch ${
+          SHOW_AWAKENING_LOOKUP ? "lg:grid-cols-2" : ""
+        } ${selection.entries.length ? "pb-40 sm:pb-28" : ""}`}
       >
-        <AwakeningLookupPanel
-          effects={ONE_TOUCH_AWAKENING_EFFECTS}
-          onAddAwakening={selection.add}
-          className="lg:max-h-[calc(100vh-12.5rem)]"
-        />
+        {SHOW_AWAKENING_LOOKUP ? (
+          <AwakeningLookupPanel
+            effects={ONE_TOUCH_AWAKENING_EFFECTS}
+            onAddAwakening={selection.add}
+            className="lg:max-h-[calc(100vh-12.5rem)]"
+          />
+        ) : null}
         <DungeonFloorPanel
           dungeonName={dungeon.nameEn}
           floors={dungeon.floors}

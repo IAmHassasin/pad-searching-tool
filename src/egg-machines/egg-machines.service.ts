@@ -8,6 +8,7 @@ import {
   type EggMachineEvent,
   type EggMachineInput,
 } from "./classify-egg-machines";
+import { ratesFromContents } from "./egg-rates";
 
 type EggRow = {
   server_id: number;
@@ -59,6 +60,7 @@ export class EggMachinesService {
       cost: Number(row.cost ?? 0),
       machineType: Number(row.machine_type),
       monsterIds: monsterIdsFromContents(row.contents),
+      rates: ratesFromContents(row.contents),
     }));
 
     const monsterIds = machines.flatMap((machine) => machine.monsterIds);

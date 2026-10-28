@@ -309,4 +309,41 @@ describe("classifyEggMachines", () => {
       ["Newer", "Older"]
     );
   });
+
+  it("keeps the rate table from the latest run of each server", () => {
+    const events = classifyEggMachines(
+      [
+        machine({
+          serverId: 0,
+          start: SINCE + 100,
+          monsterIds: [1, 2],
+          rates: [{ monsterId: 1, weight: 100 }],
+        }),
+        machine({
+          serverId: 0,
+          start: SINCE + 200,
+          monsterIds: [1, 2],
+          rates: [
+            { monsterId: 1, weight: 250 },
+            { monsterId: 2, weight: 750 },
+          ],
+        }),
+        machine({
+          serverId: 1,
+          start: SINCE + 150,
+          monsterIds: [1, 2],
+          rates: [{ monsterId: 2, weight: 400 }],
+        }),
+      ],
+      new Set([1, 2]),
+      NOW,
+      SINCE
+    );
+    assert.equal(events.length, 1);
+    assert.deepEqual(events[0]?.rates.JP, [
+      { monsterId: 1, weight: 250 },
+      { monsterId: 2, weight: 750 },
+    ]);
+    assert.deepEqual(events[0]?.rates.NA, [{ monsterId: 2, weight: 400 }]);
+  });
 });

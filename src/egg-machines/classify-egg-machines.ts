@@ -24,6 +24,11 @@ export type EggServer = "JP" | "NA";
 
 export type EggBadge = "JP" | "NA" | "Might skip";
 
+export type EggCardRate = {
+  monsterId: number;
+  weight: number;
+};
+
 export type EggMachineInput = {
   serverId: number;
   name: string;
@@ -32,6 +37,8 @@ export type EggMachineInput = {
   cost: number;
   machineType: number;
   monsterIds: number[];
+  /** Positive per-card weights from `egg_machines.contents`. Omitted on older callers. */
+  rates?: EggCardRate[];
 };
 
 export type EggWindow = {
@@ -49,6 +56,8 @@ export type EggMachineEvent = {
   badges: EggBadge[];
   jpOnlyIds: number[];
   sharedIds: number[];
+  /** Rate table of the latest run on each server that has this pool. */
+  rates: Partial<Record<EggServer, EggCardRate[]>>;
 };
 
 type Pool = {
@@ -80,21 +89,35 @@ function serverOf(serverId: number): EggServer | null {
   return null;
 }
 
-function latestWindow(machines: EggMachineInput[], server: EggServer): EggWindow | null {
+function latestMachine(machines: EggMachineInput[], server: EggServer): EggMachineInput | null {
   const serverId = server === "JP" ? 0 : 1;
   const runs = machines.filter((machine) => machine.serverId === serverId);
   if (!runs.length) return null;
-  const latest = runs.reduce((best, run) => {
+  return runs.reduce((best, run) => {
     if (run.start > best.start) return run;
     if (run.start === best.start && run.end > best.end) return run;
     return best;
   });
+}
+
+function latestWindow(machines: EggMachineInput[], server: EggServer): EggWindow | null {
+  const latest = latestMachine(machines, server);
+  if (!latest) return null;
   return {
     server,
     start: latest.start,
     end: latest.end,
     cost: latest.cost,
   };
+}
+
+function ratesFor(machines: EggMachineInput[]): Partial<Record<EggServer, EggCardRate[]>> {
+  const rates: Partial<Record<EggServer, EggCardRate[]>> = {};
+  for (const server of ["JP", "NA"] as const) {
+    const latest = latestMachine(machines, server);
+    if (latest) rates[server] = latest.rates ?? [];
+  }
+  return rates;
 }
 
 function maxStart(machines: EggMachineInput[], serverId: number): number | null {
@@ -143,7 +166,12 @@ export function classifyEggMachines(
     const ids = uniqueSorted(machine.monsterIds);
     const key = poolKey(ids);
     const pool = pools.get(key) ?? { ids, machines: [] };
-    pool.machines.push({ ...machine, monsterIds: ids, name: machine.name.trim() });
+    pool.machines.push({
+      ...machine,
+      monsterIds: ids,
+      name: machine.name.trim(),
+      rates: machine.rates ?? [],
+    });
     pools.set(key, pool);
   }
 
@@ -188,6 +216,7 @@ export function classifyEggMachines(
       badges,
       jpOnlyIds,
       sharedIds,
+      rates: ratesFor(entry.group.machines),
     });
   }
 
