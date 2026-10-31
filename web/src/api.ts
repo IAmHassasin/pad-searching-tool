@@ -42,6 +42,18 @@ async function getJson<T>(path: string, init?: RequestInit): Promise<T> {
   return res.json() as Promise<T>;
 }
 
+export type AwokenSkillsPage = {
+  table: string;
+  limit: number;
+  offset: number;
+  rows: Record<string, unknown>[];
+};
+
+/** Full `awoken_skills` page. Descriptions for the awakening popup. */
+export function fetchAwokenSkills(): Promise<AwokenSkillsPage> {
+  return getJson<AwokenSkillsPage>("/awoken-skills?limit=5000");
+}
+
 export function getAdminToken(storageKey: string): string | null {
   try {
     return sessionStorage.getItem(storageKey);

@@ -1,6 +1,10 @@
 import type Database from "better-sqlite3";
 import type { DataSource } from "typeorm";
-import { effectDurationLoops, stageCooldownAt } from "./skill-charge-sql.ts";
+import {
+  effectDurationLoops,
+  loopCopyCount,
+  stageCooldownAt,
+} from "./skill-charge-sql.ts";
 import { skillGlobMatch } from "./skill-search-sql.ts";
 
 const FLAG = "__padRegexpRegistered";
@@ -109,7 +113,8 @@ function effectMatchCore(
   requireLoop: boolean,
   loopCooldown: unknown,
   loopCharges: unknown,
-  loopStageCooldowns: unknown
+  loopStageCooldowns: unknown,
+  loopCopies: unknown
 ): 0 | 1 {
   if (pattern == null || value == null) return 0;
   const re = compile(String(pattern), "gi");
@@ -145,7 +150,8 @@ function effectMatchCore(
           loopCooldown,
           loopStageCooldowns
         );
-        ok = effectDurationLoops(turns, stageCd, loopCharges);
+        const copies = loopCopyCount(loopCopies);
+        ok = copies != null && effectDurationLoops(turns, stageCd, loopCharges, copies);
       }
     }
     if (ok) return 1;
@@ -174,15 +180,17 @@ export function effectMatch(
     false,
     null,
     null,
+    null,
     null
   );
 }
 
 /**
- * Same as {@link effectMatch}, plus the matched clause must loop: its duration
- * is at least ceil(stage cooldown / chargesPerTurn). `chargesPerTurn` includes
- * the natural 1 plus skill-charge awakenings. `stageCooldowns` is the
- * comma-separated per-stage list; stage 1 still uses `cooldown`.
+ * Same as {@link effectMatch}, plus the matched clause must loop.
+ * The gap between uses is ceil(ceil(stage cooldown / chargesPerTurn) / copies).
+ * `copies` is 1, 2, or 3 cards with this active; omitted means 1.
+ * `chargesPerTurn` includes the natural 1 plus skill-charge awakenings.
+ * `stageCooldowns` is the comma-separated per-stage list; stage 1 still uses `cooldown`.
  */
 export function effectLoopMatch(
   pattern: unknown,
@@ -194,7 +202,8 @@ export function effectLoopMatch(
   turnMax: unknown,
   cooldown: unknown,
   chargesPerTurn: unknown,
-  stageCooldowns: unknown
+  stageCooldowns: unknown,
+  copies: unknown = 1
 ): 0 | 1 {
   return effectMatchCore(
     pattern,
@@ -207,7 +216,40 @@ export function effectLoopMatch(
     true,
     cooldown,
     chargesPerTurn,
-    stageCooldowns
+    stageCooldowns,
+    copies
+  );
+}
+
+/**
+ * SQLite counts arguments from `function.length`, which skips defaulted
+ * parameters, so the loop function lists every argument itself.
+ */
+function effectLoopSql(
+  pattern: unknown,
+  groupIndex: unknown,
+  value: unknown,
+  min: unknown,
+  max: unknown,
+  turnMin: unknown,
+  turnMax: unknown,
+  cooldown: unknown,
+  chargesPerTurn: unknown,
+  stageCooldowns: unknown,
+  copies: unknown
+): 0 | 1 {
+  return effectLoopMatch(
+    pattern,
+    groupIndex,
+    value,
+    min,
+    max,
+    turnMin,
+    turnMax,
+    cooldown,
+    chargesPerTurn,
+    stageCooldowns,
+    copies
   );
 }
 
@@ -245,7 +287,7 @@ export function registerSqliteRegexp(db: Database.Database): void {
   );
 
   db.function("effect_match", { deterministic: true }, effectMatch);
-  db.function("effect_loop", { deterministic: true }, effectLoopMatch);
+  db.function("effect_loop", { deterministic: true }, effectLoopSql);
 
   db.function("skill_glob", { deterministic: true }, skillGlobMatch);
 

@@ -51,10 +51,13 @@ export type EffectValueRangeInput = {
   turnMin?: number | null;
   turnMax?: number | null;
   /**
-   * Active skills only. The matched clause loops when its duration is at least
-   * the cooldown after skill-charge awakenings. Evolving skills use that stage's CD.
+   * Active skills only. The matched clause loops when its duration covers the
+   * charged cooldown shared across `loopCopies` cards. Evolving skills use
+   * that stage's CD.
    */
   loop?: boolean;
+  /** 1, 2, or 3 copies of this active. Ignored unless `loop` is set. Default 1. */
+  loopCopies?: 1 | 2 | 3;
 };
 
 /** Column expressions for the active-skill loop check. Built by search, never from user text. */

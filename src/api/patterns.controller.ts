@@ -70,11 +70,25 @@ const EFFECT_SCOPES: Record<string, EffectValueRangeInput["skillType"]> = {
   l: "leader_skill",
 };
 
+function parseLoopCopiesToken(
+  raw: string | undefined,
+  effectId: string
+): 1 | 2 | 3 | undefined {
+  if (raw == null || raw.trim() === "") return undefined;
+  if (raw === "1" || raw === "2" || raw === "3") {
+    return Number(raw) as 1 | 2 | 3;
+  }
+  throw new BadRequestException(
+    `Effect filter "${effectId}": loop copies must be 1, 2, or 3.`
+  );
+}
+
 /**
- * `effect=familyId[@a|@l]:min:max[:turnMin:turnMax[:loop]],...` — any bound may be
- * empty for unbounded; `@a` / `@l` scope the range to the active / leader
- * chip it tunes. A trailing `1` requires that effect to loop.
- * e.g. `effect=shield_percent@a:50::2:,damage_cap_buff@a:::::1`.
+ * `effect=familyId[@a|@l]:min:max[:turnMin:turnMax[:copies]],...` — any bound
+ * may be empty for unbounded; `@a` / `@l` scope the range to the active /
+ * leader chip it tunes. A trailing `1`, `2`, or `3` requires that effect to
+ * loop with that many copies of the active.
+ * e.g. `effect=shield_percent@a:50::2:,damage_cap_buff@a:::::2`.
  */
 function parseEffectRanges(raw: string | undefined): EffectValueRangeInput[] {
   if (!raw?.trim()) return [];
@@ -94,7 +108,8 @@ function parseEffectRanges(raw: string | undefined): EffectValueRangeInput[] {
     const max = parseOptionalNumber(maxRaw);
     const turnMin = parseOptionalNumber(turnMinRaw);
     const turnMax = parseOptionalNumber(turnMaxRaw);
-    const loop = loopRaw === "1";
+    const loopCopies = parseLoopCopiesToken(loopRaw, id);
+    const loop = loopCopies != null;
     if (
       min == null &&
       max == null &&
@@ -122,6 +137,7 @@ function parseEffectRanges(raw: string | undefined): EffectValueRangeInput[] {
       turnMin,
       turnMax,
       loop,
+      loopCopies,
     });
   }
   return out;

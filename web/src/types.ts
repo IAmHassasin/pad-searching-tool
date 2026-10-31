@@ -188,9 +188,21 @@ export type EffectValueRange = {
   max: number | null;
   turnMin: number | null;
   turnMax: number | null;
-  /** Active skill: keep this effect up (duration longer than CD after skill charge). */
+  /** Active skill: keep this effect up across the selected number of copies. */
   loop: boolean;
 };
+
+/** How many copies of one active are rotated to keep a looped effect up. */
+export type LoopCopyCount = 1 | 2 | 3;
+
+/** Missing or any other value is one copy, the original loop check. */
+export function activeLoopCopies(filters: {
+  loopCopies?: number | null;
+}): LoopCopyCount {
+  return filters.loopCopies === 2 || filters.loopCopies === 3
+    ? filters.loopCopies
+    : 1;
+}
 
 export const EMPTY_EFFECT_VALUE_RANGE: EffectValueRange = {
   min: null,
@@ -271,16 +283,20 @@ export function familiesForTag(
 /**
  * Effect-value filters (shield %, xN HP, charge turns, …) plus their duration.
  * Sent to `GET /monsters/search` as
- * `effect=familyId[@a|@l]:min:max:turnMin:turnMax[:1],…`; a trailing `1` requires
- * that active effect to loop. The server extracts the numbers out of the skill
- * description with the family's regex (see exports/patterns/effect_value_families.json).
+ * `effect=familyId[@a|@l]:min:max:turnMin:turnMax[:copies],…`. `copies` is
+ * `1`, `2`, or `3`: that many cards with the active must keep the effect up.
+ * The server extracts the numbers out of the skill description with the
+ * family's regex (see exports/patterns/effect_value_families.json).
  */
 export type AdvancedEffectFilters = {
   ranges: Partial<Record<EffectRangeKey, EffectValueRange>>;
+  /** Applies to every effect whose Loop box is checked. Default is 1 copy. */
+  loopCopies: LoopCopyCount;
 };
 
 export const EMPTY_ADVANCED_EFFECT_FILTERS: AdvancedEffectFilters = {
   ranges: {},
+  loopCopies: 1,
 };
 
 export function hasAdvancedEffectFilters(
@@ -325,7 +341,7 @@ export function pruneEffectRanges(
     }
     ranges[key] = range;
   }
-  return changed ? { ranges } : filters;
+  return changed ? { ...filters, ranges } : filters;
 }
 
 /** `key:min:max:turnMin:turnMax` specs for the `effect` param / share URL. */
@@ -333,6 +349,7 @@ export function serializeAdvancedEffectFilters(
   filters: AdvancedEffectFilters
 ): string {
   const parts: string[] = [];
+  const copies = activeLoopCopies(filters);
   for (const [key, range] of Object.entries(filters.ranges)) {
     if (!isRangeActive(range)) continue;
     const bounds: (number | null)[] = [range.min, range.max];
@@ -340,7 +357,7 @@ export function serializeAdvancedEffectFilters(
     if (range.turnMin != null || range.turnMax != null || loop) {
       bounds.push(range.turnMin, range.turnMax);
     }
-    if (loop) bounds.push(1);
+    if (loop) bounds.push(copies);
     parts.push([key, ...bounds.map((b) => b ?? "")].join(":"));
   }
   return parts.join(",");
@@ -351,6 +368,7 @@ export function parseAdvancedEffectFilters(
 ): AdvancedEffectFilters {
   if (!raw?.trim()) return EMPTY_ADVANCED_EFFECT_FILTERS;
   const ranges: AdvancedEffectFilters["ranges"] = {};
+  let loopCopies: LoopCopyCount = 1;
   const num = (s: string | undefined) => {
     if (!s?.trim()) return null;
     const n = Number(s);
@@ -362,14 +380,17 @@ export function parseAdvancedEffectFilters(
       .split(":");
     // Hand-edited links: an invalid scope would make every search a 400.
     if (!key || !/^[^@]+(@[al])?$/.test(key)) continue;
+    const copies: LoopCopyCount | null =
+      loopRaw === "1" ? 1 : loopRaw === "2" ? 2 : loopRaw === "3" ? 3 : null;
+    if (copies != null && copies > loopCopies) loopCopies = copies;
     const range: EffectValueRange = {
       min: num(minRaw),
       max: num(maxRaw),
       turnMin: num(turnMinRaw),
       turnMax: num(turnMaxRaw),
-      loop: loopRaw === "1",
+      loop: copies != null,
     };
     if (isRangeActive(range)) ranges[key] = range;
   }
-  return { ranges };
+  return { ranges, loopCopies };
 }

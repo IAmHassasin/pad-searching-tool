@@ -54,20 +54,38 @@ export function effectiveSkillCooldown(
 }
 
 /**
- * The effect can be kept up when its duration is at least the effective
- * cooldown. A 5-turn buff loops a 5-turn stage; a 3-turn buff does not.
+ * How many copies of the same active are rotated. Missing means one copy.
+ * Any other value is rejected so a bad count cannot widen the filter.
+ */
+export function loopCopyCount(raw: unknown): 1 | 2 | 3 | null {
+  if (raw == null || raw === "") return 1;
+  const n = typeof raw === "number" ? raw : Number(raw);
+  if (n === 1 || n === 2 || n === 3) return n;
+  return null;
+}
+
+/**
+ * The effect stays up when its duration covers the gap between uses.
+ * One copy is ready in ceil(cooldown / chargesPerTurn) turns. N copies of
+ * that same active each charge on their own, so the gap is ceil(that / N).
+ * Equal to the gap still loops. A 5-turn buff loops a 5-turn stage on one
+ * copy; a 3-turn buff does not, but two copies can cover it.
  */
 export function effectDurationLoops(
   turns: number | null,
   cooldown: unknown,
-  chargesPerTurn: unknown
+  chargesPerTurn: unknown,
+  copies: unknown = 1
 ): boolean {
   if (turns == null || !Number.isFinite(turns)) return false;
+  const n = loopCopyCount(copies);
+  if (n == null) return false;
   const cd = typeof cooldown === "number" ? cooldown : Number(cooldown);
   const charges =
     typeof chargesPerTurn === "number" ? chargesPerTurn : Number(chargesPerTurn);
   const effective = effectiveSkillCooldown(cd, charges);
-  return effective != null && turns >= effective;
+  if (effective == null) return false;
+  return turns >= Math.ceil(effective / n);
 }
 
 const STAGE_MARKER = /\d+\)\s/g;

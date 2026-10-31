@@ -13,6 +13,7 @@ import {
 } from "../patterns/register-sqlite-regexp.ts";
 import {
   effectDurationLoops,
+  loopCopyCount,
   skillChargeChargesPerTurnSql,
   stageCooldownAt,
 } from "../patterns/skill-charge-sql.ts";
@@ -244,10 +245,23 @@ describe("active effect loop", () => {
     id: string,
     text: string,
     cd: number,
-    charges: number
+    charges: number,
+    copies = 1
   ) => {
     const { regex, group } = regexOf(id);
-    return effectLoopMatch(regex, group, text, null, null, null, null, cd, charges);
+    return effectLoopMatch(
+      regex,
+      group,
+      text,
+      null,
+      null,
+      null,
+      null,
+      cd,
+      charges,
+      null,
+      copies
+    );
   };
 
   it("keeps an effect up when duration is at least the charged cooldown", () => {
@@ -260,6 +274,27 @@ describe("active effect loop", () => {
     assert.equal(effectDurationLoops(5, 11, 2), false);
     assert.equal(effectDurationLoops(6, 11, 2), true);
     assert.equal(effectDurationLoops(8, null, 2), false);
+    // A bad copy count must not fall back to a wider match.
+    assert.equal(loopCopyCount(null), 1);
+    assert.equal(loopCopyCount(4), null);
+    assert.equal(effectDurationLoops(2, 3, 1, 4), false);
+  });
+
+  it("loops shorter effects when 2 or 3 copies share the cooldown", () => {
+    // CD 3, no skill charge. A 2-turn effect needs a second copy.
+    assert.equal(effectDurationLoops(2, 3, 1, 1), false);
+    assert.equal(effectDurationLoops(2, 3, 1, 2), true);
+    // CD 5 needs three copies before a 2-turn effect covers the gap.
+    assert.equal(effectDurationLoops(2, 5, 1, 2), false);
+    assert.equal(effectDurationLoops(2, 5, 1, 3), true);
+    // 13413 absorb is 3 turns against a charged CD of 5.
+    assert.equal(effectDurationLoops(3, 10, 2, 1), false);
+    assert.equal(effectDurationLoops(3, 10, 2, 2), true);
+
+    assert.equal(loops("bypass_void_damage", text14255, 3, 1, 1), 0);
+    assert.equal(loops("bypass_void_damage", text14255, 3, 1, 2), 1);
+    assert.equal(loops("bypass_dmg_absorb", text13413, 10, 2, 1), 0);
+    assert.equal(loops("bypass_dmg_absorb", text13413, 10, 2, 2), 1);
   });
 
   it("matches the sample actives effect by effect", () => {
@@ -310,6 +345,15 @@ describe("active effect loop", () => {
       effectLoopMatch(absorb.regex, absorb.group, text, null, null, null, null, 22, 1, "26,5"),
       0
     );
+    // Stage CD 5. Two copies still leave a 3-turn gap; three copies cover 2 turns.
+    assert.equal(
+      effectLoopMatch(absorb.regex, absorb.group, text, null, null, null, null, 22, 1, "26,5", 2),
+      0
+    );
+    assert.equal(
+      effectLoopMatch(absorb.regex, absorb.group, text, null, null, null, null, 22, 1, "26,5", 3),
+      1
+    );
     // Without the stage list, the 5-turn buff is compared to CD 22 and does not loop.
     assert.equal(
       effectLoopMatch(hp.regex, hp.group, text, null, null, null, null, 22, 1, null),
@@ -356,13 +400,14 @@ describe("active effect loop", () => {
     insert.run(13413, text13413, 10, "(51)", "", null);
     insert.run(8765, text8765, 18, "(97)", "", null);
     const charges = skillChargeChargesPerTurnSql("regular", "super", "sync");
-    const idsFor = (regex: string, group: number) =>
+    insert.run(5, "For 2 turns, bypass void damage shield effects", 5, "", "", null);
+    const idsFor = (regex: string, group: number, copies = 1) =>
       (
         db
           .prepare(
-            `SELECT id FROM m WHERE effect_loop(?, ?, txt, NULL, NULL, NULL, NULL, cd, ${charges}, NULL) = 1 ORDER BY id`
+            `SELECT id FROM m WHERE effect_loop(?, ?, txt, NULL, NULL, NULL, NULL, cd, ${charges}, NULL, ?) = 1 ORDER BY id`
           )
-          .all(regex, group) as { id: number }[]
+          .all(regex, group, copies) as { id: number }[]
       ).map((r) => r.id);
 
     assert.deepEqual(idsFor("damage cap", 0), [8765, 13413]);
@@ -370,6 +415,11 @@ describe("active effect loop", () => {
     assert.deepEqual(idsFor("spinner", 0), [8765]);
     assert.deepEqual(idsFor("(?<![+\\d.])(\\d+\\.?\\d*)x orb move time", 1), [8765]);
     assert.deepEqual(idsFor("(?<![+\\d.])(\\d+\\.?\\d*)x ATK for", 1), [8765]);
+    // Two copies pull in the 2-turn and 3-turn effects that one copy cannot hold.
+    assert.deepEqual(idsFor("damage cap", 0, 2), [8765, 13413, 14255]);
+    assert.deepEqual(idsFor("bypass void damage shield", 0, 2), [13413, 14255]);
+    // CD 5, 2 turns: only three copies close the gap.
+    assert.deepEqual(idsFor("bypass void damage shield", 0, 3), [5, 13413, 14255]);
     db.close();
   });
 });

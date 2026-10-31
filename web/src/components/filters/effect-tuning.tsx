@@ -2,12 +2,14 @@ import { EffectFilterSpriteIcon } from "../EffectFilterSpriteIcon";
 import { hasEffectFilterIcon } from "../../lib/effect-filter-sprite";
 import {
   EMPTY_EFFECT_VALUE_RANGE,
+  activeLoopCopies,
   effectRangeKey,
   familiesForTag,
   type AdvancedEffectFilters,
   type EffectFamilyDef,
   type EffectRangeKey,
   type EffectValueRange,
+  type LoopCopyCount,
   type SelectedPatternTag,
   type SkillFilters,
 } from "../../types";
@@ -39,7 +41,7 @@ function setRange(
   } else {
     ranges[key] = next;
   }
-  return { ranges };
+  return { ...filters, ranges };
 }
 
 function BoundInput({
@@ -184,6 +186,126 @@ export function ActiveSkillCooldownField({
   );
 }
 
+const LOOP_COPY_OPTIONS: {
+  copies: LoopCopyCount;
+  label: string;
+  title: string;
+  idle: string;
+  on: string;
+  hint: string;
+  box: string;
+  check: string;
+  text: string;
+}[] = [
+  {
+    copies: 1,
+    label: "x1",
+    title: "1 copy. The effect lasts at least the charged cooldown.",
+    idle: "text-[var(--color-accent-strong)] hover:bg-[var(--color-accent-muted)]",
+    on: "bg-[var(--color-accent-muted)] text-[var(--color-accent-strong)] shadow-[var(--shadow-glow)]",
+    hint: "Checked Loop effects · 1 copy covers the charged cooldown",
+    box: "border-white/[0.06]",
+    check: "accent-[var(--color-accent)]",
+    text: "text-[var(--color-muted)]",
+  },
+  {
+    copies: 2,
+    label: "x2",
+    title:
+      "2 copies of this active. The effect lasts at least half the charged cooldown, rounded up.",
+    idle: "text-[var(--color-secondary-strong)] hover:bg-[var(--color-secondary-muted)]",
+    on: "bg-[var(--color-secondary-muted)] text-[var(--color-secondary-strong)] shadow-[var(--shadow-glow-cyan)]",
+    hint: "Checked Loop effects · 2 copies cover the charged cooldown",
+    box: "border-[var(--color-secondary)]/70",
+    check: "accent-[var(--color-secondary)]",
+    text: "text-[var(--color-secondary-strong)]",
+  },
+  {
+    copies: 3,
+    label: "x3",
+    title:
+      "3 copies of this active. The effect lasts at least a third of the charged cooldown, rounded up.",
+    idle: "text-[var(--color-pad-dark)] hover:bg-[color-mix(in_srgb,var(--color-pad-dark)_16%,transparent)]",
+    on: "bg-[color-mix(in_srgb,var(--color-pad-dark)_22%,transparent)] text-[var(--color-pad-dark)]",
+    hint: "Checked Loop effects · 3 copies cover the charged cooldown",
+    box: "border-[var(--color-pad-dark)]/70",
+    check: "accent-[var(--color-pad-dark)]",
+    text: "text-[var(--color-pad-dark)]",
+  },
+];
+
+function loopCopyOption(copies: LoopCopyCount) {
+  return LOOP_COPY_OPTIONS.find((option) => option.copies === copies) ?? LOOP_COPY_OPTIONS[0];
+}
+
+/** True once any effect's Loop box is checked. The x1/x2/x3 control waits for that. */
+export function hasCheckedEffectLoop(filters: AdvancedEffectFilters): boolean {
+  return Object.values(filters.ranges).some((range) => range?.loop === true);
+}
+
+/**
+ * How many copies of the same active are rotated when an effect's Loop box
+ * is checked. x1 is one card. x2 and x3 use a different color from x1.
+ */
+export function ActiveSkillLoopSystemField({
+  filters,
+  onChange,
+  compact = false,
+}: {
+  filters: AdvancedEffectFilters;
+  onChange: (next: AdvancedEffectFilters) => void;
+  compact?: boolean;
+}) {
+  const copies = activeLoopCopies(filters);
+  const selected = loopCopyOption(copies);
+  return (
+    <div
+      className={`mb-3 rounded-lg border bg-[var(--color-inset)]/50 p-1.5 ${selected.box}`}
+    >
+      <div className="flex items-center gap-1.5">
+        <span
+          className={`w-12 shrink-0 font-semibold text-[var(--color-muted)] ${
+            compact ? "text-[9px]" : "text-[10px]"
+          }`}
+        >
+          Loop
+        </span>
+        <div
+          role="group"
+          aria-label="Loop copies"
+          className="flex min-w-0 flex-1 items-center rounded-md border border-[var(--color-border)] bg-[var(--color-inset)] p-0.5"
+        >
+          {LOOP_COPY_OPTIONS.map((option) => {
+            const active = copies === option.copies;
+            return (
+              <button
+                key={option.copies}
+                type="button"
+                aria-pressed={active}
+                title={option.title}
+                onClick={() => {
+                  if (active && filters.loopCopies === option.copies) return;
+                  onChange({ ...filters, loopCopies: option.copies });
+                }}
+                className={`pressable flex-1 rounded px-1.5 font-mono font-semibold tracking-wide ${
+                  compact ? "py-0.5 text-[10px]" : "py-0.5 text-[11px]"
+                } ${active ? option.on : option.idle}`}
+              >
+                {option.label}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+      <p
+        className={`mt-1 text-[var(--color-faint)] ${compact ? "text-[8px]" : "text-[9px]"}`}
+      >
+        {selected.hint}
+      </p>
+    </div>
+  );
+}
+
 function FamilyTuning({
   family,
   skillType,
@@ -204,6 +326,7 @@ function FamilyTuning({
   const showValue = family.supports_value !== false;
   // Durations ("For N turns, …") only exist in active skill text.
   const showTurns = family.supports_turns === true && skillType === "active_skill";
+  const loopSystem = loopCopyOption(activeLoopCopies(filters));
   if (!showValue && !showTurns) return null;
 
   return (
@@ -255,7 +378,7 @@ function FamilyTuning({
           className={`flex cursor-pointer items-center gap-1.5 ${
             compact ? "text-[9px]" : "text-[10px]"
           }`}
-          title="Duration is at least the cooldown after skill charge. Evolving skills use that stage's CD. Awakening 51 charges +1 per turn (CD/2), 97 charges +2 (CD/3). Regular copies stack; only the stronger super awakening counts."
+          title="Keep this effect up with the loop system above. x1 is one card. x2 and x3 rotate that many copies; each copy charges on its own. Evolving skills use that stage's CD. Awakening 51 charges +1 per turn, 97 charges +2. Regular skill-charge copies stack; only the stronger super awakening counts."
         >
           <input
             type="checkbox"
@@ -263,9 +386,9 @@ function FamilyTuning({
             onChange={(e) =>
               onChange(setRange(filters, key, { loop: e.target.checked }))
             }
-            className="accent-[var(--color-accent)]"
+            className={loopSystem.check}
           />
-          <span className="font-semibold text-[var(--color-muted)]">Loop</span>
+          <span className={`font-semibold ${loopSystem.text}`}>Loop</span>
         </label>
       )}
     </div>
@@ -306,11 +429,21 @@ export function SelectedEffectTuning({
 
   if (!cards.length) return null;
 
+  const showLoopSystem =
+    skillType === "active_skill" && hasCheckedEffectLoop(effectFilters);
+
   return (
     <div className="mt-3 border-t border-white/[0.06] pt-2">
       <p className={`ds-label mb-1.5 ${compact ? "text-[9px]" : "text-[10px]"}`}>
         Selected effects
       </p>
+      {showLoopSystem && (
+        <ActiveSkillLoopSystemField
+          filters={effectFilters}
+          onChange={onEffectFiltersChange}
+          compact={compact}
+        />
+      )}
       <div className="space-y-1.5">
         {cards.map(({ pattern, families: cardFamilies }) => {
           const keys = cardFamilies.map((f) => effectRangeKey(f.id, skillType));
@@ -319,7 +452,7 @@ export function SelectedEffectTuning({
           const clear = () => {
             const ranges = { ...effectFilters.ranges };
             for (const k of keys) delete ranges[k];
-            onEffectFiltersChange({ ranges });
+            onEffectFiltersChange({ ...effectFilters, ranges });
           };
           return (
             <div
@@ -417,7 +550,7 @@ export function UnscopedEffectRangeChips({
       family?.label ?? key,
       bound(r.min, r.max, unit),
       bound(r.turnMin, r.turnMax, "T"),
-      r.loop ? "loop" : null,
+      r.loop ? `loop x${activeLoopCopies(effectFilters)}` : null,
     ]
       .filter(Boolean)
       .join(" ");
@@ -434,7 +567,7 @@ export function UnscopedEffectRangeChips({
             onClick={() => {
               const ranges = { ...effectFilters.ranges };
               delete ranges[key];
-              onEffectFiltersChange({ ranges });
+              onEffectFiltersChange({ ...effectFilters, ranges });
             }}
             className="pressable inline-flex items-center gap-1 rounded-full border border-[var(--color-secondary)]/50 bg-[var(--color-secondary-muted)] px-2 py-0.5 text-[10px] font-semibold text-[var(--color-secondary-strong)] hover:border-[var(--color-negative)]/60 hover:bg-[var(--color-negative)]/10 hover:text-red-300"
             title={`${text} — click to remove`}

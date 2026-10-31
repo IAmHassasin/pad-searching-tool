@@ -13,6 +13,7 @@ import type {
   EffectValueRangeInput,
 } from "./effect-value-types";
 import type { SkillType } from "./pattern-types";
+import { loopCopyCount } from "./skill-charge-sql";
 
 function resolveConfigPath(envKey: string, fallback: string): string {
   const fromEnv = process.env[envKey]?.trim();
@@ -90,6 +91,10 @@ export class EffectValueCatalogService implements OnModuleInit {
     const turnMax = turnsOn && finite(range.turnMax) ? range.turnMax : null;
     const wantLoop =
       range.loop === true && turnsOn && range.skillType !== "leader_skill";
+    const copies = wantLoop ? loopCopyCount(range.loopCopies) : null;
+    if (wantLoop && copies == null) {
+      throw new BadRequestException("Loop copies must be 1, 2, or 3.");
+    }
     if (
       min == null &&
       max == null &&
@@ -123,11 +128,12 @@ export class EffectValueCatalogService implements OnModuleInit {
         turnMax
       );
       const column = columnExprFor(matcher.skill_type);
-      if (wantLoop && loopColumns) {
+      if (wantLoop && loopColumns && copies != null) {
+        params.push(copies);
         return (
           `effect_loop(?, ?, ${column}, ?, ?, ?, ?, ` +
           `${loopColumns.cooldownExpr}, ${loopColumns.chargesPerTurnExpr}, ` +
-          `${loopColumns.stageCooldownsExpr}) = 1`
+          `${loopColumns.stageCooldownsExpr}, ?) = 1`
         );
       }
       return `effect_match(?, ?, ${column}, ?, ?, ?, ?) = 1`;
