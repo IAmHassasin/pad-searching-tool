@@ -7,9 +7,15 @@ import Database from "better-sqlite3";
 import type { EffectValueFamiliesFile } from "../patterns/effect-value-types.ts";
 import {
   effectClauseTurns,
+  effectLoopMatch,
   effectMatch,
   registerSqliteRegexp,
 } from "../patterns/register-sqlite-regexp.ts";
+import {
+  effectDurationLoops,
+  skillChargeChargesPerTurnSql,
+  stageCooldownAt,
+} from "../patterns/skill-charge-sql.ts";
 import {
   cooldownSql,
   parseSkillTextTerms,
@@ -205,5 +211,165 @@ describe("dadguide effect families", () => {
     db.close();
     assert.ok(expected.size > 0);
     assert.deepEqual(actual, expected);
+  });
+});
+
+describe("active effect loop", () => {
+  const text14255 =
+    "For 2 turns, bypass void damage shield effects; For 2 turns, bypass damage absorb shield effects; For 2 turns, create 1 spinner restricted to Wood, Dark, and Heal orbs; For 2 turns, set damage cap of self to 40,000,000,000";
+  const text13413 =
+    "For 8 turns, set damage cap of self to 26,000,000,000; For 3 turns, bypass att. absorb and damage absorb shield effects; For 3 turns, bypass void damage shield effects";
+  const text8765 =
+    "Create 2 spinners that change every 1.0s for 8 turns; For 8 turns, 2x orb move time; For 8 turns, 2x ATK for this monster; For 8 turns, set damage cap of self to 26,000,000,000";
+
+  const families = (
+    JSON.parse(
+      readFileSync(
+        path.join(root, "exports/patterns/effect_value_families.json"),
+        "utf8"
+      )
+    ) as EffectValueFamiliesFile
+  ).families;
+
+  const regexOf = (id: string) => {
+    const family = families.find((f) => f.id === id);
+    assert.ok(family, id);
+    return {
+      regex: family.matchers[0].regex,
+      group: family.matchers[0].value_group,
+    };
+  };
+
+  const loops = (
+    id: string,
+    text: string,
+    cd: number,
+    charges: number
+  ) => {
+    const { regex, group } = regexOf(id);
+    return effectLoopMatch(regex, group, text, null, null, null, null, cd, charges);
+  };
+
+  it("keeps an effect up when duration is at least the charged cooldown", () => {
+    assert.equal(effectDurationLoops(8, 10, 2), true);
+    assert.equal(effectDurationLoops(3, 10, 2), false);
+    assert.equal(effectDurationLoops(8, 18, 3), true);
+    assert.equal(effectDurationLoops(2, 3, 1), false);
+    assert.equal(effectDurationLoops(5, 5, 1), true);
+    // Odd cooldowns round up. Equal to that rounded CD still loops.
+    assert.equal(effectDurationLoops(5, 11, 2), false);
+    assert.equal(effectDurationLoops(6, 11, 2), true);
+    assert.equal(effectDurationLoops(8, null, 2), false);
+  });
+
+  it("matches the sample actives effect by effect", () => {
+    // 14255: CD 3, no skill charge. Every effect lasts 2 turns.
+    for (const id of [
+      "bypass_void_damage",
+      "bypass_dmg_absorb",
+      "create_spinner",
+      "damage_cap_buff",
+    ]) {
+      assert.equal(loops(id, text14255, 3, 1), 0, id);
+    }
+
+    // 13413: CD 10 + awk 51 → 5. Only the 8-turn damage cap loops.
+    assert.equal(loops("damage_cap_buff", text13413, 10, 2), 1);
+    assert.equal(loops("bypass_att_absorb", text13413, 10, 2), 0);
+    assert.equal(loops("bypass_dmg_absorb", text13413, 10, 2), 0);
+    assert.equal(loops("bypass_void_damage", text13413, 10, 2), 0);
+
+    // 8765: CD 18 + awk 97 → 6. Every 8-turn effect loops.
+    for (const id of [
+      "create_spinner",
+      "movetime_multiplier",
+      "active_atk_buff_multiplier",
+      "damage_cap_buff",
+    ]) {
+      assert.equal(loops(id, text8765, 18, 3), 1, id);
+    }
+  });
+
+  it("loops an evolving skill against that stage's cooldown", () => {
+    const text =
+      "After each skill, evolve to the next: 1) Charge all allies' skills by 2 turns; Enhance all orbs 2) For 5 turns, 1.5x HP; For 5 turns, 1.5x orb move time; For 2 turns, bypass att. absorb and damage absorb shield effects";
+    const hp = regexOf("hp_burst_multiplier");
+    const move = regexOf("movetime_multiplier");
+    const absorb = regexOf("bypass_dmg_absorb");
+    // Parent CD is stage 1 (22). Stage list is unskilled stage 1 then stage 2.
+    assert.equal(stageCooldownAt(text, text.indexOf("1.5x HP"), 22, "26,5"), 5);
+    assert.equal(
+      effectLoopMatch(hp.regex, hp.group, text, null, null, null, null, 22, 1, "26,5"),
+      1
+    );
+    assert.equal(
+      effectLoopMatch(move.regex, move.group, text, null, null, null, null, 22, 1, "26,5"),
+      1
+    );
+    assert.equal(
+      effectLoopMatch(absorb.regex, absorb.group, text, null, null, null, null, 22, 1, "26,5"),
+      0
+    );
+    // Without the stage list, the 5-turn buff is compared to CD 22 and does not loop.
+    assert.equal(
+      effectLoopMatch(hp.regex, hp.group, text, null, null, null, null, 22, 1, null),
+      0
+    );
+  });
+
+  it("counts skill charge from regular, sync, and one super awakening", () => {
+    const db = new Database(":memory:");
+    db.exec(
+      "CREATE TABLE m (id INTEGER, regular TEXT, super TEXT, sync INTEGER)"
+    );
+    const insert = db.prepare("INSERT INTO m VALUES (?, ?, ?, ?)");
+    insert.run(1, "", "", null);
+    insert.run(2, "(51)", "", null);
+    insert.run(3, "(97)", "", null);
+    insert.run(4, "(51),(51)", "", null);
+    insert.run(5, "(51)", "(97),(51)", null);
+    insert.run(6, "", "(51),(97)", null);
+    insert.run(7, "", "", 97);
+    const expr = skillChargeChargesPerTurnSql("regular", "super", "sync");
+    const charge = (id: number) =>
+      (db.prepare(`SELECT ${expr} AS n FROM m WHERE id = ?`).get(id) as { n: number })
+        .n;
+    assert.equal(charge(1), 1);
+    assert.equal(charge(2), 2);
+    assert.equal(charge(3), 3);
+    assert.equal(charge(4), 3);
+    assert.equal(charge(5), 4);
+    // Both skill-charge options are supers: pick 97, do not add them.
+    assert.equal(charge(6), 3);
+    assert.equal(charge(7), 3);
+    db.close();
+  });
+
+  it("applies loop in SQL using that card's cooldown and skill charge", () => {
+    const db = new Database(":memory:");
+    registerSqliteRegexp(db);
+    db.exec(
+      "CREATE TABLE m (id INTEGER, txt TEXT, cd INTEGER, regular TEXT, super TEXT, sync INTEGER)"
+    );
+    const insert = db.prepare("INSERT INTO m VALUES (?, ?, ?, ?, ?, ?)");
+    insert.run(14255, text14255, 3, "", "", null);
+    insert.run(13413, text13413, 10, "(51)", "", null);
+    insert.run(8765, text8765, 18, "(97)", "", null);
+    const charges = skillChargeChargesPerTurnSql("regular", "super", "sync");
+    const idsFor = (regex: string, group: number) =>
+      (
+        db
+          .prepare(
+            `SELECT id FROM m WHERE effect_loop(?, ?, txt, NULL, NULL, NULL, NULL, cd, ${charges}, NULL) = 1 ORDER BY id`
+          )
+          .all(regex, group) as { id: number }[]
+      ).map((r) => r.id);
+
+    assert.deepEqual(idsFor("damage cap", 0), [8765, 13413]);
+    assert.deepEqual(idsFor("bypass void damage shield", 0), []);
+    assert.deepEqual(idsFor("spinner", 0), [8765]);
+    assert.deepEqual(idsFor("(?<![+\\d.])(\\d+\\.?\\d*)x orb move time", 1), [8765]);
+    assert.deepEqual(idsFor("(?<![+\\d.])(\\d+\\.?\\d*)x ATK for", 1), [8765]);
+    db.close();
   });
 });

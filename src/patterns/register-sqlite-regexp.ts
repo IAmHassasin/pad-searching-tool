@@ -1,5 +1,6 @@
 import type Database from "better-sqlite3";
 import type { DataSource } from "typeorm";
+import { effectDurationLoops, stageCooldownAt } from "./skill-charge-sql.ts";
 import { skillGlobMatch } from "./skill-search-sql.ts";
 
 const FLAG = "__padRegexpRegistered";
@@ -97,14 +98,18 @@ export function effectClauseTurns(
  * matcher). Used by the effect-value search (shield %, xN HP, charge turns,
  * …) — the boolean `regexp()` below can only say "this effect exists".
  */
-export function effectMatch(
+function effectMatchCore(
   pattern: unknown,
   groupIndex: unknown,
   value: unknown,
   min: unknown,
   max: unknown,
   turnMin: unknown,
-  turnMax: unknown
+  turnMax: unknown,
+  requireLoop: boolean,
+  loopCooldown: unknown,
+  loopCharges: unknown,
+  loopStageCooldowns: unknown
 ): 0 | 1 {
   if (pattern == null || value == null) return 0;
   const re = compile(String(pattern), "gi");
@@ -128,14 +133,82 @@ export function effectMatch(
       const num = parseCapturedNumber(m[groupNo]);
       ok = Number.isFinite(num) && inBounds(num, minNum, maxNum);
     }
-    if (ok && checkTurns) {
+    if (ok && (checkTurns || requireLoop)) {
       const turns = effectClauseTurns(text, m.index, m.index + m[0].length);
-      ok = turns != null && inBounds(turns, turnMinNum, turnMaxNum);
+      if (checkTurns) {
+        ok = turns != null && inBounds(turns, turnMinNum, turnMaxNum);
+      }
+      if (ok && requireLoop) {
+        const stageCd = stageCooldownAt(
+          text,
+          m.index,
+          loopCooldown,
+          loopStageCooldowns
+        );
+        ok = effectDurationLoops(turns, stageCd, loopCharges);
+      }
     }
     if (ok) return 1;
     // Zero-length match guard — otherwise exec() would spin on the same index.
     if (m.index === re.lastIndex) re.lastIndex++;
   }
+}
+
+export function effectMatch(
+  pattern: unknown,
+  groupIndex: unknown,
+  value: unknown,
+  min: unknown,
+  max: unknown,
+  turnMin: unknown,
+  turnMax: unknown
+): 0 | 1 {
+  return effectMatchCore(
+    pattern,
+    groupIndex,
+    value,
+    min,
+    max,
+    turnMin,
+    turnMax,
+    false,
+    null,
+    null,
+    null
+  );
+}
+
+/**
+ * Same as {@link effectMatch}, plus the matched clause must loop: its duration
+ * is at least ceil(stage cooldown / chargesPerTurn). `chargesPerTurn` includes
+ * the natural 1 plus skill-charge awakenings. `stageCooldowns` is the
+ * comma-separated per-stage list; stage 1 still uses `cooldown`.
+ */
+export function effectLoopMatch(
+  pattern: unknown,
+  groupIndex: unknown,
+  value: unknown,
+  min: unknown,
+  max: unknown,
+  turnMin: unknown,
+  turnMax: unknown,
+  cooldown: unknown,
+  chargesPerTurn: unknown,
+  stageCooldowns: unknown
+): 0 | 1 {
+  return effectMatchCore(
+    pattern,
+    groupIndex,
+    value,
+    min,
+    max,
+    turnMin,
+    turnMax,
+    true,
+    cooldown,
+    chargesPerTurn,
+    stageCooldowns
+  );
 }
 
 /** Value-only form of {@link effectMatch} (kept for existing SQL callers). */
@@ -172,6 +245,7 @@ export function registerSqliteRegexp(db: Database.Database): void {
   );
 
   db.function("effect_match", { deterministic: true }, effectMatch);
+  db.function("effect_loop", { deterministic: true }, effectLoopMatch);
 
   db.function("skill_glob", { deterministic: true }, skillGlobMatch);
 

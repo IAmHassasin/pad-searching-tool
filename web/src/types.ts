@@ -188,6 +188,8 @@ export type EffectValueRange = {
   max: number | null;
   turnMin: number | null;
   turnMax: number | null;
+  /** Active skill: keep this effect up (duration longer than CD after skill charge). */
+  loop: boolean;
 };
 
 export const EMPTY_EFFECT_VALUE_RANGE: EffectValueRange = {
@@ -195,12 +197,17 @@ export const EMPTY_EFFECT_VALUE_RANGE: EffectValueRange = {
   max: null,
   turnMin: null,
   turnMax: null,
+  loop: false,
 };
 
 function isRangeActive(r: EffectValueRange | undefined): r is EffectValueRange {
   return (
     r != null &&
-    (r.min != null || r.max != null || r.turnMin != null || r.turnMax != null)
+    (r.min != null ||
+      r.max != null ||
+      r.turnMin != null ||
+      r.turnMax != null ||
+      r.loop === true)
   );
 }
 
@@ -264,9 +271,9 @@ export function familiesForTag(
 /**
  * Effect-value filters (shield %, xN HP, charge turns, …) plus their duration.
  * Sent to `GET /monsters/search` as
- * `effect=familyId[@a|@l]:min:max:turnMin:turnMax,…`; the server extracts the
- * numbers out of the skill description with the family's regex (see
- * exports/patterns/effect_value_families.json).
+ * `effect=familyId[@a|@l]:min:max:turnMin:turnMax[:1],…`; a trailing `1` requires
+ * that active effect to loop. The server extracts the numbers out of the skill
+ * description with the family's regex (see exports/patterns/effect_value_families.json).
  */
 export type AdvancedEffectFilters = {
   ranges: Partial<Record<EffectRangeKey, EffectValueRange>>;
@@ -328,10 +335,12 @@ export function serializeAdvancedEffectFilters(
   const parts: string[] = [];
   for (const [key, range] of Object.entries(filters.ranges)) {
     if (!isRangeActive(range)) continue;
-    const bounds = [range.min, range.max];
-    if (range.turnMin != null || range.turnMax != null) {
+    const bounds: (number | null)[] = [range.min, range.max];
+    const loop = range.loop === true;
+    if (range.turnMin != null || range.turnMax != null || loop) {
       bounds.push(range.turnMin, range.turnMax);
     }
+    if (loop) bounds.push(1);
     parts.push([key, ...bounds.map((b) => b ?? "")].join(":"));
   }
   return parts.join(",");
@@ -348,7 +357,7 @@ export function parseAdvancedEffectFilters(
     return Number.isFinite(n) ? n : null;
   };
   for (const spec of raw.split(",")) {
-    const [key, minRaw, maxRaw, turnMinRaw, turnMaxRaw] = spec
+    const [key, minRaw, maxRaw, turnMinRaw, turnMaxRaw, loopRaw] = spec
       .trim()
       .split(":");
     // Hand-edited links: an invalid scope would make every search a 400.
@@ -358,6 +367,7 @@ export function parseAdvancedEffectFilters(
       max: num(maxRaw),
       turnMin: num(turnMinRaw),
       turnMax: num(turnMaxRaw),
+      loop: loopRaw === "1",
     };
     if (isRangeActive(range)) ranges[key] = range;
   }

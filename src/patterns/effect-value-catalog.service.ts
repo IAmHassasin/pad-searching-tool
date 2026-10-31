@@ -7,6 +7,7 @@ import {
 import * as fs from "node:fs";
 import * as path from "node:path";
 import type {
+  EffectLoopColumns,
   EffectValueFamiliesFile,
   EffectValueFamily,
   EffectValueRangeInput,
@@ -70,7 +71,8 @@ export class EffectValueCatalogService implements OnModuleInit {
   buildRangeClause(
     range: EffectValueRangeInput,
     columnExprFor: (skillType: SkillType) => string,
-    params: unknown[]
+    params: unknown[],
+    loopColumns?: EffectLoopColumns | null
   ): string | null {
     const family = this.byId.get(range.familyId);
     if (!family) {
@@ -86,16 +88,32 @@ export class EffectValueCatalogService implements OnModuleInit {
     const max = valueOn && finite(range.max) ? range.max : null;
     const turnMin = turnsOn && finite(range.turnMin) ? range.turnMin : null;
     const turnMax = turnsOn && finite(range.turnMax) ? range.turnMax : null;
-    if (min == null && max == null && turnMin == null && turnMax == null) {
+    const wantLoop =
+      range.loop === true && turnsOn && range.skillType !== "leader_skill";
+    if (
+      min == null &&
+      max == null &&
+      turnMin == null &&
+      turnMax == null &&
+      !wantLoop
+    ) {
       return null;
+    }
+    if (wantLoop && !loopColumns) {
+      throw new BadRequestException(
+        "Loop effect filter requires active skill cooldown."
+      );
     }
 
     const matchers = (family.matchers ?? []).filter(
       (m) => !range.skillType || m.skill_type === range.skillType
     );
-    if (!matchers.length) return null;
+    const used = wantLoop
+      ? matchers.filter((m) => m.skill_type === "active_skill")
+      : matchers;
+    if (!used.length) return null;
 
-    const parts = matchers.map((matcher) => {
+    const parts = used.map((matcher) => {
       params.push(
         matcher.regex,
         valueOn ? (matcher.value_group ?? 1) : 0,
@@ -104,9 +122,15 @@ export class EffectValueCatalogService implements OnModuleInit {
         turnMin,
         turnMax
       );
-      return `effect_match(?, ?, ${columnExprFor(
-        matcher.skill_type
-      )}, ?, ?, ?, ?) = 1`;
+      const column = columnExprFor(matcher.skill_type);
+      if (wantLoop && loopColumns) {
+        return (
+          `effect_loop(?, ?, ${column}, ?, ?, ?, ?, ` +
+          `${loopColumns.cooldownExpr}, ${loopColumns.chargesPerTurnExpr}, ` +
+          `${loopColumns.stageCooldownsExpr}) = 1`
+        );
+      }
+      return `effect_match(?, ?, ${column}, ?, ?, ?, ?) = 1`;
     });
 
     return `(${parts.join(" OR ")})`;
@@ -133,12 +157,18 @@ export class EffectValueCatalogService implements OnModuleInit {
   buildWhere(
     ranges: EffectValueRangeInput[] | undefined,
     columnExprFor: (skillType: SkillType) => string,
-    params: unknown[]
+    params: unknown[],
+    loopColumns?: EffectLoopColumns | null
   ): string | null {
     if (!ranges?.length) return null;
     const clauses: string[] = [];
     for (const range of ranges) {
-      const clause = this.buildRangeClause(range, columnExprFor, params);
+      const clause = this.buildRangeClause(
+        range,
+        columnExprFor,
+        params,
+        loopColumns
+      );
       if (clause) clauses.push(clause);
     }
     if (!clauses.length) return null;

@@ -581,6 +581,27 @@
       ]
     },
     {
+      "id": "create_spinner",
+      "label": "Create Spinner",
+      "group": "active",
+      "unit": "",
+      "value_type": "int",
+      "supports_value": false,
+      "supports_turns": true,
+      "tags": {
+        "active_skill": [
+          "create_spinner"
+        ]
+      },
+      "matchers": [
+        {
+          "skill_type": "active_skill",
+          "regex": "spinner",
+          "value_group": 0
+        }
+      ]
+    },
+    {
       "id": "attribute_change",
       "label": "Attribute Change",
       "group": "active",

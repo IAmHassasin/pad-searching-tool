@@ -50,4 +50,17 @@ export type EffectValueRangeInput = {
   /** Duration bounds ("For N turns,") of the matched effect clause. */
   turnMin?: number | null;
   turnMax?: number | null;
+  /**
+   * Active skills only. The matched clause loops when its duration is at least
+   * the cooldown after skill-charge awakenings. Evolving skills use that stage's CD.
+   */
+  loop?: boolean;
+};
+
+/** Column expressions for the active-skill loop check. Built by search, never from user text. */
+export type EffectLoopColumns = {
+  cooldownExpr: string;
+  chargesPerTurnExpr: string;
+  /** Comma-separated max-level CD per evolving-skill stage. Empty for a single skill. */
+  stageCooldownsExpr: string;
 };

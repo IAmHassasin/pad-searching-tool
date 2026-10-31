@@ -10,7 +10,11 @@ import {
   equivalenceRulesAsComposite,
 } from "../awakening-equivalence";
 import { EffectValueCatalogService } from "../patterns/effect-value-catalog.service";
-import type { EffectValueRangeInput } from "../patterns/effect-value-types";
+import type {
+  EffectLoopColumns,
+  EffectValueRangeInput,
+} from "../patterns/effect-value-types";
+import { skillChargeChargesPerTurnSql } from "../patterns/skill-charge-sql";
 import {
   appendEffectTagClause,
   DEFAULT_EFFECT_TAG_COLUMNS,
@@ -164,6 +168,22 @@ export class PatternSearchService {
     };
   }
 
+  /** Max-skill-level cooldown and skill-charge rate for the loop filter. */
+  private activeEffectLoopColumns(): EffectLoopColumns {
+    const awkCol = `_src.${this.quotedColumn("awakenings")}`;
+    const superCol = `_src.${this.quotedColumn("super_awakenings")}`;
+    const syncCol = `_src.${this.quotedColumn("sync_awsid")}`;
+    return {
+      cooldownExpr: `_src.${this.quotedColumn("active_skill_cooldown_min")}`,
+      chargesPerTurnExpr: skillChargeChargesPerTurnSql(
+        this.regularAwakeningsExpr(awkCol),
+        this.superAwakeningsExpr(awkCol, superCol),
+        syncCol
+      ),
+      stageCooldownsExpr: `_src.${this.quotedColumn("active_skill_stage_cooldowns")}`,
+    };
+  }
+
   private skillColumnExpr(skillType: SkillType): string {
     const col =
       skillType === "active_skill"
@@ -232,7 +252,8 @@ export class PatternSearchService {
         const rangeClause = this.effectValues.buildRangeClause(
           range,
           (skillType) => this.skillColumnExpr(skillType),
-          params
+          params,
+          this.activeEffectLoopColumns()
         );
         if (rangeClause) tuning.push(rangeClause);
       }
@@ -558,7 +579,8 @@ export class PatternSearchService {
     const effectWhere = this.effectValues.buildWhere(
       input.effectRanges?.filter((r) => !usedRanges.has(r)),
       (skillType) => this.skillColumnExpr(skillType),
-      params
+      params,
+      this.activeEffectLoopColumns()
     );
     if (effectWhere) parts.push(effectWhere);
     if (attach.vanishAttached && hasVanishFilters(input.vanish)) {

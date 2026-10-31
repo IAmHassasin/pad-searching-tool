@@ -71,9 +71,10 @@ const EFFECT_SCOPES: Record<string, EffectValueRangeInput["skillType"]> = {
 };
 
 /**
- * `effect=familyId[@a|@l]:min:max[:turnMin:turnMax],...` — any bound may be
+ * `effect=familyId[@a|@l]:min:max[:turnMin:turnMax[:loop]],...` — any bound may be
  * empty for unbounded; `@a` / `@l` scope the range to the active / leader
- * chip it tunes, e.g. `effect=shield_percent@a:50::2:,skill_charge_turns:2:3`.
+ * chip it tunes. A trailing `1` requires that effect to loop.
+ * e.g. `effect=shield_percent@a:50::2:,damage_cap_buff@a:::::1`.
  */
 function parseEffectRanges(raw: string | undefined): EffectValueRangeInput[] {
   if (!raw?.trim()) return [];
@@ -81,7 +82,8 @@ function parseEffectRanges(raw: string | undefined): EffectValueRangeInput[] {
   for (const part of raw.split(",")) {
     const spec = part.trim();
     if (!spec) continue;
-    const [idRaw, minRaw, maxRaw, turnMinRaw, turnMaxRaw] = spec.split(":");
+    const [idRaw, minRaw, maxRaw, turnMinRaw, turnMaxRaw, loopRaw] =
+      spec.split(":");
     const idParts = (idRaw ?? "").split("@");
     const id = idParts[0]?.trim();
     const scope = idParts[1]?.trim();
@@ -92,7 +94,14 @@ function parseEffectRanges(raw: string | undefined): EffectValueRangeInput[] {
     const max = parseOptionalNumber(maxRaw);
     const turnMin = parseOptionalNumber(turnMinRaw);
     const turnMax = parseOptionalNumber(turnMaxRaw);
-    if (min == null && max == null && turnMin == null && turnMax == null) {
+    const loop = loopRaw === "1";
+    if (
+      min == null &&
+      max == null &&
+      turnMin == null &&
+      turnMax == null &&
+      !loop
+    ) {
       continue;
     }
     if (min != null && max != null && min > max) {
@@ -112,6 +121,7 @@ function parseEffectRanges(raw: string | undefined): EffectValueRangeInput[] {
       max,
       turnMin,
       turnMax,
+      loop,
     });
   }
   return out;

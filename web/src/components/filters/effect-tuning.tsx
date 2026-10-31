@@ -32,7 +32,8 @@ function setRange(
     next.min == null &&
     next.max == null &&
     next.turnMin == null &&
-    next.turnMax == null
+    next.turnMax == null &&
+    next.loop !== true
   ) {
     delete ranges[key];
   } else {
@@ -249,6 +250,24 @@ function FamilyTuning({
           }
         />
       )}
+      {showTurns && skillType === "active_skill" && (
+        <label
+          className={`flex cursor-pointer items-center gap-1.5 ${
+            compact ? "text-[9px]" : "text-[10px]"
+          }`}
+          title="Duration is at least the cooldown after skill charge. Evolving skills use that stage's CD. Awakening 51 charges +1 per turn (CD/2), 97 charges +2 (CD/3). Regular copies stack; only the stronger super awakening counts."
+        >
+          <input
+            type="checkbox"
+            checked={range.loop === true}
+            onChange={(e) =>
+              onChange(setRange(filters, key, { loop: e.target.checked }))
+            }
+            className="accent-[var(--color-accent)]"
+          />
+          <span className="font-semibold text-[var(--color-muted)]">Loop</span>
+        </label>
+      )}
     </div>
   );
 }
@@ -398,6 +417,7 @@ export function UnscopedEffectRangeChips({
       family?.label ?? key,
       bound(r.min, r.max, unit),
       bound(r.turnMin, r.turnMax, "T"),
+      r.loop ? "loop" : null,
     ]
       .filter(Boolean)
       .join(" ");
