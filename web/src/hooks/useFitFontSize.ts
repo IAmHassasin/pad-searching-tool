@@ -1,4 +1,5 @@
 import { useLayoutEffect, useRef, useState } from "react";
+import { fontFitWidthChanged } from "../lib/font-fit-resize";
 
 /**
  * Shrink a container's font-size until its content fits `maxHeightPx`,
@@ -54,7 +55,23 @@ export function useFitFontSize({
     fit();
     const parent = el.parentElement;
     if (!parent || typeof ResizeObserver === "undefined") return;
-    const ro = new ResizeObserver(fit);
+    // fit() already measured this layout. The observer also fires once on
+    // subscribe; that sample only records width so a height change cannot
+    // immediately run fit() again.
+    let sawWidth = false;
+    let lastWidth: number | null = null;
+    const ro = new ResizeObserver((entries) => {
+      const width = entries[0]?.contentRect.width;
+      if (width == null) return;
+      const changed = fontFitWidthChanged(lastWidth, width);
+      lastWidth = width;
+      if (!sawWidth) {
+        sawWidth = true;
+        return;
+      }
+      if (!changed) return;
+      fit();
+    });
     ro.observe(parent);
     return () => ro.disconnect();
   }, [minPx, maxPx, maxHeightPx, resetKey]);

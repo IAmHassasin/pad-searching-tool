@@ -1,4 +1,4 @@
-import { type AttributeSlotFilters } from "./monster-attributes";
+import type { AttributeSlotFilters } from "./lib/monster-attributes.ts";
 
 export type MonsterRecord = {
   monster_id?: number;
