@@ -96,9 +96,11 @@ function validateAgainstDadguide(dadguidePath, rows) {
     for (const row of rows) {
       const found = check.get(row.monster_id);
       if (!found) {
-        throw new Error(
-          `monster_id ${row.monster_id} not found in dadguide (${dadguidePath})`
+        console.warn(
+          `Warning: monster_id ${row.monster_id} is not in dadguide yet (${dadguidePath}); kept the curated name`
         );
+        row.name_ja = null;
+        continue;
       }
       if (!row.name_en && found.name_en) {
         row.name_en = found.name_en;

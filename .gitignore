@@ -30,6 +30,8 @@ pad.db
 pad.working.sqlite
 seed/*.sqlite
 !seed/gamewith-vanish.sqlite
+# Required by Dockerfile (COPY) so CI builds have it.
+!seed/void-super-gravity.sqlite
 
 cloudflare/**/node_modules/
 cloudflare/**/.wrangler/

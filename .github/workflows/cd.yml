@@ -1,0 +1,219 @@
+# Continuous delivery for main:
+#   test -> (build APK | deploy to Oracle VM) -> GitHub release with APK + changelog
+#
+# Required repository secrets (see scripts/ci/set-github-secrets.sh):
+#   PROD_ENV_FILE                  full contents of the production .env
+#   ORACLE_HOST                    VM public IP (terraform output public_ip)
+#   ORACLE_SSH_PRIVATE_KEY         contents of key/vm_ssh.pem
+#   ORACLE_KNOWN_HOSTS             known_hosts line(s) for ORACLE_HOST (pins the VM host key)
+#   APP_DOMAIN                     optional, terraform output app_domain (empty = Caddy on :80 only)
+#   ORIGIN_HOST                    optional, terraform output origin_hostname
+#   ANDROID_ENV_FILE               contents of web/.env.android
+#   ANDROID_DEBUG_KEYSTORE_BASE64  base64 of ~/.android/debug.keystore (keeps APK signature stable)
+# Optional repository variable:
+#   ORACLE_USER                    SSH user on the VM (default: opc)
+name: CD
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cd-main
+  cancel-in-progress: false
+
+env:
+  NODE_VERSION: "22"
+
+jobs:
+  test:
+    name: Test and build
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      tag: ${{ steps.version.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            web/package-lock.json
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          npm ci --prefix web
+
+      - name: Unit tests
+        run: npm test
+
+      - name: Build backend and web
+        run: |
+          npm run build
+          npm run build:web
+
+      - name: Compute version
+        id: version
+        run: |
+          base="$(node -p "require('./package.json').version.split('.').slice(0,2).join('.')")"
+          version="${base}.${GITHUB_RUN_NUMBER}"
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+          echo "tag=v${version}" >> "$GITHUB_OUTPUT"
+          echo "Release version: v${version}"
+
+  apk:
+    name: Build Android APK
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Write Android env and signing keystore
+        env:
+          ANDROID_ENV_FILE: ${{ secrets.ANDROID_ENV_FILE }}
+          ANDROID_DEBUG_KEYSTORE_BASE64: ${{ secrets.ANDROID_DEBUG_KEYSTORE_BASE64 }}
+        run: |
+          if [ -z "$ANDROID_ENV_FILE" ] || [ -z "$ANDROID_DEBUG_KEYSTORE_BASE64" ]; then
+            echo "::error::ANDROID_ENV_FILE and ANDROID_DEBUG_KEYSTORE_BASE64 secrets are required."
+            exit 1
+          fi
+          printf '%s\n' "$ANDROID_ENV_FILE" > web/.env.android
+          mkdir -p "$HOME/.android"
+          printf '%s' "$ANDROID_DEBUG_KEYSTORE_BASE64" | base64 -d > "$HOME/.android/debug.keystore"
+
+      - name: Install web dependencies
+        run: npm ci --prefix web
+
+      - name: Build APK
+        env:
+          ORG_GRADLE_PROJECT_appVersionCode: ${{ github.run_number }}
+          ORG_GRADLE_PROJECT_appVersionName: ${{ needs.test.outputs.version }}
+        run: |
+          chmod +x web/android/gradlew
+          npm run android:apk --prefix web
+          mv releases/pad-searching-tool.apk "releases/pad-searching-tool-${{ needs.test.outputs.tag }}.apk"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: apk
+          path: releases/pad-searching-tool-${{ needs.test.outputs.tag }}.apk
+          if-no-files-found: error
+          retention-days: 7
+
+  deploy:
+    name: Deploy to Oracle VM
+    needs: test
+    # workflow_dispatch can target any branch; only main may reach production.
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    # Environment restricted to the main branch; no required reviewers (personal project).
+    environment: production
+    env:
+      ORACLE_USER: ${{ vars.ORACLE_USER || 'opc' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepare SSH key, known_hosts and production env
+        env:
+          ORACLE_SSH_PRIVATE_KEY: ${{ secrets.ORACLE_SSH_PRIVATE_KEY }}
+          ORACLE_KNOWN_HOSTS: ${{ secrets.ORACLE_KNOWN_HOSTS }}
+          PROD_ENV_FILE: ${{ secrets.PROD_ENV_FILE }}
+          ORACLE_HOST: ${{ secrets.ORACLE_HOST }}
+        run: |
+          if [ -z "$ORACLE_SSH_PRIVATE_KEY" ] || [ -z "$ORACLE_KNOWN_HOSTS" ] || [ -z "$PROD_ENV_FILE" ] || [ -z "$ORACLE_HOST" ]; then
+            echo "::error::ORACLE_SSH_PRIVATE_KEY, ORACLE_KNOWN_HOSTS, PROD_ENV_FILE and ORACLE_HOST secrets are required."
+            exit 1
+          fi
+          umask 077
+          # Pin the VM host key: with a known entry, ssh/scp (StrictHostKeyChecking=accept-new
+          # in deploy.mk) refuse to connect if the presented key does not match.
+          mkdir -p "$HOME/.ssh"
+          printf '%s\n' "$ORACLE_KNOWN_HOSTS" | tr -d '\r' > "$HOME/.ssh/known_hosts"
+          printf '%s\n' "$ORACLE_SSH_PRIVATE_KEY" | tr -d '\r' > "$RUNNER_TEMP/vm_ssh.pem"
+          printf '%s\n' "$PROD_ENV_FILE" | tr -d '\r' > "$RUNNER_TEMP/prod.env"
+
+      - name: Deploy via iac/deploy.mk
+        env:
+          ORACLE_HOST: ${{ secrets.ORACLE_HOST }}
+          APP_DOMAIN: ${{ secrets.APP_DOMAIN }}
+          ORIGIN_HOST: ${{ secrets.ORIGIN_HOST }}
+        run: |
+          make -f iac/deploy.mk deploy \
+            ORACLE_HOST="$ORACLE_HOST" \
+            ORACLE_USER="$ORACLE_USER" \
+            APP_DOMAIN="$APP_DOMAIN" \
+            ORIGIN_HOST="$ORIGIN_HOST" \
+            SSH_KEY="$RUNNER_TEMP/vm_ssh.pem" \
+            ENV_FILE="$RUNNER_TEMP/prod.env"
+
+      - name: Health check
+        env:
+          ORACLE_HOST: ${{ secrets.ORACLE_HOST }}
+        run: |
+          for i in $(seq 1 30); do
+            if ssh -i "$RUNNER_TEMP/vm_ssh.pem" -o StrictHostKeyChecking=accept-new \
+                "$ORACLE_USER@$ORACLE_HOST" "curl -fsS http://127.0.0.1:3000/health" ; then
+              echo; echo "Healthy after attempt $i."
+              exit 0
+            fi
+            echo "Not healthy yet (attempt $i/30), retrying in 10s..."
+            sleep 10
+          done
+          echo "::error::App did not become healthy within 5 minutes."
+          exit 1
+
+      - name: Remove credentials
+        if: always()
+        run: rm -f "$RUNNER_TEMP/vm_ssh.pem" "$RUNNER_TEMP/prod.env"
+
+  release:
+    name: GitHub release
+    needs: [test, apk, deploy]
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: apk
+          path: dist-release
+
+      - name: Generate changelog
+        run: bash scripts/ci/generate-changelog.sh "${{ needs.test.outputs.tag }}" release-notes.md
+
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ needs.test.outputs.tag }}
+        run: |
+          gh release create "$TAG" dist-release/*.apk \
+            --target "$GITHUB_SHA" \
+            --title "$TAG" \
+            --notes-file release-notes.md \
+            --latest
