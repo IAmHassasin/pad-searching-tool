@@ -12,6 +12,7 @@ import { OneTouchPage } from "./one-touch/OneTouchPage";
 import { CustomCardPage } from "./custom-card/CustomCardPage";
 import { TeamBuildPage } from "./team-build/TeamBuildPage";
 import { TierMakerPage } from "./tier-maker/TierMakerPage";
+import { SupportLaunch } from "./components/SupportLaunch";
 import "./index.css";
 
 const queryClient = new QueryClient({
@@ -62,6 +63,7 @@ createRoot(document.getElementById("root")!).render(
     <QueryClientProvider client={queryClient}>
       <AdminSessionProvider>
         <Root />
+        <SupportLaunch />
       </AdminSessionProvider>
     </QueryClientProvider>
   </StrictMode>

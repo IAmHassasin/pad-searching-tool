@@ -15,6 +15,7 @@ import {
 } from "../lib/result-display";
 import type { ResultSortOption } from "../lib/results-sort";
 import type { MonsterRecord } from "../types";
+import { MonsterPortrait } from "./MonsterPortrait";
 import { MonsterQuickPreview } from "./MonsterQuickPreview";
 import {
   MonsterPreviewInfoButton,
@@ -118,9 +119,9 @@ export function ResultsList({
     displaySections != null && hasAnyDisplaySection(displaySections);
   const showCdCol = !compact && !minimal && showCd;
   const showEhpCol = !compact && !minimal && resultSort === "ls_ehp";
-  const showInfoCol = !hoverCapable;
+  const showInfoCol = !hoverCapable && !minimal;
 
-  const estimateSize = showInlineCard ? 152 : compact || minimal ? 40 : 44;
+  const estimateSize = minimal ? 52 : showInlineCard ? 152 : compact ? 40 : 44;
 
   const virtualizer = useVirtualizer({
     count: rows.length,
@@ -163,16 +164,18 @@ export function ResultsList({
 
   return (
     <div ref={parentRef} className="min-h-0 flex-1 overflow-auto">
-      <div
-        className={`ds-label sticky top-0 z-10 grid border-b border-white/[0.06] bg-[var(--color-surface)]/95 text-left ${rowGutter}`}
-        style={{ gridTemplateColumns }}
-      >
-        <div className="whitespace-nowrap px-1.5 py-1.5">ID</div>
-        <div className={headerCell}>Name</div>
-        {showCdCol && <div className="px-2 py-1.5">CD</div>}
-        {showEhpCol && <div className="px-2 py-1.5">eHP</div>}
-        {showInfoCol && <div />}
-      </div>
+      {!minimal && (
+        <div
+          className={`ds-label sticky top-0 z-10 grid border-b border-white/[0.06] bg-[var(--color-surface)]/95 text-left ${rowGutter}`}
+          style={{ gridTemplateColumns }}
+        >
+          <div className="whitespace-nowrap px-1.5 py-1.5">ID</div>
+          <div className={headerCell}>Name</div>
+          {showCdCol && <div className="px-2 py-1.5">CD</div>}
+          {showEhpCol && <div className="px-2 py-1.5">eHP</div>}
+          {showInfoCol && <div />}
+        </div>
+      )}
 
       {rows.length > 0 && (
         <div
@@ -205,14 +208,39 @@ export function ResultsList({
                       onSelect(row);
                     }
                   }}
-                  className={`grid cursor-pointer items-center rounded-xl border transition-colors duration-150 ${
+                  className={`cursor-pointer rounded-xl border transition-colors duration-150 ${
+                    minimal ? "flex items-center gap-1.5 px-1.5 py-1" : "grid items-center"
+                  } ${
                     active
                       ? "border-[var(--color-accent)]/60 bg-[var(--color-hover)] shadow-[var(--shadow-glow)]"
                       : "border-white/[0.05] bg-[var(--color-panel)]/90 hover:border-white/10 hover:bg-[var(--color-hover)]"
                   }`}
-                  style={{ gridTemplateColumns }}
+                  style={minimal ? undefined : { gridTemplateColumns }}
                 >
-                  <div className={`self-start ${minimal ? "py-1.5 pl-1" : "py-2 pl-1.5"}`}>
+                  {minimal ? (
+                    <>
+                      <MonsterPortrait
+                        monsterId={id}
+                        alt=""
+                        variant="icon"
+                        className="h-9 w-9 shrink-0 rounded-md border border-white/10 object-cover"
+                      />
+                      <div className="min-w-0">
+                        <MonsterNameCell name={nameFor(row)} minimal />
+                        <span
+                          className={`mt-0.5 inline-block font-mono text-[10px] font-bold tabular-nums ${
+                            listedId.region === "jp"
+                              ? "text-[var(--color-secondary-strong)]"
+                              : "text-[var(--color-accent-strong)]"
+                          }`}
+                        >
+                          {listedId.text}
+                        </span>
+                      </div>
+                    </>
+                  ) : (
+                  <>
+                  <div className="self-start py-2 pl-1.5">
                     <span
                       className={`inline-block whitespace-nowrap rounded-md bg-[var(--color-inset)] font-mono font-bold tabular-nums tracking-wide ring-1 ${
                         listedId.region === "jp"
@@ -288,6 +316,8 @@ export function ResultsList({
                         }}
                       />
                     </div>
+                  )}
+                  </>
                   )}
                 </div>
               </div>
