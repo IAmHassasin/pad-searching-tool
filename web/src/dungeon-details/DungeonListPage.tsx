@@ -1,8 +1,8 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { adminDeleteDungeon } from "../api";
 import { AdminLaunch } from "../components/AdminLaunch";
-import { AppToolsNav } from "../components/AppToolsNav";
 import { CatalogDeleteButton } from "../components/CatalogDeleteButton";
+import { PageHeader } from "../components/PageHeader";
 import { useAdminSession } from "../hooks/useAdminSession";
 import { fetchDungeonList } from "./api";
 
@@ -15,35 +15,27 @@ export function DungeonListPage() {
   const queryClient = useQueryClient();
 
   return (
-    <div className="min-h-full bg-[var(--color-surface)] text-[#e6edf3]">
-      <header className="border-b border-[var(--color-border)] bg-[var(--color-panel)] px-4 py-3">
-        <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3">
-          <div>
-            <h1 className="text-lg font-semibold">Dungeon details</h1>
-            <p className="text-sm text-[var(--color-muted)]">
-              Floor tables parsed from AppMedia (English UI)
-            </p>
-          </div>
-          <div className="flex flex-wrap items-center gap-2">
-            <AppToolsNav variant="inline" />
-            <AdminLaunch variant="chip" />
-          </div>
-        </div>
-      </header>
+    <div className="min-h-full bg-[var(--color-surface)] text-[var(--color-fg)]">
+      <PageHeader
+        title="Dungeon details"
+        subtitle="Floor tables parsed from AppMedia (English UI)"
+        actions={<AdminLaunch variant="chip" />}
+        maxWidthClass="max-w-5xl"
+      />
 
-      <main className="mx-auto max-w-5xl px-4 py-6">
+      <main className="mx-auto max-w-5xl px-3 py-4 sm:px-4 sm:py-6">
         {list.isLoading && (
-          <p className="text-[var(--color-muted)]">Loading…</p>
+          <p className="text-sm text-[var(--color-muted)]">Loading…</p>
         )}
         {list.isError && (
-          <p className="text-red-400">
+          <p className="text-sm text-[var(--color-negative)]">
             {list.error instanceof Error ? list.error.message : "Failed to load"}
           </p>
         )}
         {list.data && list.data.dungeons.length === 0 && (
-          <p className="text-[var(--color-muted)]">
+          <p className="text-sm text-[var(--color-muted)]">
             No dungeons yet. Run{" "}
-            <code className="rounded bg-[var(--color-panel)] px-1.5 py-0.5 text-xs">
+            <code className="rounded bg-[var(--color-inset)] px-1.5 py-0.5 font-mono text-xs text-[var(--color-accent-strong)]">
               make dungeon-import
             </code>{" "}
             then restart Docker.
@@ -56,14 +48,16 @@ export function DungeonListPage() {
             return (
               <li
                 key={d.appmediaPostId}
-                className="flex items-stretch overflow-hidden rounded-lg border border-[var(--color-border)] bg-[var(--color-panel)]"
+                className="ds-card flex items-stretch overflow-hidden transition-colors duration-150 hover:border-white/10 hover:bg-[var(--color-hover)]"
               >
                 <a
                   href={`/dungeon-details/${d.appmediaPostId}`}
-                  className="min-w-0 flex-1 px-4 py-3 hover:bg-white/5"
+                  className="pressable min-w-0 flex-1 px-4 py-3"
                 >
-                  <div className="font-medium">{title}</div>
-                  <div className="mt-1 text-xs text-[var(--color-muted)]">
+                  <div className="font-semibold text-[var(--color-fg-strong)]">
+                    {title}
+                  </div>
+                  <div className="mt-1 font-mono text-xs text-[var(--color-muted)]">
                     #{d.appmediaPostId}
                     {imported ? ` · ${imported}` : ""}
                   </div>

@@ -24,12 +24,12 @@ export function EventFamilyCarousel({
   };
 
   return (
-    <div className="flex items-center gap-2 border-t border-[#6b4f2a]/70 bg-[#1a140e]/90 px-3 py-3">
+    <div className="flex items-center gap-2 border-t border-[var(--color-border)] bg-[var(--color-panel)]/90 px-3 py-3">
       <button
         type="button"
         onClick={() => go(-1)}
         aria-label="Previous form"
-        className="shrink-0 rounded-full border border-[#6b4f2a]/90 bg-[#2f2118] px-2 py-1 text-[#e8dcc8] hover:border-[#c9a84a] hover:text-white"
+        className="pressable flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[var(--color-border-strong)] bg-[var(--color-inset)] text-[var(--color-fg)] hover:border-[var(--color-accent)]/60 hover:text-[var(--color-fg-strong)]"
       >
         ‹
       </button>
@@ -44,10 +44,10 @@ export function EventFamilyCarousel({
               type="button"
               onClick={() => onSelect(i)}
               aria-label={row.name_en ?? `Monster ${id}`}
-              className={`relative shrink-0 rounded-lg border p-0.5 transition-shadow ${
+              className={`pressable relative shrink-0 rounded-lg border p-0.5 ${
                 selected
-                  ? "border-[#ffd54f] shadow-[0_0_10px_rgba(255,213,79,0.5)]"
-                  : "border-[#8b6914]/70 hover:border-[#c9a84a]"
+                  ? "border-[var(--color-accent)] bg-[var(--color-accent-muted)] shadow-[var(--shadow-glow)]"
+                  : "border-[var(--color-border-strong)] hover:border-[var(--color-accent)]/60"
               }`}
               style={{ width: 56, height: 56 }}
             >
@@ -58,7 +58,7 @@ export function EventFamilyCarousel({
                 className="h-full w-full rounded object-cover"
               />
               <span
-                className="absolute -bottom-1 -right-1 rounded-full border border-[#6b4f2a] bg-[#0f0c0a] px-1 text-[8px] font-bold text-[#c9b08a]"
+                className="absolute -bottom-1 -right-1 rounded-full border border-[var(--color-border-strong)] bg-[var(--color-inset)] px-1 font-mono text-[8px] font-bold text-[var(--color-muted)]"
                 title={mode === "art" ? "Artwork" : "Card"}
               >
                 {mode === "art" ? "A" : "C"}
@@ -71,7 +71,7 @@ export function EventFamilyCarousel({
         type="button"
         onClick={() => go(1)}
         aria-label="Next form"
-        className="shrink-0 rounded-full border border-[#6b4f2a]/90 bg-[#2f2118] px-2 py-1 text-[#e8dcc8] hover:border-[#c9a84a] hover:text-white"
+        className="pressable flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[var(--color-border-strong)] bg-[var(--color-inset)] text-[var(--color-fg)] hover:border-[var(--color-accent)]/60 hover:text-[var(--color-fg-strong)]"
       >
         ›
       </button>

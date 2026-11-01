@@ -91,14 +91,14 @@ function CollapsiblePickerSection({
   const [open, setOpen] = useState(defaultOpen);
   const show = forcedOpen || open;
   return (
-    <section className="rounded border border-[var(--color-border)] bg-[#0d1117]">
+    <section className="rounded-lg border border-[var(--color-border)] bg-[var(--color-inset)]">
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={show}
-        className="flex w-full items-center justify-between gap-2 px-2 py-1.5 text-left hover:bg-white/5"
+        className="flex min-h-9 w-full items-center justify-between gap-2 rounded-lg px-2 py-1.5 text-left transition-colors hover:bg-[var(--color-hover)]"
       >
-        <span className="text-[10px] font-semibold uppercase tracking-wide text-[#a8c878]">
+        <span className="ds-label">
           {title}
         </span>
         <span className="text-[10px] text-[var(--color-muted)]" aria-hidden>
@@ -133,7 +133,7 @@ function TypeInsertRow({
           type="button"
           title={`Insert type: ${t.label}`}
           onClick={() => onPickType(t.id)}
-          className="rounded border border-transparent p-0.5 hover:border-[#c9a84a]"
+          className="pressable rounded border border-transparent p-0.5 hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-muted)]"
         >
           <MonsterTypeSpriteIcon
             typeId={t.id}
@@ -169,7 +169,7 @@ function AwakeningGroupRows({
               type="button"
               title={`Insert awakening #${id}`}
               onClick={() => onPickAwk(id)}
-              className="rounded border border-transparent p-0.5 hover:border-[#c9a84a]"
+              className="pressable rounded border border-transparent p-0.5 hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-muted)]"
             >
               <AwakeningSpriteIcon awokenSkillId={id} size={20} />
             </button>
@@ -198,7 +198,7 @@ function EffectInsertRow({
           type="button"
           title={`Insert effect #${id}`}
           onClick={() => onPickEffect(id)}
-          className="rounded border border-transparent p-0.5 hover:border-[#c9a84a]"
+          className="pressable rounded border border-transparent p-0.5 hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-muted)]"
         >
           <SkillEffectSpriteIcon effectId={id} size={22} />
         </button>
@@ -225,7 +225,7 @@ function OrbInsertRow({
             type="button"
             title={def ? `Insert ${def.label}` : `Insert orb #${id}`}
             onClick={() => onPickOrb(id)}
-            className="flex w-11 flex-col items-center gap-0.5 rounded border border-transparent p-0.5 hover:border-[#c9a84a]"
+            className="flex w-11 flex-col items-center gap-0.5 pressable rounded border border-transparent p-0.5 hover:border-[var(--color-accent)] hover:bg-[var(--color-accent-muted)]"
           >
             <OrbSpriteIcon orbId={id} size={22} title={def?.label} />
             <span className="max-w-full truncate text-[8px] leading-tight text-[var(--color-muted)]">
@@ -272,7 +272,7 @@ function DescWithAwkInsert({
         <button
           type="button"
           onClick={() => setPickerOpen(true)}
-          className="rounded border border-[#6b8f3c]/70 bg-[#1a2a12] px-1.5 py-0.5 text-[10px] text-[#c5e0a0] hover:border-[#a8c878]"
+          className="pressable min-h-7 rounded-full border border-[var(--color-positive)]/50 bg-emerald-500/10 px-2.5 py-0.5 text-[10px] font-semibold text-emerald-300 hover:border-[var(--color-positive)]"
         >
           Insert icon
         </button>
@@ -283,7 +283,7 @@ function DescWithAwkInsert({
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         rows={rows}
-        className="w-full rounded border border-[var(--color-border)] bg-[#161b22] px-2 py-1 text-xs text-white"
+        className="ds-input w-full px-2.5 py-1.5 text-xs"
       />
       {pickerOpen && (
         <SkillIconInsertPicker
@@ -378,7 +378,7 @@ function SkillIconInsertPicker({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
+      className="animate-fade-in fixed inset-0 z-50 flex items-end justify-center bg-black/50 sm:items-center sm:p-4"
       role="dialog"
       aria-modal
       aria-label={
@@ -392,10 +392,10 @@ function SkillIconInsertPicker({
       }}
     >
       <div
-        className="flex max-h-[min(85vh,42rem)] w-full max-w-xl flex-col rounded-xl border border-[#a8842f] bg-[#1a1410] p-4 shadow-xl"
+        className="ds-float animate-sheet-in sm:animate-fade-in flex max-h-[min(85vh,42rem)] w-full max-w-xl flex-col rounded-t-3xl p-4 pb-[calc(env(safe-area-inset-bottom)+1rem)] sm:rounded-2xl sm:pb-4"
         onClick={(e) => e.stopPropagation()}
       >
-        <h3 className="mb-1 text-sm font-semibold text-[#f5e6c8]">
+        <h3 className="mb-1 text-sm font-bold text-[var(--color-fg-strong)]">
           {isLeader ? "Insert icon into leader skill" : "Insert icon into active skill"}
         </h3>
         <p className="mb-2 text-[11px] text-[var(--color-muted)]">
@@ -410,7 +410,7 @@ function SkillIconInsertPicker({
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search: fire, lock, nail, skyfall, dragon…"
-            className="w-full rounded border border-[var(--color-border)] bg-[#161b22] px-2 py-1.5 text-xs text-white placeholder:text-[var(--color-muted)]"
+            className="ds-input min-h-9 w-full px-2.5 py-1.5 text-xs"
           />
         </label>
         <div className="min-h-0 flex-1 space-y-2 overflow-y-auto pr-0.5">
@@ -461,7 +461,7 @@ function SkillIconInsertPicker({
               <CollapsiblePickerSection title="Skill effects" defaultOpen={false}>
                 {visibleEffectGroups.map((group) => (
                   <section key={group.label}>
-                    <p className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-[#a8c878]">
+                    <p className="ds-label mb-1">
                       {group.label}
                     </p>
                     <EffectInsertRow
@@ -494,7 +494,7 @@ function SkillIconInsertPicker({
                 {visibleAwkGroups.map((group) => (
                   <section key={group.label}>
                     {!isLeader && (
-                      <p className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-[#a8c878]">
+                      <p className="ds-label mb-1">
                         {group.label}
                       </p>
                     )}
@@ -512,7 +512,7 @@ function SkillIconInsertPicker({
           <button
             type="button"
             onClick={onClose}
-            className="rounded border border-[var(--color-border)] px-3 py-1.5 text-xs text-[var(--color-muted)] hover:text-white"
+            className="ds-btn pressable min-h-10 px-4 text-xs font-semibold sm:min-h-9"
           >
             Done
           </button>
@@ -569,13 +569,11 @@ export function SkillEditor({ draft, onChange }: Props) {
   };
 
   return (
-    <section className="rounded-lg border border-[var(--color-border)] bg-[#0d1117] p-3">
-      <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-[#c9a84a]">
-        Skills
-      </h2>
+    <section className="ds-card p-3">
+      <h2 className="ds-label mb-2">Skills</h2>
       <div className="space-y-3">
         <div>
-          <p className="mb-1 text-[10px] font-semibold uppercase text-[#9ec5ff]">
+          <p className="mb-1 text-[10px] font-semibold tracking-wide text-[var(--color-secondary-strong)] uppercase">
             Active skill
           </p>
           {!staged && (
@@ -584,20 +582,20 @@ export function SkillEditor({ draft, onChange }: Props) {
               value={draft.activeSkillName}
               onChange={(e) => onChange({ activeSkillName: e.target.value })}
               placeholder="Skill name"
-              className="mb-1.5 w-full rounded border border-[var(--color-border)] bg-[#161b22] px-2 py-1 text-sm text-white"
+              className="ds-input mb-1.5 min-h-9 w-full px-2.5 py-1 text-sm"
             />
           )}
 
-          <div className="mb-1.5 flex rounded-lg border border-[var(--color-border)] bg-[#0d1117] p-0.5">
+          <div className="mb-1.5 flex gap-0.5 rounded-full border border-[var(--color-border)] bg-[var(--color-inset)] p-0.5">
             {SKILL_TYPES.map(({ id, label }) => (
               <button
                 key={id}
                 type="button"
                 onClick={() => setSkillType(id)}
-                className={`flex-1 rounded-md px-1.5 py-1 text-[10px] font-medium ${
+                className={`pressable min-h-8 flex-1 rounded-full border px-1.5 py-1 text-[10px] font-semibold ${
                   draft.activeSkillType === id
-                    ? "bg-[#3d6aa8] text-white"
-                    : "text-[var(--color-muted)] hover:text-white"
+                    ? "border-[var(--color-accent)]/70 bg-[var(--color-accent-muted)] text-[var(--color-accent-strong)] shadow-[var(--shadow-glow)]"
+                    : "border-transparent text-[var(--color-muted)] hover:text-[var(--color-fg-strong)]"
                 }`}
               >
                 {label}
@@ -619,10 +617,10 @@ export function SkillEditor({ draft, onChange }: Props) {
               {draft.activeSkillStages.map((stage, index) => (
                 <div
                   key={index}
-                  className="rounded border border-[var(--color-border)] bg-[#161b22] p-2"
+                  className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-2"
                 >
                   <div className="mb-1 flex items-center justify-between gap-2">
-                    <span className="text-[10px] font-semibold text-[#9ec5ff]">
+                    <span className="font-mono text-[10px] font-semibold text-[var(--color-secondary-strong)] tabular-nums">
                       Stage {index + 1}
                     </span>
                     <div className="flex items-center gap-2">
@@ -638,7 +636,7 @@ export function SkillEditor({ draft, onChange }: Props) {
                                 cd: parseOptionalInt(e.target.value),
                               })
                             }
-                            className="w-14 rounded border border-[var(--color-border)] bg-[#0d1117] px-1.5 py-0.5 text-sm text-white"
+                            className="ds-input w-14 px-1.5 py-0.5 font-mono text-sm tabular-nums"
                             placeholder="—"
                           />
                         </label>
@@ -647,7 +645,7 @@ export function SkillEditor({ draft, onChange }: Props) {
                         <button
                           type="button"
                           onClick={() => removeStage(index)}
-                          className="text-[10px] text-red-300 hover:text-red-200"
+                          className="text-[10px] font-semibold text-red-300 hover:text-[var(--color-negative)]"
                         >
                           Remove
                         </button>
@@ -661,7 +659,7 @@ export function SkillEditor({ draft, onChange }: Props) {
                       updateStage(index, { name: e.target.value })
                     }
                     placeholder={`Stage ${index + 1} skill name`}
-                    className="mb-1 w-full rounded border border-[var(--color-border)] bg-[#0d1117] px-2 py-1 text-sm text-white"
+                    className="ds-input mb-1 min-h-9 w-full px-2.5 py-1 text-sm"
                   />
                   <DescWithAwkInsert
                     mode="active"
@@ -675,7 +673,7 @@ export function SkillEditor({ draft, onChange }: Props) {
               <button
                 type="button"
                 onClick={addStage}
-                className="rounded border border-[var(--color-border)] px-2 py-1 text-[10px] text-[var(--color-muted)] hover:border-[#9ec5ff] hover:text-white"
+                className="pressable min-h-8 rounded-lg border border-dashed border-[var(--color-border-strong)] px-3 py-1 text-[10px] font-semibold text-[var(--color-muted)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent-strong)]"
               >
                 + Add stage
               </button>
@@ -703,7 +701,7 @@ export function SkillEditor({ draft, onChange }: Props) {
                     activeSkillCdMin: parseOptionalInt(e.target.value),
                   })
                 }
-                className="mt-0.5 w-full rounded border border-[var(--color-border)] bg-[#161b22] px-2 py-1 text-sm text-white"
+                className="ds-input mt-0.5 min-h-9 w-full px-2.5 py-1 font-mono text-sm tabular-nums"
               />
             </label>
             <label className="flex-1 text-[10px] text-[var(--color-muted)]">
@@ -716,7 +714,7 @@ export function SkillEditor({ draft, onChange }: Props) {
                     activeSkillCdMax: parseOptionalInt(e.target.value),
                   })
                 }
-                className="mt-0.5 w-full rounded border border-[var(--color-border)] bg-[#161b22] px-2 py-1 text-sm text-white"
+                className="ds-input mt-0.5 min-h-9 w-full px-2.5 py-1 font-mono text-sm tabular-nums"
               />
             </label>
           </div>
@@ -727,7 +725,7 @@ export function SkillEditor({ draft, onChange }: Props) {
           )}
         </div>
         <div>
-          <p className="mb-1 text-[10px] font-semibold uppercase text-[#f5d4a8]">
+          <p className="mb-1 text-[10px] font-semibold tracking-wide text-[var(--color-amber-text)] uppercase">
             Leader skill
           </p>
           <input
@@ -735,7 +733,7 @@ export function SkillEditor({ draft, onChange }: Props) {
             value={draft.leaderSkillName}
             onChange={(e) => onChange({ leaderSkillName: e.target.value })}
             placeholder="Leader skill name"
-            className="mb-1 w-full rounded border border-[var(--color-border)] bg-[#161b22] px-2 py-1 text-sm text-white"
+            className="ds-input mb-1 min-h-9 w-full px-2.5 py-1 text-sm"
           />
           <DescWithAwkInsert
             mode="leader"

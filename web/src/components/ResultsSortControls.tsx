@@ -40,12 +40,14 @@ export function ResultsSortControls({
       <div
         className={`flex items-center gap-1.5 ${compact ? "shrink-0" : "flex-wrap"}`}
       >
-        <label className="flex items-center gap-1.5 text-[10px] text-[var(--color-muted)]">
-          <span className="shrink-0">Sort</span>
+        <label className="flex items-center gap-1.5">
+          <span className="ds-label shrink-0">Sort</span>
           <select
             value={sort}
             onChange={(e) => onSortChange(e.target.value as ResultSortOption)}
-            className="max-w-[10rem] rounded border border-[var(--color-border)] bg-[#0d1117] px-1.5 py-0.5 text-[10px] text-white"
+            className={`ds-input max-w-[10rem] px-1.5 py-0.5 text-[10px] ${
+              sort !== "default" ? "border-[var(--color-accent)]/60" : ""
+            }`}
           >
             {RESULT_SORT_OPTIONS.map((opt) => (
               <option key={opt.value} value={opt.value}>
@@ -61,10 +63,10 @@ export function ResultsSortControls({
             title="Awk modifier"
             aria-label={`Awk modifier${enabledCount > 0 ? ` (${enabledCount} selected)` : ""}`}
             onClick={() => setModalOpen(true)}
-            className={`rounded border p-1 transition-colors ${
+            className={`pressable rounded-lg border p-1.5 ${
               enabledCount > 0
-                ? "border-[#6b8f3c] bg-[#1a2a12] text-[#a8c878]"
-                : "border-amber-600/70 bg-amber-950/30 text-amber-300"
+                ? "border-[var(--color-positive)]/60 bg-emerald-500/10 text-emerald-300"
+                : "border-[var(--color-accent)]/60 bg-[var(--color-accent-muted)] text-[var(--color-accent-strong)] shadow-[var(--shadow-glow)]"
             }`}
           >
             <svg

@@ -48,30 +48,31 @@ export function EventMonsterModal({ family, initialMonsterId, onClose }: Props) 
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm"
+      className="animate-fade-in fixed inset-0 z-50 flex items-end justify-center bg-black/50 backdrop-blur-sm sm:items-center sm:p-4"
       onClick={onClose}
     >
       <div
-        className="relative flex max-h-[92vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border-2 border-[#a8842f] bg-[#0f0c0a] shadow-[0_16px_48px_rgba(0,0,0,0.7)]"
+        className="ds-float animate-sheet-in relative flex max-h-[92vh] w-full max-w-2xl flex-col overflow-hidden rounded-t-3xl sm:animate-fade-in sm:rounded-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         <button
           type="button"
           onClick={onClose}
           aria-label="Close"
-          className="absolute left-3 top-3 z-20 flex h-8 w-8 items-center justify-center rounded-full border border-[#6b4f2a]/90 bg-[#2f2118]/90 text-base text-[#e8dcc8] hover:border-[#c9a84a] hover:text-white"
+          className="pressable absolute left-3 top-3 z-20 flex h-9 w-9 items-center justify-center rounded-full border border-[var(--color-border-strong)] bg-[var(--color-panel)]/90 text-base text-[var(--color-fg)] hover:border-[var(--color-accent)]/60 hover:text-[var(--color-fg-strong)]"
         >
           ×
         </button>
 
-        <div className="absolute right-3 top-3 z-20 flex shrink-0 rounded-full border border-[#6b4f2a]/90 bg-[#2f2118]/90 p-0.5 text-[11px] font-semibold">
+        <div className="absolute right-3 top-3 z-20 flex shrink-0 rounded-full border border-[var(--color-border-strong)] bg-[var(--color-inset)]/90 p-0.5 text-[11px] font-semibold">
           <button
             type="button"
             onClick={() => setMode("art")}
-            className={`rounded-full px-2.5 py-1 transition-colors ${
+            aria-pressed={mode === "art"}
+            className={`pressable rounded-full px-3 py-1.5 ${
               mode === "art"
-                ? "bg-[#5c4a12] text-[#ffe082]"
-                : "text-[#c9b08a] hover:text-white"
+                ? "bg-[var(--color-accent-muted)] text-[var(--color-accent-strong)]"
+                : "text-[var(--color-muted)] hover:text-[var(--color-fg-strong)]"
             }`}
           >
             Artwork
@@ -79,10 +80,11 @@ export function EventMonsterModal({ family, initialMonsterId, onClose }: Props) 
           <button
             type="button"
             onClick={() => setMode("card")}
-            className={`rounded-full px-2.5 py-1 transition-colors ${
+            aria-pressed={mode === "card"}
+            className={`pressable rounded-full px-3 py-1.5 ${
               mode === "card"
-                ? "bg-[#5c4a12] text-[#ffe082]"
-                : "text-[#c9b08a] hover:text-white"
+                ? "bg-[var(--color-accent-muted)] text-[var(--color-accent-strong)]"
+                : "text-[var(--color-muted)] hover:text-[var(--color-fg-strong)]"
             }`}
           >
             Card

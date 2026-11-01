@@ -15,6 +15,8 @@ export type EventSeedFile = {
   coverMonsterIds?: number[];
   entries: EventSeedEntry[];
   loading?: { theme: string; minMs?: number; asset?: string };
+  banner?: string;
+  bannerArt?: string;
 };
 
 export type MonsterNameRow = { monsterId: number; nameEn: string };

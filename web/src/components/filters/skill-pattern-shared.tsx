@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { EffectFilterSpriteIcon } from "../EffectFilterSpriteIcon";
 import { hasEffectFilterIcon } from "../../lib/effect-filter-sprite";
 import type { PatternGroupsManifest, SkillFilters } from "../../types";
@@ -10,16 +11,17 @@ export function tagKey(tag: {
   return tag.tag_id != null ? String(tag.tag_id) : tag.tag_name_en;
 }
 
+/** Categorical accents (category dot + header); tuned for the navy surfaces. */
 export const CATEGORY_ACCENT: Record<string, string> = {
-  as_offensive_damage: "#f85149",
-  as_buffs_caps: "#d29922",
-  as_mechanics_utility: "#a371f7",
-  as_recovery: "#3fb950",
-  as_orb_manipulation: "#39c5cf",
-  ls_stat_multipliers: "#58a6ff",
-  ls_condition_buffs: "#db6d28",
-  ls_extra_effects: "#f778ba",
-  ls_restrictions_board: "#8b949e",
+  as_offensive_damage: "#ef4444",
+  as_buffs_caps: "#fbbf24",
+  as_mechanics_utility: "#c084fc",
+  as_recovery: "#10b981",
+  as_orb_manipulation: "#4cd7f6",
+  ls_stat_multipliers: "#38bdf8",
+  ls_condition_buffs: "#fb923c",
+  ls_extra_effects: "#f472b6",
+  ls_restrictions_board: "#94a3b8",
 };
 
 export function PatternTagChip({
@@ -54,26 +56,21 @@ export function PatternTagChip({
       onClick={onToggle}
       title={tooltip}
       aria-label={label}
-      className={`group inline-flex max-w-full items-center gap-1 rounded-md border text-left transition-colors ${
+      className={`group pressable inline-flex max-w-full items-center gap-1.5 border text-left font-semibold ${
         hasIcon
           ? compact
-            ? "p-0.5"
-            : "p-1"
+            ? "rounded-lg p-0.5"
+            : "rounded-lg p-1"
           : compact
-            ? "px-1.5 py-0.5 text-[10px] leading-tight"
-            : "px-2 py-1 text-[11px] leading-tight"
+            ? "rounded-full px-2 py-0.5 text-[10px] leading-tight"
+            : "rounded-full px-2.5 py-1 text-[11px] leading-tight"
       } ${
         disabled
-          ? "cursor-not-allowed border-[var(--color-border)]/50 text-[var(--color-muted)] opacity-40"
+          ? "cursor-not-allowed border-[var(--color-border)]/50 text-[var(--color-faint)] opacity-40"
           : selected
-            ? "border-[var(--color-accent)] bg-[var(--color-accent-muted)] text-white shadow-[inset_0_0_0_1px_rgba(88,166,255,0.25)]"
-            : "border-[var(--color-border)] bg-[var(--color-inset)] text-[#c9d1d9] hover:border-[var(--color-accent)]/60 hover:bg-[var(--color-hover)]"
+            ? "border-[var(--color-accent)]/70 bg-[var(--color-accent-muted)] text-[var(--color-accent-strong)] shadow-[var(--shadow-glow)]"
+            : "border-[var(--color-border)] bg-[var(--color-panel)] text-[var(--color-muted)] hover:border-[var(--color-border-strong)] hover:bg-[var(--color-hover)] hover:text-[var(--color-fg-strong)]"
       }`}
-      style={
-        selected && !disabled
-          ? { boxShadow: `inset 3px 0 0 0 ${accent}` }
-          : undefined
-      }
     >
       {hasIcon ? (
         <EffectFilterSpriteIcon
@@ -84,7 +81,7 @@ export function PatternTagChip({
       ) : (
         <>
           <span
-            className={`h-1.5 w-1.5 shrink-0 rounded-full ${selected ? "opacity-100" : "opacity-60 group-hover:opacity-100"}`}
+            className={`h-1.5 w-1.5 shrink-0 rounded-full ${selected ? "opacity-100 shadow-[0_0_6px_currentColor]" : "opacity-50 group-hover:opacity-90"}`}
             style={{ backgroundColor: accent }}
             aria-hidden
           />
@@ -93,10 +90,10 @@ export function PatternTagChip({
       )}
       {count > 0 && !hasIcon && (
         <span
-          className={`shrink-0 rounded px-1 py-px text-[9px] font-medium tabular-nums ${
+          className={`shrink-0 rounded-full px-1.5 py-px font-mono text-[9px] font-medium tabular-nums ${
             selected
-              ? "bg-[var(--color-accent)]/20 text-[var(--color-accent)]"
-              : "bg-[var(--color-hover)] text-[var(--color-muted)]"
+              ? "bg-[var(--color-accent)]/20 text-[var(--color-accent-strong)]"
+              : "bg-[var(--color-inset)] text-[var(--color-faint)]"
           }`}
         >
           {count}
@@ -115,7 +112,7 @@ export function PatternMatchToggle({
 }) {
   return (
     <div
-      className="mb-3 flex rounded-lg border border-[var(--color-border)] bg-[var(--color-inset)] p-0.5"
+      className="mb-3 flex rounded-full border border-[var(--color-border)] bg-[var(--color-inset)] p-0.5"
       role="radiogroup"
       aria-label="Pattern match mode"
     >
@@ -131,10 +128,10 @@ export function PatternMatchToggle({
           role="radio"
           aria-checked={value === id}
           onClick={() => onChange(id)}
-          className={`flex-1 rounded-md px-2 py-1 text-xs font-medium transition-colors ${
+          className={`pressable flex-1 rounded-full px-2 py-1 text-xs font-semibold ${
             value === id
-              ? "bg-[var(--color-accent)] text-[var(--color-inset)]"
-              : "text-[var(--color-muted)] hover:text-white"
+              ? "bg-[var(--color-accent-muted)] text-[var(--color-accent-strong)] shadow-[var(--shadow-glow)]"
+              : "text-[var(--color-muted)] hover:text-[var(--color-fg-strong)]"
           }`}
         >
           {label}
@@ -154,12 +151,21 @@ export function SkillPatternGroup({
   iconOnly = false,
   showAdvancedToggle = false,
   defaultOpen,
+  beforeTags,
+  afterTags,
+  extraActiveCount = 0,
 }: {
   title: string;
   skillType: "active_skill" | "leader_skill";
   categories: PatternGroupsManifest["active_skill_filters"];
   filters: SkillFilters;
   onChange: (next: SkillFilters) => void;
+  /** Rendered above the chip grid (e.g. the active skill CD field). */
+  beforeTags?: ReactNode;
+  /** Rendered below the chip grid (e.g. selected-effect value inputs). */
+  afterTags?: ReactNode;
+  /** Non-chip filters active in this section — keeps it open on load. */
+  extraActiveCount?: number;
   compact?: boolean;
   /** When true, only show filters that have effect icons. */
   iconOnly?: boolean;
@@ -214,7 +220,7 @@ export function SkillPatternGroup({
       : `${totalTags} tags`;
 
   const sectionDefaultOpen =
-    defaultOpen ?? selectedInGroup > 0;
+    defaultOpen ?? selectedInGroup + extraActiveCount > 0;
 
   return (
     <CollapsibleFilterSection
@@ -225,7 +231,7 @@ export function SkillPatternGroup({
       headerExtra={
         showAdvancedToggle ? (
           <label
-            className={`flex shrink-0 cursor-pointer items-center gap-1 text-[var(--color-muted)] ${
+            className={`flex shrink-0 cursor-pointer items-center gap-1 rounded-md px-1 font-medium text-[var(--color-muted)] transition-colors hover:text-[var(--color-fg-strong)] ${
               compact ? "text-[9px]" : "text-[10px]"
             }`}
             onClick={(e) => e.stopPropagation()}
@@ -246,6 +252,7 @@ export function SkillPatternGroup({
         ) : undefined
       }
     >
+      {beforeTags}
       <div className={`space-y-3 ${compact ? "" : ""}`}>
         {visibleCategories.map((cat) => {
           const accent =
@@ -253,11 +260,11 @@ export function SkillPatternGroup({
           return (
             <div key={cat.category_id}>
               <p
-                className="mb-1.5 flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wide text-[var(--color-muted)]"
+                className="ds-label mb-1.5 flex items-center gap-1.5"
                 style={{ color: accent }}
               >
                 <span
-                  className="h-px w-2 shrink-0"
+                  className="h-1.5 w-1.5 shrink-0 rounded-full"
                   style={{ backgroundColor: accent }}
                   aria-hidden
                 />
@@ -285,6 +292,7 @@ export function SkillPatternGroup({
           );
         })}
       </div>
+      {afterTags}
     </CollapsibleFilterSection>
   );
 }
@@ -304,7 +312,7 @@ export function SkillPatternSelectionBar({
 
   return (
     <div
-      className={`shrink-0 border-b border-[var(--color-border)] bg-[var(--color-panel)] ${
+      className={`shrink-0 border-b border-white/[0.06] ${
         compact ? "px-0 pb-2" : "pb-2"
       }`}
     >
@@ -317,7 +325,7 @@ export function SkillPatternSelectionBar({
           <button
             type="button"
             onClick={clearPatterns}
-            className={`shrink-0 rounded border border-[var(--color-border)] text-[var(--color-muted)] hover:border-red-500/50 hover:text-red-300 ${
+            className={`pressable shrink-0 rounded-lg font-semibold text-[var(--color-muted)] hover:bg-[var(--color-negative)]/10 hover:text-[var(--color-negative)] ${
               compact ? "px-2 py-0.5 text-[10px]" : "px-2 py-0.5 text-[10px]"
             }`}
           >
@@ -379,9 +387,9 @@ export function SkillSelectedPatternChips({
             key={`${p.skillType}-${p.tagKey}`}
             type="button"
             onClick={() => toggleTag(p.skillType, p.tagKey, label)}
-            className={`inline-flex items-center gap-1 rounded-full border border-[var(--color-accent)]/50 bg-[var(--color-accent-muted)] ${
-              hasIcon ? "p-0.5" : "px-2 py-0.5 text-[10px] text-[var(--color-accent)]"
-            } hover:border-red-500/50 hover:bg-red-950/40 hover:text-red-300`}
+            className={`pressable inline-flex items-center gap-1 rounded-full border border-[var(--color-accent)]/50 bg-[var(--color-accent-muted)] text-[var(--color-accent-strong)] ${
+              hasIcon ? "p-0.5" : "px-2 py-0.5 text-[10px] font-semibold"
+            } hover:border-[var(--color-negative)]/60 hover:bg-[var(--color-negative)]/10 hover:text-red-300`}
             title={`${label} — click to remove`}
             aria-label={`Remove ${label}`}
           >
@@ -412,7 +420,7 @@ function SkillTextSearchFields({
   return (
     <>
       <select
-        className={`mb-2 w-full rounded border border-[var(--color-border)] bg-[var(--color-inset)] px-2 py-1 ${
+        className={`ds-input mb-2 w-full px-2 py-1 ${
           compact ? "text-[10px]" : "text-xs"
         }`}
         value={filters.skillTextMode}
@@ -427,40 +435,49 @@ function SkillTextSearchFields({
         <option value="active">Active only</option>
         <option value="leader">Leader only</option>
       </select>
+      <p
+        className={`mb-2 text-[var(--color-faint)] ${
+          compact ? "text-[9px]" : "text-[10px]"
+        }`}
+      >
+        Separate terms with <code>|</code> (all must match). <code>*</code>{" "}
+        matches anything within one effect — <code>by * turn</code> finds
+        "by 1 turn", "by 3 turns", …
+      </p>
       <label
-        className={`mb-2 flex flex-col gap-0.5 text-[var(--color-muted)] ${
+        className={`mb-2 flex flex-col gap-1 font-medium text-[var(--color-muted)] ${
           compact ? "text-[10px]" : "text-xs"
         }`}
       >
         Active skill description
         <textarea
           rows={compact ? 2 : 3}
-          className={`resize-y rounded border border-[var(--color-border)] bg-[var(--color-inset)] px-2 py-1 text-white ${
+          className={`ds-input resize-y px-2 py-1 font-normal ${
             compact ? "text-xs" : "text-sm"
           }`}
           value={filters.activeSkillText}
           onChange={(e) =>
             onChange({ ...filters, activeSkillText: e.target.value })
           }
-          placeholder="Substring filter (AND with patterns)…"
+          placeholder="e.g. by * turn | reduce damage"
         />
       </label>
       <label
-        className={`flex flex-col gap-0.5 text-[var(--color-muted)] ${
+        className={`flex flex-col gap-1 font-medium text-[var(--color-muted)] ${
           compact ? "text-[10px]" : "text-xs"
         }`}
       >
         Leader skill description
         <textarea
           rows={compact ? 2 : 3}
-          className={`resize-y rounded border border-[var(--color-border)] bg-[var(--color-inset)] px-2 py-1 text-white ${
+          className={`ds-input resize-y px-2 py-1 font-normal ${
             compact ? "text-xs" : "text-sm"
           }`}
           value={filters.leaderSkillText}
           onChange={(e) =>
             onChange({ ...filters, leaderSkillText: e.target.value })
           }
-          placeholder="Substring filter (AND with patterns)…"
+          placeholder="e.g. by * turn | reduce damage"
         />
       </label>
     </>
@@ -500,7 +517,7 @@ export function SkillTextSearchSection({
       summary={
         activeFields > 0
           ? `${activeFields} field${activeFields === 1 ? "" : "s"} active`
-          : "substring filter"
+          : "multi-term · wildcard"
       }
       compact={compact}
       defaultOpen={activeFields > 0}

@@ -17,7 +17,7 @@ export function ActiveSkillVoidSuperGravityLine({
 
   return (
     <p
-      className={`mb-1.5 font-medium text-[#c9a84a] ${
+      className={`mb-1.5 font-medium text-[var(--pst-skill-supplement,#c9a84a)] ${
         compact ? "text-[9px]" : "text-[10px]"
       } ${className}`}
     >

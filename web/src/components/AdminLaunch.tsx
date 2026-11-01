@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { createPortal } from "react-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import { AdminPanel } from "./AdminPanel";
 import { useAdminSession } from "../hooks/useAdminSession";
@@ -26,8 +27,8 @@ export function AdminLaunch({ variant = "header", compact = false }: Props) {
 
   const buttonClass =
     variant === "chip"
-      ? "rounded border border-amber-700/80 px-2 py-0.5 text-xs text-amber-200 hover:border-amber-500 hover:text-amber-100"
-      : "rounded border border-amber-700/80 bg-amber-950/40 px-2.5 py-1 text-xs font-medium text-amber-200 hover:border-amber-500 hover:text-amber-50";
+      ? "pressable shrink-0 rounded-full border border-[var(--color-accent)]/40 bg-[var(--color-accent-muted)] px-2.5 py-1 text-[11px] font-semibold text-[var(--color-accent-strong)] hover:border-[var(--color-accent)]"
+      : "pressable shrink-0 rounded-lg border border-[var(--color-accent)]/40 bg-[var(--color-accent-muted)] px-3 py-1.5 text-xs font-semibold text-[var(--color-accent-strong)] hover:border-[var(--color-accent)]";
 
   const label = admin.isSuperadmin
     ? "Admin"
@@ -40,21 +41,26 @@ export function AdminLaunch({ variant = "header", compact = false }: Props) {
       <button type="button" className={buttonClass} onClick={() => setOpen(true)}>
         {label}
       </button>
-      <AdminPanel
-        variant="modal"
-        open={open}
-        onClose={() => setOpen(false)}
-        adminEnabled={admin.adminEnabled}
-        isSuperadmin={admin.isSuperadmin}
-        checking={admin.checking}
-        username={admin.username}
-        token={admin.token}
-        onLogin={async (u, p) => {
-          await admin.login(u, p);
-        }}
-        onLogout={admin.logout}
-        onRefreshComplete={() => invalidateCatalogs(queryClient)}
-      />
+      {/* Portal out of the launcher's host: app bars use backdrop-filter,
+          which would otherwise become the containing block of the fixed modal. */}
+      {createPortal(
+        <AdminPanel
+          variant="modal"
+          open={open}
+          onClose={() => setOpen(false)}
+          adminEnabled={admin.adminEnabled}
+          isSuperadmin={admin.isSuperadmin}
+          checking={admin.checking}
+          username={admin.username}
+          token={admin.token}
+          onLogin={async (u, p) => {
+            await admin.login(u, p);
+          }}
+          onLogout={admin.logout}
+          onRefreshComplete={() => invalidateCatalogs(queryClient)}
+        />,
+        document.body
+      )}
     </>
   );
 }

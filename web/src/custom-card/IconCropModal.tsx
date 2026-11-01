@@ -168,13 +168,13 @@ export function IconCropModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
+      className="animate-fade-in fixed inset-0 z-50 flex items-end justify-center bg-black/50 sm:items-center sm:p-4"
       role="dialog"
       aria-modal
       aria-label="Crop icon"
     >
-      <div className="w-full max-w-md rounded-xl border border-[#a8842f] bg-[#1a1410] p-4 shadow-xl">
-        <h3 className="mb-2 text-sm font-semibold text-[#f5e6c8]">
+      <div className="ds-float animate-sheet-in sm:animate-fade-in max-h-[100dvh] w-full max-w-md overflow-y-auto rounded-t-3xl p-4 pb-[calc(env(safe-area-inset-bottom)+1rem)] sm:rounded-2xl sm:pb-4">
+        <h3 className="mb-2 text-sm font-bold text-[var(--color-fg-strong)]">
           Crop square icon
         </h3>
         <p className="mb-3 text-[11px] text-[var(--color-muted)]">
@@ -182,7 +182,7 @@ export function IconCropModal({
           resize.
         </p>
         <div
-          className="relative mx-auto overflow-hidden rounded bg-black"
+          className="relative mx-auto overflow-hidden rounded-lg bg-[var(--color-inset)] ring-1 ring-white/10"
           style={{ width: VIEW, height: VIEW }}
           onPointerMove={onPointerMove}
           onPointerUp={endDrag}
@@ -204,7 +204,7 @@ export function IconCropModal({
               }}
             />
             <div
-              className="absolute cursor-move border-2 border-[#ffd54f] bg-[#ffd54f]/15"
+              className="absolute cursor-move border-2 border-[var(--color-accent-strong)] bg-[var(--color-accent-strong)]/15"
               style={{
                 left: leftPx,
                 top: topPx,
@@ -214,14 +214,14 @@ export function IconCropModal({
               onPointerDown={(e) => onPointerDown(e, "move")}
             >
               <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-                <span className="rounded bg-black/50 px-1 text-[9px] text-[#ffd54f]">
+                <span className="rounded bg-black/50 px-1 font-mono text-[9px] text-[var(--color-accent-strong)]">
                   1:1
                 </span>
               </div>
               <button
                 type="button"
                 aria-label="Resize crop"
-                className="absolute -bottom-1.5 -right-1.5 h-3.5 w-3.5 cursor-se-resize rounded-sm border border-[#ffd54f] bg-[#5c4a12]"
+                className="absolute -bottom-1.5 -right-1.5 h-3.5 w-3.5 cursor-se-resize rounded-sm border border-[var(--color-accent-strong)] bg-[var(--color-amber-border)]"
                 onPointerDown={(e) => {
                   e.stopPropagation();
                   onPointerDown(e, "resize");
@@ -234,14 +234,14 @@ export function IconCropModal({
           <button
             type="button"
             onClick={onCancel}
-            className="rounded border border-[var(--color-border)] px-3 py-1.5 text-xs text-[var(--color-muted)] hover:text-white"
+            className="ds-btn pressable min-h-10 px-4 text-xs font-semibold sm:min-h-9"
           >
             Cancel
           </button>
           <button
             type="button"
             onClick={() => void confirm()}
-            className="rounded border border-[#c9a84a] bg-[#3a2f12] px-3 py-1.5 text-xs font-semibold text-[#f5e6c8]"
+            className="ds-btn-primary pressable min-h-10 px-4 text-xs sm:min-h-9"
           >
             Apply crop
           </button>

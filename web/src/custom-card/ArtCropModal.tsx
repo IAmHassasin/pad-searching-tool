@@ -183,13 +183,13 @@ export function ArtCropModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
+      className="animate-fade-in fixed inset-0 z-50 flex items-end justify-center bg-black/50 sm:items-center sm:p-4"
       role="dialog"
       aria-modal
       aria-label="Crop card art"
     >
-      <div className="w-full max-w-md rounded-xl border border-[#a8842f] bg-[#1a1410] p-4 shadow-xl">
-        <h3 className="mb-2 text-sm font-semibold text-[#f5e6c8]">
+      <div className="ds-float animate-sheet-in sm:animate-fade-in max-h-[100dvh] w-full max-w-md overflow-y-auto rounded-t-3xl p-4 pb-[calc(env(safe-area-inset-bottom)+1rem)] sm:rounded-2xl sm:pb-4">
+        <h3 className="mb-2 text-sm font-bold text-[var(--color-fg-strong)]">
           Crop card art
         </h3>
         <p className="mb-3 text-[11px] text-[var(--color-muted)]">
@@ -197,7 +197,7 @@ export function ArtCropModal({
           Outside the image stays transparent.
         </p>
         <div
-          className="relative mx-auto touch-none overflow-hidden rounded"
+          className="relative mx-auto touch-none overflow-hidden rounded-lg ring-1 ring-white/10"
           style={{
             width: VIEW_W,
             height: VIEW_H,
@@ -242,7 +242,7 @@ export function ArtCropModal({
             }}
           />
           <div
-            className="pointer-events-none absolute border-2 border-[#ffd54f]"
+            className="pointer-events-none absolute border-2 border-[var(--color-accent-strong)]"
             style={{
               left: FRAME_LEFT,
               top: FRAME_TOP,
@@ -251,7 +251,7 @@ export function ArtCropModal({
             }}
           >
             <div className="absolute inset-0 flex items-center justify-center">
-              <span className="rounded bg-black/50 px-1 text-[9px] text-[#ffd54f]">
+              <span className="rounded bg-black/50 px-1 font-mono text-[9px] text-[var(--color-accent-strong)]">
                 2:3
               </span>
             </div>
@@ -269,13 +269,13 @@ export function ArtCropModal({
             step={0.01}
             value={zoom}
             onChange={(e) => setZoomKeepingCenter(Number(e.target.value))}
-            className="h-1.5 flex-1 cursor-pointer appearance-none rounded-full bg-[#3a2f12] accent-[#c9a84a]"
+            className="h-1.5 flex-1 cursor-pointer appearance-none rounded-full bg-[var(--color-inset)] accent-[var(--color-accent)]"
             aria-label="Zoom"
           />
           <span className="text-[10px] text-[var(--color-muted)]" aria-hidden>
             +
           </span>
-          <span className="w-9 text-right text-[10px] tabular-nums text-[#c9a84a]">
+          <span className="w-9 text-right font-mono text-[10px] text-[var(--color-accent-strong)] tabular-nums">
             {zoomLabel}
           </span>
         </div>
@@ -284,14 +284,14 @@ export function ArtCropModal({
           <button
             type="button"
             onClick={onCancel}
-            className="rounded border border-[var(--color-border)] px-3 py-1.5 text-xs text-[var(--color-muted)] hover:text-white"
+            className="ds-btn pressable min-h-10 px-4 text-xs font-semibold sm:min-h-9"
           >
             Cancel
           </button>
           <button
             type="button"
             onClick={() => void confirm()}
-            className="rounded border border-[#c9a84a] bg-[#3a2f12] px-3 py-1.5 text-xs font-semibold text-[#f5e6c8]"
+            className="ds-btn-primary pressable min-h-10 px-4 text-xs sm:min-h-9"
           >
             Apply crop
           </button>

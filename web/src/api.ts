@@ -42,6 +42,18 @@ async function getJson<T>(path: string, init?: RequestInit): Promise<T> {
   return res.json() as Promise<T>;
 }
 
+export type AwokenSkillsPage = {
+  table: string;
+  limit: number;
+  offset: number;
+  rows: Record<string, unknown>[];
+};
+
+/** Full `awoken_skills` page. Descriptions for the awakening popup. */
+export function fetchAwokenSkills(): Promise<AwokenSkillsPage> {
+  return getJson<AwokenSkillsPage>("/awoken-skills?limit=5000");
+}
+
 export function getAdminToken(storageKey: string): string | null {
   try {
     return sessionStorage.getItem(storageKey);
@@ -187,6 +199,8 @@ function skillParams(q: URLSearchParams, f: SkillFilters) {
   q.set("skillTextMode", f.skillTextMode);
   if (f.activeSkillText.trim()) q.set("activeSkillText", f.activeSkillText.trim());
   if (f.leaderSkillText.trim()) q.set("leaderSkillText", f.leaderSkillText.trim());
+  if (f.activeCdMin != null) q.set("activeCdMin", String(f.activeCdMin));
+  if (f.activeCdMax != null) q.set("activeCdMax", String(f.activeCdMax));
 }
 
 export async function searchMonstersPage(
@@ -249,6 +263,19 @@ export async function searchAllMonsters(
   }
   if (!Number.isFinite(total)) total = all.length;
   return { rows: all, total, minMonsterId, modernOnly };
+}
+
+export function translateMonsterNames(ids: number[]) {
+  const unique = [...new Set(ids.filter((id) => Number.isInteger(id) && id > 0))].slice(
+    0,
+    40
+  );
+  if (!unique.length) return Promise.resolve({ names: {} as Record<string, string> });
+  return getJson<{ names: Record<string, string> }>("/monsters/translate-names", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ ids: unique }),
+  });
 }
 
 export function fetchMonstersByIds(ids: number[]) {

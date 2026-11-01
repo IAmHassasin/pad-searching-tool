@@ -2,8 +2,9 @@ import { awakeningFallbackImageUrl } from "../lib/awakening-sprite";
 import { PAD_AWAKENING } from "../lib/pad-constants";
 import { AwakeningSpriteIcon } from "./AwakeningSpriteIcon";
 
+// Optional `--pst-awk-prefix-*` overrides; fallbacks keep the in-game card look.
 const prefixFrameClass =
-  "shrink-0 rounded-sm border border-[#6b8f3c]/80 bg-[#2a3d18] object-cover shadow-[inset_0_0_0_1px_rgba(255,255,255,0.12)]";
+  "shrink-0 rounded-sm border border-[var(--pst-awk-prefix-border,#6b8f3c)]/80 bg-[var(--pst-awk-prefix-bg,#2a3d18)] object-cover shadow-[inset_0_0_0_1px_rgba(255,255,255,0.12)]";
 
 type Props = {
   ids: number[];

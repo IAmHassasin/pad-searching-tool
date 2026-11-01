@@ -5,11 +5,13 @@ import App from "./App";
 import { AdminSessionProvider } from "./hooks/useAdminSession";
 import { DungeonDetailsPage } from "./dungeon-details/DungeonDetailsPage";
 import { DungeonListPage } from "./dungeon-details/DungeonListPage";
+import { EggMachinesPage } from "./egg-machines/EggMachinesPage";
 import { EventDetailPage } from "./event/EventDetailPage";
 import { EventListPage } from "./event/EventListPage";
 import { OneTouchPage } from "./one-touch/OneTouchPage";
 import { CustomCardPage } from "./custom-card/CustomCardPage";
 import { TeamBuildPage } from "./team-build/TeamBuildPage";
+import { TierMakerPage } from "./tier-maker/TierMakerPage";
 import "./index.css";
 
 const queryClient = new QueryClient({
@@ -34,6 +36,9 @@ function Root() {
   if (path === "/event") {
     return <EventListPage />;
   }
+  if (path === "/egg-machines") {
+    return <EggMachinesPage />;
+  }
   if (eventDetailMatch) {
     return <EventDetailPage eventId={eventDetailMatch[1]} />;
   }
@@ -45,6 +50,9 @@ function Root() {
   }
   if (path === "/team-build") {
     return <TeamBuildPage />;
+  }
+  if (path === "/tier-maker") {
+    return <TierMakerPage />;
   }
   return <App />;
 }

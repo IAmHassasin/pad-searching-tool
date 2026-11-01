@@ -7,8 +7,8 @@ import {
   type PatternGroupsManifest,
   type SelectedPatternTag,
   type SkillFilters,
-} from "../types";
-import { parseMonsterTypeIds } from "./monster-types";
+} from "../types.ts";
+import { parseMonsterTypeIds } from "./monster-types.ts";
 
 /** Assist equipment awakening — search target for Resonate links. */
 export const ASSIST_EQUIPMENT_AWAKENING_ID = 49;
@@ -55,13 +55,18 @@ export function buildOneTouchMonsterSearchUrl(
   });
 }
 
-function parseIntCsvParam(search: string, key: string): number[] | null {
+/** `min` is 0 for dadguide attribute and type ids (Fire and Evo Mats are 0). */
+function parseIntCsvParam(
+  search: string,
+  key: string,
+  min = 1
+): number[] | null {
   const raw = new URLSearchParams(search).get(key);
   if (!raw?.trim()) return null;
   const ids = raw
     .split(",")
     .map((s) => Number(s.trim()))
-    .filter((n) => Number.isFinite(n) && n > 0);
+    .filter((n) => Number.isFinite(n) && n >= min);
   return ids.length ? ids : null;
 }
 
@@ -78,19 +83,19 @@ export function parseExcludedAwakeningIdsFromSearch(
 }
 
 export function parseTypesFromSearch(search: string): number[] | null {
-  return parseIntCsvParam(search, "types");
+  return parseIntCsvParam(search, "types", 0);
 }
 
 export function parseAttributeSlot1FromSearch(search: string): number[] | null {
-  return parseIntCsvParam(search, "attributeSlot1");
+  return parseIntCsvParam(search, "attributeSlot1", 0);
 }
 
 export function parseAttributeSlot2FromSearch(search: string): number[] | null {
-  return parseIntCsvParam(search, "attributeSlot2");
+  return parseIntCsvParam(search, "attributeSlot2", 0);
 }
 
 export function parseAttributeSlot3FromSearch(search: string): number[] | null {
-  return parseIntCsvParam(search, "attributeSlot3");
+  return parseIntCsvParam(search, "attributeSlot3", 0);
 }
 
 function parseOptionalNumberParam(search: string, key: string): number | null {
@@ -152,6 +157,8 @@ export function parseSkillFiltersFromSearch(
     ...fallback,
     activeSkillText: parseStringParam(search, "activeSkillText"),
     leaderSkillText: parseStringParam(search, "leaderSkillText"),
+    activeCdMin: parseOptionalNumberParam(search, "activeCdMin"),
+    activeCdMax: parseOptionalNumberParam(search, "activeCdMax"),
     skillTextMode:
       skillTextMode === "active" || skillTextMode === "leader"
         ? skillTextMode
@@ -252,6 +259,12 @@ export function buildSearchParamsFromFilters(
   }
   if (skillFilters.leaderSkillText.trim()) {
     q.set("leaderSkillText", skillFilters.leaderSkillText.trim());
+  }
+  if (skillFilters.activeCdMin != null) {
+    q.set("activeCdMin", String(skillFilters.activeCdMin));
+  }
+  if (skillFilters.activeCdMax != null) {
+    q.set("activeCdMax", String(skillFilters.activeCdMax));
   }
 
   if (advancedEffectFilters) {

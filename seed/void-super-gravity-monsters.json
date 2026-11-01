@@ -1,5 +1,5 @@
 {
-  "_comment": "Curated 超重力を無効化 holders — dadguide skill text omits this effect (TBD placeholders). turns from Altema skill_sonota/72.",
+  "_comment": "Curated 超重力を無効化 holders — dadguide skill text omits this effect (TBD placeholders). turns from Altema skill_sonota/72, checked 2026-11-01.",
   "sourceUrl": "https://altema.jp/pazudora/skill_sonota/72",
   "monsters": [
     { "monster_id": 6668, "name_en": "Crow Guardian Mystic, Kukan", "turns": 2 },
@@ -10,6 +10,8 @@
     { "monster_id": 13609, "name_en": "Competitive Draconic Songstress on Flute, Eva", "turns": 2 },
     { "monster_id": 13616, "name_en": "Science Club's Spectre, Yura", "turns": 1 },
     { "monster_id": 13828, "name_en": "Solomon & Merna", "turns": 10 },
-    { "monster_id": 13852, "name_en": "Maid Ilumina", "turns": 1 }
+    { "monster_id": 13852, "name_en": "Maid Ilumina", "turns": 1 },
+    { "monster_id": 14167, "name_en": "[うつつの華模様]塩見周子", "turns": 15 },
+    { "monster_id": 14228, "name_en": "コーラリオンの海奉玉", "turns": 4 }
   ]
 }

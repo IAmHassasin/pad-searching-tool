@@ -45,4 +45,8 @@ export type EventDetail = EventSummary & {
   entries: EventEntry[];
   /** Optional intro loader theme (from seed `loading`). */
   loading: EventLoadingConfig | null;
+  /** Optional hero background image (from seed `banner`). */
+  banner: string | null;
+  /** Optional hero character art drawn over the background (from seed `bannerArt`). */
+  bannerArt: string | null;
 };

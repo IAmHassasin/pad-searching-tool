@@ -101,7 +101,10 @@ export function SkillDescRichContent({
     }
     if (highlightAfterActivation && isAfterActivationMarker(part)) {
       return (
-        <strong key={i} className="font-bold text-[#f5e6c8]">
+        <strong
+          key={i}
+          className="font-bold text-[var(--pst-skill-strong,#f5e6c8)]"
+        >
           {part}
         </strong>
       );

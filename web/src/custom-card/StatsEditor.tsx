@@ -15,7 +15,7 @@ function StatInput({
   onValue: (v: number | null) => void;
 }) {
   return (
-    <label className="block text-[11px] text-[var(--color-muted)]">
+    <label className="block font-mono text-[11px] font-semibold text-[var(--color-muted)]">
       {label}
       <input
         type="number"
@@ -27,7 +27,7 @@ function StatInput({
               : Number.parseInt(e.target.value, 10) || null
           )
         }
-        className="mt-0.5 w-full rounded border border-[var(--color-border)] bg-[#161b22] px-2 py-1 text-sm text-white"
+        className="ds-input mt-0.5 min-h-9 w-full px-2.5 py-1 font-mono text-sm tabular-nums"
       />
     </label>
   );
@@ -35,10 +35,8 @@ function StatInput({
 
 export function StatsEditor({ draft, onChange }: Props) {
   return (
-    <section className="rounded-lg border border-[var(--color-border)] bg-[#0d1117] p-3">
-      <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-[#c9a84a]">
-        Stats
-      </h2>
+    <section className="ds-card p-3">
+      <h2 className="ds-label mb-2">Stats</h2>
       <div className="grid grid-cols-3 gap-2">
         <StatInput
           label="HP"

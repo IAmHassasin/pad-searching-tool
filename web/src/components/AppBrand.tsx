@@ -12,16 +12,16 @@ export function AppBrand({
   className = "",
 }: Props) {
   return (
-    <div className={`flex items-center gap-1.5 ${className}`}>
+    <div className={`flex items-center gap-2 ${className}`}>
       <img
         src={pstLogoUrl}
         alt=""
         width={size}
         height={size}
-        className="shrink-0 rounded-lg shadow-[0_0_0_1px_rgba(88,166,255,0.25),0_4px_12px_-4px_rgba(0,0,0,0.6)]"
+        className="shrink-0 rounded-full ring-1 ring-[var(--color-accent)]/50 shadow-[var(--shadow-glow)]"
         aria-hidden
       />
-      <h1 className="whitespace-nowrap text-sm font-bold tracking-tight text-white sm:text-base [font-family:var(--font-mono)]">
+      <h1 className="whitespace-nowrap font-mono text-sm font-bold uppercase tracking-wider text-[var(--color-fg-strong)] sm:text-base">
         {title}
       </h1>
     </div>

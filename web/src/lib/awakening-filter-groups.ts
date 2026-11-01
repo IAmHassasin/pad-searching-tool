@@ -32,6 +32,7 @@ export const AWAKENING_FILTER_GROUPS: AwakeningFilterGroup[] = [
     label: "Match style",
     rows: [
       [22, 23, 24, 25, 26, 27, 73, 74, 75, 76, 77],
+      [149, 150, 151, 152, 153],
       [116, 117, 118, 119, 120, 96, 121, 122, 123, 124, 125],
       [133, 134, 135],
       [43, 61, 107, 111, 144],
@@ -41,7 +42,7 @@ export const AWAKENING_FILTER_GROUPS: AwakeningFilterGroup[] = [
   },
   {
     label: "Resist",
-    rows: [[52, 28, 136, 68, 69, 70, 141, 10, 11, 12, 13, 54, 55, 140, 53, 71, 72]],
+    rows: [[52, 28, 136, 68, 69, 70, 141, 10, 11, 12, 13, 54, 55, 140, 53, 71, 72, 148]],
   },
   {
     label: "Killer",

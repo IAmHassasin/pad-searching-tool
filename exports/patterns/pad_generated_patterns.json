@@ -434,7 +434,7 @@
         },
         {
             "example_matched_text": "Create 4 Fire, Wood, and Dark orbs",
-            "regex_pattern": "Create (\\d+) ((?:Fire|Water|Wood|Light|Dark|Heal)(?:, (?:Fire|Water|Wood|Light|Dark|Heal)){0,4}) orbs",
+            "regex_pattern": "Create (\\d+) ((?:Fire|Water|Wood|Light|Dark|Heal)(?:(?:, and |, | and )(?:Fire|Water|Wood|Light|Dark|Heal)){1,5}) orbs",
             "skill_type": "active_skill",
             "status": "new_effect_detected",
             "tag_id": null,
@@ -594,7 +594,7 @@
         },
         {
             "example_matched_text": "4x ATK when matching Fire and Water",
-            "regex_pattern": "(\\d+)x ATK when matching ((?:Fire|Water|Wood|Light|Dark)(?:, (?:Fire|Water|Wood|Light|Dark)){0,4}) at once",
+            "regex_pattern": "(\\d+)x ATK when matching ((?:Fire|Water|Wood|Light|Dark)(?:(?:, and |, | and )(?:Fire|Water|Wood|Light|Dark))+)(?: at once)?",
             "skill_type": "leader_skill",
             "status": "new_effect_detected",
             "tag_id": null,
@@ -706,7 +706,7 @@
         },
         {
             "example_matched_text": "2.5x ATK when matching Fire, Water, and Wood at once",
-            "regex_pattern": "(\\d+\\.?\\d*)x ATK when matching ((?:Fire|Water|Wood|Light|Dark|Heal)(?:, (?:Fire|Water|Wood|Light|Dark|Heal)){0,4}) at once",
+            "regex_pattern": "(\\d+\\.?\\d*)x ATK when matching ((?:Fire|Water|Wood|Light|Dark|Heal)(?:(?:, and |, | and )(?:Fire|Water|Wood|Light|Dark|Heal))+)(?: at once)?",
             "skill_type": "leader_skill",
             "status": "new_effect_detected",
             "tag_id": null,

@@ -1,10 +1,12 @@
 import type { AwkModifierSettings } from "../lib/awakening-stat-modifier";
 import type { ResultDisplaySections } from "../lib/result-display";
+import type { ResultIdScope } from "../lib/result-id-scope";
 import type { ResultQuickFilter } from "../lib/result-quick-filter";
 import type { ResultSortOption } from "../lib/results-sort";
 import type { MonsterRecord } from "../types";
 import { MonsterDetailPanel } from "./MonsterDetailPanel";
 import { ModernOnlySearchHint } from "./ModernOnlySearchHint";
+import { ResultIdScopeSwitcher } from "./ResultIdScopeSwitcher";
 import { ResultsDisplayControls } from "./ResultsDisplayControls";
 import { ResultsList } from "./ResultsList";
 import { ResultsQuickFilter } from "./ResultsQuickFilter";
@@ -25,6 +27,8 @@ type Props = {
   onDisplaySectionsChange: (next: ResultDisplaySections) => void;
   resultQuickFilter: ResultQuickFilter;
   onResultQuickFilterChange: (next: ResultQuickFilter) => void;
+  resultIdScope: ResultIdScope;
+  onResultIdScopeChange: (next: ResultIdScope) => void;
   modernOnly?: boolean;
   minMonsterId?: number;
 };
@@ -44,19 +48,25 @@ export function ResultsPanel({
   onDisplaySectionsChange,
   resultQuickFilter,
   onResultQuickFilterChange,
+  resultIdScope,
+  onResultIdScopeChange,
   modernOnly,
   minMonsterId,
 }: Props) {
   return (
     <main className="flex min-w-0 flex-1 flex-col overflow-hidden">
-      <header className="flex shrink-0 flex-wrap items-center justify-between gap-2 border-b border-[var(--color-border)] bg-[var(--color-panel)] px-3 py-2">
-        <div className="flex items-center gap-1">
-          <h2 className="text-sm font-semibold tracking-wide [font-family:var(--font-mono)]">
+      <header className="flex shrink-0 flex-wrap items-center justify-between gap-2 border-b border-white/[0.06] bg-[var(--color-panel)] px-3 py-2">
+        <div className="flex items-center gap-1.5">
+          <h2 className="ds-label text-[11px] text-[var(--color-fg)]">
             Results
           </h2>
           <ResultsQuickFilter
             value={resultQuickFilter}
             onChange={onResultQuickFilterChange}
+          />
+          <ResultIdScopeSwitcher
+            value={resultIdScope}
+            onChange={onResultIdScopeChange}
           />
         </div>
         <div className="flex flex-wrap items-center gap-3">
@@ -70,18 +80,25 @@ export function ResultsPanel({
             awkSettings={awkModifierSettings}
             onAwkSettingsChange={onAwkModifierSettingsChange}
           />
-          <p className="flex items-center gap-1.5 text-xs tabular-nums text-[var(--color-muted)] [font-family:var(--font-mono)]">
+          <p className="flex items-center gap-1.5 font-mono text-xs tabular-nums text-[var(--color-muted)]">
             <span
               className={`h-1.5 w-1.5 shrink-0 rounded-full ${
                 loading
-                  ? "animate-pulse bg-[var(--color-accent-2)]"
-                  : "bg-[var(--color-accent)]"
+                  ? "animate-pulse bg-[var(--color-secondary)] shadow-[var(--shadow-glow-cyan)]"
+                  : "bg-[var(--color-accent)] shadow-[var(--shadow-glow)]"
               }`}
               aria-hidden
             />
-            {loading
-              ? `loading… ${loadProgress ?? 0}`
-              : `${rows.length} shown · ${totalLoaded} loaded`}
+            {loading ? (
+              `loading… ${loadProgress ?? 0}`
+            ) : (
+              <>
+                <span className="font-semibold text-[var(--color-accent-strong)]">
+                  {rows.length}
+                </span>
+                {` shown · ${totalLoaded} loaded`}
+              </>
+            )}
           </p>
         </div>
       </header>
@@ -91,7 +108,7 @@ export function ResultsPanel({
         minMonsterId={minMonsterId}
       />
 
-      <div className="grid min-h-0 flex-1 grid-cols-1 lg:grid-cols-2">
+      <div className="grid min-h-0 flex-1 grid-cols-1 lg:grid-cols-2 lg:grid-rows-1">
         <div className="flex min-h-0 flex-col overflow-hidden border-b border-[var(--color-border)] lg:border-b-0 lg:border-r">
           <ResultsList
             rows={rows}
@@ -103,11 +120,11 @@ export function ResultsPanel({
           />
         </div>
 
-        <div className="relative flex min-h-0 items-stretch justify-center overflow-auto bg-[#0a0e12] p-3">
+        <div className="flex h-full min-h-0 min-w-0 flex-col overflow-hidden bg-[var(--color-inset)] p-2">
           {selected ? (
-            <MonsterDetailPanel row={selected} onSelect={onSelect} />
+            <MonsterDetailPanel row={selected} onSelect={onSelect} fill />
           ) : (
-            <p className="text-sm text-[var(--color-muted)]">
+            <p className="m-auto text-sm text-[var(--color-muted)]">
               Select a row to view details.
             </p>
           )}

@@ -27,7 +27,7 @@ export function listEvolutionArticleUrls(html: string): string[] {
 
 export function extractEventNameFromArticle(text: string): string | null {
   const match = text.match(
-    /Select\s+(.+?)\s+(?:monsters|characters)\s+have received upgrades as well!/i
+    /Select\s+([^.!?]+?)\s+(?:monsters|characters)\s+have received upgrades(?:\s+as well)?!/i
   );
   const name = match?.[1]?.trim();
   return name || null;
@@ -37,7 +37,11 @@ export function extractUpgradeMonsterNames(text: string): string[] {
   const match = text.match(
     /(?:^|[.!?]\s+)([^.!?]*?)\s+have received Assist Evolutions!?/i
   );
-  const clause = match?.[1]?.trim();
+  const clause = match?.[1]
+    // Wix post header ("20 hours ago 1 min read") runs into the first sentence.
+    ?.replace(/^.*?\bmin read\s+/i, "")
+    .replace(/^Newly added (?:monsters|characters) such as\s+/i, "")
+    .trim();
   if (!clause) return [];
   return clause
     .split(/\s+and\s+/i)

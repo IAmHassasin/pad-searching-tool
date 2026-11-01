@@ -28,10 +28,10 @@ export function MonsterRelationIcon({
       type="button"
       onClick={onClick}
       aria-label={row.name_en ?? `Monster ${monsterId}`}
-      className={`shrink-0 rounded border bg-[#1a1410] p-0.5 transition-shadow ${
+      className={`pressable shrink-0 rounded-md border bg-[var(--color-inset)] p-0.5 ${
         selected
-          ? "border-[#ffd54f] shadow-[0_0_8px_rgba(255,213,79,0.45)]"
-          : "border-[#8b6914]/70 hover:border-[#c9a84a] hover:shadow-md"
+          ? "border-[var(--color-accent)] shadow-[var(--shadow-glow)] ring-2 ring-[var(--color-accent)]/40"
+          : "border-white/10 hover:border-[var(--color-border-strong)] hover:bg-[var(--color-hover)]"
       }`}
       style={{ width: size, height: size }}
     >

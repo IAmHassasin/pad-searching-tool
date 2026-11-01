@@ -30,10 +30,12 @@ export function AwakeningLookupPanel({
 
   return (
     <aside
-      className={`flex min-h-0 flex-col rounded-lg border border-[var(--color-border)] bg-[var(--color-panel)] ${className}`}
+      className={`ds-card flex min-h-0 flex-col overflow-hidden ${className}`}
     >
-      <div className="shrink-0 border-b border-[var(--color-border)] px-3 py-2">
-        <h2 className="text-sm font-semibold">Awakening lookup</h2>
+      <div className="shrink-0 border-b border-white/[0.06] px-3 py-2.5">
+        <h2 className="text-[13px] font-bold tracking-wider text-slate-300 uppercase">
+          Awakening lookup
+        </h2>
         <p className="mt-0.5 text-xs text-[var(--color-muted)]">
           One-Touch effects. Click to queue search (excludes Dungeon Bonus).
         </p>
@@ -42,7 +44,7 @@ export function AwakeningLookupPanel({
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search name or effect…"
-          className="mt-2 w-full rounded border border-[var(--color-border)] bg-[#0d1117] px-2 py-1.5 text-sm outline-none focus:border-[var(--color-accent)]"
+          className="ds-input mt-2 min-h-10 w-full px-3 py-1.5 text-sm"
         />
       </div>
       <div className="min-h-0 flex-1 overflow-y-auto p-2 columns-2 gap-x-3 xl:columns-3 2xl:columns-4">
@@ -74,11 +76,11 @@ function AwakeningEffectRow({
   const canSearch = effect.id != null;
 
   return (
-    <div className="flex gap-1.5 rounded-md px-0.5 py-1 hover:bg-[#21262d]">
+    <div className="flex gap-1.5 rounded-lg px-1 py-1 transition-colors hover:bg-[var(--color-hover)]">
       {canSearch ? (
         <button
           type="button"
-          className="shrink-0"
+          className="pressable shrink-0 self-start rounded hover:ring-1 hover:ring-[var(--color-accent)]"
           title={`Add ${effect.nameEn} to search queue`}
           onClick={() => onAdd(effect.id!, effect.nameEn)}
         >
@@ -105,7 +107,7 @@ function AwakeningEffectRow({
               ])}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[9px] text-[var(--color-accent)] hover:underline"
+              className="text-[9px] font-semibold text-[var(--color-accent-strong)] hover:underline"
               onClick={(ev) => ev.stopPropagation()}
             >
               Search

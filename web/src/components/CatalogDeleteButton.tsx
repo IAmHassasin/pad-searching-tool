@@ -14,7 +14,7 @@ export function CatalogDeleteButton({ label, onDelete }: Props) {
       <button
         type="button"
         disabled={busy}
-        className="rounded border border-red-900/80 px-2 py-1 text-xs text-red-300 hover:border-red-500 hover:text-red-100 disabled:opacity-50"
+        className="pressable min-h-8 rounded-lg border border-[var(--color-negative)]/40 bg-[var(--color-negative)]/10 px-2.5 py-1 text-xs font-semibold text-red-300 hover:border-[var(--color-negative)] hover:bg-[var(--color-negative)]/20 hover:text-red-100 disabled:opacity-50"
         onClick={async (e) => {
           e.preventDefault();
           e.stopPropagation();

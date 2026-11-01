@@ -7,11 +7,13 @@ import {
 import * as fs from "node:fs";
 import * as path from "node:path";
 import type {
+  EffectLoopColumns,
   EffectValueFamiliesFile,
   EffectValueFamily,
   EffectValueRangeInput,
 } from "./effect-value-types";
 import type { SkillType } from "./pattern-types";
+import { loopCopyCount } from "./skill-charge-sql";
 
 function resolveConfigPath(envKey: string, fallback: string): string {
   const fromEnv = process.env[envKey]?.trim();
@@ -65,12 +67,13 @@ export class EffectValueCatalogService implements OnModuleInit {
 
   /**
    * One family's range clause: OR across its matchers (any matcher hitting a
-   * value inside the range qualifies the monster).
+   * value — and duration — inside the range qualifies the monster).
    */
   buildRangeClause(
     range: EffectValueRangeInput,
     columnExprFor: (skillType: SkillType) => string,
-    params: unknown[]
+    params: unknown[],
+    loopColumns?: EffectLoopColumns | null
   ): string | null {
     const family = this.byId.get(range.familyId);
     if (!family) {
@@ -78,36 +81,100 @@ export class EffectValueCatalogService implements OnModuleInit {
         `Unknown effect value family: ${range.familyId}`
       );
     }
-    const hasMin = range.min != null && Number.isFinite(range.min);
-    const hasMax = range.max != null && Number.isFinite(range.max);
-    if (!hasMin && !hasMax) return null;
-    if (!family.matchers?.length) return null;
+    const finite = (n: number | null | undefined): n is number =>
+      n != null && Number.isFinite(n);
+    const valueOn = family.supports_value !== false;
+    const turnsOn = family.supports_turns === true;
+    const min = valueOn && finite(range.min) ? range.min : null;
+    const max = valueOn && finite(range.max) ? range.max : null;
+    const turnMin = turnsOn && finite(range.turnMin) ? range.turnMin : null;
+    const turnMax = turnsOn && finite(range.turnMax) ? range.turnMax : null;
+    const wantLoop =
+      range.loop === true && turnsOn && range.skillType !== "leader_skill";
+    const copies = wantLoop ? loopCopyCount(range.loopCopies) : null;
+    if (wantLoop && copies == null) {
+      throw new BadRequestException("Loop copies must be 1, 2, or 3.");
+    }
+    if (
+      min == null &&
+      max == null &&
+      turnMin == null &&
+      turnMax == null &&
+      !wantLoop
+    ) {
+      return null;
+    }
+    if (wantLoop && !loopColumns) {
+      throw new BadRequestException(
+        "Loop effect filter requires active skill cooldown."
+      );
+    }
 
-    const parts = family.matchers.map((matcher) => {
+    const matchers = (family.matchers ?? []).filter(
+      (m) => !range.skillType || m.skill_type === range.skillType
+    );
+    const used = wantLoop
+      ? matchers.filter((m) => m.skill_type === "active_skill")
+      : matchers;
+    if (!used.length) return null;
+
+    const parts = used.map((matcher) => {
       params.push(
         matcher.regex,
-        matcher.value_group ?? 1,
-        hasMin ? range.min : null,
-        hasMax ? range.max : null
+        valueOn ? (matcher.value_group ?? 1) : 0,
+        min,
+        max,
+        turnMin,
+        turnMax
       );
-      return `effect_value_in_range(?, ?, ${columnExprFor(
-        matcher.skill_type
-      )}, ?, ?) = 1`;
+      const column = columnExprFor(matcher.skill_type);
+      if (wantLoop && loopColumns && copies != null) {
+        params.push(copies);
+        return (
+          `effect_loop(?, ?, ${column}, ?, ?, ?, ?, ` +
+          `${loopColumns.cooldownExpr}, ${loopColumns.chargesPerTurnExpr}, ` +
+          `${loopColumns.stageCooldownsExpr}, ?) = 1`
+        );
+      }
+      return `effect_match(?, ?, ${column}, ?, ?, ?, ?) = 1`;
     });
 
     return `(${parts.join(" OR ")})`;
+  }
+
+  /**
+   * Ranges that tune one selected effect chip: the family lists the chip's
+   * tag key for that skill text, and the range is scoped to it.
+   */
+  rangesForTag(
+    skillType: SkillType,
+    tagKey: string,
+    ranges: EffectValueRangeInput[] | undefined
+  ): EffectValueRangeInput[] {
+    if (!ranges?.length) return [];
+    return ranges.filter(
+      (r) =>
+        r.skillType === skillType &&
+        (this.byId.get(r.familyId)?.tags?.[skillType] ?? []).includes(tagKey)
+    );
   }
 
   /** All families AND'ed together (each is an independent requirement). */
   buildWhere(
     ranges: EffectValueRangeInput[] | undefined,
     columnExprFor: (skillType: SkillType) => string,
-    params: unknown[]
+    params: unknown[],
+    loopColumns?: EffectLoopColumns | null
   ): string | null {
     if (!ranges?.length) return null;
     const clauses: string[] = [];
     for (const range of ranges) {
-      const clause = this.buildRangeClause(range, columnExprFor, params);
+      const clause = this.buildRangeClause(
+        range,
+        columnExprFor,
+        params,
+        loopColumns
+      );
       if (clause) clauses.push(clause);
     }
     if (!clauses.length) return null;

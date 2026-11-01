@@ -1,0 +1,32 @@
+{
+  "eventId": "halloween",
+  "title": "Halloween",
+  "subtitle": "New Monsters & Evolutions",
+  "publishedAt": "2026-10-23",
+  "sourceUrl": "https://www.puzzleanddragons.us/single-post/halloween-returns-2610",
+  "groupId": 59,
+  "banner": "/event-banner/halloween-2610-bg.jpg",
+  "bannerArt": "/event-banner/halloween-2610-art.png",
+  "coverMonsterIds": [14175, 14178, 14181, 14184, 14187, 14190],
+  "loading": {
+    "theme": "fade",
+    "minMs": 700
+  },
+  "entries": [
+    { "monsterId": 14175, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 14176, "role": "new-evolution", "label": "New Evolution", "note": "Assist Evolution for Moonlit Pranksters, Euchs & Miya" },
+    { "monsterId": 14178, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 14181, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 14184, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 14186, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 14189, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 14192, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 14194, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 14196, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 14198, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 14200, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 14202, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 14204, "role": "new-monster", "label": "New Monster" },
+    { "monsterId": 14206, "role": "new-monster", "label": "New Monster" }
+  ]
+}

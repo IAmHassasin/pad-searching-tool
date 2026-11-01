@@ -28,8 +28,8 @@ export function CollapsibleFilterSection({
 
   return (
     <section
-      className={`rounded-lg border bg-[var(--color-inset)]/40 transition-colors ${
-        open ? "border-[var(--color-border)]" : "border-[var(--color-border)]/70"
+      className={`ds-card transition-colors ${
+        open ? "border-white/10" : "hover:border-white/10"
       } ${compact ? "p-1.5" : "p-2"} ${fillHeight && open ? "flex min-h-0 flex-1 flex-col" : ""} ${className ?? ""}`}
     >
       <div className="flex items-center gap-1.5">
@@ -37,28 +37,30 @@ export function CollapsibleFilterSection({
           type="button"
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
-          className={`flex min-w-0 flex-1 items-center gap-1.5 text-left transition-colors hover:text-white ${
+          className={`group flex min-w-0 flex-1 items-center gap-1.5 rounded-md text-left transition-colors ${
             compact ? "py-0.5" : "py-1"
           }`}
         >
           <span
-            className={`shrink-0 text-[var(--color-muted)] transition-transform ${
-              open ? "rotate-0" : "-rotate-90"
+            className={`shrink-0 transition-transform ${
+              open
+                ? "rotate-0 text-[var(--color-accent)]"
+                : "-rotate-90 text-[var(--color-faint)] group-hover:text-[var(--color-muted)]"
             } ${compact ? "text-[10px]" : "text-xs"}`}
             aria-hidden
           >
             ▾
           </span>
           <span
-            className={`font-semibold text-white ${
-              compact ? "text-[11px]" : "text-xs"
-            }`}
+            className={`ds-label transition-colors group-hover:text-[var(--color-fg-strong)] ${
+              open ? "text-[var(--color-fg)]" : ""
+            } ${compact ? "text-[10px]" : "text-[11px]"}`}
           >
             {title}
           </span>
           {summary && (
             <span
-              className={`ml-auto shrink-0 text-[var(--color-muted)] ${
+              className={`ml-auto shrink-0 font-mono tabular-nums text-[var(--color-muted)] ${
                 compact ? "text-[9px]" : "text-[10px]"
               }`}
             >

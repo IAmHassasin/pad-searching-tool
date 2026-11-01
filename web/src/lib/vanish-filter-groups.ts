@@ -24,10 +24,11 @@ export const VANISH_FILTER_GROUPS: AwakeningFilterGroup[] = [
   {
     label: "Match style",
     rows: [
-      [117, 119, 120, 96, 121, 122, 123, 125],
+      [23, 25, 26],
+      [96, 121, 122, 123, 125],
       [43, 61, 107],
       [79, 80, 81],
-      [44, 108, 110, 126, 109, 115],
+      [44, 108, 110, 126, 112, 109, 115],
     ],
   },
   {
@@ -39,7 +40,7 @@ export const VANISH_FILTER_GROUPS: AwakeningFilterGroup[] = [
   {
     label: "Enhance orb",
     rows: [
-      [137, 99, 100, 101, 102, 103, 104, 29],
+      [137, 99, 100, 101, 102, 103, 104, 16, 29],
     ],
   },
   {

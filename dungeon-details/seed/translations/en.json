@@ -7,13 +7,17 @@
     "79970458": "Underworld Challenge — counters & recommended teams (1.4B dungeon)",
     "80048764": "Misty Rain Challenge — counters & recommended teams | Ethereal Sky Realm",
     "80128597": "Great Tree Challenge — counters & recommended teams | Abyssal Heavy Realm",
+    "80347105": "Firmament Challenge — counters & recommended teams | Ethereal Sky Realm",
+    "80439652": "Phoenix Challenge — counters & recommended teams | Roaring Phoenix Emperor",
     "冥境チャレンジの攻略や対策とおすすめパーティ｜14億ダンジョン": "Underworld Challenge — counters & recommended teams (1.4B dungeon)",
     "12億ダンジョンの攻略や対策とおすすめパーティ｜銀翼チャレンジ": "Silver Wing Challenge — counters & recommended teams (1.2B dungeon)",
     "13億ダンジョンの攻略や対策とおすすめパーティ｜天境チャレンジ": "Heavenly Realm Challenge — counters & recommended teams (1.3B dungeon)",
     "風雲チャレンジの攻略や対策とおすすめパーティ｜天空の儚域": "Wind & Cloud Challenge — counters & recommended teams | Ethereal Sky Realm",
     "霧雨チャレンジの攻略や対策とおすすめパーティ｜天空の儚域": "Misty Rain Challenge — counters & recommended teams | Ethereal Sky Realm",
     "紅蓮チャレンジの攻略や対策とおすすめパーティ｜奈落の重界": "Crimson Challenge — counters & recommended teams | Abyssal Heavy Realm",
-    "大樹チャレンジの攻略や対策とおすすめパーティ｜奈落の重界": "Great Tree Challenge — counters & recommended teams | Abyssal Heavy Realm"
+    "大樹チャレンジの攻略や対策とおすすめパーティ｜奈落の重界": "Great Tree Challenge — counters & recommended teams | Abyssal Heavy Realm",
+    "天穹チャレンジの攻略や対策とおすすめパーティ｜天空の儚域": "Firmament Challenge — counters & recommended teams | Ethereal Sky Realm",
+    "鳳凰チャレンジの攻略や対策とおすすめパーティ｜轟爆の鳳凰帝": "Phoenix Challenge — counters & recommended teams | Roaring Phoenix Emperor"
   },
   "gimmicks": {
     "覚醒無効": "Awoken Skill Bind",
@@ -401,6 +405,18 @@
     [
       "大樹チャレンジ",
       "Great Tree Challenge"
+    ],
+    [
+      "天穹チャレンジ",
+      "Firmament Challenge"
+    ],
+    [
+      "鳳凰チャレンジ",
+      "Phoenix Challenge"
+    ],
+    [
+      "轟爆の鳳凰帝",
+      "Roaring Phoenix Emperor"
     ],
     [
       "乱入",

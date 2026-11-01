@@ -27,6 +27,10 @@ function capInlineIconSize(lineHeightPx: number): number {
   return Math.min(14, Math.max(7, Math.round(lineHeightPx * 0.85)));
 }
 
+/**
+ * Colors read optional `--pst-cd-*` custom properties; fallbacks are the
+ * in-game card colors (PNG export), app chrome may override them.
+ */
 function StageCdBadge({
   cd,
   compact = false,
@@ -38,7 +42,7 @@ function StageCdBadge({
 }) {
   return (
     <span
-      className={`shrink-0 rounded border border-[#5b8fd4]/40 bg-[#1a2a3f]/80 font-bold tabular-nums text-[#9ec5ff] ${
+      className={`shrink-0 rounded border border-[var(--pst-cd-border,#5b8fd4)]/40 bg-[var(--pst-cd-bg,#1a2a3f)]/80 font-bold tabular-nums text-[var(--pst-cd-text,#9ec5ff)] ${
         compact ? "px-1 py-px text-[0.85em]" : "px-1 py-px text-[0.9em]"
       }`}
       title={title ?? "Active skill cooldown for this stage"}

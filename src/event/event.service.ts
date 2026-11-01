@@ -36,6 +36,10 @@ type SeedEvent = {
   coverMonsterIds?: number[];
   /** Intro loader — theme id registered on the web client. */
   loading?: { theme: string; minMs?: number; asset?: string };
+  /** Hero background image path, e.g. `/event-banner/halloween-2610-bg.jpg`. */
+  banner?: string;
+  /** Hero character art (transparent PNG) drawn over `banner`. */
+  bannerArt?: string;
   /** Flat showcase list — preferred. */
   entries?: SeedEntry[];
   /** @deprecated Use `entries` + `label` instead. */
@@ -69,6 +73,8 @@ export type EventDetail = EventSummary & {
   coverMonsters: Record<string, unknown>[];
   entries: EventEntryDetail[];
   loading: { theme: string; minMs?: number; asset?: string } | null;
+  banner: string | null;
+  bannerArt: string | null;
 };
 
 @Injectable()
@@ -216,6 +222,8 @@ export class EventService {
             asset: seed.loading.asset,
           }
         : null,
+      banner: seed.banner?.trim() || null,
+      bannerArt: seed.bannerArt?.trim() || null,
     };
   }
 
