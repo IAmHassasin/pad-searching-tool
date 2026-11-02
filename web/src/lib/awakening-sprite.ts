@@ -141,6 +141,9 @@ export function awakeningSpriteStyle(
     height: coords.tileHeight * scale,
     backgroundImage: `url(${awakeningSpriteImageUrl})`,
     backgroundRepeat: "no-repeat",
+    // Frames use a border; anchor the sheet to the border box so the tile
+    // is not shifted by the border width and neighbors do not bleed in.
+    backgroundOrigin: "border-box",
     backgroundSize: `${coords.spriteWidth * scale}px ${coords.spriteHeight * scale}px`,
     backgroundPosition: `${coords.x * scale}px ${coords.y * scale}px`,
   };
@@ -202,6 +205,9 @@ export function monsterTypeSpriteStyle(
     height: coords.tileHeight * scale,
     backgroundImage: `url(${awakeningSpriteImageUrl})`,
     backgroundRepeat: "no-repeat",
+    // Frames use a border; anchor the sheet to the border box so the tile
+    // is not shifted by the border width and neighbors do not bleed in.
+    backgroundOrigin: "border-box",
     backgroundSize: `${coords.spriteWidth * scale}px ${coords.spriteHeight * scale}px`,
     backgroundPosition: `${coords.x * scale}px ${coords.y * scale}px`,
   };
@@ -258,6 +264,9 @@ export function monsterAttributeSpriteStyle(
     height: coords.tileHeight * scale,
     backgroundImage: `url(${awakeningSpriteImageUrl})`,
     backgroundRepeat: "no-repeat",
+    // Frames use a border; anchor the sheet to the border box so the tile
+    // is not shifted by the border width and neighbors do not bleed in.
+    backgroundOrigin: "border-box",
     backgroundSize: `${coords.spriteWidth * scale}px ${coords.spriteHeight * scale}px`,
     backgroundPosition: `${coords.x * scale}px ${coords.y * scale}px`,
   };
