@@ -46,6 +46,7 @@ import {
   GROUP_NAME_MATCH_TABLES,
 } from "./search-group-match";
 import { VoidSuperGravityService } from "./void-super-gravity.service";
+import { hiddenMonstersClause } from "./hidden-monsters";
 
 const IDENT = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
 
@@ -586,6 +587,11 @@ export class PatternSearchService {
     if (attach.vanishAttached && hasVanishFilters(input.vanish)) {
       parts.push(...this.vanish.buildVanishWhere(input.vanish, params));
     }
+    const hiddenClause = hiddenMonstersClause(
+      `CAST(_src.${this.quotedColumn("monster_id")} AS INTEGER)`,
+      params
+    );
+    if (hiddenClause) parts.push(hiddenClause);
 
     const whereSql = parts.length ? `WHERE ${parts.join(" AND ")}` : "";
     return {
