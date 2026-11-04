@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useRef, useState, type DragEvent } from "react";
 import { PageHeader } from "../components/PageHeader";
+import { QuickSearchProvider } from "../components/quick-search/QuickSearchContext";
+import { QuickSearchLayout } from "../components/quick-search/QuickSearchLayout";
 import { exportElementToPng } from "../custom-card/export-png";
 import { BadgeStyleFields, ColorField, FIELD_INPUT } from "./BadgeStyleFields";
 import {
@@ -413,6 +415,7 @@ export function TierMakerPage() {
   const { iconSize, gap, colors } = board;
 
   return (
+    <QuickSearchProvider>
     <div className="flex h-full flex-col bg-[var(--color-surface)] text-[var(--color-fg)]">
       <PageHeader
         title="Tier Maker"
@@ -437,6 +440,7 @@ export function TierMakerPage() {
         }
       />
 
+      <QuickSearchLayout>
       <div className="min-h-0 flex-1 overflow-auto p-3 sm:p-4">
         <div className="mx-auto grid max-w-7xl gap-4 lg:grid-cols-[minmax(0,1fr)_320px]">
           <div className="min-w-0 space-y-3">
@@ -657,6 +661,8 @@ export function TierMakerPage() {
           </aside>
         </div>
       </div>
+      </QuickSearchLayout>
     </div>
+    </QuickSearchProvider>
   );
 }

@@ -1,7 +1,7 @@
-import type { MonsterRecord } from "../../types";
-import { resolveSuperAwakeningIds } from "../awakenings";
-import type { MonsterLevelTarget } from "./types";
-import { LEVEL_120_EXTRA_PCT } from "./stat-reference";
+import type { MonsterRecord } from "../../types.ts";
+import { parseRegularAwakenings } from "../awakenings.ts";
+import type { MonsterLevelTarget } from "./types.ts";
+import { LEVEL_120_EXTRA_PCT } from "./stat-reference.ts";
 
 function limitMult(row: MonsterRecord): number {
   const raw = Number(row.limit_mult);
@@ -32,19 +32,25 @@ export function clampMonsterLevel(
   return level > max ? max : level;
 }
 
+/** Skill Voice: "increase base stats by 10%". */
+export const SKILL_VOICE_AWAKENING_ID = 63;
+export const SKILL_VOICE_BASE_MULT = 1.1;
+
 /**
- * Cards with sync awakening (no SA list) and no limit break use hp_max × 1.1 in-game.
- * dadguide `hp_max` predates the sync-awakening stat adjustment for these cards.
+ * Skill Voice (63) multiplies the Lv.99 base by 1.1 before level scaling and
+ * +points; dadguide stores the base without it. In-game: 7943 Lv99 +297 =
+ * round(4586 × 1.1) + 990 = 6035; Denken 13422 and Mina 12905 (PDC) agree.
  */
 export function baseStatMultiplier(row: MonsterRecord): number {
-  if (limitMult(row) > 0) return 1;
-  const superIds = resolveSuperAwakeningIds(
-    row.awakenings,
-    row.super_awakenings
-  );
-  if (superIds.length > 0) return 1;
+  const regular = parseRegularAwakenings(row.awakenings);
   const sync = Number(row.sync_awsid);
-  return Number.isFinite(sync) && sync > 0 ? 1.1 : 1;
+  if (
+    regular.includes(SKILL_VOICE_AWAKENING_ID) ||
+    sync === SKILL_VOICE_AWAKENING_ID
+  ) {
+    return SKILL_VOICE_BASE_MULT;
+  }
+  return 1;
 }
 
 /**
@@ -57,7 +63,9 @@ export function lb110Percent(row: MonsterRecord): number {
   const exp = Number(row.exp) || 0;
   const cost = monsterCost(row);
 
-  if (exp >= 1_000_000_000) return lm * 2;
+  // 1B-exp cards: altema lists Odin 12806 (lm10) at Lv110 = ×1.1 and PDC
+  // fits Zelclea 13483 (lm10) with +10%, so limit_mult is used directly.
+  if (exp >= 1_000_000_000) return lm;
   if (exp >= 50_000_000) return lm * 0.6;
   if (exp >= 5_000_000 && lm >= 50) return lm / 3.52;
 
@@ -66,6 +74,7 @@ export function lb110Percent(row: MonsterRecord): number {
     if (cost > 0 && cost < lm) return lm + cost - 11;
     if (cost > lm) {
       // Small cost excess (e.g. Hathor cost35 lm30) keeps base limit_mult %.
+      // Small cost excess (Hathor lm30 cost35, Mina & Soshiro lm30 cost40) keeps limit_mult %.
       if (cost - lm < 15) return lm;
       if (cost >= 50) return lm + 14;
       // cost 45 tier: high-HP cards (e.g. Serie) use cost−10, not lm+14.
@@ -77,11 +86,6 @@ export function lb110Percent(row: MonsterRecord): number {
   }
 
   return lm;
-}
-
-/** 1B-exp cards use sequential 110→120; others add SLB% on Lv.99 base (039日記). */
-function usesSequentialSlb(row: MonsterRecord): boolean {
-  return (Number(row.exp) || 0) >= 1_000_000_000;
 }
 
 /**
@@ -113,9 +117,9 @@ export function scaleStatForLevel(
   const at110 = Math.round(base * (1 + lb / 100));
   if (level === 110) return at110;
 
-  if (usesSequentialSlb(row)) {
-    return Math.round(at110 * (1 + slb / 100));
-  }
+  // Lv.120 adds the SLB % on top of the LB % (additive on the Lv.99 base):
+  // 命天龍・ゼルクレア 11210 Lv120 = 8124 × 1.4 = 11374; PDC Zelclea 13483
+  // (1B exp) = base × 1.2, not 1.1 × 1.1.
   const totalPct = 1 + lb / 100 + slb / 100;
   const exp = Number(row.exp) || 0;
   const cost = monsterCost(row);

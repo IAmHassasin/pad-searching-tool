@@ -1,4 +1,4 @@
-import type { MonsterRecord } from "../types";
+import type { MonsterRecord } from "../types.ts";
 
 /** dadguide `d_types` — monster type slots (type_1_id … type_3_id). */
 export const MONSTER_TYPES = [

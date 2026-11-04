@@ -1,5 +1,5 @@
-import { parseMonsterTypeIds } from "../monster-types";
-import type { MonsterRecord } from "../../types";
+import { parseMonsterTypeIds } from "../monster-types.ts";
+import type { MonsterRecord } from "../../types.ts";
 
 export type LeaderStatMultipliers = { hp: number; rcv: number };
 

@@ -21,6 +21,8 @@ import { DEFAULT_RESULT_DISPLAY_SECTIONS } from "./lib/result-display";
 import { useDebouncedValue } from "./hooks/useDebouncedValue";
 import { MonsterNameTranslationProvider } from "./hooks/useLiveMonsterNames";
 import { useMobileWebview } from "./hooks/useMobileWebview";
+import { useTeamDraft } from "./hooks/useTeamDraft";
+import { monsterRowId } from "./lib/filters";
 import type { AwkModifierSettings } from "./lib/awakening-stat-modifier";
 import type { ResultDisplaySections } from "./lib/result-display";
 import {
@@ -95,6 +97,7 @@ export default function App() {
   const [resultIdScope, setResultIdScope] = useState<ResultIdScope>("all");
   const [shareMsg, setShareMsg] = useState<string | null>(null);
   const isMobileWebview = useMobileWebview();
+  const teamDraft = useTeamDraft();
 
   const debouncedMonster = useDebouncedValue(monsterFilters, 300);
   const debouncedSkill = useDebouncedValue(skillFilters, 400);
@@ -216,6 +219,16 @@ export default function App() {
   }, [snapshot, resultSort, awkModifierSettings, resultQuickFilter, resultIdScope]);
 
   const apiError = health.error ?? patternGroups.error ?? search.error ?? null;
+
+  const teamDraftProps = {
+    draft: teamDraft.draft,
+    onPickSlot: (
+      row: import("./types").MonsterRecord,
+      slotIndex: number,
+      kind: "monster" | "assist"
+    ) => teamDraft.setSlot(slotIndex, kind, monsterRowId(row)),
+    onClear: teamDraft.clearMembers,
+  };
 
   const handleShareFilter = async () => {
     const relativeUrl = buildShareSearchUrl(
@@ -363,6 +376,7 @@ export default function App() {
           effectFamilies={effectFamilies.data?.families}
           modernOnly={snapshot?.modernOnly}
           minMonsterId={snapshot?.minMonsterId}
+          teamDraft={teamDraftProps}
         />
       ) : (
         // Plain flex row, not a grid: below `xl` (1280px) isMobileWebview is
@@ -395,6 +409,7 @@ export default function App() {
             onResultIdScopeChange={setResultIdScope}
             modernOnly={snapshot?.modernOnly}
             minMonsterId={snapshot?.minMonsterId}
+            teamDraft={teamDraftProps}
           />
           <SkillFilterPanel
             filters={skillFilters}

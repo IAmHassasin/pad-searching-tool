@@ -3,16 +3,16 @@ import {
   getAwakeningStatMultipliers,
   statMultiplierLabel,
   type StatMultipliers,
-} from "../awakening-stat-modifier";
-import { resolvePrefixedAwakeningIds } from "../awakenings";
-import type { MonsterRecord } from "../../types";
+} from "../awakening-stat-modifier.ts";
+import { resolvePrefixedAwakeningIds } from "../awakenings.ts";
+import type { MonsterRecord } from "../../types.ts";
 
 /**
  * Super awakenings that boost team-screen raw stats (passive).
  * Battle-only SAs (e.g. 130 Aging) are excluded — they do not change the HP/ATK/RCV shown on the team select screen.
  */
 const RAW_STAT_SUPER_AWAKENING_IDS = new Set([
-  30, 63, 127, 132, 142, 145, 146, 147,
+  30, 63, 127, 132, 142, 145, 146, 147, 138, 139,
 ]);
 
 export function isRawStatSuperAwakening(awkId: number): boolean {

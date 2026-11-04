@@ -8,7 +8,8 @@ import { MonsterDetailPanel } from "./MonsterDetailPanel";
 import { ModernOnlySearchHint } from "./ModernOnlySearchHint";
 import { ResultIdScopeSwitcher } from "./ResultIdScopeSwitcher";
 import { ResultsDisplayControls } from "./ResultsDisplayControls";
-import { ResultsList } from "./ResultsList";
+import { ResultsList, type TeamDraftPanelProps } from "./ResultsList";
+import { TeamDraftDock } from "./team-draft/TeamDraftDock";
 import { ResultsQuickFilter } from "./ResultsQuickFilter";
 import { ResultsSortControls } from "./ResultsSortControls";
 
@@ -31,6 +32,7 @@ type Props = {
   onResultIdScopeChange: (next: ResultIdScope) => void;
   modernOnly?: boolean;
   minMonsterId?: number;
+  teamDraft?: TeamDraftPanelProps;
 };
 
 export function ResultsPanel({
@@ -52,6 +54,7 @@ export function ResultsPanel({
   onResultIdScopeChange,
   modernOnly,
   minMonsterId,
+  teamDraft,
 }: Props) {
   return (
     <main className="flex min-w-0 flex-1 flex-col overflow-hidden">
@@ -117,7 +120,11 @@ export function ResultsPanel({
             loading={loading}
             resultSort={resultSort}
             displaySections={displaySections}
+            teamDraft={teamDraft}
           />
+          {teamDraft && (
+            <TeamDraftDock draft={teamDraft.draft} onClear={teamDraft.onClear} />
+          )}
         </div>
 
         <div className="flex h-full min-h-0 min-w-0 flex-col overflow-hidden bg-[var(--color-inset)] p-2">

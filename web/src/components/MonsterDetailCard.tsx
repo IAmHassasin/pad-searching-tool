@@ -119,7 +119,13 @@ function LinkPillButton({
   );
 }
 
-function SkillBlock({
+const SKILL_BLOCK_LABEL: Record<"active" | "leader" | "assist", string> = {
+  active: "Skill",
+  leader: "Leader Skill",
+  assist: "Assist Skill",
+};
+
+export function SkillBlock({
   kind,
   title,
   body,
@@ -129,7 +135,7 @@ function SkillBlock({
   stageCooldowns,
   compact = false,
 }: {
-  kind: "active" | "leader";
+  kind: "active" | "leader" | "assist";
   title: string;
   body: string;
   cooldown?: string | null;
@@ -141,7 +147,10 @@ function SkillBlock({
   const badge =
     kind === "active"
       ? "bg-[linear-gradient(180deg,#5b8fd4_0%,#3d6aa8_100%)]"
-      : "bg-[linear-gradient(180deg,#d4843a_0%,#a85c1a_100%)]";
+      : kind === "assist"
+        ? "bg-[linear-gradient(180deg,#4caf7d_0%,#2e7d55_100%)]"
+        : "bg-[linear-gradient(180deg,#d4843a_0%,#a85c1a_100%)]";
+  const isActiveKind = kind === "active" || kind === "assist";
 
   return (
     <section
@@ -156,13 +165,13 @@ function SkillBlock({
             : "-top-2.5 px-2 py-0.5 text-[0.9em]"
         }`}
       >
-        {kind === "active" ? "Skill" : "Leader Skill"}
+        {SKILL_BLOCK_LABEL[kind]}
       </span>
       <div className={`flex items-start justify-between gap-2 ${compact ? "mb-1" : "mb-1.5"}`}>
         <h4 className="min-w-0 flex-1 wrap-anywhere break-words text-[1.1em] font-bold leading-snug text-[#f5e6c8]">
           {title}
         </h4>
-        {kind === "active" && cooldown && (
+        {isActiveKind && cooldown && (
           <span
             className={`shrink-0 rounded border border-[#5b8fd4]/40 bg-[#1a2a3f]/80 font-bold tabular-nums leading-none text-[#9ec5ff] ${
               compact ? "px-1 py-px text-[0.9em]" : "px-1.5 py-0.5 text-[1em]"
@@ -173,14 +182,14 @@ function SkillBlock({
           </span>
         )}
       </div>
-      {kind === "active" && voidSuperGravityTurns != null ? (
+      {isActiveKind && voidSuperGravityTurns != null ? (
         <ActiveSkillVoidSuperGravityLine
           turns={voidSuperGravityTurns}
           compact={compact}
           className="!text-[1em]"
         />
       ) : null}
-      {kind === "active" ? (
+      {isActiveKind ? (
         <ActiveSkillDescText
           text={body}
           stageCooldowns={stageCooldowns}
@@ -194,7 +203,7 @@ function SkillBlock({
           className="min-w-0 wrap-anywhere break-words whitespace-pre-wrap text-[1em] leading-snug text-[#e8dcc8]"
         />
       )}
-      {kind === "active" && vanishGrantedAwokenIds?.length ? (
+      {isActiveKind && vanishGrantedAwokenIds?.length ? (
         <ActiveSkillVanishAddLine
           ids={vanishGrantedAwokenIds}
           iconSize={compact ? 14 : 18}

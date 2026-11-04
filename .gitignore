@@ -29,6 +29,8 @@ web/android/local.properties
 pad.db
 pad.working.sqlite
 seed/*.sqlite
+seed/*.sqlite-shm
+seed/*.sqlite-wal
 !seed/gamewith-vanish.sqlite
 # Required by Dockerfile (COPY) so CI builds have it.
 !seed/void-super-gravity.sqlite

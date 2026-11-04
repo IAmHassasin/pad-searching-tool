@@ -1,0 +1,3561 @@
+{
+  "version": 1,
+  "importedAt": "2026-11-04",
+  "sources": [
+    "https://appmedia.jp/pazudora/78441527",
+    "https://kamigame.jp/puzzle-dragons/%E3%81%8A%E5%BD%B9%E7%AB%8B%E3%81%A1%E6%83%85%E5%A0%B1%E3%83%BB%E3%82%B3%E3%83%A9%E3%83%A0/%E8%B6%85%E9%87%8D%E5%8A%9B%E6%94%BB%E7%95%A5.html",
+    "https://appmedia.jp/?p=77008214",
+    "https://appmedia.jp/?p=76853093",
+    "https://appmedia.jp/?p=75753553",
+    "https://appmedia.jp/?p=77337470",
+    "https://appmedia.jp/?p=76310704",
+    "https://appmedia.jp/?p=77447767",
+    "https://appmedia.jp/?p=76189906",
+    "https://appmedia.jp/?p=75936865",
+    "https://appmedia.jp/?p=78589298",
+    "https://appmedia.jp/?p=78343169",
+    "https://appmedia.jp/?p=78034112",
+    "https://appmedia.jp/?p=78201716",
+    "https://appmedia.jp/?p=77888135",
+    "https://appmedia.jp/?p=77744415",
+    "https://xn--0ck4aw2h.gamewith.jp/article/show/531389",
+    "https://kamigame.jp/puzzle-dragons/%E3%83%80%E3%83%B3%E3%82%B8%E3%83%A7%E3%83%B3/%E3%83%86%E3%82%AF%E3%83%8B%E3%82%AB%E3%83%AB%E3%83%80%E3%83%B3%E3%82%B8%E3%83%A7%E3%83%B3/%E5%AE%88%E9%9C%8A%E3%81%AE%E5%A4%A9%E4%BD%93.html",
+    "https://appmedia.jp/?p=80347105",
+    "https://altema.jp/pazudora/dungeon/1141",
+    "https://appmedia.jp/?p=79768151",
+    "https://xn--0ck4aw2h.gamewith.jp/article/show/585607",
+    "https://appmedia.jp/?p=80128597",
+    "https://xn--0ck4aw2h.gamewith.jp/article/show/551905",
+    "https://altema.jp/pazudora/dungeon/1134",
+    "https://appmedia.jp/?p=79140893",
+    "https://xn--0ck4aw2h.gamewith.jp/article/show/578912",
+    "https://appmedia.jp/pazudora/78260648",
+    "https://game8.jp/pazudora/723726",
+    "https://appmedia.jp/pazudora/27375504",
+    "https://altema.jp/pazudora/dungeon/878",
+    "https://xn--0ck4aw2h.gamewith.jp/article/show/379820",
+    "https://www.appbank.net/2023/01/18/iphone-application/2378228.php",
+    "https://altema.jp/pazudora/killerlist/128",
+    "https://appmedia.jp/?p=76346926",
+    "https://game8.jp/pazudora/524909",
+    "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+    "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
+    "https://xn--0ck4aw2h.gamewith.jp/article/show/496863",
+    "https://appmedia.jp/?p=79537394",
+    "https://appmedia.jp/?p=79633016",
+    "https://xn--0ck4aw2h.gamewith.jp/article/show/61061",
+    "https://game8.jp/pazudora/625447",
+    "https://appmedia.jp/pazudora/76866815",
+    "https://appmedia.jp/pazudora/80534632"
+  ],
+  "dungeons": [
+    {
+      "id": "ura-unknown-nova-ultimate-evil-lifeform",
+      "nameJa": "裏・未知の新星／裏極悪生命体",
+      "nameEn": "Ura Unknown Nova: Ultimate Evil Lifeform",
+      "category": "Unknown Nova (超重力)",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": 15,
+      "stat": {
+        "hp": 1,
+        "atk": 0.001,
+        "rcv": 1
+      },
+      "superGravity": 0.001,
+      "sourceUrl": "https://appmedia.jp/pazudora/78441527",
+      "notes": "confirmed (kamigame + appmedia)"
+    },
+    {
+      "id": "unknown-nova-ultimate-evil-lifeform",
+      "nameJa": "未知の新星／極悪生命体",
+      "nameEn": "Unknown Nova: Ultimate Evil Lifeform",
+      "category": "Unknown Nova (超重力)",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": 15,
+      "stat": {
+        "hp": 1,
+        "atk": 0.002,
+        "rcv": 1
+      },
+      "superGravity": 0.002,
+      "sourceUrl": "https://kamigame.jp/puzzle-dragons/%E3%81%8A%E5%BD%B9%E7%AB%8B%E3%81%A1%E6%83%85%E5%A0%B1%E3%83%BB%E3%82%B3%E3%83%A9%E3%83%A0/%E8%B6%85%E9%87%8D%E5%8A%9B%E6%94%BB%E7%95%A5.html",
+      "notes": "confirmed (kamigame + appmedia)"
+    },
+    {
+      "id": "ura-unknown-nova-eternal-myriad-dragon",
+      "nameJa": "裏・未知の新星／裏永刻の万龍",
+      "nameEn": "Ura Unknown Nova: Eternal Myriad Dragon",
+      "category": "Unknown Nova (超重力)",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": 15,
+      "stat": {
+        "hp": 1,
+        "atk": 0.0025,
+        "rcv": 1
+      },
+      "superGravity": 0.0025,
+      "sourceUrl": "https://appmedia.jp/?p=77008214",
+      "notes": "confirmed sun (appmedia + GameWith + altema); divisor appmedia"
+    },
+    {
+      "id": "ura-unknown-nova-thousand-dragon-of-the-azure-sky",
+      "nameJa": "裏・未知の新星／裏蒼穹の千龍",
+      "nameEn": "Ura Unknown Nova: Thousand Dragon of the Azure Sky",
+      "category": "Unknown Nova (超重力)",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": 16,
+      "stat": {
+        "hp": 1,
+        "atk": 0.004,
+        "rcv": 1
+      },
+      "superGravity": 0.004,
+      "sourceUrl": "https://appmedia.jp/?p=76853093",
+      "notes": "divisor from appmedia only"
+    },
+    {
+      "id": "unknown-nova-trillion-dragon-of-annihilation",
+      "nameJa": "未知の新星／潰滅の兆龍",
+      "nameEn": "Unknown Nova: Trillion Dragon of Annihilation",
+      "category": "Unknown Nova (超重力)",
+      "sun": false,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": 16,
+      "stat": {
+        "hp": 1,
+        "atk": 0.005,
+        "rcv": 1
+      },
+      "superGravity": 0.005,
+      "sourceUrl": "https://appmedia.jp/?p=75753553",
+      "notes": "confirmed; no sun/moon marker; no-continue; no RCV debuff"
+    },
+    {
+      "id": "ura-unknown-nova-trillion-dragon-of-annihilation",
+      "nameJa": "裏・未知の新星／裏潰滅の兆龍",
+      "nameEn": "Ura Unknown Nova: Trillion Dragon of Annihilation",
+      "category": "Unknown Nova (超重力)",
+      "sun": false,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": 16,
+      "stat": {
+        "hp": 1,
+        "atk": 0.005,
+        "rcv": 1
+      },
+      "superGravity": 0.005,
+      "sourceUrl": "https://appmedia.jp/?p=77337470",
+      "notes": "confirmed; no sun/moon marker; no RCV debuff"
+    },
+    {
+      "id": "unknown-nova-hundred-trillion-dragon-of-chaos",
+      "nameJa": "未知の新星／混沌の億兆龍【超高度】",
+      "nameEn": "Unknown Nova: Hundred-Trillion Dragon of Chaos",
+      "category": "Unknown Nova (超重力)",
+      "sun": false,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": 16,
+      "stat": {
+        "hp": 1,
+        "atk": 0.01,
+        "rcv": 0.25
+      },
+      "superGravity": 0.01,
+      "sourceUrl": "https://kamigame.jp/puzzle-dragons/%E3%81%8A%E5%BD%B9%E7%AB%8B%E3%81%A1%E6%83%85%E5%A0%B1%E3%83%BB%E3%82%B3%E3%83%A9%E3%83%A0/%E8%B6%85%E9%87%8D%E5%8A%9B%E6%94%BB%E7%95%A5.html",
+      "notes": "confirmed (kamigame + appmedia); no sun/moon marker"
+    },
+    {
+      "id": "ura-unknown-nova-hundred-dragon-of-blazing-flames",
+      "nameJa": "裏・未知の新星／裏業炎の百龍",
+      "nameEn": "Ura Unknown Nova: Hundred Dragon of Blazing Flames",
+      "category": "Unknown Nova (超重力)",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": 16,
+      "stat": {
+        "hp": 1,
+        "atk": 0.01,
+        "rcv": 1
+      },
+      "superGravity": 0.01,
+      "sourceUrl": "https://appmedia.jp/?p=76310704",
+      "notes": "confirmed (appmedia + game8); no-continue"
+    },
+    {
+      "id": "ura-unknown-nova-hundred-trillion-dragon-of-chaos",
+      "nameJa": "裏・未知の新星／裏混沌の億兆龍【超高度】",
+      "nameEn": "Ura Unknown Nova: Hundred-Trillion Dragon of Chaos",
+      "category": "Unknown Nova (超重力)",
+      "sun": false,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": 16,
+      "stat": {
+        "hp": 1,
+        "atk": 0.01,
+        "rcv": 0.25
+      },
+      "superGravity": 0.01,
+      "sourceUrl": "https://appmedia.jp/?p=77447767",
+      "notes": "confirmed (appmedia + GameWith tag); no sun/moon marker"
+    },
+    {
+      "id": "unknown-nova-eternal-myriad-dragon",
+      "nameJa": "未知の新星／永刻の万龍",
+      "nameEn": "Unknown Nova: Eternal Myriad Dragon",
+      "category": "Unknown Nova (超重力)",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": 15,
+      "stat": {
+        "hp": 1,
+        "atk": 0.0125,
+        "rcv": 1
+      },
+      "superGravity": 0.0125,
+      "sourceUrl": "https://appmedia.jp/?p=76189906",
+      "notes": "confirmed (appmedia + kamigame + altema)"
+    },
+    {
+      "id": "unknown-nova-thousand-dragon-of-the-azure-sky",
+      "nameJa": "未知の新星／蒼穹の千龍",
+      "nameEn": "Unknown Nova: Thousand Dragon of the Azure Sky",
+      "category": "Unknown Nova (超重力)",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": 16,
+      "stat": {
+        "hp": 1,
+        "atk": 0.0125,
+        "rcv": 1
+      },
+      "superGravity": 0.0125,
+      "sourceUrl": "https://appmedia.jp/?p=75936865",
+      "notes": "confirmed (appmedia + kamigame)"
+    },
+    {
+      "id": "unknown-nova-hundred-dragon-of-blazing-flames",
+      "nameJa": "未知の新星／業炎の百龍",
+      "nameEn": "Unknown Nova: Hundred Dragon of Blazing Flames",
+      "category": "Unknown Nova (超重力)",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": 16,
+      "stat": {
+        "hp": 1,
+        "atk": 0.02,
+        "rcv": 1
+      },
+      "superGravity": 0.02,
+      "sourceUrl": "https://appmedia.jp/?p=75753553",
+      "notes": "confirmed; no-continue; moon per appmedia + GameWith"
+    },
+    {
+      "id": "returning-supernova-rampaging-ultimate-evil-lifeform",
+      "nameJa": "再臨の超星／暴乱の極悪生命体【超高度/バランスタイプ強化】",
+      "nameEn": "Returning Supernova: Rampaging Ultimate Evil Lifeform",
+      "category": "Returning Supernova (再臨の超星)",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": 13,
+      "stat": {
+        "hp": 1,
+        "atk": 0.0006,
+        "rcv": 0.25
+      },
+      "superGravity": 0.0006,
+      "sourceUrl": "https://appmedia.jp/?p=78589298",
+      "conditional": [
+        {
+          "types": [
+            1
+          ],
+          "hp": 1.5,
+          "atk": 1,
+          "rcv": 1
+        }
+      ],
+      "notes": "confirmed (appmedia + altema); ATK x6/10000; Balanced type HP x1.5"
+    },
+    {
+      "id": "returning-supernova-hundred-trillion-dragon-of-five-extremes",
+      "nameJa": "再臨の超星／伍窮の億兆龍【超高度/体力タイプ強化】",
+      "nameEn": "Returning Supernova: Hundred-Trillion Dragon of Five Extremes",
+      "category": "Returning Supernova (再臨の超星)",
+      "sun": false,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": 12,
+      "stat": {
+        "hp": 1,
+        "atk": 0.0007,
+        "rcv": 0.25
+      },
+      "superGravity": 0.0007,
+      "sourceUrl": "https://appmedia.jp/?p=78343169",
+      "conditional": [
+        {
+          "types": [
+            2
+          ],
+          "hp": 1.5,
+          "atk": 1,
+          "rcv": 1
+        }
+      ],
+      "notes": "confirmed (appmedia + altema); ATK x7/10000; Physical type HP x1.5; no sun/moon"
+    },
+    {
+      "id": "returning-supernova-abyssal-myriad-dragon",
+      "nameJa": "再臨の超星／深遠の万龍【回復タイプ強化】",
+      "nameEn": "Returning Supernova: Abyssal Myriad Dragon",
+      "category": "Returning Supernova (再臨の超星)",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": 11,
+      "stat": {
+        "hp": 1,
+        "atk": 0.001,
+        "rcv": 1
+      },
+      "superGravity": 0.001,
+      "sourceUrl": "https://appmedia.jp/?p=78034112",
+      "conditional": [
+        {
+          "types": [
+            3
+          ],
+          "hp": 1.5,
+          "atk": 1,
+          "rcv": 1
+        }
+      ],
+      "notes": "divisor appmedia only; Healer type HP x1.5 (stage-list tag)"
+    },
+    {
+      "id": "returning-supernova-star-shattering-trillion-dragon",
+      "nameJa": "再臨の超星／星砕の兆龍【超高度/神タイプ強化】",
+      "nameEn": "Returning Supernova: Star-Shattering Trillion Dragon",
+      "category": "Returning Supernova (再臨の超星)",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": 12,
+      "stat": {
+        "hp": 1,
+        "atk": 0.001,
+        "rcv": 0.5
+      },
+      "superGravity": 0.001,
+      "sourceUrl": "https://appmedia.jp/?p=78201716",
+      "conditional": [
+        {
+          "types": [
+            5
+          ],
+          "hp": 1.5,
+          "atk": 1,
+          "rcv": 1
+        }
+      ],
+      "notes": "confirmed; God type HP x1.5"
+    },
+    {
+      "id": "returning-supernova-thousand-dragon-of-purification",
+      "nameJa": "再臨の超星／浄罪の千龍",
+      "nameEn": "Returning Supernova: Thousand Dragon of Purification",
+      "category": "Returning Supernova (再臨の超星)",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": 10,
+      "stat": {
+        "hp": 1,
+        "atk": 0.001,
+        "rcv": 1
+      },
+      "superGravity": 0.001,
+      "sourceUrl": "https://appmedia.jp/?p=77888135",
+      "notes": "confirmed (appmedia + kamigame)"
+    },
+    {
+      "id": "returning-supernova-hundred-dragon-of-smoldering-embers",
+      "nameJa": "再臨の超星／煉燼の百龍",
+      "nameEn": "Returning Supernova: Hundred Dragon of Smoldering Embers",
+      "category": "Returning Supernova (再臨の超星)",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": 9,
+      "stat": {
+        "hp": 1,
+        "atk": 0.0016,
+        "rcv": 1
+      },
+      "superGravity": 0.0016,
+      "sourceUrl": "https://appmedia.jp/?p=77744415",
+      "notes": "confirmed (appmedia + kamigame)"
+    },
+    {
+      "id": "guardian-celestial-bodies-guardian-of-the-moon",
+      "nameJa": "守霊の天体／月の守護者【超高度】",
+      "nameEn": "Guardian Celestial Bodies: Guardian of the Moon",
+      "category": "Guardian Celestial Bodies (守霊の天体)",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": 14,
+      "stat": {
+        "hp": 1,
+        "atk": 0.0004,
+        "rcv": 0.5
+      },
+      "superGravity": 0.0004,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/531389",
+      "notes": "confirmed (GameWith + kamigame); 60-min, no-continue"
+    },
+    {
+      "id": "guardian-celestial-bodies-guardian-of-the-sun",
+      "nameJa": "守霊の天体／太陽の守護者【超高度】",
+      "nameEn": "Guardian Celestial Bodies: Guardian of the Sun",
+      "category": "Guardian Celestial Bodies (守霊の天体)",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": 15,
+      "stat": {
+        "hp": 1,
+        "atk": 0.0004,
+        "rcv": 0.5
+      },
+      "superGravity": 0.0004,
+      "sourceUrl": "https://kamigame.jp/puzzle-dragons/%E3%83%80%E3%83%B3%E3%82%B8%E3%83%A7%E3%83%B3/%E3%83%86%E3%82%AF%E3%83%8B%E3%82%AB%E3%83%AB%E3%83%80%E3%83%B3%E3%82%B8%E3%83%A7%E3%83%B3/%E5%AE%88%E9%9C%8A%E3%81%AE%E5%A4%A9%E4%BD%93.html",
+      "notes": "sun confirmed; divisors kamigame only; 60-min solo"
+    },
+    {
+      "id": "guardian-celestial-bodies-guardian-of-venus",
+      "nameJa": "守霊の天体／金星の守護者【超高度】",
+      "nameEn": "Guardian Celestial Bodies: Guardian of Venus",
+      "category": "Guardian Celestial Bodies (守霊の天体)",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": 13,
+      "stat": {
+        "hp": 1,
+        "atk": 0.0004,
+        "rcv": 0.5
+      },
+      "superGravity": 0.0004,
+      "sourceUrl": "https://kamigame.jp/puzzle-dragons/%E3%83%80%E3%83%B3%E3%82%B8%E3%83%A7%E3%83%B3/%E3%83%86%E3%82%AF%E3%83%8B%E3%82%AB%E3%83%AB%E3%83%80%E3%83%B3%E3%82%B8%E3%83%A7%E3%83%B3/%E5%AE%88%E9%9C%8A%E3%81%AE%E5%A4%A9%E4%BD%93.html",
+      "notes": "unverified: kamigame only (moon per appmedia)"
+    },
+    {
+      "id": "guardian-celestial-bodies-guardian-of-jupiter",
+      "nameJa": "守霊の天体／木星の守護者【超高度】",
+      "nameEn": "Guardian Celestial Bodies: Guardian of Jupiter",
+      "category": "Guardian Celestial Bodies (守霊の天体)",
+      "sun": false,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": 12,
+      "stat": {
+        "hp": 1,
+        "atk": 0.0005,
+        "rcv": 0.25
+      },
+      "superGravity": 0.0005,
+      "sourceUrl": "https://kamigame.jp/puzzle-dragons/%E3%83%80%E3%83%B3%E3%82%B8%E3%83%A7%E3%83%B3/%E3%83%86%E3%82%AF%E3%83%8B%E3%82%AB%E3%83%AB%E3%83%80%E3%83%B3%E3%82%B8%E3%83%A7%E3%83%B3/%E5%AE%88%E9%9C%8A%E3%81%AE%E5%A4%A9%E4%BD%93.html",
+      "notes": "confirmed (kamigame + altema); no sun/moon marker; battles 12 vs 15 differ"
+    },
+    {
+      "id": "guardian-celestial-bodies-guardian-of-mercury",
+      "nameJa": "守霊の天体／水星の守護者【超高度】",
+      "nameEn": "Guardian Celestial Bodies: Guardian of Mercury",
+      "category": "Guardian Celestial Bodies (守霊の天体)",
+      "sun": false,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": 13,
+      "stat": {
+        "hp": 1,
+        "atk": 0.0005,
+        "rcv": 0.25
+      },
+      "superGravity": 0.0005,
+      "sourceUrl": "https://kamigame.jp/puzzle-dragons/%E3%83%80%E3%83%B3%E3%82%B8%E3%83%A7%E3%83%B3/%E3%83%86%E3%82%AF%E3%83%8B%E3%82%AB%E3%83%AB%E3%83%80%E3%83%B3%E3%82%B8%E3%83%A7%E3%83%B3/%E5%AE%88%E9%9C%8A%E3%81%AE%E5%A4%A9%E4%BD%93.html",
+      "notes": "unverified: kamigame only; no sun/moon marker"
+    },
+    {
+      "id": "ephemeral-sky-realm-god-king-of-the-heavenly-vault",
+      "nameJa": "天空の儚域／天穹の神王【超重力】",
+      "nameEn": "Ephemeral Sky Realm: God King of the Heavenly Vault",
+      "category": "Ephemeral Sky Realm (天空の儚域)",
+      "sun": false,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": 15,
+      "stat": {
+        "hp": 1,
+        "atk": 0.001667,
+        "rcv": 0.05
+      },
+      "superGravity": 0.001667,
+      "sourceUrl": "https://appmedia.jp/?p=80347105",
+      "notes": "appmedia only (two pages agree)"
+    },
+    {
+      "id": "ephemeral-sky-realm-demon-king-of-drizzle",
+      "nameJa": "天空の儚域／霧雨の魔王【超重力】",
+      "nameEn": "Ephemeral Sky Realm: Demon King of Drizzle",
+      "category": "Ephemeral Sky Realm (天空の儚域)",
+      "sun": false,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": 15,
+      "stat": {
+        "hp": 1,
+        "atk": 0.002,
+        "rcv": 0.055556
+      },
+      "superGravity": 0.002,
+      "sourceUrl": "https://altema.jp/pazudora/dungeon/1141",
+      "notes": "ATK confirmed (altema + game8); RCV 1/18 altema only; no-continue"
+    },
+    {
+      "id": "ephemeral-sky-realm-dragon-king-of-wind-and-cloud",
+      "nameJa": "天空の儚域／風雲の龍王【超重力】",
+      "nameEn": "Ephemeral Sky Realm: Dragon King of Wind and Cloud",
+      "category": "Ephemeral Sky Realm (天空の儚域)",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": 12,
+      "stat": {
+        "hp": 1,
+        "atk": 0.002,
+        "rcv": 0.0625
+      },
+      "superGravity": 0.002,
+      "sourceUrl": "https://appmedia.jp/?p=79768151",
+      "notes": "confirmed (kamigame + appmedia); sun per GameWith; 60-min solo"
+    },
+    {
+      "id": "abyssal-heavy-realm-coral-dragon-king",
+      "nameJa": "奈落の重界／珊瑚の龍王【激流】",
+      "nameEn": "Abyssal Heavy Realm: Coral Dragon King",
+      "category": "Abyssal Heavy Realm (奈落の重界)",
+      "sun": false,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": 15,
+      "stat": {
+        "hp": 1,
+        "atk": 0.0002,
+        "rcv": 1
+      },
+      "superGravity": 0.0002,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/585607",
+      "conditional": [
+        {
+          "attributes": [
+            1
+          ],
+          "hp": 1,
+          "atk": 1,
+          "rcv": 2.5
+        }
+      ],
+      "notes": "confirmed (GameWith + appmedia + official); Torrent: Water RCV x2.5, skill heals halved"
+    },
+    {
+      "id": "abyssal-heavy-realm-spirit-king-of-the-great-tree",
+      "nameJa": "奈落の重界／大樹の霊王【深緑】",
+      "nameEn": "Abyssal Heavy Realm: Spirit King of the Great Tree",
+      "category": "Abyssal Heavy Realm (奈落の重界)",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": 15,
+      "stat": {
+        "hp": 1,
+        "atk": 0.000286,
+        "rcv": 1
+      },
+      "superGravity": 0.000286,
+      "sourceUrl": "https://appmedia.jp/?p=80128597",
+      "conditional": [
+        {
+          "attributes": [
+            2
+          ],
+          "hp": 1,
+          "atk": 2,
+          "rcv": 2
+        }
+      ],
+      "notes": "appmedia only; Deep Green: Wood ATK x2 and RCV x2, jammer skyfall"
+    },
+    {
+      "id": "abyssal-heavy-realm-crimson-machine-king",
+      "nameJa": "奈落の重界／紅蓮の機王【灼熱】",
+      "nameEn": "Abyssal Heavy Realm: Crimson Machine King",
+      "category": "Abyssal Heavy Realm (奈落の重界)",
+      "sun": false,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": 12,
+      "stat": {
+        "hp": 0.9,
+        "atk": 0.0003,
+        "rcv": 0.5
+      },
+      "superGravity": 0.0003,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/551905",
+      "notes": "confirmed; ATK ~1/3333 (3/10000 assumed); Scorching: max HP -10%, RCV x1/2"
+    },
+    {
+      "id": "infinity-colosseum-black-blazing-dragon-of-the-netherworld",
+      "nameJa": "∞級 1人専用コロシアム／冥境の黒熾龍【超重力】",
+      "nameEn": "Infinity Colosseum: Black Blazing Dragon of the Netherworld",
+      "category": "Infinity Colosseum (∞級)",
+      "sun": false,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": 15,
+      "stat": {
+        "hp": 1,
+        "atk": 0.0002,
+        "rcv": 1
+      },
+      "superGravity": 0.0002,
+      "sourceUrl": "https://altema.jp/pazudora/dungeon/1134",
+      "notes": "altema only; 1.4-billion challenge; leader change disabled"
+    },
+    {
+      "id": "infinity-colosseum-angel-of-the-covenant",
+      "nameJa": "∞級 1人専用コロシアム／契約の天使【超重力】",
+      "nameEn": "Infinity Colosseum: Angel of the Covenant",
+      "category": "Infinity Colosseum (∞級)",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": 15,
+      "stat": {
+        "hp": 1,
+        "atk": 0.0005,
+        "rcv": 1
+      },
+      "superGravity": 0.0005,
+      "sourceUrl": "https://appmedia.jp/?p=79140893",
+      "notes": "confirmed (appmedia + altema + game8); 1.1-billion challenge"
+    },
+    {
+      "id": "infinity-colosseum-roaring-phoenix-emperor",
+      "nameJa": "∞級 1人専用コロシアム／轟爆の鳳凰帝【超重力/超高度】",
+      "nameEn": "Infinity Colosseum: Roaring Phoenix Emperor",
+      "category": "Infinity Colosseum (∞級)",
+      "sun": false,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": 15,
+      "stat": {
+        "hp": 1,
+        "atk": 0.0005,
+        "rcv": 0.25
+      },
+      "superGravity": 0.0005,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/578912",
+      "notes": "confirmed (GameWith + altema + official)"
+    },
+    {
+      "id": "infinity-colosseum-unknown-nova-rush",
+      "nameJa": "∞級 1人専用コロシアム／未知の新星ラッシュ【超重力】",
+      "nameEn": "Infinity Colosseum: Unknown Nova Rush",
+      "category": "Infinity Colosseum (∞級)",
+      "sun": false,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": 15,
+      "stat": {
+        "hp": 1,
+        "atk": 0.0005,
+        "rcv": 1
+      },
+      "superGravity": 0.0005,
+      "sourceUrl": "https://appmedia.jp/pazudora/78260648",
+      "notes": "confirmed (appmedia + altema); 1-billion challenge; no sun/moon"
+    },
+    {
+      "id": "infinity-colosseum-ura-unknown-nova-rush",
+      "nameJa": "∞級 1人専用コロシアム／裏未知の新星ラッシュ【超重力】",
+      "nameEn": "Infinity Colosseum: Ura Unknown Nova Rush",
+      "category": "Infinity Colosseum (∞級)",
+      "sun": false,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": 13,
+      "stat": {
+        "hp": 1,
+        "atk": 0.0005,
+        "rcv": 1
+      },
+      "superGravity": 0.0005,
+      "sourceUrl": "https://game8.jp/pazudora/723726",
+      "notes": "kamigame only; leader change disabled; battles 13 vs 15 differ"
+    },
+    {
+      "id": "infinity-colosseum-silver-winged-white-swift-emperor",
+      "nameJa": "∞級 1人専用コロシアム／銀翼の白迅帝【超重力】",
+      "nameEn": "Infinity Colosseum: Silver-Winged White Swift Emperor",
+      "category": "Infinity Colosseum (∞級)",
+      "sun": false,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": 16,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://game8.jp/pazudora/723726",
+      "notes": "super gravity present but divisor not published; ATK left at x1; no sun/moon"
+    },
+    {
+      "id": "infinity-colosseum-white-thunder-dragon-of-the-celestial-border",
+      "nameJa": "∞級 1人専用コロシアム／天境の白霹竜【超重力/超高度】",
+      "nameEn": "Infinity Colosseum: White Thunder Dragon of the Celestial Border",
+      "category": "Infinity Colosseum (∞級)",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": 15,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "sun per appmedia; super gravity + altitude present, divisors unknown (left x1)"
+    },
+    {
+      "id": "cave-of-mad-training",
+      "nameJa": "狂練の洞窟",
+      "nameEn": "Cave of Mad Training",
+      "category": "Colosseum / Arena",
+      "sun": false,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 0.01,
+        "rcv": 1
+      },
+      "superGravity": 0.01,
+      "sourceUrl": "https://altema.jp/pazudora/dungeon/878",
+      "notes": "confirmed (altema + kamigame)"
+    },
+    {
+      "id": "infinite-corridor-super-gravity-tier-1-100",
+      "nameJa": "無限回廊【超重力】 1/100",
+      "nameEn": "Infinite Corridor (Super Gravity) tier 1/100",
+      "category": "Colosseum / Arena",
+      "sun": false,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 0.01,
+        "rcv": 1
+      },
+      "superGravity": 0.01,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/379820",
+      "notes": "confirmed tier"
+    },
+    {
+      "id": "infinite-corridor-super-gravity-tier-1-80",
+      "nameJa": "無限回廊【超重力】 1/80",
+      "nameEn": "Infinite Corridor (Super Gravity) tier 1/80",
+      "category": "Colosseum / Arena",
+      "sun": false,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 0.0125,
+        "rcv": 1
+      },
+      "superGravity": 0.0125,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/379820",
+      "notes": "confirmed tier"
+    },
+    {
+      "id": "infinite-corridor-super-gravity-tier-1-50",
+      "nameJa": "無限回廊【超重力】 1/50",
+      "nameEn": "Infinite Corridor (Super Gravity) tier 1/50",
+      "category": "Colosseum / Arena",
+      "sun": false,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 0.02,
+        "rcv": 1
+      },
+      "superGravity": 0.02,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/379820",
+      "notes": "confirmed tier; higher tiers conflict (kamigame 400 vs GameWith 200/250)"
+    },
+    {
+      "id": "catastrophic-colosseum-celestial-motion-of-heaven-and-hades",
+      "nameJa": "壊滅極限コロシアム／天冥の星動",
+      "nameEn": "Catastrophic Colosseum: Celestial Motion of Heaven and Hades",
+      "category": "Colosseum / Arena",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "confirmed moon (appmedia + GameWith)"
+    },
+    {
+      "id": "catastrophic-colosseum-guiding-radiance-and-ruinous-darkness",
+      "nameJa": "壊滅極限コロシアム／導煌と壊冥【超高度】",
+      "nameEn": "Catastrophic Colosseum: Guiding Radiance and Ruinous Darkness",
+      "category": "Colosseum / Arena",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 0.5
+      },
+      "superGravity": null,
+      "sourceUrl": "https://www.appbank.net/2023/01/18/iphone-application/2378228.php",
+      "notes": "confirmed; RCV x1/2, no super gravity"
+    },
+    {
+      "id": "catastrophic-colosseum-star-breaking-wings-of-ruin",
+      "nameJa": "壊滅極限コロシアム／星壊の滅翼",
+      "nameEn": "Catastrophic Colosseum: Star-Breaking Wings of Ruin",
+      "category": "Colosseum / Arena",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "confirmed moon (appmedia + GameWith)"
+    },
+    {
+      "id": "co-op-ultimate-arena",
+      "nameJa": "協力極限の闘技場",
+      "nameEn": "Co-op Ultimate Arena",
+      "category": "Colosseum / Arena",
+      "sun": true,
+      "moon": false,
+      "multiplayer": true,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://altema.jp/pazudora/killerlist/128",
+      "notes": "unverified: altema only; multiplayer"
+    },
+    {
+      "id": "transcendent-colosseum-azure-submerged-war-emperor",
+      "nameJa": "超絶極限コロシアム／蒼潜の戦帝",
+      "nameEn": "Transcendent Colosseum: Azure Submerged War Emperor",
+      "category": "Colosseum / Arena",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "confirmed moon (appmedia + GameWith)"
+    },
+    {
+      "id": "transcendent-colosseum-star-guiding-heavenly-wings",
+      "nameJa": "超絶極限コロシアム／星導の天翼",
+      "nameEn": "Transcendent Colosseum: Star-Guiding Heavenly Wings",
+      "category": "Colosseum / Arena",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "confirmed moon (appmedia + GameWith)"
+    },
+    {
+      "id": "ultimate-arena-alien-existence",
+      "nameJa": "極限の闘技場／異形の存在",
+      "nameEn": "Ultimate Arena: Alien Existence",
+      "category": "Colosseum / Arena",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "unverified: appmedia only"
+    },
+    {
+      "id": "ultimate-arena-goddess-of-two-poles-1-2-3",
+      "nameJa": "極限の闘技場／双極の女神（1・2・3）",
+      "nameEn": "Ultimate Arena: Goddess of Two Poles (1 / 2 / 3)",
+      "category": "Colosseum / Arena",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "confirmed sun (appmedia + altema) for Arena 1, 2 and 3"
+    },
+    {
+      "id": "ultimate-arena-incarnation-of-worlds",
+      "nameJa": "極限の闘技場／列界の化身",
+      "nameEn": "Ultimate Arena: Incarnation of Worlds",
+      "category": "Colosseum / Arena",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "unverified: appmedia only"
+    },
+    {
+      "id": "ultimate-arena-three-hands-of-fate",
+      "nameJa": "極限の闘技場／運命の三針",
+      "nameEn": "Ultimate Arena: Three Hands of Fate",
+      "category": "Colosseum / Arena",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "confirmed sun (appmedia + altema)"
+    },
+    {
+      "id": "ura-ultimate-arena-alien-existence",
+      "nameJa": "裏・極限の闘技場／裏異形の存在",
+      "nameEn": "Ura Ultimate Arena: Alien Existence",
+      "category": "Colosseum / Arena",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "unverified: appmedia only"
+    },
+    {
+      "id": "ura-ultimate-arena-goddess-of-two-poles",
+      "nameJa": "裏・極限の闘技場／裏双極の女神",
+      "nameEn": "Ura Ultimate Arena: Goddess of Two Poles",
+      "category": "Colosseum / Arena",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "unverified: appmedia only"
+    },
+    {
+      "id": "ura-ultimate-arena-incarnation-of-worlds",
+      "nameJa": "裏・極限の闘技場／裏列界の化身",
+      "nameEn": "Ura Ultimate Arena: Incarnation of Worlds",
+      "category": "Colosseum / Arena",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "unverified: appmedia only"
+    },
+    {
+      "id": "ura-ultimate-arena-three-hands-of-fate",
+      "nameJa": "裏・極限の闘技場／裏運命の三針",
+      "nameEn": "Ura Ultimate Arena: Three Hands of Fate",
+      "category": "Colosseum / Arena",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "unverified: appmedia only"
+    },
+    {
+      "id": "mystic-dimension-bird-beyond-dimensions",
+      "nameJa": "神秘の次元／多次元の越鳥",
+      "nameEn": "Mystic Dimension: Bird Beyond Dimensions",
+      "category": "Mystic Dimension (神秘の次元)",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "confirmed moon; no duplicate monsters"
+    },
+    {
+      "id": "mystic-dimension-guide-of-dimensions",
+      "nameJa": "神秘の次元／次元の案内人",
+      "nameEn": "Mystic Dimension: Guide of Dimensions",
+      "category": "Mystic Dimension (神秘の次元)",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "confirmed moon (appmedia; GameWith lists parent)"
+    },
+    {
+      "id": "mystic-dimension-visitor-of-the-fourth-dimension",
+      "nameJa": "神秘の次元／四次元の探訪者",
+      "nameEn": "Mystic Dimension: Visitor of the Fourth Dimension",
+      "category": "Mystic Dimension (神秘の次元)",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "confirmed moon (appmedia + GameWith)"
+    },
+    {
+      "id": "ura-mystic-dimension-bird-beyond-dimensions",
+      "nameJa": "裏・神秘の次元／裏多次元の越鳥",
+      "nameEn": "Ura Mystic Dimension: Bird Beyond Dimensions",
+      "category": "Mystic Dimension (神秘の次元)",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "confirmed moon; no duplicate monsters"
+    },
+    {
+      "id": "ura-mystic-dimension-guide-of-dimensions",
+      "nameJa": "裏・神秘の次元／裏次元の案内人",
+      "nameEn": "Ura Mystic Dimension: Guide of Dimensions",
+      "category": "Mystic Dimension (神秘の次元)",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "confirmed moon; variants add a type stat boost (values not published)"
+    },
+    {
+      "id": "ura-mystic-dimension-visitor-of-the-fourth-dimension",
+      "nameJa": "裏・神秘の次元／裏四次元の探訪者",
+      "nameEn": "Ura Mystic Dimension: Visitor of the Fourth Dimension",
+      "category": "Mystic Dimension (神秘の次元)",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "confirmed moon; rarity <=6 boost (value not published)"
+    },
+    {
+      "id": "new-demon-king-challenge-ura-demon-corridor-super-gravity",
+      "nameJa": "新魔王チャレンジ（裏魔廊の支配者【超重力】）",
+      "nameEn": "New Demon King Challenge (Ura Demon Corridor, Super Gravity)",
+      "category": "Shura Realm (修羅の幻界)",
+      "sun": false,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": 14,
+      "stat": {
+        "hp": 1,
+        "atk": 0.01,
+        "rcv": 1
+      },
+      "superGravity": 0.01,
+      "sourceUrl": "https://appmedia.jp/?p=76346926",
+      "notes": "confirmed; event 2022-12; 30-min; no duplicate monsters; marker not stated"
+    },
+    {
+      "id": "shura-realm-absolute-of-the-mechanical-castle",
+      "nameJa": "修羅の幻界／機構城の絶対者",
+      "nameEn": "Shura Realm: Absolute of the Mechanical Castle",
+      "category": "Shura Realm (修羅の幻界)",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "confirmed moon; all five attributes required"
+    },
+    {
+      "id": "shura-realm-guardian-of-the-demon-gate",
+      "nameJa": "修羅の幻界／魔門の守護者",
+      "nameEn": "Shura Realm: Guardian of the Demon Gate",
+      "category": "Shura Realm (修羅の幻界)",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "confirmed moon (appmedia; GameWith lists parent)"
+    },
+    {
+      "id": "shura-realm-ruler-of-the-demon-corridor",
+      "nameJa": "修羅の幻界／魔廊の支配者",
+      "nameEn": "Shura Realm: Ruler of the Demon Corridor",
+      "category": "Shura Realm (修羅の幻界)",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "confirmed moon; no duplicate monsters"
+    },
+    {
+      "id": "ura-shura-realm-absolute-of-the-mechanical-castle",
+      "nameJa": "裏・修羅の幻界／裏機構城の絶対者",
+      "nameEn": "Ura Shura Realm: Absolute of the Mechanical Castle",
+      "category": "Shura Realm (修羅の幻界)",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "confirmed moon; all five attributes required"
+    },
+    {
+      "id": "ura-shura-realm-guardian-of-the-demon-gate",
+      "nameJa": "裏・修羅の幻界／裏魔門の守護者",
+      "nameEn": "Ura Shura Realm: Guardian of the Demon Gate",
+      "category": "Shura Realm (修羅の幻界)",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "confirmed moon (appmedia; GameWith lists parent)"
+    },
+    {
+      "id": "ura-shura-realm-ruler-of-the-demon-corridor",
+      "nameJa": "裏・修羅の幻界／裏魔廊の支配者",
+      "nameEn": "Ura Shura Realm: Ruler of the Demon Corridor",
+      "category": "Shura Realm (修羅の幻界)",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "confirmed moon; no duplicate monsters"
+    },
+    {
+      "id": "super-gravity-dragon-rush-1-2",
+      "nameJa": "超重力ドラゴンラッシュ【1】【2】",
+      "nameEn": "Super Gravity Dragon Rush 1 / 2",
+      "category": "Descended / Rush",
+      "sun": false,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": 6,
+      "stat": {
+        "hp": 1,
+        "atk": 0.01,
+        "rcv": 1
+      },
+      "superGravity": 0.01,
+      "sourceUrl": "https://game8.jp/pazudora/524909",
+      "notes": "confirmed (kamigame + altema); event; no-continue"
+    },
+    {
+      "id": "knight-descended-super-flame-knight",
+      "nameJa": "ナイト降臨（超フレイムナイト）",
+      "nameEn": "Knight Descended (Super Flame Knight)",
+      "category": "Descended / Rush",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 0.02,
+        "rcv": 1
+      },
+      "superGravity": 0.02,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "moon per GameWith only; ATK 1/50 confirmed (kamigame + appmedia); all attributes required"
+    },
+    {
+      "id": "amen-descended",
+      "nameJa": "アメン降臨",
+      "nameEn": "Amen Descended",
+      "category": "Descended / Rush",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only"
+    },
+    {
+      "id": "apophis-descended",
+      "nameJa": "アポピス降臨",
+      "nameEn": "Apophis Descended",
+      "category": "Descended / Rush",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only"
+    },
+    {
+      "id": "beleth-descended",
+      "nameJa": "ベレト降臨",
+      "nameEn": "Beleth Descended",
+      "category": "Descended / Rush",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only"
+    },
+    {
+      "id": "brahma-descended",
+      "nameJa": "ブラフマー降臨",
+      "nameEn": "Brahma Descended",
+      "category": "Descended / Rush",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only"
+    },
+    {
+      "id": "bull-demon-king-descended",
+      "nameJa": "牛魔王降臨",
+      "nameEn": "Bull Demon King Descended",
+      "category": "Descended / Rush",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
+      "notes": "unverified: GameWith sun list only"
+    },
+    {
+      "id": "chi-lin-descended",
+      "nameJa": "チィリン降臨",
+      "nameEn": "Chi Lin Descended",
+      "category": "Descended / Rush",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
+      "notes": "unverified: GameWith sun list only"
+    },
+    {
+      "id": "demonius-descended",
+      "nameJa": "デモニアス降臨",
+      "nameEn": "Demonius Descended",
+      "category": "Descended / Rush",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only"
+    },
+    {
+      "id": "dipsior-descended",
+      "nameJa": "ディプシオール降臨",
+      "nameEn": "Dipsior Descended",
+      "category": "Descended / Rush",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://altema.jp/pazudora/killerlist/128",
+      "notes": "unverified: altema sun list only"
+    },
+    {
+      "id": "dorothy-descended",
+      "nameJa": "ドロシー降臨",
+      "nameEn": "Dorothy Descended",
+      "category": "Descended / Rush",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
+      "notes": "unverified: GameWith sun list only"
+    },
+    {
+      "id": "eir-descended",
+      "nameJa": "エイル降臨",
+      "nameEn": "Eir Descended",
+      "category": "Descended / Rush",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only"
+    },
+    {
+      "id": "elme-descended",
+      "nameJa": "エルメ降臨",
+      "nameEn": "Elme Descended",
+      "category": "Descended / Rush",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only"
+    },
+    {
+      "id": "eris-descended",
+      "nameJa": "エリス降臨",
+      "nameEn": "Eris Descended",
+      "category": "Descended / Rush",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only"
+    },
+    {
+      "id": "gainaut-descended",
+      "nameJa": "ガイノウト降臨",
+      "nameEn": "Gainaut Descended",
+      "category": "Descended / Rush",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
+      "notes": "unverified: GameWith sun list only"
+    },
+    {
+      "id": "gawain-descended",
+      "nameJa": "ガウェイン降臨",
+      "nameEn": "Gawain Descended",
+      "category": "Descended / Rush",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
+      "notes": "unverified: GameWith sun list only"
+    },
+    {
+      "id": "hera-beorc-descended",
+      "nameJa": "ヘラベオーク降臨",
+      "nameEn": "Hera-Beorc Descended",
+      "category": "Descended / Rush",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://altema.jp/pazudora/killerlist/128",
+      "notes": "unverified: altema sun list only"
+    },
+    {
+      "id": "hoppo-descended",
+      "nameJa": "ホッポ降臨",
+      "nameEn": "Hoppo Descended",
+      "category": "Descended / Rush",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only"
+    },
+    {
+      "id": "irene-descended",
+      "nameJa": "イレーヌ降臨",
+      "nameEn": "Irene Descended",
+      "category": "Descended / Rush",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only"
+    },
+    {
+      "id": "jabberwock-descended",
+      "nameJa": "ジャバウォック降臨",
+      "nameEn": "Jabberwock Descended",
+      "category": "Descended / Rush",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only"
+    },
+    {
+      "id": "jurond-descended",
+      "nameJa": "ジュロンド降臨",
+      "nameEn": "Jurond Descended",
+      "category": "Descended / Rush",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
+      "notes": "confirmed sun (GameWith + altema)"
+    },
+    {
+      "id": "khonsu-descended",
+      "nameJa": "コンス降臨",
+      "nameEn": "Khonsu Descended",
+      "category": "Descended / Rush",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only"
+    },
+    {
+      "id": "kuroganemaru-descended",
+      "nameJa": "クロガネマル降臨",
+      "nameEn": "Kuroganemaru Descended",
+      "category": "Descended / Rush",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only"
+    },
+    {
+      "id": "libertas-descended",
+      "nameJa": "リベルタス降臨",
+      "nameEn": "Libertas Descended",
+      "category": "Descended / Rush",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
+      "notes": "unverified: GameWith sun list only"
+    },
+    {
+      "id": "lindworm-descended",
+      "nameJa": "リントヴルム降臨",
+      "nameEn": "Lindworm Descended",
+      "category": "Descended / Rush",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
+      "notes": "unverified: GameWith sun list only"
+    },
+    {
+      "id": "linthia-descended",
+      "nameJa": "リンシア降臨",
+      "nameEn": "Linthia Descended",
+      "category": "Descended / Rush",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
+      "notes": "unverified: GameWith sun list only"
+    },
+    {
+      "id": "lion-dance-nordis-descended",
+      "nameJa": "獅子舞の騎龍王・ノルディス降臨",
+      "nameEn": "Lion Dance Nordis Descended",
+      "category": "Descended / Rush",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
+      "notes": "confirmed sun (GameWith + altema)"
+    },
+    {
+      "id": "maine-descended",
+      "nameJa": "マイネ降臨",
+      "nameEn": "Maine Descended",
+      "category": "Descended / Rush",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only"
+    },
+    {
+      "id": "manticore-descended",
+      "nameJa": "マンティコア降臨",
+      "nameEn": "Manticore Descended",
+      "category": "Descended / Rush",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://altema.jp/pazudora/killerlist/128",
+      "notes": "unverified: altema sun list only"
+    },
+    {
+      "id": "mut-descended",
+      "nameJa": "ムート降臨",
+      "nameEn": "Mut Descended",
+      "category": "Descended / Rush",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only"
+    },
+    {
+      "id": "myr-descended",
+      "nameJa": "ミル降臨",
+      "nameEn": "Myr Descended",
+      "category": "Descended / Rush",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only"
+    },
+    {
+      "id": "new-year-nordis-descended",
+      "nameJa": "正月ノルディス降臨",
+      "nameEn": "New Year Nordis Descended",
+      "category": "Descended / Rush",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
+      "notes": "confirmed sun (GameWith + altema)"
+    },
+    {
+      "id": "nidhogg-descended",
+      "nameJa": "ニーズヘッグ降臨",
+      "nameEn": "Nidhogg Descended",
+      "category": "Descended / Rush",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only"
+    },
+    {
+      "id": "nimue-descended",
+      "nameJa": "ニムエ降臨",
+      "nameEn": "Nimue Descended",
+      "category": "Descended / Rush",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only"
+    },
+    {
+      "id": "nordis-descended",
+      "nameJa": "ノルディス降臨",
+      "nameEn": "Nordis Descended",
+      "category": "Descended / Rush",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
+      "notes": "confirmed sun (GameWith + altema)"
+    },
+    {
+      "id": "odin-dragon-descended",
+      "nameJa": "オーディンドラゴン降臨",
+      "nameEn": "Odin Dragon Descended",
+      "category": "Descended / Rush",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only"
+    },
+    {
+      "id": "panera-descended",
+      "nameJa": "パネラ降臨",
+      "nameEn": "Panera Descended",
+      "category": "Descended / Rush",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only"
+    },
+    {
+      "id": "pixel-valkyrie-descended",
+      "nameJa": "ドットヴァルキリー降臨",
+      "nameEn": "Pixel Valkyrie Descended",
+      "category": "Descended / Rush",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only"
+    },
+    {
+      "id": "pixel-zeus-and-hera-descended",
+      "nameJa": "ドットゼウス＆ヘラ降臨",
+      "nameEn": "Pixel Zeus and Hera Descended",
+      "category": "Descended / Rush",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only"
+    },
+    {
+      "id": "quetzalcoatl-descended",
+      "nameJa": "ケツァルコアトル降臨",
+      "nameEn": "Quetzalcoatl Descended",
+      "category": "Descended / Rush",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
+      "notes": "unverified: GameWith sun list only"
+    },
+    {
+      "id": "ra-dragon-descended",
+      "nameJa": "ラードラゴン降臨",
+      "nameEn": "Ra Dragon Descended",
+      "category": "Descended / Rush",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only"
+    },
+    {
+      "id": "ratatoskr-descended",
+      "nameJa": "ラタトスク降臨",
+      "nameEn": "Ratatoskr Descended",
+      "category": "Descended / Rush",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
+      "notes": "unverified: GameWith sun list only"
+    },
+    {
+      "id": "raziel-descended",
+      "nameJa": "ラジエル降臨",
+      "nameEn": "Raziel Descended",
+      "category": "Descended / Rush",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
+      "notes": "unverified: GameWith sun list only"
+    },
+    {
+      "id": "regaloban-descended",
+      "nameJa": "レガロバン降臨",
+      "nameEn": "Regaloban Descended",
+      "category": "Descended / Rush",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only"
+    },
+    {
+      "id": "reincarnated-dragon-swordsman-descended",
+      "nameJa": "転生龍刀士降臨",
+      "nameEn": "Reincarnated Dragon Swordsman Descended",
+      "category": "Descended / Rush",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
+      "notes": "unverified: GameWith sun list only"
+    },
+    {
+      "id": "reincarnated-rushana-descended",
+      "nameJa": "転生ルシャナ降臨",
+      "nameEn": "Reincarnated Rushana Descended",
+      "category": "Descended / Rush",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
+      "notes": "unverified: GameWith sun list only"
+    },
+    {
+      "id": "reiwa-descended",
+      "nameJa": "レイワ降臨",
+      "nameEn": "Reiwa Descended",
+      "category": "Descended / Rush",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only"
+    },
+    {
+      "id": "rushana-descended",
+      "nameJa": "ルシャナ降臨",
+      "nameEn": "Rushana Descended",
+      "category": "Descended / Rush",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
+      "notes": "unverified: GameWith sun list only"
+    },
+    {
+      "id": "sacred-ruins-of-the-gods-reincarnated-athena-non-descended",
+      "nameJa": "神々の聖跡／転生アテナNON降臨",
+      "nameEn": "Sacred Ruins of the Gods: Reincarnated Athena NON Descended",
+      "category": "Descended / Rush",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "confirmed moon (appmedia + GameWith)"
+    },
+    {
+      "id": "sacred-ruins-of-the-gods-reincarnated-hera-luna-descended",
+      "nameJa": "神々の聖跡／転生ヘラLUNA降臨",
+      "nameEn": "Sacred Ruins of the Gods: Reincarnated Hera LUNA Descended",
+      "category": "Descended / Rush",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "confirmed sun (appmedia + GameWith + altema)"
+    },
+    {
+      "id": "sacred-ruins-of-the-gods-reincarnated-valkyrie-ciel-descended",
+      "nameJa": "神々の聖跡／転生ヴァルキリーCIEL降臨",
+      "nameEn": "Sacred Ruins of the Gods: Reincarnated Valkyrie CIEL Descended",
+      "category": "Descended / Rush",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "confirmed sun (appmedia + GameWith + altema)"
+    },
+    {
+      "id": "sacred-ruins-of-the-gods-reincarnated-zeus-giga-descended",
+      "nameJa": "神々の聖跡／転生ゼウスGIGA降臨",
+      "nameEn": "Sacred Ruins of the Gods: Reincarnated Zeus GIGA Descended",
+      "category": "Descended / Rush",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "confirmed sun (appmedia + GameWith + altema)"
+    },
+    {
+      "id": "scarlet-descended",
+      "nameJa": "スカーレット降臨",
+      "nameEn": "Scarlet Descended",
+      "category": "Descended / Rush",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only"
+    },
+    {
+      "id": "scathach-descended",
+      "nameJa": "スカアハ降臨",
+      "nameEn": "Scathach Descended",
+      "category": "Descended / Rush",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only"
+    },
+    {
+      "id": "scheherazade-descended",
+      "nameJa": "シェヘラザード降臨",
+      "nameEn": "Scheherazade Descended",
+      "category": "Descended / Rush",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only"
+    },
+    {
+      "id": "senri-descended",
+      "nameJa": "センリ降臨",
+      "nameEn": "Senri Descended",
+      "category": "Descended / Rush",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
+      "notes": "unverified: GameWith sun list only"
+    },
+    {
+      "id": "shiva-dragon-descended",
+      "nameJa": "シヴァドラゴン降臨",
+      "nameEn": "Shiva Dragon Descended",
+      "category": "Descended / Rush",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only"
+    },
+    {
+      "id": "shuten-doji-descended",
+      "nameJa": "酒呑童子降臨",
+      "nameEn": "Shuten-doji Descended",
+      "category": "Descended / Rush",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://altema.jp/pazudora/killerlist/128",
+      "notes": "unverified: altema sun list only"
+    },
+    {
+      "id": "sol-and-mani-descended",
+      "nameJa": "ソール&マーニ降臨",
+      "nameEn": "Sol and Mani Descended",
+      "category": "Descended / Rush",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
+      "notes": "unverified: GameWith sun list only"
+    },
+    {
+      "id": "special-descended-rush-dragon-demon-realm",
+      "nameJa": "特殊降臨ラッシュ 龍魔界",
+      "nameEn": "Special Descended Rush: Dragon Demon Realm",
+      "category": "Descended / Rush",
+      "sun": false,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "conflict: appmedia moon / altema+game8 sun — check in-game"
+    },
+    {
+      "id": "super-ultimate-chinese-rush",
+      "nameJa": "超極限中華ラッシュ",
+      "nameEn": "Super Ultimate Chinese Rush",
+      "category": "Descended / Rush",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://altema.jp/pazudora/killerlist/128",
+      "notes": "unverified: altema only"
+    },
+    {
+      "id": "ultimate-descended-rush-hyakka-ryoran-1-2-5",
+      "nameJa": "極限降臨ラッシュ 百花繚乱（1・2・5）",
+      "nameEn": "Ultimate Descended Rush: Hyakka Ryoran 1 / 2 / 5",
+      "category": "Descended / Rush",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "confirmed sun (appmedia + GameWith + altema); 5 = Hyakka Challenge"
+    },
+    {
+      "id": "ultimate-descended-rush-hyakka-ryoran-3-4",
+      "nameJa": "極限降臨ラッシュ 百花繚乱（3・4）",
+      "nameEn": "Ultimate Descended Rush: Hyakka Ryoran 3 / 4",
+      "category": "Descended / Rush",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "confirmed moon (appmedia + GameWith); 4 = Ryoran Challenge"
+    },
+    {
+      "id": "ultimate-devil-rush-heavenly-demon-realm",
+      "nameJa": "極限デビルラッシュ 天魔界",
+      "nameEn": "Ultimate Devil Rush: Heavenly Demon Realm",
+      "category": "Descended / Rush",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "unverified: appmedia only"
+    },
+    {
+      "id": "ultimate-hera-rush-feast-of-the-queen",
+      "nameJa": "極限ヘララッシュ 妃の宴",
+      "nameEn": "Ultimate Hera Rush: Feast of the Queen",
+      "category": "Descended / Rush",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "unverified: appmedia only"
+    },
+    {
+      "id": "ultimate-yamato-rush-land-of-the-rising-sun",
+      "nameJa": "極限大和ラッシュ 日出国",
+      "nameEn": "Ultimate Yamato Rush: Land of the Rising Sun",
+      "category": "Descended / Rush",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "unverified: appmedia only"
+    },
+    {
+      "id": "ultimate-zeus-rush-feast-of-the-king",
+      "nameJa": "極限ゼウスラッシュ 王の宴",
+      "nameEn": "Ultimate Zeus Rush: Feast of the King",
+      "category": "Descended / Rush",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "unverified: appmedia only"
+    },
+    {
+      "id": "vidar-descended",
+      "nameJa": "ヴィーザル降臨",
+      "nameEn": "Vidar Descended",
+      "category": "Descended / Rush",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
+      "notes": "confirmed sun (GameWith + altema)"
+    },
+    {
+      "id": "volsung-descended",
+      "nameJa": "ヴォルスーン降臨",
+      "nameEn": "Volsung Descended",
+      "category": "Descended / Rush",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only"
+    },
+    {
+      "id": "weldor-descended",
+      "nameJa": "ウェルドール降臨",
+      "nameEn": "Weldor Descended",
+      "category": "Descended / Rush",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://altema.jp/pazudora/killerlist/128",
+      "notes": "unverified: altema sun list only"
+    },
+    {
+      "id": "zaerog-infinity-descended",
+      "nameJa": "ゼローグ∞降臨",
+      "nameEn": "Zaerog Infinity Descended",
+      "category": "Descended / Rush",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only"
+    },
+    {
+      "id": "zahhak-descended",
+      "nameJa": "ザッハーク降臨",
+      "nameEn": "Zahhak Descended",
+      "category": "Descended / Rush",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only"
+    },
+    {
+      "id": "zerenbas-descended",
+      "nameJa": "ゼレンバス降臨",
+      "nameEn": "Zerenbas Descended",
+      "category": "Descended / Rush",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
+      "notes": "confirmed sun (GameWith + altema)"
+    },
+    {
+      "id": "zilregato-descended",
+      "nameJa": "ジルレガート降臨",
+      "nameEn": "Zilregato Descended",
+      "category": "Descended / Rush",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only"
+    },
+    {
+      "id": "cat-dragon-mountain-forest",
+      "nameJa": "猫龍の山林",
+      "nameEn": "Cat Dragon Mountain Forest",
+      "category": "Technical EX",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "appmedia; altema lists its floor 光の猫龍 under sun (Technical EX1)"
+    },
+    {
+      "id": "dog-dragon-ninja-village",
+      "nameJa": "犬龍の忍里【同キャラ禁止】",
+      "nameEn": "Dog Dragon Ninja Village",
+      "category": "Technical EX",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "unverified: appmedia only; no duplicate monsters (Technical EX1)"
+    },
+    {
+      "id": "dragon-knight-princess-sanctuary",
+      "nameJa": "龍騎姫の聖地【同キャラ禁止】",
+      "nameEn": "Dragon Knight Princess Sanctuary",
+      "category": "Technical EX",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "unverified: appmedia only (Technical EX1)"
+    },
+    {
+      "id": "flower-dragon-garden",
+      "nameJa": "華龍の庭園【回復なし】",
+      "nameEn": "Flower Dragon Garden",
+      "category": "Technical EX",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 0
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "unverified: appmedia only; no recovery (RCV 0) (Technical EX1)"
+    },
+    {
+      "id": "hanging-garden-of-the-god-king",
+      "nameJa": "神王の空中庭園",
+      "nameEn": "Hanging Garden of the God King",
+      "category": "Technical EX",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "unverified: appmedia only (Technical EX2)"
+    },
+    {
+      "id": "historic-dragon-great-demon-realm",
+      "nameJa": "歴龍の大魔境",
+      "nameEn": "Historic Dragon Great Demon Realm",
+      "category": "Technical EX",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "unverified: appmedia only (Technical EX1)"
+    },
+    {
+      "id": "insect-dragon-secret-path",
+      "nameJa": "蟲龍の密道",
+      "nameEn": "Insect Dragon Secret Path",
+      "category": "Technical EX",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "unverified: appmedia only (Technical EX1)"
+    },
+    {
+      "id": "iron-star-dragon-spire",
+      "nameJa": "鉄星龍の尖塔",
+      "nameEn": "Iron Star Dragon Spire",
+      "category": "Technical EX",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "unverified: appmedia only (Technical EX1)"
+    },
+    {
+      "id": "karakuri-goemon-appears",
+      "nameJa": "からくり五右衛門参上",
+      "nameEn": "Karakuri Goemon Appears",
+      "category": "Technical EX",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "unverified: appmedia only (Technical EX2)"
+    },
+    {
+      "id": "legendary-airspace",
+      "nameJa": "伝説の空域",
+      "nameEn": "Legendary Airspace",
+      "category": "Technical EX",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "unverified: appmedia only (Technical EX2)"
+    },
+    {
+      "id": "legendary-mountain-path",
+      "nameJa": "伝説の山道",
+      "nameEn": "Legendary Mountain Path",
+      "category": "Technical EX",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "confirmed sun (appmedia + altema) (Technical EX2)"
+    },
+    {
+      "id": "legendary-ruins",
+      "nameJa": "伝説の遺構",
+      "nameEn": "Legendary Ruins",
+      "category": "Technical EX",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "unverified: appmedia only (Technical EX2)"
+    },
+    {
+      "id": "legendary-sea-of-trees",
+      "nameJa": "伝説の樹海",
+      "nameEn": "Legendary Sea of Trees",
+      "category": "Technical EX",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "unverified: appmedia only (Technical EX2)"
+    },
+    {
+      "id": "legendary-skyway",
+      "nameJa": "伝説の空路",
+      "nameEn": "Legendary Skyway",
+      "category": "Technical EX",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "confirmed sun (appmedia + altema) (Technical EX2)"
+    },
+    {
+      "id": "legendary-snowfield",
+      "nameJa": "伝説の雪渓",
+      "nameEn": "Legendary Snowfield",
+      "category": "Technical EX",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "confirmed sun (appmedia + altema) (Technical EX2)"
+    },
+    {
+      "id": "machine-athena-descended",
+      "nameJa": "マシンアテナ降臨",
+      "nameEn": "Machine Athena Descended",
+      "category": "Technical EX",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "unverified: appmedia only (Technical EX2)"
+    },
+    {
+      "id": "machine-dragon-giant-base",
+      "nameJa": "機械龍の巨大基地",
+      "nameEn": "Machine Dragon Giant Base",
+      "category": "Technical EX",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "unverified: appmedia only (Technical EX1)"
+    },
+    {
+      "id": "machine-hera-descended",
+      "nameJa": "マシンヘラ降臨",
+      "nameEn": "Machine Hera Descended",
+      "category": "Technical EX",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "unverified: appmedia only (Technical EX2)"
+    },
+    {
+      "id": "machine-noah-descended",
+      "nameJa": "マシンノア降臨",
+      "nameEn": "Machine Noah Descended",
+      "category": "Technical EX",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "unverified: appmedia only (Technical EX2)"
+    },
+    {
+      "id": "machine-zeus-descended",
+      "nameJa": "マシンゼウス降臨",
+      "nameEn": "Machine Zeus Descended",
+      "category": "Technical EX",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 0
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "unverified: appmedia only; no recovery (RCV 0)"
+    },
+    {
+      "id": "paradise-of-the-holy-beasts",
+      "nameJa": "聖獣達の楽園",
+      "nameEn": "Paradise of the Holy Beasts",
+      "category": "Technical EX",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "unverified: appmedia only (Technical EX2)"
+    },
+    {
+      "id": "pirate-dragon-hidden-cave",
+      "nameJa": "海賊龍の潜窟",
+      "nameEn": "Pirate Dragon Hidden Cave",
+      "category": "Technical EX",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "unverified: appmedia only (Technical EX1)"
+    },
+    {
+      "id": "sengoku-dragon-territory",
+      "nameJa": "戦国龍の領土【全属性必須】",
+      "nameEn": "Sengoku Dragon Territory",
+      "category": "Technical EX",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "notes": "appmedia; altema lists floor 光の戦武龍 under sun; all attributes required"
+    },
+    {
+      "id": "october-2026-ex-rush",
+      "nameJa": "10月EXラッシュ 2026",
+      "nameEn": "October 2026 EX Rush",
+      "category": "Event / Collab",
+      "sun": false,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": 7,
+      "stat": {
+        "hp": 1,
+        "atk": 0.0005,
+        "rcv": 0.25
+      },
+      "superGravity": 0.0005,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/496863",
+      "notes": "confirmed (GameWith + altema); 40-min, no-continue"
+    },
+    {
+      "id": "december-2025-quest-lv9",
+      "nameJa": "12月クエスト Lv9 2025",
+      "nameEn": "December 2025 Quest Lv9",
+      "category": "Event / Collab",
+      "sun": false,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": 5,
+      "stat": {
+        "hp": 1,
+        "atk": 0.0025,
+        "rcv": 1
+      },
+      "superGravity": 0.0025,
+      "sourceUrl": "https://appmedia.jp/?p=79537394",
+      "notes": "appmedia only; no-continue"
+    },
+    {
+      "id": "january-2026-quest-lv9",
+      "nameJa": "1月クエスト Lv9 2026",
+      "nameEn": "January 2026 Quest Lv9",
+      "category": "Event / Collab",
+      "sun": false,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": 5,
+      "stat": {
+        "hp": 1,
+        "atk": 0.0025,
+        "rcv": 0
+      },
+      "superGravity": 0.0025,
+      "sourceUrl": "https://appmedia.jp/?p=79633016",
+      "notes": "appmedia only; super altitude 1/4 but no recovery, so RCV 0"
+    },
+    {
+      "id": "november-2026-quest-lv5",
+      "nameJa": "11月クエスト Lv5 2026（究極グランディス）",
+      "nameEn": "November 2026 Quest Lv5",
+      "category": "Event / Collab",
+      "sun": false,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": 17,
+      "stat": {
+        "hp": 1,
+        "atk": 0.0025,
+        "rcv": 1
+      },
+      "superGravity": 0.0025,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/61061",
+      "notes": "confirmed (appmedia + GameWith); 60-min, no-continue"
+    },
+    {
+      "id": "scorching-challenge-2024-lvex",
+      "nameJa": "灼熱チャレンジ【超重力/超高度】 LvEX",
+      "nameEn": "Scorching Challenge (2024) LvEX",
+      "category": "Event / Collab",
+      "sun": false,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": 16,
+      "stat": {
+        "hp": 1,
+        "atk": 0.005,
+        "rcv": 0.005
+      },
+      "superGravity": 0.005,
+      "sourceUrl": "https://game8.jp/pazudora/625447",
+      "notes": "partially verified (game8); per-level divisors unknown; 2024-07 event"
+    },
+    {
+      "id": "fest-exclusive-rare-stone-rush-super-gravity",
+      "nameJa": "★7/★6フェス限 希石ラッシュ【超重力】",
+      "nameEn": "Fest-Exclusive Rare Stone Rush (Super Gravity)",
+      "category": "Event / Collab",
+      "sun": false,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 0.01,
+        "rcv": 1
+      },
+      "superGravity": 0.01,
+      "sourceUrl": "https://kamigame.jp/puzzle-dragons/%E3%81%8A%E5%BD%B9%E7%AB%8B%E3%81%A1%E6%83%85%E5%A0%B1%E3%83%BB%E3%82%B3%E3%83%A9%E3%83%A0/%E8%B6%85%E9%87%8D%E5%8A%9B%E6%94%BB%E7%95%A5.html",
+      "notes": "unverified: kamigame table only"
+    },
+    {
+      "id": "10th-anniversary-last-challenge-lv5",
+      "nameJa": "10周年ラストチャレンジ Lv5",
+      "nameEn": "10th Anniversary Last Challenge Lv5",
+      "category": "Event / Collab",
+      "sun": false,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 0.02,
+        "rcv": 1
+      },
+      "superGravity": 0.02,
+      "sourceUrl": "https://kamigame.jp/puzzle-dragons/%E3%81%8A%E5%BD%B9%E7%AB%8B%E3%81%A1%E6%83%85%E5%A0%B1%E3%83%BB%E3%82%B3%E3%83%A9%E3%83%A0/%E8%B6%85%E9%87%8D%E5%8A%9B%E6%94%BB%E7%95%A5.html",
+      "notes": "unverified: kamigame table only"
+    },
+    {
+      "id": "4000-days-anniversary-challenge",
+      "nameJa": "4000日記念チャレンジ",
+      "nameEn": "4000 Days Anniversary Challenge",
+      "category": "Event / Collab",
+      "sun": false,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 0.02,
+        "rcv": 1
+      },
+      "superGravity": 0.02,
+      "sourceUrl": "https://kamigame.jp/puzzle-dragons/%E3%81%8A%E5%BD%B9%E7%AB%8B%E3%81%A1%E6%83%85%E5%A0%B1%E3%83%BB%E3%82%B3%E3%83%A9%E3%83%A0/%E8%B6%85%E9%87%8D%E5%8A%9B%E6%94%BB%E7%95%A5.html",
+      "notes": "unverified: kamigame table only"
+    },
+    {
+      "id": "rainbow-medal-challenge-super-gravity",
+      "nameJa": "虹メダルチャレンジ【超重力】",
+      "nameEn": "Rainbow Medal Challenge (Super Gravity)",
+      "category": "Event / Collab",
+      "sun": false,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 0.02,
+        "rcv": 1
+      },
+      "superGravity": 0.02,
+      "sourceUrl": "https://kamigame.jp/puzzle-dragons/%E3%81%8A%E5%BD%B9%E7%AB%8B%E3%81%A1%E6%83%85%E5%A0%B1%E3%83%BB%E3%82%B3%E3%83%A9%E3%83%A0/%E8%B6%85%E9%87%8D%E5%8A%9B%E6%94%BB%E7%95%A5.html",
+      "notes": "unverified: kamigame table only"
+    },
+    {
+      "id": "62-million-downloads-challenge",
+      "nameJa": "6200万DL記念チャレンジ",
+      "nameEn": "62 Million Downloads Challenge",
+      "category": "Event / Collab",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith only; limited-time"
+    },
+    {
+      "id": "christmas-dungeon",
+      "nameJa": "クリスマスダンジョン",
+      "nameEn": "Christmas Dungeon",
+      "category": "Event / Collab",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only; event/collab"
+    },
+    {
+      "id": "crimson-road-of-fortune",
+      "nameJa": "宝来の紅路",
+      "nameEn": "Crimson Road of Fortune",
+      "category": "Event / Collab",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://altema.jp/pazudora/killerlist/128",
+      "notes": "unverified: altema sun list only; event/collab"
+    },
+    {
+      "id": "demon-slayer-collab-dungeon",
+      "nameJa": "鬼滅の刃コラボダンジョン",
+      "nameEn": "Demon Slayer Collab Dungeon",
+      "category": "Event / Collab",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only; event/collab"
+    },
+    {
+      "id": "demon-slayer-colosseum",
+      "nameJa": "鬼滅の刃コロシアム",
+      "nameEn": "Demon Slayer Colosseum",
+      "category": "Event / Collab",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only; event/collab"
+    },
+    {
+      "id": "devil-challenge",
+      "nameJa": "悪魔チャレンジ",
+      "nameEn": "Devil Challenge",
+      "category": "Event / Collab",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only; event/collab"
+    },
+    {
+      "id": "eco-collab",
+      "nameJa": "ECOコラボ",
+      "nameEn": "ECO Collab",
+      "category": "Event / Collab",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://altema.jp/pazudora/killerlist/128",
+      "notes": "unverified: altema sun list only; event/collab"
+    },
+    {
+      "id": "gunma-collab",
+      "nameJa": "ぐんまコラボ",
+      "nameEn": "Gunma Collab",
+      "category": "Event / Collab",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://altema.jp/pazudora/killerlist/128",
+      "notes": "unverified: altema sun list only; event/collab"
+    },
+    {
+      "id": "hantengu-descended",
+      "nameJa": "半天狗降臨",
+      "nameEn": "Hantengu Descended",
+      "category": "Event / Collab",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only; event/collab"
+    },
+    {
+      "id": "latent-attribute-resist-rush",
+      "nameJa": "潜在属性軽減ラッシュ",
+      "nameEn": "Latent Attribute Resist Rush",
+      "category": "Event / Collab",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only; event/collab"
+    },
+    {
+      "id": "latent-parameter-enhance-rush",
+      "nameJa": "潜在パラメータ強化ラッシュ",
+      "nameEn": "Latent Parameter Enhance Rush",
+      "category": "Event / Collab",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only; event/collab"
+    },
+    {
+      "id": "merry-christmas-in-the-arena",
+      "nameJa": "闘技場のメリークリスマス",
+      "nameEn": "Merry Christmas in the Arena",
+      "category": "Event / Collab",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only; event/collab"
+    },
+    {
+      "id": "november-2026-quest-lv3",
+      "nameJa": "11月クエスト Lv3 2026（エレイン）",
+      "nameEn": "November 2026 Quest Lv3",
+      "category": "Event / Collab",
+      "sun": false,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": 6,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/76866815",
+      "conditional": [
+        {
+          "attributes": [
+            2
+          ],
+          "hp": 8,
+          "atk": 8,
+          "rcv": 8
+        }
+      ],
+      "notes": "unverified: appmedia says Wood all stats x8; GameWith only 'wood boost'"
+    },
+    {
+      "id": "november-2026-quest-lv4",
+      "nameJa": "11月クエスト Lv4 2026（イレーヌ）",
+      "nameEn": "November 2026 Quest Lv4",
+      "category": "Event / Collab",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": 7,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 0.25
+      },
+      "superGravity": null,
+      "sourceUrl": "https://appmedia.jp/pazudora/80534632",
+      "notes": "confirmed (appmedia + GameWith); fixed helper; no ATK debuff"
+    },
+    {
+      "id": "puzzle-and-dragons-z-colosseum",
+      "nameJa": "パズドラZコロシアム",
+      "nameEn": "Puzzle and Dragons Z Colosseum",
+      "category": "Event / Collab",
+      "sun": true,
+      "moon": false,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://altema.jp/pazudora/killerlist/128",
+      "notes": "unverified: altema sun list only; event/collab"
+    },
+    {
+      "id": "santa-zeus-dios-descended",
+      "nameJa": "サンタゼウスディオス降臨",
+      "nameEn": "Santa Zeus Dios Descended",
+      "category": "Event / Collab",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only; event/collab"
+    },
+    {
+      "id": "shura-challenge",
+      "nameJa": "修羅チャレンジ",
+      "nameEn": "Shura Challenge",
+      "category": "Event / Collab",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only; event/collab"
+    },
+    {
+      "id": "tower-of-departure",
+      "nameJa": "旅立ちの塔",
+      "nameEn": "Tower of Departure",
+      "category": "Event / Collab",
+      "sun": false,
+      "moon": true,
+      "multiplayer": false,
+      "maxFloor": null,
+      "stat": {
+        "hp": 1,
+        "atk": 1,
+        "rcv": 1
+      },
+      "superGravity": null,
+      "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
+      "notes": "unverified: GameWith moon list only; event/collab"
+    }
+  ]
+}
