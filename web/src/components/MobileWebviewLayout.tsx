@@ -20,7 +20,8 @@ import { MonsterDetailPanel } from "./MonsterDetailPanel";
 import { ModernOnlySearchHint } from "./ModernOnlySearchHint";
 import { ResultIdScopeSwitcher } from "./ResultIdScopeSwitcher";
 import { ResultsDisplayControls } from "./ResultsDisplayControls";
-import { ResultsList } from "./ResultsList";
+import { ResultsList, type TeamDraftPanelProps } from "./ResultsList";
+import { TeamDraftDock } from "./team-draft/TeamDraftDock";
 import { ResultsQuickFilter } from "./ResultsQuickFilter";
 import { ResultsSortControls } from "./ResultsSortControls";
 import {
@@ -75,6 +76,7 @@ type Props = {
   onResultIdScopeChange: (next: ResultIdScope) => void;
   modernOnly?: boolean;
   minMonsterId?: number;
+  teamDraft?: TeamDraftPanelProps;
 };
 
 const PANEL_TITLES: Record<BottomPanelMode, string> = {
@@ -566,6 +568,7 @@ export function MobileWebviewLayout({
   onResultIdScopeChange,
   modernOnly,
   minMonsterId,
+  teamDraft,
 }: Props) {
   const [detailCollapsed, setDetailCollapsed] = useState(false);
   const showDetail = selected != null;
@@ -641,7 +644,15 @@ export function MobileWebviewLayout({
               minimal={showDetail && !detailCollapsed}
               resultSort={resultSort}
               displaySections={displaySections}
+              teamDraft={teamDraft}
             />
+            {teamDraft && (
+              <TeamDraftDock
+                draft={teamDraft.draft}
+                onClear={teamDraft.onClear}
+                compact
+              />
+            )}
           </div>
 
           {showDetail && (

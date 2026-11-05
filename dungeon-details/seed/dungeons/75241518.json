@@ -1,0 +1,259 @@
+{
+  "appmediaPostId": 75241518,
+  "titleJa": "【パズドラ】伝説の空域の攻略や対策とおすすめパーティ",
+  "titleEn": "伝説の空域 — counters & recommended teams",
+  "sourceUrl": "https://appmedia.jp/pazudora/75241518",
+  "modified": "2022-03-13T21:14:42",
+  "importedAt": "2026-11-04T20:03:32.381Z",
+  "maxDamage": {
+    "value": 28965,
+    "floor": "B4",
+    "monsterId": 2092,
+    "monsterNameJa": null,
+    "raw": "28,965ダメージ"
+  },
+  "requiredGimmicks": [
+    {
+      "id": "ダメジ無効",
+      "labelJa": "ダメージ無効",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/6dd217d2eb879afbc4f87c25f0d706fe.jpg",
+      "category": "required"
+    }
+  ],
+  "cautionGimmicks": [
+    {
+      "id": "スキル遅延",
+      "labelJa": "スキル遅延",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/1cc1e8c018ea83a40f76d55aef4962f9.jpg",
+      "category": "caution"
+    },
+    {
+      "id": "ルレット",
+      "labelJa": "ルーレット",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2017/05/a9639b827fc3d02a353d7f9fa1657503.jpg",
+      "category": "caution"
+    },
+    {
+      "id": "コンボ吸収",
+      "labelJa": "コンボ吸収",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/f0ce23fe72f6de2f99d74960e3ed42f5.jpg",
+      "category": "caution"
+    },
+    {
+      "id": "バインド",
+      "labelJa": "バインド",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/ca135b43895b408e8542d36745a59692.jpg",
+      "category": "caution"
+    },
+    {
+      "id": "リダチェン",
+      "labelJa": "リダチェン",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/2100f3640fa3fcc6fefccd272a16a4e4.jpg",
+      "category": "caution"
+    },
+    {
+      "id": "覚醒無効",
+      "labelJa": "覚醒無効",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/94f35b4f6637877fdd4c08962ea72f6e.jpg",
+      "category": "caution"
+    },
+    {
+      "id": "爆弾",
+      "labelJa": "爆弾",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/10/fa108cb841d0e8c0341197b60441e82e.jpg",
+      "category": "caution"
+    },
+    {
+      "id": "雲",
+      "labelJa": "雲",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/5247938759c158ab7a10b96a0182229b.jpg",
+      "category": "caution"
+    }
+  ],
+  "floors": [
+    {
+      "floor": "B1",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": 1295,
+          "monsterNameJa": null,
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/1295.jpg",
+          "types": [],
+          "hp": "350 (",
+          "defense": "1000万)",
+          "effects": [
+            {
+              "raw": "HP99%割合ダメージ",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 1294,
+          "monsterNameJa": null,
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/1294.jpg",
+          "types": [],
+          "hp": "800万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "999ターン：6コンボ以下吸収",
+              "tags": [],
+              "gimmickIds": [
+                "ダメジ吸収",
+                "コンボ無効"
+              ],
+              "damage": null,
+              "turns": "999ターン"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B2",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": 234,
+          "monsterNameJa": null,
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/234.jpg",
+          "types": [],
+          "hp": "50(",
+          "defense": "80万)",
+          "effects": [
+            {
+              "raw": "※2体出現",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "スキル遅延1～3ターン",
+              "tags": [],
+              "gimmickIds": [
+                "スキル遅延"
+              ],
+              "damage": null,
+              "turns": "3ターン"
+            }
+          ]
+        },
+        {
+          "monsterId": 1230,
+          "monsterNameJa": null,
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/1230.jpg",
+          "types": [],
+          "hp": "30(",
+          "defense": "60万)",
+          "effects": [
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B3",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": 1225,
+          "monsterNameJa": null,
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/1225.jpg",
+          "types": [],
+          "hp": "約1593万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "5ターン：状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "5ターン"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B4",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": 2092,
+          "monsterNameJa": null,
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/2092.jpg",
+          "types": [],
+          "hp": "約1034万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "5ターン：状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "5ターン"
+            },
+            {
+              "raw": "28,965ダメージ",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": "28,965ダメージ",
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B5",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": 3732,
+          "monsterNameJa": null,
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/3732.jpg",
+          "types": [],
+          "hp": "3億",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "10ターン：左上・右上・左下隅にルーレット",
+              "tags": [],
+              "gimmickIds": [
+                "ルレット"
+              ],
+              "damage": null,
+              "turns": "10ターン"
+            },
+            {
+              "raw": "999ターン：状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "999ターン"
+            },
+            {
+              "raw": "999ターン：2000万以上無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "999ターン"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

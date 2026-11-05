@@ -1,0 +1,274 @@
+{
+  "appmediaPostId": 75239826,
+  "titleJa": "【パズドラ】伝説の山道の攻略や対策とおすすめパーティ",
+  "titleEn": "伝説の山道 — counters & recommended teams",
+  "sourceUrl": "https://appmedia.jp/pazudora/75239826",
+  "modified": "2022-03-17T07:57:03",
+  "importedAt": "2026-11-04T20:03:37.076Z",
+  "maxDamage": null,
+  "requiredGimmicks": [],
+  "cautionGimmicks": [
+    {
+      "id": "バインド",
+      "labelJa": "バインド",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/ca135b43895b408e8542d36745a59692.jpg",
+      "category": "caution"
+    },
+    {
+      "id": "お邪魔",
+      "labelJa": "お邪魔",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/07/Dead.png",
+      "category": "caution"
+    }
+  ],
+  "floors": [
+    {
+      "floor": "B1",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": 260,
+          "monsterNameJa": null,
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/260.jpg",
+          "types": [],
+          "hp": "750",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "※各バトル2～3体ずつランダム出現",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 181,
+          "monsterNameJa": null,
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/181.jpg",
+          "types": [],
+          "hp": "750",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 178,
+          "monsterNameJa": null,
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/178.jpg",
+          "types": [],
+          "hp": "750",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 308,
+          "monsterNameJa": null,
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/308.jpg",
+          "types": [],
+          "hp": "約36万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 601,
+          "monsterNameJa": null,
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/601.jpg",
+          "types": [],
+          "hp": "約36万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 603,
+          "monsterNameJa": null,
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/603.jpg",
+          "types": [],
+          "hp": "約36万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 1173,
+          "monsterNameJa": null,
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/1173.jpg",
+          "types": [],
+          "hp": "約11万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 1174,
+          "monsterNameJa": null,
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/1174.jpg",
+          "types": [],
+          "hp": "約11万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 1175,
+          "monsterNameJa": null,
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/1175.jpg",
+          "types": [],
+          "hp": "約11万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B6",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": 249,
+          "monsterNameJa": null,
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/249.jpg",
+          "types": [],
+          "hp": "約21万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 250,
+          "monsterNameJa": null,
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/250.jpg",
+          "types": [],
+          "hp": "約21万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 1228,
+          "monsterNameJa": null,
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/1228.jpg",
+          "types": [],
+          "hp": "30(",
+          "defense": "60万)",
+          "effects": [
+            {
+              "raw": "3ターン：1体バインド",
+              "tags": [],
+              "gimmickIds": [
+                "バインド"
+              ],
+              "damage": null,
+              "turns": "3ターン"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B7",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": 1472,
+          "monsterNameJa": null,
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/1472.jpg",
+          "types": [],
+          "hp": "約501万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "4ターン：状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "4ターン"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

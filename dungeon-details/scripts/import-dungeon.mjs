@@ -28,6 +28,7 @@ import {
 } from "../lib/gimmick-master.mjs";
 import { parseGimmickPanel } from "../lib/parse-gimmick-panel.mjs";
 import { parseDungeonFloorTable } from "../lib/parse-dungeon-table.mjs";
+import { findMaxDamage } from "../lib/max-damage.mjs";
 import { writeDungeonSqlite } from "../lib/export-sqlite.mjs";
 import {
   DEFAULT_DUNGEON_URLS_PATH,
@@ -147,6 +148,10 @@ async function importOne(target, options) {
 
   const floors = parseDungeonFloorTable(post.html, master.entries);
   const stats = summarizeMatchStats(floors);
+  // Stored once at import so the list API / team trial never re-scan floors.
+  const maxDamage = findMaxDamage(floors, (token, raw) =>
+    console.warn(`  Skipped malformed damage "${token}" in "${raw}" — check the source page`)
+  );
 
   const requiredGimmicks = panelEntries
     .filter((e) => e.category === "required")
@@ -169,6 +174,7 @@ async function importOne(target, options) {
     sourceUrl: post.sourceUrl,
     modified: post.modified,
     importedAt: new Date().toISOString(),
+    maxDamage,
     requiredGimmicks,
     cautionGimmicks,
     floors,
@@ -187,6 +193,9 @@ async function importOne(target, options) {
   );
   console.log(
     `  Effect match: ${stats.matched}/${stats.lines} (${stats.lines ? Math.round((stats.matched / stats.lines) * 100) : 0}%)`
+  );
+  console.log(
+    `  Max hit: ${maxDamage ? `${maxDamage.value.toLocaleString("en-US")} (${maxDamage.floor ?? "?"})` : "none"}`
   );
   console.log(`  Wrote JSON → ${jsonPath}`);
 

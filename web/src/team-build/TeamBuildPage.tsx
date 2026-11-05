@@ -1,14 +1,36 @@
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { fetchMonstersByIds } from "../api";
 import { AwakeningSpriteIcon } from "../components/AwakeningSpriteIcon";
 import { AwkModifierModal } from "../components/AwkModifierModal";
 import { MonsterPortrait } from "../components/MonsterPortrait";
 import { PageHeader } from "../components/PageHeader";
-import { DEFAULT_AWK_MODIFIER_SETTINGS } from "../components/ResultsSortControls";
-import { useTruncatedTitle } from "../hooks/useTruncatedTitle";
+import { ResizableSidePanel } from "../components/ResizableSidePanel";
+import {
+  QuickSearchProvider,
+  useQuickSearch,
+} from "../components/quick-search/QuickSearchContext";
+import { QuickSearchIdInput } from "../components/quick-search/QuickSearchIdInput";
+import { QuickSearchLayout } from "../components/quick-search/QuickSearchLayout";
+import { MonsterNameTranslationProvider } from "../hooks/useLiveMonsterNames";
+import { useDungeonEntries } from "../hooks/useDungeonEntries";
+import { useMobileWebview } from "../hooks/useMobileWebview";
+import { useResizablePanel } from "../hooks/useResizablePanel";
+import { useTeamDraft } from "../hooks/useTeamDraft";
+import { parseRegularAwakenings } from "../lib/awakenings";
 import { computeTeamStats } from "../lib/team-build/compute-stats";
+import {
+  describeDungeonModifiers,
+  resolveDungeonModifiers,
+} from "../lib/team-build/dungeon-modifiers";
+import { maxHitForEntry, seedForEntry } from "../lib/team-build/dungeon-sources";
+import {
+  combineLeaderMultipliers,
+  leaderMultipliersForMember,
+} from "../lib/team-build/leader-skill";
 import { lb110Percent, maxMonsterLevel } from "../lib/team-build/level-scaling";
+import { grantedAssistAwakenings } from "../lib/team-build/passive-awakenings";
+import { describeSlotContributions } from "../lib/team-build/stat-contributions";
 import {
   exportTeamEqString,
   exportTeamIdString,
@@ -19,18 +41,19 @@ import {
   listSuperAwakeningOptions,
   superAwakeningLabel,
 } from "../lib/team-build/super-awakening-modifier";
+import { BADGE_OPTIONS } from "../lib/team-build/stat-reference";
 import {
-  BADGE_OPTIONS,
-} from "../lib/team-build/stat-reference";
-import {
-  defaultTeamBuildConfig,
   type MemberStatResult,
   type MonsterLevelTarget,
   type TeamBadgeId,
-  type TeamBuildConfig,
   type TeamMemberConfig,
 } from "../lib/team-build/types";
 import type { MonsterRecord } from "../types";
+import { DungeonPickerModal } from "./DungeonPickerModal";
+import { TeamAwakeningPanel } from "./TeamAwakeningPanel";
+import { TeamAwakeningSummary } from "./TeamAwakeningSummary";
+import { TeamCardSheet } from "./TeamCardSheet";
+import { TeamTrialPanel } from "./TeamTrialPanel";
 
 function parseId(raw: string): number | null {
   const n = Number(raw.trim());
@@ -55,7 +78,7 @@ const STAT_TEXT = {
 } as const;
 
 const FIELD_INPUT =
-  "ds-input min-h-9 px-2 py-1 font-mono text-sm tabular-nums";
+  "ds-input min-h-9 w-full px-2 py-1 font-mono text-sm tabular-nums";
 
 function TeamStatLine({
   kind,
@@ -95,12 +118,14 @@ function TeamSlotCard({
   result,
   selected,
   onSelect,
+  dungeonLabel,
 }: {
   index: number;
   member: TeamMemberConfig;
   result: MemberStatResult | undefined;
   selected: boolean;
   onSelect: () => void;
+  dungeonLabel?: string | null;
 }) {
   const monsterId = parseId(member.monsterId);
   const eqId = parseId(member.eqId);
@@ -112,23 +137,28 @@ function TeamSlotCard({
       type="button"
       onClick={onSelect}
       aria-pressed={selected}
+      title={
+        selected
+          ? "Click again to go back to the team view"
+          : monsterId
+            ? "Click to edit or replace this card"
+            : "Click to pick a card"
+      }
       className={`pressable flex w-[96px] shrink-0 flex-col items-center rounded-xl border p-1.5 text-left ${
         selected
           ? "border-[var(--color-accent)]/70 bg-[var(--color-accent-muted)] shadow-[var(--shadow-glow)]"
           : "border-white/[0.06] bg-[var(--color-panel)]/90 hover:border-[var(--color-border-strong)] hover:bg-[var(--color-hover)]"
       }`}
     >
-      {label && (
-        <span
-          className={`ds-label mb-1 ${
-            selected || index === 0 || index === 5
-              ? "text-[var(--color-accent-strong)]"
-              : ""
-          }`}
-        >
-          {label}
-        </span>
-      )}
+      <span
+        className={`ds-label mb-1 ${
+          selected || index === 0 || index === 5
+            ? "text-[var(--color-accent-strong)]"
+            : ""
+        }`}
+      >
+        {label}
+      </span>
 
       <div className="relative">
         <div className="h-[72px] w-[72px] overflow-hidden rounded-lg border border-white/10 bg-[var(--color-inset)]">
@@ -141,7 +171,7 @@ function TeamSlotCard({
             />
           ) : (
             <div className="flex h-full w-full items-center justify-center text-[10px] text-[var(--color-faint)]">
-              —
+              + card
             </div>
           )}
         </div>
@@ -185,10 +215,19 @@ function TeamSlotCard({
       )}
 
       <div className="mt-1.5 w-full space-y-0.5 px-0.5">
-        <TeamStatLine kind="hp" value={result?.hp.afterRaw ?? 0} />
-        <TeamStatLine kind="atk" value={result?.atk.afterRaw ?? 0} />
-        <TeamStatLine kind="rcv" value={result?.rcv.afterRaw ?? 0} />
+        <TeamStatLine kind="hp" value={result?.hp.afterDungeon ?? 0} />
+        <TeamStatLine kind="atk" value={result?.atk.afterDungeon ?? 0} />
+        <TeamStatLine kind="rcv" value={result?.rcv.afterDungeon ?? 0} />
       </div>
+
+      {dungeonLabel && (
+        <span
+          className="mt-1 max-w-full truncate rounded-full border border-[var(--color-secondary)]/30 bg-[var(--color-inset)]/70 px-1.5 py-px font-mono text-[8px] font-semibold text-[var(--color-secondary-strong)]"
+          title={`Stats inside ${dungeonLabel}`}
+        >
+          {dungeonLabel}
+        </span>
+      )}
 
       {result?.error && (
         <span className="mt-0.5 max-w-full truncate text-[8px] text-[var(--color-negative)]">
@@ -199,6 +238,7 @@ function TeamSlotCard({
   );
 }
 
+/** Numeric fields of the selected slot (IDs via quick search, level, +points). */
 function SlotEditor({
   index,
   member,
@@ -210,61 +250,58 @@ function SlotEditor({
   monster: MonsterRecord | null;
   onChange: (next: TeamMemberConfig) => void;
 }) {
-  const saOptions = monster ? listSuperAwakeningOptions(monster) : [];
   const levelCap = monster ? maxMonsterLevel(monster) : 120;
-  const transformForm = monster?.is_transform_form === true || monster?.is_transform_form === 1;
-  const nameTitle = useTruncatedTitle<HTMLSpanElement>(
-    monster ? monster.name_en ?? `#${monster.monster_id}` : ""
-  );
+  const transformForm =
+    monster?.is_transform_form === true || monster?.is_transform_form === 1;
+  const roleLabel = slotLabel(index);
 
-  const roleLabel =
-    index === 0 ? "Leader" : index === 5 ? "Helper" : `Sub ${index}`;
+  const numField = (
+    label: string,
+    key: "plusHp" | "plusAtk" | "plusRcv" | "eqPlusHp" | "eqPlusAtk" | "eqPlusRcv",
+    max: number
+  ) => (
+    <label className="flex flex-col gap-0.5">
+      <span className="ds-label">{label}</span>
+      <input
+        type="number"
+        min={0}
+        max={max}
+        value={member[key] || ""}
+        onChange={(e) => onChange({ ...member, [key]: Number(e.target.value) || 0 })}
+        className={FIELD_INPUT}
+      />
+    </label>
+  );
 
   return (
     <div className="ds-card p-3">
-      <div className="mb-3 flex items-center justify-between gap-2">
-        <span className="ds-label shrink-0 text-[var(--color-accent-strong)]">
-          {roleLabel}
-        </span>
+      <div className="mb-3 flex flex-wrap items-center justify-between gap-x-2 gap-y-1">
+        <span className="ds-label text-[var(--color-accent-strong)]">{roleLabel} · settings</span>
         {monster && (
-          <span className="flex min-w-0 items-center gap-1.5">
-            {monster.monster_id != null && (
-              <span className="shrink-0 rounded-md bg-[var(--color-inset)] px-1.5 py-0.5 font-mono text-[11px] font-bold tabular-nums text-[var(--color-accent-strong)] ring-1 ring-[var(--color-accent)]/20">
-                #{monster.monster_id}
-              </span>
-            )}
-            <span
-              ref={nameTitle.ref}
-              title={nameTitle.title}
-              className="truncate text-xs font-semibold text-[var(--color-fg-strong)]"
-            >
-              {monster.name_en ?? `#${monster.monster_id}`}
-            </span>
+          <span className="font-mono text-[10px] tabular-nums text-[var(--color-muted)]">
+            {transformForm
+              ? "Transform form — max Lv.99"
+              : `LB +${lb110Percent(monster)}% (lm ${monster.limit_mult ?? 0}, cost ${monster.cost ?? "—"})`}
           </span>
         )}
       </div>
 
-      <div className="grid grid-cols-2 gap-2 text-sm sm:grid-cols-3 lg:grid-cols-4">
-        <label className="flex flex-col gap-0.5">
+      <div className="grid grid-cols-3 gap-2 text-sm">
+        <span className="ds-label col-span-3 text-[var(--color-muted)]">Card</span>
+        <label className="col-span-2 flex flex-col gap-0.5">
           <span className="ds-label">Monster ID</span>
-          <input
+          <QuickSearchIdInput
             type="text"
             inputMode="numeric"
             value={member.monsterId}
             onChange={(e) => onChange({ ...member, monsterId: e.target.value })}
             className={FIELD_INPUT}
             placeholder="e.g. 12806"
-          />
-        </label>
-        <label className="flex flex-col gap-0.5">
-          <span className="ds-label">Eq ID</span>
-          <input
-            type="text"
-            inputMode="numeric"
-            value={member.eqId}
-            onChange={(e) => onChange({ ...member, eqId: e.target.value })}
-            className={FIELD_INPUT}
-            placeholder="Assist"
+            targetKey={`slot-${index}-monster`}
+            targetLabel={`${roleLabel} · Monster ID`}
+            onPickId={(id) =>
+              onChange({ ...member, monsterId: String(id), selectedSuperAwakening: null })
+            }
           />
         </label>
         <label className="flex flex-col gap-0.5">
@@ -272,10 +309,7 @@ function SlotEditor({
           <select
             value={member.level}
             onChange={(e) =>
-              onChange({
-                ...member,
-                level: Number(e.target.value) as MonsterLevelTarget,
-              })
+              onChange({ ...member, level: Number(e.target.value) as MonsterLevelTarget })
             }
             className={FIELD_INPUT}
           >
@@ -284,163 +318,130 @@ function SlotEditor({
             {levelCap >= 120 && <option value={120}>120 (SLB)</option>}
           </select>
         </label>
-        <label className="flex flex-col gap-0.5">
-          <span className="ds-label">+HP</span>
-          <input
-            type="number"
-            min={0}
-            max={297}
-            value={member.plusHp || ""}
-            onChange={(e) =>
-              onChange({ ...member, plusHp: Number(e.target.value) || 0 })
-            }
-            className={FIELD_INPUT}
-          />
-        </label>
-        <label className="flex flex-col gap-0.5">
-          <span className="ds-label">+ATK</span>
-          <input
-            type="number"
-            min={0}
-            max={297}
-            value={member.plusAtk || ""}
-            onChange={(e) =>
-              onChange({ ...member, plusAtk: Number(e.target.value) || 0 })
-            }
-            className={FIELD_INPUT}
-          />
-        </label>
-        <label className="flex flex-col gap-0.5">
-          <span className="ds-label">+RCV</span>
-          <input
-            type="number"
-            min={0}
-            max={297}
-            value={member.plusRcv || ""}
-            onChange={(e) =>
-              onChange({ ...member, plusRcv: Number(e.target.value) || 0 })
-            }
-            className={FIELD_INPUT}
-          />
-        </label>
-        <label className="flex flex-col gap-0.5">
-          <span className="ds-label">Eq +HP</span>
-          <input
-            type="number"
-            min={0}
-            max={99}
-            value={member.eqPlusHp || ""}
-            onChange={(e) =>
-              onChange({ ...member, eqPlusHp: Number(e.target.value) || 0 })
-            }
-            className={FIELD_INPUT}
-          />
-        </label>
-        <label className="flex flex-col gap-0.5">
-          <span className="ds-label">Eq +RCV</span>
-          <input
-            type="number"
-            min={0}
-            max={99}
-            value={member.eqPlusRcv || ""}
-            onChange={(e) =>
-              onChange({ ...member, eqPlusRcv: Number(e.target.value) || 0 })
-            }
-            className={FIELD_INPUT}
-          />
-        </label>
+        {numField("+HP", "plusHp", 297)}
+        {numField("+ATK", "plusAtk", 297)}
+        {numField("+RCV", "plusRcv", 297)}
       </div>
 
-      {saOptions.length > 0 && (
-        <div className="mt-3">
-          <span className="ds-label mb-1.5 block">
-            Super awakening
-          </span>
-          <div className="flex flex-wrap gap-1.5">
-            {saOptions.map((awkId) => {
-              const selected = member.selectedSuperAwakening === awkId;
-              return (
-                <button
-                  key={awkId}
-                  type="button"
-                  title={superAwakeningLabel(awkId)}
-                  onClick={() =>
-                    onChange({ ...member, selectedSuperAwakening: awkId })
-                  }
-                  aria-pressed={selected}
-                  className={`pressable rounded border p-1 ${
-                    selected
-                      ? "border-[var(--color-accent)] bg-[var(--color-accent-muted)] shadow-[var(--shadow-glow)]"
-                      : "border-[var(--color-border)] bg-[var(--color-inset)] hover:border-[var(--color-border-strong)]"
-                  }`}
-                >
-                  <AwakeningSpriteIcon awokenSkillId={awkId} size={22} />
-                </button>
-              );
-            })}
-            <button
-              type="button"
-              onClick={() =>
-                onChange({ ...member, selectedSuperAwakening: null })
-              }
-              aria-pressed={member.selectedSuperAwakening == null}
-              className={`ds-pill pressable min-h-8 px-3 text-[11px] font-semibold ${
-                member.selectedSuperAwakening == null ? "ds-pill-active" : ""
-              }`}
-            >
-              None
-            </button>
-          </div>
-        </div>
-      )}
-
-      {monster && (
-        <p className="mt-3 border-t border-[var(--color-border)] pt-2 font-mono text-[10px] tabular-nums text-[var(--color-muted)]">
-          {transformForm ? (
-            <>Transform form — max Lv.99</>
-          ) : (
-            <>
-              LB +{lb110Percent(monster)}% (lm {monster.limit_mult ?? 0}, cost{" "}
-              {monster.cost ?? "—"})
-            </>
-          )}
-        </p>
-      )}
-
+      <div className="mt-3 grid grid-cols-3 gap-2 border-t border-white/[0.06] pt-3 text-sm">
+        <span className="ds-label col-span-3 text-emerald-300/80">Assist</span>
+        <label className="col-span-3 flex flex-col gap-0.5">
+          <span className="ds-label">Eq ID</span>
+          <QuickSearchIdInput
+            type="text"
+            inputMode="numeric"
+            value={member.eqId}
+            onChange={(e) => onChange({ ...member, eqId: e.target.value })}
+            className={FIELD_INPUT}
+            placeholder="Assist"
+            targetKey={`slot-${index}-assist`}
+            targetLabel={`${roleLabel} · Eq ID`}
+            onPickId={(id) => onChange({ ...member, eqId: String(id) })}
+          />
+        </label>
+        {numField("Eq +HP", "eqPlusHp", 297)}
+        {numField("Eq +ATK", "eqPlusAtk", 297)}
+        {numField("Eq +RCV", "eqPlusRcv", 297)}
+      </div>
     </div>
   );
 }
 
+/** Team total with the raw value (no LS / dungeon / badge) as a secondary line. */
 function TeamTotalBox({
   label,
   value,
+  raw,
   accent,
 }: {
   label: string;
   value: number;
+  raw: number;
   accent: string;
 }) {
   return (
     <div className="ds-card min-w-0 px-2 py-2 text-center sm:px-4">
       <div className="ds-label truncate">{label}</div>
-      <div
-        className={`truncate font-mono text-sm font-bold tabular-nums sm:text-lg ${accent}`}
-      >
+      <div className={`truncate font-mono text-sm font-bold tabular-nums sm:text-lg ${accent}`}>
         {value.toLocaleString()}
+      </div>
+      <div
+        className="truncate font-mono text-[10px] tabular-nums text-[var(--color-muted)]"
+        title="Raw total: no leader skill, dungeon or badge"
+      >
+        raw {raw.toLocaleString()}
       </div>
     </div>
   );
 }
 
-export function TeamBuildPage() {
-  const [config, setConfig] = useState<TeamBuildConfig>(() =>
-    defaultTeamBuildConfig(DEFAULT_AWK_MODIFIER_SETTINGS)
+function CopyRow({
+  label,
+  value,
+  onCopy,
+  accent,
+  buttonLabel = "Copy",
+}: {
+  label: string;
+  value: string;
+  onCopy: () => void;
+  accent: string;
+  buttonLabel?: string;
+}) {
+  return (
+    <div>
+      <div className="mb-1 flex items-center justify-between gap-2">
+        <span className="ds-label text-[var(--color-faint)]">{label}</span>
+        <button
+          type="button"
+          onClick={onCopy}
+          className="ds-btn pressable min-h-8 px-3 text-[11px] font-semibold"
+        >
+          {buttonLabel}
+        </button>
+      </div>
+      <output
+        className={`block break-all rounded-lg bg-[var(--color-inset)] px-2 py-1.5 font-mono text-xs tabular-nums ring-1 ring-white/[0.04] ${accent}`}
+      >
+        {value}
+      </output>
+    </div>
   );
+}
+
+export function TeamBuildPage() {
+  const isMobile = useMobileWebview();
+  return (
+    <QuickSearchProvider defaultExpanded={!isMobile}>
+      <MonsterNameTranslationProvider>
+        <TeamBuildPageInner isMobile={isMobile} />
+      </MonsterNameTranslationProvider>
+    </QuickSearchProvider>
+  );
+}
+
+function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
+  // Persisted draft: shared with the search page's slot picker and restored
+  // after a reload / tab switch.
+  const { draft: config, setDraft: setConfig, clearMembers } = useTeamDraft();
+  const qs = useQuickSearch();
   const [awkOpen, setAwkOpen] = useState(false);
-  const [selectedSlot, setSelectedSlot] = useState(0);
+  const [dungeonOpen, setDungeonOpen] = useState(false);
+  // Trial mode: test the team against an imported dungeon (panel under the totals).
+  const [trialOpen, setTrialOpen] = useState(false);
+  // null = no slot selected: the page shows the team-wide awakening summary.
+  const [selectedSlot, setSelectedSlot] = useState<number | null>(null);
+  const [idsOpen, setIdsOpen] = useState(false);
   const [importText, setImportText] = useState("");
   const [importMsg, setImportMsg] = useState<string | null>(null);
   const [copyMsg, setCopyMsg] = useState<string | null>(null);
+  const awkPanel = useResizablePanel({
+    storageKey: "team-awakenings",
+    side: "right",
+    defaultWidth: 340,
+    minWidth: 280,
+    maxWidth: 520,
+  });
 
   const idsToFetch = useMemo(() => {
     const ids = new Set<number>();
@@ -468,6 +469,7 @@ export function TeamBuildPage() {
     return map;
   }, [lookup.data]);
 
+  // Keep level / super awakening valid for the card in each slot.
   useEffect(() => {
     setConfig((c) => {
       let changed = false;
@@ -489,33 +491,47 @@ export function TeamBuildPage() {
           next = { ...m, level: cap };
         }
         const options = listSuperAwakeningOptions(row);
-        if (!options.length) {
-          if (next.selectedSuperAwakening != null) {
-            changed = true;
-            return { ...next, selectedSuperAwakening: null };
-          }
-          return next;
+        if (next.selectedSuperAwakening != null && !options.includes(next.selectedSuperAwakening)) {
+          changed = true;
+          return { ...next, selectedSuperAwakening: null };
         }
-        if (
-          next.selectedSuperAwakening != null &&
-          options.includes(next.selectedSuperAwakening)
-        ) {
-          return next;
-        }
-        if (next.selectedSuperAwakening == null) {
-          return next;
-        }
-        changed = true;
-        return { ...next, selectedSuperAwakening: null };
+        return next;
       });
       return changed ? { ...c, members } : c;
     });
-  }, [monstersById]);
+  }, [monstersById, setConfig]);
 
-  const summary = useMemo(
-    () => computeTeamStats(config, monstersById),
-    [config, monstersById]
+  // One dungeon list for the picker and the trial: catalog + imported floor tables.
+  const dungeonSources = useDungeonEntries();
+  const dungeon = useMemo(
+    () => resolveDungeonModifiers(config, dungeonSources.entries),
+    [config, dungeonSources.entries]
   );
+  const trialSeed = useMemo(
+    () => seedForEntry(dungeon.entry, dungeonSources.seedsByPostId),
+    [dungeon.entry, dungeonSources.seedsByPostId]
+  );
+  const trialMaxHit = useMemo(
+    () => maxHitForEntry(dungeon.entry, dungeonSources.seedsByPostId),
+    [dungeon.entry, dungeonSources.seedsByPostId]
+  );
+  const dungeonChips = useMemo(
+    () =>
+      describeDungeonModifiers(dungeon.stat, {
+        sun: dungeon.dungeonAwks.includes(128),
+        moon: dungeon.dungeonAwks.includes(129),
+        multiplayer: dungeon.dungeonAwks.includes(30),
+        maxFloor: dungeon.entry?.maxFloor ?? null,
+        conditional: dungeon.conditional,
+      }),
+    [dungeon]
+  );
+  const summary = useMemo(
+    () => computeTeamStats(config, monstersById, dungeon),
+    [config, monstersById, dungeon]
+  );
+  const dungeonActiveLabel =
+    config.dungeonId && config.dungeonId !== "none" ? dungeon.label : null;
 
   const resultBySlot = useMemo(() => {
     const map = new Map<number, MemberStatResult>();
@@ -523,12 +539,65 @@ export function TeamBuildPage() {
     return map;
   }, [summary.members]);
 
-  const updateMember = (index: number, next: TeamMemberConfig) => {
-    setConfig((c) => ({
-      ...c,
-      members: c.members.map((m, i) => (i === index ? next : m)),
-    }));
-  };
+  const updateMember = useCallback(
+    (index: number, next: TeamMemberConfig) => {
+      setConfig((c) => ({
+        ...c,
+        members: c.members.map((m, i) => (i === index ? next : m)),
+      }));
+    },
+    [setConfig]
+  );
+
+  const clearSelection = useCallback(() => {
+    setSelectedSlot(null);
+    qs.clearTarget();
+  }, [qs]);
+
+  /**
+   * Select a slot and point the quick search at its Monster ID. Desktop opens
+   * the sidebar; on mobile the drawer would cover the page, so only the
+   * target is set (the edge tab / search button opens it). Clicking the
+   * selected slot again clears the selection (team view).
+   */
+  const selectSlot = useCallback(
+    (index: number) => {
+      if (selectedSlot === index) {
+        clearSelection();
+        return;
+      }
+      setSelectedSlot(index);
+      (isMobile ? qs.select : qs.activate)({
+        key: `slot-${index}-monster`,
+        label: `${slotLabel(index)} · Monster ID`,
+        onPick: (id) =>
+          setConfig((c) => ({
+            ...c,
+            members: c.members.map((m, i) =>
+              i === index
+                ? { ...m, monsterId: String(id), selectedSuperAwakening: null }
+                : m
+            ),
+          })),
+      });
+    },
+    [qs, setConfig, isMobile, selectedSlot, clearSelection]
+  );
+
+  const pickAssistFor = useCallback(
+    (index: number) => {
+      qs.activate({
+        key: `slot-${index}-assist`,
+        label: `${slotLabel(index)} · Eq ID`,
+        onPick: (id) =>
+          setConfig((c) => ({
+            ...c,
+            members: c.members.map((m, i) => (i === index ? { ...m, eqId: String(id) } : m)),
+          })),
+      });
+    },
+    [qs, setConfig]
+  );
 
   const copyToClipboard = async (text: string, label: string) => {
     try {
@@ -541,14 +610,9 @@ export function TeamBuildPage() {
   };
 
   const handleImport = () => {
-    const { members, warnings } = importTeamIdString(
-      importText,
-      config.members
-    );
+    const { members, warnings } = importTeamIdString(importText, config.members);
     setConfig((c) => ({ ...c, members }));
-    setImportMsg(
-      warnings.length ? warnings.join(" ") : "Team imported."
-    );
+    setImportMsg(warnings.length ? warnings.join(" ") : "Team imported.");
     setImportText("");
     setTimeout(() => setImportMsg(null), 4000);
   };
@@ -557,244 +621,432 @@ export function TeamBuildPage() {
   const exportedEquipment = exportTeamEqString(config);
   const exportedTsubaki = exportTeamTsubakiString(config);
 
-  const selectedMember = config.members[selectedSlot];
-  const selectedMonster = parseId(selectedMember.monsterId)
-    ? monstersById.get(parseId(selectedMember.monsterId)!) ?? null
-    : null;
+  const monsterOf = useCallback(
+    (raw: string): MonsterRecord | null => {
+      const id = parseId(raw);
+      return id ? monstersById.get(id) ?? null : null;
+    },
+    [monstersById]
+  );
+
+  const selectedMember = selectedSlot != null ? config.members[selectedSlot] : null;
+  const selectedMonster = selectedMember ? monsterOf(selectedMember.monsterId) : null;
+  const selectedEq = selectedMember ? monsterOf(selectedMember.eqId) : null;
+  const selectedResult = selectedSlot != null ? resultBySlot.get(selectedSlot) : undefined;
+
+  const teamAwakeningSlots = useMemo(
+    () =>
+      config.members.map((m) => ({
+        member: m,
+        monster: monsterOf(m.monsterId),
+        eq: monsterOf(m.eqId),
+      })),
+    [config.members, monsterOf]
+  );
+
+  const contributions = useMemo(() => {
+    if (!selectedMonster || !selectedMember) return [];
+    const leaders = config.members.filter((m) => m.role === "leader");
+    const leaderRow = (i: number) => {
+      const id = leaders[i] ? parseId(leaders[i].monsterId) : null;
+      return id ? monstersById.get(id) ?? null : null;
+    };
+    const leaderMult = combineLeaderMultipliers(
+      leaderMultipliersForMember(selectedMonster, leaderRow(0), config.leaderOverrides[0]),
+      leaderMultipliersForMember(selectedMonster, leaderRow(1), config.leaderOverrides[1])
+    );
+    const teamAwakenings = config.members.flatMap((m) => {
+      const row = parseId(m.monsterId) ? monstersById.get(parseId(m.monsterId)!) : null;
+      if (!row) return [];
+      const eq = parseId(m.eqId) ? monstersById.get(parseId(m.eqId)!) ?? null : null;
+      return [...parseRegularAwakenings(row.awakenings), ...grantedAssistAwakenings(eq)];
+    });
+    return describeSlotContributions({
+      member: selectedMember,
+      row: selectedMonster,
+      eq: selectedEq,
+      config,
+      dungeon,
+      teamAwakenings,
+      leaderMult,
+    });
+  }, [selectedMonster, selectedEq, selectedMember, config, dungeon, monstersById]);
+
+  const awakeningPanel =
+    selectedSlot != null && selectedMember ? (
+      <TeamAwakeningPanel
+        slotLabel={slotLabel(selectedSlot)}
+        member={selectedMember}
+        monster={selectedMonster}
+        eq={selectedEq}
+        result={selectedResult}
+        contributions={contributions}
+        onChangeMember={(next) => updateMember(selectedSlot, next)}
+        onClearSelection={clearSelection}
+        inline={isMobile}
+      />
+    ) : (
+      <TeamAwakeningSummary slots={teamAwakeningSlots} inline={isMobile} />
+    );
 
   return (
     <div className="flex h-full flex-col bg-[var(--color-surface)] text-[var(--color-fg)]">
       <PageHeader
         title="Team Build"
         subtitle="Team stat calculator"
-        maxWidthClass="max-w-4xl"
+        maxWidthClass="max-w-5xl"
         actions={
-          <button
-            type="button"
-            className="ds-btn pressable min-h-9 px-3 text-xs font-semibold"
-            onClick={() => setAwkOpen(true)}
-          >
-            Dungeon awk
-          </button>
+          <>
+            <button
+              type="button"
+              className="pressable min-h-9 rounded-lg px-2 text-[11px] font-semibold text-[var(--color-muted)] hover:bg-[var(--color-negative)]/10 hover:text-[var(--color-negative)]"
+              onClick={() => {
+                if (window.confirm("Clear all team slots?")) clearMembers();
+              }}
+            >
+              Reset team
+            </button>
+            <button
+              type="button"
+              className={`ds-btn pressable min-h-9 px-3 text-xs font-semibold ${
+                dungeon.entry || config.dungeonId === "custom"
+                  ? "border-[var(--color-accent)]/60 text-[var(--color-accent-strong)]"
+                  : ""
+              }`}
+              onClick={() => setDungeonOpen(true)}
+            >
+              Dungeon
+            </button>
+          </>
         }
       />
 
-      <div className="min-h-0 flex-1 overflow-auto p-3 sm:p-4">
-        <div className="mx-auto max-w-4xl">
-          {/* Team row — PAD layout: Leader | 4 subs | Helper (scrolls horizontally on narrow screens) */}
-          <div className="-mx-3 overflow-x-auto px-3 pb-2 sm:mx-0 sm:px-0">
-            <div className="mx-auto flex w-max items-end gap-2">
-              <div className="shrink-0 rounded-2xl bg-[var(--color-accent)]/[0.06] p-1 ring-1 ring-[var(--color-accent)]/25">
-                <TeamSlotCard
-                  index={0}
-                  member={config.members[0]}
-                  result={resultBySlot.get(0)}
-                  selected={selectedSlot === 0}
-                  onSelect={() => setSelectedSlot(0)}
+      <QuickSearchLayout>
+        <div className="flex min-h-0 flex-1 overflow-hidden">
+          <div className="min-h-0 min-w-0 flex-1 overflow-auto p-3 sm:p-4">
+            <div className="mx-auto max-w-5xl">
+              {/* Team row — PAD layout: Leader | 4 subs | Helper (scrolls horizontally on narrow screens) */}
+              <div className="-mx-3 overflow-x-auto px-3 pb-2 sm:mx-0 sm:px-0">
+                <div className="mx-auto flex w-max items-end gap-2">
+                  <div className="shrink-0 rounded-2xl bg-[var(--color-accent)]/[0.06] p-1 ring-1 ring-[var(--color-accent)]/25">
+                    <TeamSlotCard
+                      index={0}
+                      member={config.members[0]}
+                      result={resultBySlot.get(0)}
+                      selected={selectedSlot === 0}
+                      onSelect={() => selectSlot(0)}
+                      dungeonLabel={dungeonActiveLabel}
+                    />
+                  </div>
+                  <div className="flex shrink-0 gap-1 rounded-2xl bg-white/[0.02] p-1 ring-1 ring-white/[0.06]">
+                    {[1, 2, 3, 4].map((i) => (
+                      <TeamSlotCard
+                        key={i}
+                        index={i}
+                        member={config.members[i]}
+                        result={resultBySlot.get(i)}
+                        selected={selectedSlot === i}
+                        onSelect={() => selectSlot(i)}
+                        dungeonLabel={dungeonActiveLabel}
+                      />
+                    ))}
+                  </div>
+                  <div className="shrink-0 rounded-2xl bg-[var(--color-accent)]/[0.06] p-1 ring-1 ring-[var(--color-accent)]/25">
+                    <TeamSlotCard
+                      index={5}
+                      member={config.members[5]}
+                      result={resultBySlot.get(5)}
+                      selected={selectedSlot === 5}
+                      onSelect={() => selectSlot(5)}
+                      dungeonLabel={dungeonActiveLabel}
+                    />
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setTrialOpen((v) => !v)}
+                    aria-pressed={trialOpen}
+                    title="Trial — test this team against a dungeon"
+                    className={`pressable flex w-11 shrink-0 flex-col items-center justify-center gap-1.5 self-stretch rounded-2xl border ${
+                      trialOpen
+                        ? "border-[var(--color-accent)]/70 bg-[var(--color-accent-muted)] text-[var(--color-accent-strong)] shadow-[var(--shadow-glow)]"
+                        : "border-white/[0.06] bg-[var(--color-panel)]/90 text-[var(--color-muted)] hover:border-[var(--color-border-strong)] hover:bg-[var(--color-hover)] hover:text-[var(--color-accent-strong)]"
+                    }`}
+                  >
+                    <span aria-hidden className="text-xl leading-none">
+                      ⇒
+                    </span>
+                    <span className="ds-label rotate-180 [writing-mode:vertical-rl]">Trial</span>
+                  </button>
+                </div>
+              </div>
+
+              <p className="mb-3 text-center text-[10px] text-[var(--color-faint)]">
+                Click a slot to edit it or pick a replacement from the quick search on the left.
+                Slot stats include stat awakenings, assist, leader skill
+                {dungeonActiveLabel ? " and the selected dungeon" : ""}; totals add the badge and
+                Enhanced Team HP / RCV awakenings. The ⇒ button opens the trial: test the team
+                against an imported dungeon.
+              </p>
+
+              <div className="mb-3 grid grid-cols-3 gap-2 sm:gap-3">
+                <TeamTotalBox
+                  label="Total HP"
+                  value={summary.teamHp}
+                  raw={summary.teamRawHp}
+                  accent={STAT_TEXT.hp}
+                />
+                <TeamTotalBox
+                  label="Total ATK"
+                  value={summary.teamAtk}
+                  raw={summary.teamRawAtk}
+                  accent={STAT_TEXT.atk}
+                />
+                <TeamTotalBox
+                  label="Total RCV"
+                  value={summary.teamRcv}
+                  raw={summary.teamRawRcv}
+                  accent={STAT_TEXT.rcv}
                 />
               </div>
 
-              <div className="flex shrink-0 gap-1 rounded-2xl bg-white/[0.02] p-1 ring-1 ring-white/[0.06]">
-                {[1, 2, 3, 4].map((i) => (
-                  <TeamSlotCard
-                    key={i}
-                    index={i}
-                    member={config.members[i]}
-                    result={resultBySlot.get(i)}
-                    selected={selectedSlot === i}
-                    onSelect={() => setSelectedSlot(i)}
-                  />
-                ))}
-              </div>
-
-              <div className="shrink-0 rounded-2xl bg-[var(--color-accent)]/[0.06] p-1 ring-1 ring-[var(--color-accent)]/25">
-                <TeamSlotCard
-                  index={5}
-                  member={config.members[5]}
-                  result={resultBySlot.get(5)}
-                  selected={selectedSlot === 5}
-                  onSelect={() => setSelectedSlot(5)}
+              {trialOpen && (
+                <TeamTrialPanel
+                  config={config}
+                  monstersById={monstersById}
+                  teamHp={summary.teamHp}
+                  slotLabel={slotLabel}
+                  entry={dungeon.entry}
+                  dungeonLabel={dungeon.label}
+                  seed={trialSeed}
+                  maxHit={trialMaxHit}
+                  listStatus={dungeonSources.listStatus}
+                  listError={dungeonSources.listError}
+                  onOpenDungeon={() => setDungeonOpen(true)}
+                  onClose={() => setTrialOpen(false)}
                 />
-              </div>
-            </div>
-          </div>
-
-          <p className="mb-4 text-center text-[10px] text-[var(--color-faint)]">
-            Raw stats: level, +points, super awakening, assist. No badge,
-            leader skill, or dungeon awk.
-          </p>
-
-          {/* Team raw totals */}
-          <div className="mb-6 grid grid-cols-3 gap-2 sm:gap-3">
-            <TeamTotalBox
-              label="Total HP"
-              value={summary.teamRawHp}
-              accent={STAT_TEXT.hp}
-            />
-            <TeamTotalBox
-              label="Total ATK"
-              value={summary.teamRawAtk}
-              accent={STAT_TEXT.atk}
-            />
-            <TeamTotalBox
-              label="Total RCV"
-              value={summary.teamRawRcv}
-              accent={STAT_TEXT.rcv}
-            />
-          </div>
-
-          <div className="ds-card mb-4 p-3">
-            <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
-              <h2 className="ds-label">Team IDs</h2>
-              {copyMsg && (
-                <span className="text-[10px] font-semibold text-[var(--color-positive)]">
-                  {copyMsg}
-                </span>
               )}
-            </div>
 
-            <div className="mb-3 space-y-2">
-              <div>
-                <div className="mb-1 flex items-center justify-between gap-2">
-                  <span className="ds-label text-[var(--color-faint)]">
-                    Monsters
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => copyToClipboard(exportedMonsters, "Monsters")}
-                    className="ds-btn pressable min-h-8 px-3 text-[11px] font-semibold"
-                  >
-                    Copy
-                  </button>
+              {/* Team-level settings: badge + dungeon in one bar */}
+              <section className="ds-card mb-3 p-3">
+                <h2 className="ds-label mb-2">Team settings</h2>
+                <div className="grid gap-3 sm:grid-cols-[minmax(0,240px)_minmax(0,1fr)]">
+                  <label className="flex flex-col gap-1 text-sm">
+                    <span className="text-xs text-[var(--color-muted)]">Badge</span>
+                    <select
+                      value={config.badge}
+                      onChange={(e) =>
+                        setConfig((c) => ({ ...c, badge: e.target.value as TeamBadgeId }))
+                      }
+                      className="ds-input min-h-9 px-2 py-1"
+                    >
+                      {BADGE_OPTIONS.map((b) => (
+                        <option key={b.id} value={b.id}>
+                          {b.label}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <div className="flex min-w-0 flex-col gap-1 text-sm">
+                    <span className="text-xs text-[var(--color-muted)]">Dungeon</span>
+                    <button
+                      type="button"
+                      onClick={() => setDungeonOpen(true)}
+                      className="ds-input pressable flex min-h-9 items-center justify-between gap-2 px-2 py-1 text-left text-xs"
+                    >
+                      <span className="truncate font-semibold text-[var(--color-fg-strong)]">
+                        {dungeon.label}
+                      </span>
+                      <span aria-hidden className="text-[var(--color-muted)]">
+                        ▾
+                      </span>
+                    </button>
+                    {(dungeonChips.length > 0 || config.awkSettings.enabled.length > 0) && (
+                      <div className="flex flex-wrap items-center gap-1">
+                        {dungeonChips.map((c) => (
+                          <span
+                            key={c}
+                            className="rounded-full border border-[var(--color-border)] bg-[var(--color-inset)] px-1.5 py-px font-mono text-[9px] font-semibold text-[var(--color-fg)]"
+                          >
+                            {c}
+                          </span>
+                        ))}
+                        {config.awkSettings.enabled.length > 0 && (
+                          <span className="text-[10px] text-[var(--color-muted)]">
+                            + {config.awkSettings.enabled.length} manual awakening
+                            {config.awkSettings.enabled.length === 1 ? "" : "s"}
+                          </span>
+                        )}
+                      </div>
+                    )}
+                  </div>
                 </div>
-                <output className="block break-all rounded-lg bg-[var(--color-inset)] px-2 py-1.5 font-mono text-xs tabular-nums text-[var(--color-accent-strong)] ring-1 ring-white/[0.04]">
-                  {exportedMonsters}
-                </output>
-              </div>
+              </section>
 
-              <div>
-                <div className="mb-1 flex items-center justify-between gap-2">
-                  <span className="ds-label text-[var(--color-faint)]">
-                    Equipment
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => copyToClipboard(exportedEquipment, "Equipment")}
-                    className="ds-btn pressable min-h-8 px-3 text-[11px] font-semibold"
-                  >
-                    Copy
-                  </button>
-                </div>
-                <output className="block break-all rounded-lg bg-[var(--color-inset)] px-2 py-1.5 font-mono text-xs tabular-nums text-emerald-300 ring-1 ring-white/[0.04]">
-                  {exportedEquipment}
-                </output>
-              </div>
-            </div>
-
-            <div className="mb-3 border-t border-[var(--color-border)] pt-3">
-              <div className="mb-1 flex flex-wrap items-center justify-between gap-2">
-                <span className="ds-label text-[var(--color-faint)]">
-                  Tsubaki
-                </span>
+              {/* Team IDs — collapsed by default */}
+              <section className="ds-card mb-4 p-3">
                 <button
                   type="button"
-                  onClick={() => copyToClipboard(exportedTsubaki, "Tsubaki")}
-                  className="pressable min-h-8 rounded-lg border border-[var(--color-secondary)]/40 bg-[var(--color-secondary-muted)] px-3 text-[11px] font-semibold text-[var(--color-secondary-strong)] hover:border-[var(--color-secondary)]"
+                  onClick={() => setIdsOpen((v) => !v)}
+                  aria-expanded={idsOpen}
+                  className="flex w-full items-center gap-2 text-left"
                 >
-                  Copy for Tsubaki
-                </button>
-              </div>
-              <output className="block break-all rounded-lg bg-[var(--color-inset)] px-2 py-1.5 font-mono text-xs tabular-nums text-[var(--color-secondary-strong)] ring-1 ring-white/[0.04]">
-                {exportedTsubaki}
-              </output>
-            </div>
-
-            <p className="mb-2 text-[10px] text-[var(--color-muted)]">
-              Order: leader · 4 subs · helper. Empty slot ={" "}
-              <code className="font-mono font-bold text-[var(--color-accent-strong)]">1</code>. Import: line 1
-              monsters, line 2 equipment.
-            </p>
-            <div className="flex flex-col gap-2 sm:flex-row">
-              <textarea
-                rows={2}
-                value={importText}
-                onChange={(e) => setImportText(e.target.value)}
-                placeholder="Paste monster IDs (line 1) and optional eq IDs (line 2)…"
-                className="ds-input min-w-0 flex-1 resize-y px-2 py-1.5 font-mono text-xs"
-              />
-              <button
-                type="button"
-                onClick={handleImport}
-                disabled={!importText.trim()}
-                className="ds-btn-primary pressable min-h-10 shrink-0 px-4 text-xs disabled:cursor-not-allowed"
-              >
-                Import
-              </button>
-            </div>
-            {importMsg && (
-              <p className="mt-2 text-[10px] text-[var(--color-amber-text)]">{importMsg}</p>
-            )}
-          </div>
-
-          <div className="grid gap-4 lg:grid-cols-[1fr_280px]">
-            <SlotEditor
-              index={selectedSlot}
-              member={selectedMember}
-              monster={selectedMonster}
-              onChange={(next) => updateMember(selectedSlot, next)}
-            />
-
-            <aside className="flex flex-col gap-3">
-              <div className="ds-card p-3">
-                <h2 className="ds-label mb-2">Team settings</h2>
-                <label className="flex flex-col gap-1 text-sm">
-                  <span className="text-xs text-[var(--color-muted)]">Badge</span>
-                  <select
-                    value={config.badge}
-                    onChange={(e) =>
-                      setConfig((c) => ({
-                        ...c,
-                        badge: e.target.value as TeamBadgeId,
-                      }))
-                    }
-                    className="ds-input min-h-9 px-2 py-1"
+                  <span
+                    aria-hidden
+                    className={`text-xs text-[var(--color-accent)] transition-transform ${idsOpen ? "" : "-rotate-90"}`}
                   >
-                    {BADGE_OPTIONS.map((b) => (
-                      <option key={b.id} value={b.id}>
-                        {b.label}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-                <p className="mt-2 text-[10px] text-[var(--color-muted)]">
-                  Badge & leader skill affect team totals below, not slot raw stats.
-                </p>
-              </div>
+                    ▾
+                  </span>
+                  <h2 className="ds-label">Team IDs · import / export</h2>
+                  <span className="min-w-0 flex-1 truncate font-mono text-[10px] tabular-nums text-[var(--color-faint)]">
+                    {exportedMonsters}
+                  </span>
+                  {copyMsg && (
+                    <span className="shrink-0 text-[10px] font-semibold text-[var(--color-positive)]">
+                      {copyMsg}
+                    </span>
+                  )}
+                </button>
+                {idsOpen && (
+                  <div className="mt-3 space-y-3">
+                    <CopyRow
+                      label="Monsters"
+                      value={exportedMonsters}
+                      accent="text-[var(--color-accent-strong)]"
+                      onCopy={() => copyToClipboard(exportedMonsters, "Monsters")}
+                    />
+                    <CopyRow
+                      label="Equipment"
+                      value={exportedEquipment}
+                      accent="text-emerald-300"
+                      onCopy={() => copyToClipboard(exportedEquipment, "Equipment")}
+                    />
+                    <CopyRow
+                      label="Tsubaki"
+                      value={exportedTsubaki}
+                      accent="text-[var(--color-secondary-strong)]"
+                      buttonLabel="Copy for Tsubaki"
+                      onCopy={() => copyToClipboard(exportedTsubaki, "Tsubaki")}
+                    />
+                    <p className="text-[10px] text-[var(--color-muted)]">
+                      Order: leader · 4 subs · helper. Empty slot ={" "}
+                      <code className="font-mono font-bold text-[var(--color-accent-strong)]">1</code>.
+                      Import: line 1 monsters, line 2 equipment.
+                    </p>
+                    <div className="flex flex-col gap-2 sm:flex-row">
+                      <textarea
+                        rows={2}
+                        value={importText}
+                        onChange={(e) => setImportText(e.target.value)}
+                        placeholder="Paste monster IDs (line 1) and optional eq IDs (line 2)…"
+                        className="ds-input min-w-0 flex-1 resize-y px-2 py-1.5 font-mono text-xs"
+                      />
+                      <button
+                        type="button"
+                        onClick={handleImport}
+                        disabled={!importText.trim()}
+                        className="ds-btn-primary pressable min-h-10 shrink-0 px-4 text-xs disabled:cursor-not-allowed"
+                      >
+                        Import
+                      </button>
+                    </div>
+                    {importMsg && (
+                      <p className="text-[10px] text-[var(--color-amber-text)]">{importMsg}</p>
+                    )}
+                  </div>
+                )}
+              </section>
 
-              <div className="rounded-xl border border-[var(--color-positive)]/25 bg-[var(--color-positive)]/[0.06] p-3">
-                <h2 className="ds-label mb-2 text-emerald-300">
-                  With badge + LS
-                </h2>
-                <div className="space-y-1 text-sm">
-                  <div className={`flex justify-between ${STAT_TEXT.hp}`}>
-                    <span className="font-semibold">HP</span>
-                    <span className="font-mono font-bold tabular-nums">{summary.teamHp.toLocaleString()}</span>
+              {/* Selected slot: card sheet beside its settings once the column is wide enough
+                  (container query, so the layout follows the space left by the side panels) */}
+              {selectedSlot == null || !selectedMember ? (
+                <div className="ds-card p-4 text-center text-xs text-[var(--color-muted)]">
+                  No slot selected — the panel shows the whole team's awakenings. Click a slot to
+                  see its card and settings.
+                  {isMobile && <div className="mt-3 text-left">{awakeningPanel}</div>}
+                </div>
+              ) : (
+              <div className="@container">
+                <div className="grid gap-4 @xl:grid-cols-[minmax(280px,380px)_minmax(240px,1fr)] @xl:items-start">
+                  <div className="min-w-0">
+                    {selectedMonster ? (
+                      <TeamCardSheet
+                        slotLabel={slotLabel(selectedSlot)}
+                        member={selectedMember}
+                        monster={selectedMonster}
+                        eq={selectedEq}
+                        result={selectedResult}
+                        onPickAssist={() => pickAssistFor(selectedSlot)}
+                      />
+                    ) : (
+                      <div className="ds-card p-4 text-center text-xs text-[var(--color-muted)]">
+                        {slotLabel(selectedSlot)} is empty — pick a card from the quick search or
+                        type an ID in the slot settings.
+                      </div>
+                    )}
                   </div>
-                  <div className={`flex justify-between ${STAT_TEXT.atk}`}>
-                    <span className="font-semibold">ATK</span>
-                    <span className="font-mono font-bold tabular-nums">{summary.teamAtk.toLocaleString()}</span>
-                  </div>
-                  <div className={`flex justify-between ${STAT_TEXT.rcv}`}>
-                    <span className="font-semibold">RCV</span>
-                    <span className="font-mono font-bold tabular-nums">{summary.teamRcv.toLocaleString()}</span>
+
+                  <div className="min-w-0 space-y-3">
+                    <SlotEditor
+                      index={selectedSlot}
+                      member={selectedMember}
+                      monster={selectedMonster}
+                      onChange={(next) => updateMember(selectedSlot, next)}
+                    />
+                    {isMobile && <div className="ds-card p-3">{awakeningPanel}</div>}
                   </div>
                 </div>
               </div>
-            </aside>
+              )}
+            </div>
           </div>
-        </div>
-      </div>
 
+          {!isMobile && (
+            <ResizableSidePanel
+              side="right"
+              collapsed={awkPanel.collapsed}
+              width={awkPanel.width}
+              dragHandleProps={awkPanel.dragHandleProps}
+              collapsedLabel="Awakenings"
+              onExpandToggle={awkPanel.toggleCollapsed}
+              ariaLabel="awakenings and stat bonuses"
+            >
+              <div className="flex h-full min-w-0 flex-col overflow-hidden">
+                <div className="glass-bar flex shrink-0 items-center justify-between gap-2 border-b border-white/[0.06] px-3 py-2">
+                  <h2 className="flex items-center gap-2 text-[13px] font-bold uppercase tracking-wider text-[var(--color-fg-strong)]">
+                    <span
+                      aria-hidden
+                      className="h-3.5 w-1 rounded-full bg-[var(--color-positive)] shadow-[0_0_12px_rgba(16,185,129,0.35)]"
+                    />
+                    Awakenings
+                  </h2>
+                  <button
+                    type="button"
+                    onClick={awkPanel.toggleCollapsed}
+                    title="Collapse awakenings"
+                    aria-label="Collapse awakenings"
+                    className="pressable flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-[var(--color-border)] bg-white/5 text-[var(--color-muted)] hover:border-[var(--color-accent)]/60 hover:bg-[var(--color-accent-muted)] hover:text-[var(--color-accent-strong)]"
+                  >
+                    <span aria-hidden className="text-sm leading-none">
+                      ›
+                    </span>
+                  </button>
+                </div>
+                <div className="min-h-0 flex-1 overflow-hidden">{awakeningPanel}</div>
+              </div>
+            </ResizableSidePanel>
+          )}
+        </div>
+      </QuickSearchLayout>
+
+      <DungeonPickerModal
+        open={dungeonOpen && !awkOpen}
+        config={config}
+        entries={dungeonSources.entries}
+        seedsByPostId={dungeonSources.seedsByPostId}
+        onChange={(next) => setConfig(next)}
+        onClose={() => setDungeonOpen(false)}
+        onOpenAdvanced={() => setAwkOpen(true)}
+      />
       <AwkModifierModal
         open={awkOpen}
         stat="hp"

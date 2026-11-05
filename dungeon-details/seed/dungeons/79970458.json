@@ -5,6 +5,13 @@
   "sourceUrl": "https://appmedia.jp/pazudora/79970458",
   "modified": "2026-06-25T21:45:00",
   "importedAt": "2026-06-28T18:05:55.012Z",
+  "maxDamage": {
+    "value": 43200000,
+    "floor": "B12",
+    "monsterId": 12698,
+    "monsterNameJa": "レーヴェン&ラジョア",
+    "raw": "43,200,000ダメージ(4.5倍時)+以下①~③いずれか使用"
+  },
   "requiredGimmicks": [
     {
       "id": "覚醒無効",

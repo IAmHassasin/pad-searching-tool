@@ -10,6 +10,7 @@ import { PAD_AWAKENING } from "../../lib/pad-constants";
 import { MonsterAttributeSpriteIcon } from "../MonsterAttributeSpriteIcon";
 import { MonsterTypeSpriteIcon } from "../MonsterTypeSpriteIcon";
 import { CollapsibleFilterSection } from "./collapsible-filter-section";
+import { hasActiveMonsterFilters } from "../../lib/filters";
 
 export { MONSTER_TYPES };
 
@@ -43,24 +44,7 @@ export function toggleSet(set: Set<number>, n: number): Set<number> {
   return next;
 }
 
-export function hasActiveMonsterFilters(filters: MonsterFilters): boolean {
-  return (
-    filters.rarity.size > 0 ||
-    hasAttributeSlotFilters(filters.attributeSlots) ||
-    filters.types.size > 0 ||
-    filters.hpMin != null ||
-    filters.hpMax != null ||
-    filters.atkMin != null ||
-    filters.atkMax != null ||
-    filters.rcvMin != null ||
-    filters.rcvMax != null ||
-    filters.idQuery.trim().length > 0 ||
-    filters.awakeningIds.length > 0 ||
-    filters.excludedAwakeningIds.length > 0 ||
-    filters.vanishOnly ||
-    filters.vanishAwakeningIds.length > 0
-  );
-}
+export { hasActiveMonsterFilters };
 
 export function FilterChip({
   label,

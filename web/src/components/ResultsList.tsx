@@ -1,11 +1,14 @@
 import { useVirtualizer } from "@tanstack/react-virtual";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   monsterNameNeedsTranslation,
   useMonsterNameTranslation,
 } from "../hooks/useLiveMonsterNames";
+import { useLongPress } from "../hooks/useLongPress";
 import { useTruncatedTitle } from "../hooks/useTruncatedTitle";
 import { monsterRowId } from "../lib/filters";
+import type { TeamDraftSlotKind } from "../lib/team-build/team-draft-storage";
+import type { TeamBuildConfig } from "../lib/team-build/types";
 import { listedMonsterId } from "../lib/result-id-scope";
 import { formatLeaderSkillEhp } from "../lib/leader-ehp";
 import {
@@ -22,6 +25,20 @@ import {
   MonsterResultPreviewFloating,
   useMonsterResultPreview,
 } from "./MonsterResultPreviewPopover";
+import { TeamSlotMenu, type TeamSlotMenuState } from "./team-draft/TeamSlotMenu";
+
+/** Enables the right-click / long-press "add to team slot" menu on rows. */
+export type ResultsTeamDraftProps = {
+  draft: TeamBuildConfig;
+  onPickSlot: (
+    row: MonsterRecord,
+    slotIndex: number,
+    kind: TeamDraftSlotKind
+  ) => void;
+};
+
+/** Row menu props plus the dock's clear action (panels that also render the dock). */
+export type TeamDraftPanelProps = ResultsTeamDraftProps & { onClear: () => void };
 
 function groupMatchMark(row: MonsterRecord): {
   name: string;
@@ -91,6 +108,7 @@ type Props = {
   minimal?: boolean;
   resultSort?: ResultSortOption;
   displaySections?: ResultDisplaySections;
+  teamDraft?: ResultsTeamDraftProps;
 };
 
 export function ResultsList({
@@ -102,8 +120,15 @@ export function ResultsList({
   minimal = false,
   resultSort = "default",
   displaySections,
+  teamDraft,
 }: Props) {
   const parentRef = useRef<HTMLDivElement>(null);
+  const [slotMenu, setSlotMenu] = useState<TeamSlotMenuState | null>(null);
+  const openSlotSheet = useCallback((row: MonsterRecord) => {
+    setSlotMenu({ row, point: null });
+  }, []);
+  const longPress = useLongPress<MonsterRecord>({ onLongPress: openSlotSheet });
+  const slotMenuEnabled = teamDraft != null;
   const { requestIds, nameFor } = useMonsterNameTranslation();
   const {
     preview,
@@ -201,14 +226,56 @@ export function ResultsList({
                   role="button"
                   tabIndex={0}
                   aria-pressed={active ? true : undefined}
-                  onClick={() => onSelect(row)}
+                  onClick={() => {
+                    // A long-press already opened the slot menu; swallow the click.
+                    if (slotMenuEnabled && longPress.consumeLongPress()) return;
+                    onSelect(row);
+                  }}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" || e.key === " ") {
                       e.preventDefault();
                       onSelect(row);
+                      return;
+                    }
+                    // Keyboard equivalent of right-click: ContextMenu key or Shift+F10.
+                    if (
+                      slotMenuEnabled &&
+                      (e.key === "ContextMenu" || (e.shiftKey && e.key === "F10"))
+                    ) {
+                      e.preventDefault();
+                      setSlotMenu({ row, point: null });
                     }
                   }}
+                  onContextMenu={
+                    slotMenuEnabled
+                      ? (e) => {
+                          e.preventDefault();
+                          // Touch long-press fires a synthetic contextmenu; the
+                          // sheet is already open from the pointer timer.
+                          if (longPress.consumeLongPress()) return;
+                          // Browser-generated long-press (touch) → bottom sheet;
+                          // a real right-click → menu at the pointer.
+                          const native = e.nativeEvent as PointerEvent;
+                          const touchLike =
+                            native.pointerType === "touch" ||
+                            native.pointerType === "pen" ||
+                            !window.matchMedia("(hover: hover) and (pointer: fine)")
+                              .matches;
+                          setSlotMenu({
+                            row,
+                            point: touchLike
+                              ? null
+                              : { x: e.clientX, y: e.clientY },
+                          });
+                        }
+                      : undefined
+                  }
+                  {...(slotMenuEnabled ? longPress.handlersFor(row) : {})}
                   className={`cursor-pointer rounded-xl border transition-colors duration-150 ${
+                    slotMenuEnabled
+                      ? "[-webkit-touch-callout:none] [@media(hover:none)]:select-none"
+                      : ""
+                  } ${
                     minimal ? "flex items-center gap-1.5 px-1.5 py-1" : "grid items-center"
                   } ${
                     active
@@ -331,6 +398,17 @@ export function ResultsList({
         previewId={previewId}
         onClose={closePreview}
       />
+      {teamDraft && slotMenu && (
+        <TeamSlotMenu
+          state={slotMenu}
+          draft={teamDraft.draft}
+          onPick={(slotIndex, kind) => {
+            teamDraft.onPickSlot(slotMenu.row, slotIndex, kind);
+            setSlotMenu(null);
+          }}
+          onClose={() => setSlotMenu(null)}
+        />
+      )}
       {!loading && rows.length === 0 && (
         <p className="p-4 text-sm text-[var(--color-muted)]">
           No monsters match the current filters.

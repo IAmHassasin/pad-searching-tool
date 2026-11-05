@@ -1,0 +1,310 @@
+{
+  "appmediaPostId": 77849051,
+  "titleJa": "【パズドラ】潜在パラメータ強化ラッシュの高速周回パーティ",
+  "titleEn": "潜在パラメータ強化ラッシュの高速周回パーティ",
+  "sourceUrl": "https://appmedia.jp/pazudora/77849051",
+  "modified": "2026-10-09T19:07:00",
+  "importedAt": "2026-11-04T20:05:52.903Z",
+  "maxDamage": {
+    "value": 1600000,
+    "floor": "B5",
+    "monsterId": 4352,
+    "monsterNameJa": "ボーマ",
+    "raw": "1,600,000ダメージ+1ターン：全員攻撃力激減"
+  },
+  "requiredGimmicks": [],
+  "cautionGimmicks": [
+    {
+      "id": "HP固定",
+      "labelJa": "HP固定",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2017/05/60e9e2a1f6d00b82487bc43986cf53ac.jpg",
+      "category": "caution"
+    },
+    {
+      "id": "個別デバフ",
+      "labelJa": "個別デバフ",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2022/06/c696e6d406dcc54c362dba5a934c0bf8.webp",
+      "category": "caution"
+    },
+    {
+      "id": "シルド",
+      "labelJa": "シールド",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2022/12/91fdcbae458ea809f6ac2a1f95c91610.webp",
+      "category": "caution"
+    }
+  ],
+  "floors": [
+    {
+      "floor": "B1",
+      "spawnNote": "2体出現",
+      "spawns": [
+        {
+          "monsterId": 3317,
+          "monsterNameJa": "潜在全パラ強化",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/3317.webp",
+          "types": [],
+          "hp": "5000万",
+          "defense": "100万",
+          "effects": [
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 3700,
+          "monsterNameJa": "潜在HP強化＋",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/3700.webp",
+          "types": [],
+          "hp": "500億",
+          "defense": "100万",
+          "effects": [
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 3701,
+          "monsterNameJa": "潜在攻撃強化＋",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/3701.webp",
+          "types": [],
+          "hp": "5000万",
+          "defense": "100万",
+          "effects": [
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 3702,
+          "monsterNameJa": "潜在回復強化＋",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/3702.webp",
+          "types": [],
+          "hp": "5000万",
+          "defense": "100万",
+          "effects": [
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B2",
+      "spawnNote": "2体出現",
+      "spawns": [
+        {
+          "monsterId": 3317,
+          "monsterNameJa": "潜在全パラ強化",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/3317.webp",
+          "types": [],
+          "hp": "5000万",
+          "defense": "100万",
+          "effects": [
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 3700,
+          "monsterNameJa": "潜在HP強化＋",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/3700.webp",
+          "types": [],
+          "hp": "500億",
+          "defense": "100万",
+          "effects": [
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 3701,
+          "monsterNameJa": "潜在攻撃強化＋",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/3701.webp",
+          "types": [],
+          "hp": "5000万",
+          "defense": "100万",
+          "effects": [
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 3702,
+          "monsterNameJa": "潜在回復強化＋",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/3702.webp",
+          "types": [],
+          "hp": "5000万",
+          "defense": "100万",
+          "effects": [
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 7021,
+          "monsterNameJa": "潜在HP強化＋＋",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/7021.webp",
+          "types": [],
+          "hp": "500億",
+          "defense": "100万",
+          "effects": [
+            {
+              "raw": "現HP99%割合ダメージ",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 7022,
+          "monsterNameJa": "潜在攻撃強化＋＋",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/7022.webp",
+          "types": [],
+          "hp": "5000万",
+          "defense": "100万",
+          "effects": [
+            {
+              "raw": "900,000ダメージ+1ターン：2体攻撃力激減",
+              "tags": [],
+              "gimmickIds": [
+                "攻撃力減少"
+              ],
+              "damage": "900,000ダメージ",
+              "turns": "1ターン"
+            }
+          ]
+        },
+        {
+          "monsterId": 7023,
+          "monsterNameJa": "潜在回復強化＋＋",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/7023.webp",
+          "types": [],
+          "hp": "5000万",
+          "defense": "100万",
+          "effects": [
+            {
+              "raw": "32,500ダメージ+全ドロップ変化",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": "32,500ダメージ",
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B5",
+      "spawnNote": "1体出現",
+      "spawns": [
+        {
+          "monsterId": 4352,
+          "monsterNameJa": "ボーマ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/4352.webp",
+          "types": [
+            "悪魔タイプ",
+            "攻撃タイプ"
+          ],
+          "hp": "600億",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "1,600,000ダメージ+1ターン：全員攻撃力激減",
+              "tags": [],
+              "gimmickIds": [
+                "攻撃力減少"
+              ],
+              "damage": "1,600,000ダメージ",
+              "turns": "1ターン"
+            }
+          ]
+        },
+        {
+          "monsterId": 4353,
+          "monsterNameJa": "ザパン",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/4353.webp",
+          "types": [
+            "神タイプ",
+            "体力タイプ"
+          ],
+          "hp": "600億",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "1,570,000ダメージ+2ターン：最大HP半減",
+              "tags": [],
+              "gimmickIds": [
+                "最大HP減少"
+              ],
+              "damage": "1,570,000ダメージ",
+              "turns": "2ターン"
+            }
+          ]
+        },
+        {
+          "monsterId": 4354,
+          "monsterNameJa": "ビュート",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/4354.webp",
+          "types": [
+            "バランスタイプ"
+          ],
+          "hp": "600億",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "1,550,000ダメージ+シールド1個生成(HP100億)",
+              "tags": [],
+              "gimmickIds": [
+                "シルド"
+              ],
+              "damage": "1,550,000ダメージ",
+              "turns": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

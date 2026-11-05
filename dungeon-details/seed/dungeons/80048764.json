@@ -5,6 +5,13 @@
   "sourceUrl": "https://appmedia.jp/pazudora/80048764",
   "modified": "2026-06-25T21:45:00",
   "importedAt": "2026-06-28T18:05:55.952Z",
+  "maxDamage": {
+    "value": 31065000,
+    "floor": "B15",
+    "monsterId": 13795,
+    "monsterNameJa": "グレゴウル(変身)",
+    "raw": "31,065,000ダメージ(1.5倍時)の連続攻撃"
+  },
   "requiredGimmicks": [
     {
       "id": "覚醒無効",

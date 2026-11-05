@@ -1,4 +1,4 @@
-import type { MonsterRecord } from "../types";
+import type { MonsterRecord } from "../types.ts";
 
 /** dadguide `d_attributes` + sprite column (rows 0–6). */
 export const MONSTER_ATTRIBUTES = [

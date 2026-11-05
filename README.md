@@ -205,6 +205,8 @@ make dungeon-master                        # batch URLs in dungeon-details/seed/
 make dungeon-master URL=https://appmedia.jp/pazudora/79970458
 make dungeon-import                        # parse all URLs in dungeon-urls.txt
 make dungeon-import URL=79970458           # parse one dungeon
+make dungeon-max-damage                    # recompute maxDamage of every seed JSON (offline)
+make dungeon-max-hits                      # resolve the max hit of every team-build catalog entry (AppMedia guides → seeds, Kamigame fallback)
 ```
 
 ## Dungeon details (AppMedia)
@@ -214,7 +216,9 @@ Offline pipeline under **`dungeon-details/`** — parse dungeon floor tables fro
 | Step | Command | Output |
 |------|---------|--------|
 | 1. Gimmick master | `make dungeon-master` or `make dungeon-master URL=<url>` | `dungeon-details/seed/gimmick-master.json` |
-| 2. Parse dungeons | `make dungeon-import` or `make dungeon-import URL=<url>` | `dungeon-details/seed/dungeons/<id>.json` (includes `titleEn`) + SQLite |
+| 2. Parse dungeons | `make dungeon-import` or `make dungeon-import URL=<url>` | `dungeon-details/seed/dungeons/<id>.json` (includes `titleEn` and `maxDamage`, the hardest hit of the preemptive table) + SQLite |
+| 3. Backfill max hit | `make dungeon-max-damage` | rewrites `maxDamage` in every seed JSON (+ SQLite) without fetching — needed once for seeds imported before the field existed |
+| 4. Catalog max hits | `make dungeon-max-hits` | for every entry of `web/src/lib/team-build/dungeon-catalog.json`: finds the AppMedia guide (source URL, 降臨/ゲリラ/テクニカル index pages, WP search), imports its floor table as a seed and links it (`appmediaPostId`); guides without the table and Kamigame enemy tables are stored on the entry as `maxHit`. Options: `--dry-run`, `--only <text>`, `--limit N`, `--cache <dir>`, `--report <file>` |
 
 - Edit **`dungeon-details/seed/dungeon-urls.txt`** — one AppMedia URL/postId per line (used by both `dungeon-master` and `dungeon-import`).
 - Edit **`dungeon-details/seed/gimmick-phrase-aliases.json`** — extra Japanese phrases → gimmick id (improves effect matching).

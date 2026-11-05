@@ -1,0 +1,185 @@
+{
+  "appmediaPostId": 416955,
+  "titleJa": "【パズドラ】スカーレット降臨の攻略と安定周回パーティ",
+  "titleEn": "スカーレット降臨の攻略と安定周回パーティ",
+  "sourceUrl": "https://appmedia.jp/pazudora/416955",
+  "modified": "2018-11-01T17:35:23",
+  "importedAt": "2026-11-04T20:01:33.148Z",
+  "maxDamage": {
+    "value": 31584,
+    "floor": "B6",
+    "monsterId": null,
+    "monsterNameJa": null,
+    "raw": "31,584ダメージ"
+  },
+  "requiredGimmicks": [],
+  "cautionGimmicks": [],
+  "floors": [
+    {
+      "floor": "B3",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": null,
+          "monsterNameJa": null,
+          "iconUrl": null,
+          "types": [],
+          "hp": null,
+          "defense": null,
+          "effects": [
+            {
+              "raw": "999ターンの間、状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "999ターン"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B4",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": null,
+          "monsterNameJa": null,
+          "iconUrl": null,
+          "types": [],
+          "hp": null,
+          "defense": null,
+          "effects": [
+            {
+              "raw": "3ターンの間、木属性モンスターを行動不能(木属性モンスターがいる時に使用)",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "3ターン"
+            }
+          ]
+        },
+        {
+          "monsterId": null,
+          "monsterNameJa": null,
+          "iconUrl": null,
+          "types": [],
+          "hp": null,
+          "defense": null,
+          "effects": [
+            {
+              "raw": "7,351ダメージ+盤面を真っ暗にする(木属性モンスターがいない時に使用)",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": "7,351ダメージ",
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B6",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": null,
+          "monsterNameJa": null,
+          "iconUrl": null,
+          "types": [],
+          "hp": null,
+          "defense": null,
+          "effects": [
+            {
+              "raw": "31,584ダメージ",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": "31,584ダメージ",
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": null,
+          "monsterNameJa": null,
+          "iconUrl": null,
+          "types": [],
+          "hp": null,
+          "defense": null,
+          "effects": [
+            {
+              "raw": "99ターンの間、が落ちやすくなる",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "99ターン"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B7",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": null,
+          "monsterNameJa": null,
+          "iconUrl": null,
+          "types": [],
+          "hp": null,
+          "defense": null,
+          "effects": [
+            {
+              "raw": "2ターンの間、10万以上のダメージを無効化",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "2ターン"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B8",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": null,
+          "monsterNameJa": null,
+          "iconUrl": null,
+          "types": [],
+          "hp": null,
+          "defense": null,
+          "effects": [
+            {
+              "raw": "999ターンの間、状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "999ターン"
+            }
+          ]
+        },
+        {
+          "monsterId": null,
+          "monsterNameJa": null,
+          "iconUrl": null,
+          "types": [],
+          "hp": null,
+          "defense": null,
+          "effects": [
+            {
+              "raw": "99ターンの間、操作時間が1秒減少",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "99ターン"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

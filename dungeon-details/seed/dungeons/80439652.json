@@ -5,6 +5,13 @@
   "sourceUrl": "https://appmedia.jp/pazudora/80439652",
   "modified": "2026-10-26T00:56:06",
   "importedAt": "2026-10-28T17:31:15.019Z",
+  "maxDamage": {
+    "value": 21930000,
+    "floor": "B15",
+    "monsterId": 14131,
+    "monsterNameJa": "Gフェニックス(変身)",
+    "raw": "21,930,000ダメージの連続攻撃"
+  },
   "requiredGimmicks": [
     {
       "id": "覚醒無効",

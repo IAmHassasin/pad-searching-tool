@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { QuickSearchIdInput } from "../components/quick-search/QuickSearchIdInput";
+import { appendIdToList } from "../components/quick-search/quick-search-helpers";
 import { BadgeStyleFields, FIELD_INPUT } from "./BadgeStyleFields";
 import {
   addItems,
@@ -194,7 +196,7 @@ export function CellEditor({
         <label className="flex flex-col gap-0.5">
           <span className="ds-label">Card IDs</span>
           <span className="flex gap-1.5">
-            <input
+            <QuickSearchIdInput
               type="text"
               inputMode="numeric"
               value={idInput}
@@ -204,6 +206,9 @@ export function CellEditor({
               }}
               placeholder="e.g. 11735, 13605 14000"
               className={`${FIELD_INPUT} min-w-0 flex-1 font-mono tabular-nums`}
+              targetKey={`tier-cell-${key}-ids`}
+              targetLabel={`Row ${position.row + 1} · Col ${position.col + 1} · Card IDs`}
+              onPickId={(id) => setIdInput((prev) => appendIdToList(prev, id))}
             />
             <button
               type="button"

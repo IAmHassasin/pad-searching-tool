@@ -57,9 +57,20 @@ export function DungeonListPage() {
                   <div className="font-semibold text-[var(--color-fg-strong)]">
                     {title}
                   </div>
-                  <div className="mt-1 font-mono text-xs text-[var(--color-muted)]">
-                    #{d.appmediaPostId}
-                    {imported ? ` · ${imported}` : ""}
+                  <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-xs text-[var(--color-muted)]">
+                    <span>
+                      #{d.appmediaPostId}
+                      {imported ? ` · ${imported}` : ""}
+                    </span>
+                    {d.maxDamage && (
+                      <span
+                        className="rounded-full border border-[var(--color-negative)]/40 bg-[var(--color-inset)] px-1.5 py-px text-[10px] font-semibold tabular-nums text-red-300"
+                        title={`Hardest hit in the preemptive table: ${d.maxDamage.raw}${d.maxDamage.monsterNameJa ? ` (${d.maxDamage.monsterNameJa})` : ""}`}
+                      >
+                        Max hit {d.maxDamage.value.toLocaleString("en-US")}
+                        {d.maxDamage.floor ? ` · ${d.maxDamage.floor}` : ""}
+                      </span>
+                    )}
                   </div>
                 </a>
                 {admin.isSuperadmin && admin.token && (

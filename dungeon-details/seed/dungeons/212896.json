@@ -1,0 +1,528 @@
+{
+  "appmediaPostId": 212896,
+  "titleJa": "【パズドラ】ガイノウト降臨の攻略と安定周回パーティ",
+  "titleEn": "ガイノウト降臨の攻略と安定周回パーティ",
+  "sourceUrl": "https://appmedia.jp/pazudora/212896",
+  "modified": "2024-08-18T23:59:54",
+  "importedAt": "2026-11-04T19:58:32.988Z",
+  "maxDamage": {
+    "value": 15474,
+    "floor": "B9",
+    "monsterId": 1838,
+    "monsterNameJa": "ガイノウト(進化前)",
+    "raw": "15,474ダメージ+上から4列目変化"
+  },
+  "requiredGimmicks": [
+    {
+      "id": "覚醒無効",
+      "labelJa": "覚醒無効",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/94f35b4f6637877fdd4c08962ea72f6e.jpg",
+      "category": "required"
+    }
+  ],
+  "cautionGimmicks": [
+    {
+      "id": "ロック目覚め",
+      "labelJa": "ロック目覚め",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/5c8aba745caa7930489892171c1f1b6f.jpg",
+      "category": "caution"
+    }
+  ],
+  "floors": [
+    {
+      "floor": "B1",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": 252,
+          "monsterNameJa": "ルビドラ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/252.webp",
+          "types": [],
+          "hp": "247",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "各色ランダム出現",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 303,
+          "monsterNameJa": "ホノペンドラ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/303.webp",
+          "types": [],
+          "hp": "約7.5万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "各色ランダム出現",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B2",
+      "spawnNote": "3体出現",
+      "spawns": [
+        {
+          "monsterId": 1962,
+          "monsterNameJa": "アカデビニャン",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/1962.webp",
+          "types": [
+            "悪魔タイプ"
+          ],
+          "hp": "約37.9万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "各色ランダム出現",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B3",
+      "spawnNote": "2体出現",
+      "spawns": [
+        {
+          "monsterId": 310,
+          "monsterNameJa": "氷のサムライオーガ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/310.webp",
+          "types": [
+            "体力タイプ",
+            "悪魔タイプ"
+          ],
+          "hp": "約139万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "【3ターン行動】",
+              "tags": [
+                "3ターン行動"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "3ターン"
+            },
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 311,
+          "monsterNameJa": "樹のサムライオーガ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/311.webp",
+          "types": [
+            "体力タイプ",
+            "悪魔タイプ"
+          ],
+          "hp": "約139万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "【3ターン行動】",
+              "tags": [
+                "3ターン行動"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "3ターン"
+            },
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 312,
+          "monsterNameJa": "炎のアイスオーガ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/312.webp",
+          "types": [
+            "体力タイプ",
+            "悪魔タイプ"
+          ],
+          "hp": "約147万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "【3ターン行動】",
+              "tags": [
+                "3ターン行動"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "3ターン"
+            },
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 313,
+          "monsterNameJa": "樹のアイスオーガ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/313.webp",
+          "types": [
+            "体力タイプ",
+            "悪魔タイプ"
+          ],
+          "hp": "約147万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "【3ターン行動】",
+              "tags": [
+                "3ターン行動"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "3ターン"
+            },
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 314,
+          "monsterNameJa": "炎のアーマーオーガ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/314.webp",
+          "types": [
+            "体力タイプ",
+            "悪魔タイプ"
+          ],
+          "hp": "約135万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "【3ターン行動】",
+              "tags": [
+                "3ターン行動"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "3ターン"
+            },
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 315,
+          "monsterNameJa": "氷のアーマーオーガ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/315.webp",
+          "types": [
+            "体力タイプ",
+            "悪魔タイプ"
+          ],
+          "hp": "約135万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "【3ターン行動】",
+              "tags": [
+                "3ターン行動"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "3ターン"
+            },
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B4",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": 1109,
+          "monsterNameJa": "火イフリート",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/1109.webp",
+          "types": [
+            "ドラゴンタイプ",
+            "悪魔タイプ"
+          ],
+          "hp": "60",
+          "defense": "250万",
+          "effects": [
+            {
+              "raw": "【2ターン行動】",
+              "tags": [
+                "2ターン行動"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "2ターン"
+            },
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B5",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": 759,
+          "monsterNameJa": "究極フォートトイトプス",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/759.webp",
+          "types": [
+            "ドラゴンタイプ",
+            "バランスタイプ"
+          ],
+          "hp": "約461万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "999ターン：状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "999ターン"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B6",
+      "spawnNote": "2体出現",
+      "spawns": [
+        {
+          "monsterId": 618,
+          "monsterNameJa": "超キングサファドラ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/618.webp",
+          "types": [],
+          "hp": "約8.3万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 619,
+          "monsterNameJa": "超キングエメドラ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/619.webp",
+          "types": [],
+          "hp": "約8.3万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B7",
+      "spawnNote": "3体出現",
+      "spawns": [
+        {
+          "monsterId": 2299,
+          "monsterNameJa": "ホノぷれドラ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/2299.webp",
+          "types": [
+            "売却用タイプ"
+          ],
+          "hp": "50",
+          "defense": "1000万",
+          "effects": [
+            {
+              "raw": "各色ランダム出現",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B8",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": 1458,
+          "monsterNameJa": "フォークロア",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/1458.webp",
+          "types": [
+            "ドラゴンタイプ",
+            "悪魔タイプ",
+            "マシンタイプ"
+          ],
+          "hp": "約752万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "9,079ダメージ+3ターン：覚醒無効",
+              "tags": [],
+              "gimmickIds": [
+                "覚醒無効"
+              ],
+              "damage": "9,079ダメージ",
+              "turns": "3ターン"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B9",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": 1838,
+          "monsterNameJa": "ガイノウト(進化前)",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/1838.webp",
+          "types": [
+            "ドラゴンタイプ"
+          ],
+          "hp": "約824万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "3ターン：被ダメージ35%軽減",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "3ターン"
+            },
+            {
+              "raw": "15,474ダメージ+上から4列目変化",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": "15,474ダメージ",
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B10",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": 1839,
+          "monsterNameJa": "ガイノウト",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/1839.webp",
+          "types": [
+            "ドラゴンタイプ",
+            "体力タイプ"
+          ],
+          "hp": "約1332万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "99ターン：目覚め",
+              "tags": [],
+              "gimmickIds": [
+                "指定色目覚め"
+              ],
+              "damage": null,
+              "turns": "99ターン"
+            },
+            {
+              "raw": "999ターン：状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "999ターン"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

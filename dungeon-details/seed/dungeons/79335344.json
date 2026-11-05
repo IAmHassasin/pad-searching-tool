@@ -5,6 +5,13 @@
   "sourceUrl": "https://appmedia.jp/pazudora/79335344",
   "modified": "2026-06-25T21:45:00",
   "importedAt": "2026-06-28T18:05:55.273Z",
+  "maxDamage": {
+    "value": 28000000,
+    "floor": "B8",
+    "monsterId": 984,
+    "monsterNameJa": "究極ギガンテス",
+    "raw": "4,000,000(7倍時：28,000,000)ダメージの連続攻撃"
+  },
   "requiredGimmicks": [
     {
       "id": "覚醒無効",

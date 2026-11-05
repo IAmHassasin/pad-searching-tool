@@ -3,6 +3,15 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { MonsterRelationsService } from "../api/monster-relations.service";
 
+/** Hardest hit of the preemptive table, stored by the importer (dungeon-details/lib/max-damage.mjs). */
+export type DungeonMaxDamage = {
+  value: number;
+  floor: string | null;
+  monsterId: number | null;
+  monsterNameJa: string | null;
+  raw: string;
+};
+
 export type DungeonSummary = {
   appmediaPostId: number;
   titleJa: string;
@@ -10,7 +19,24 @@ export type DungeonSummary = {
   sourceUrl: string;
   modified: string | null;
   importedAt: string;
+  /** Null when the seed predates the field (run `make dungeon-max-damage`) or has no damage line. */
+  maxDamage: DungeonMaxDamage | null;
 };
+
+function readMaxDamage(raw: unknown): DungeonMaxDamage | null {
+  if (typeof raw !== "object" || raw === null) return null;
+  const r = raw as Record<string, unknown>;
+  if (typeof r.value !== "number" || !Number.isFinite(r.value) || r.value <= 0) {
+    return null;
+  }
+  return {
+    value: r.value,
+    floor: typeof r.floor === "string" ? r.floor : null,
+    monsterId: typeof r.monsterId === "number" ? r.monsterId : null,
+    monsterNameJa: typeof r.monsterNameJa === "string" ? r.monsterNameJa : null,
+    raw: typeof r.raw === "string" ? r.raw : "",
+  };
+}
 
 type EnglishTranslations = {
   titles?: Record<string, string>;
@@ -90,7 +116,10 @@ export class DungeonDetailsService {
       .filter((name) => name.endsWith(".json"))
       .map((name) => {
         const raw = readFileSync(join(this.seedDir, name), "utf8");
-        const data = JSON.parse(raw) as DungeonSummary & { titleJa: string };
+        const data = JSON.parse(raw) as Omit<DungeonSummary, "maxDamage"> & {
+          titleJa: string;
+          maxDamage?: unknown;
+        };
         return {
           appmediaPostId: data.appmediaPostId,
           titleJa: data.titleJa,
@@ -100,6 +129,7 @@ export class DungeonDetailsService {
           sourceUrl: data.sourceUrl,
           modified: data.modified ?? null,
           importedAt: data.importedAt,
+          maxDamage: readMaxDamage(data.maxDamage),
         };
       })
       .sort((a, b) => {
