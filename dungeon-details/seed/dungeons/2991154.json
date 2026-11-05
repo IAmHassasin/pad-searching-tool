@@ -1,0 +1,295 @@
+{
+  "appmediaPostId": 2991154,
+  "titleJa": "【パズドラ】リベルタス降臨のソロ攻略と安定周回パーティ",
+  "titleEn": "リベルタス降臨のソロ攻略と安定周回パーティ",
+  "sourceUrl": "https://appmedia.jp/pazudora/2991154",
+  "modified": "2022-10-25T15:35:20",
+  "importedAt": "2026-11-04T19:59:16.590Z",
+  "maxDamage": {
+    "value": 37516,
+    "floor": "B1",
+    "monsterId": null,
+    "monsterNameJa": null,
+    "raw": "37,516ダメージ"
+  },
+  "requiredGimmicks": [],
+  "cautionGimmicks": [],
+  "floors": [
+    {
+      "floor": "B1",
+      "spawnNote": "2体出現",
+      "spawns": [
+        {
+          "monsterId": null,
+          "monsterNameJa": null,
+          "iconUrl": null,
+          "types": [],
+          "hp": "約497万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "※確定出現",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "37,516ダメージ",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": "37,516ダメージ",
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": null,
+          "monsterNameJa": null,
+          "iconUrl": null,
+          "types": [],
+          "hp": "約705万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "5ターン：吸収",
+              "tags": [],
+              "gimmickIds": [
+                "属性吸収"
+              ],
+              "damage": null,
+              "turns": "5ターン"
+            }
+          ]
+        },
+        {
+          "monsterId": null,
+          "monsterNameJa": null,
+          "iconUrl": null,
+          "types": [],
+          "hp": "約663万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "5ターン：吸収",
+              "tags": [],
+              "gimmickIds": [
+                "属性吸収"
+              ],
+              "damage": null,
+              "turns": "5ターン"
+            }
+          ]
+        },
+        {
+          "monsterId": null,
+          "monsterNameJa": null,
+          "iconUrl": null,
+          "types": [],
+          "hp": "約705万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "5ターン：吸収",
+              "tags": [],
+              "gimmickIds": [
+                "属性吸収"
+              ],
+              "damage": null,
+              "turns": "5ターン"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B2",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": null,
+          "monsterNameJa": null,
+          "iconUrl": null,
+          "types": [],
+          "hp": "約1,504万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "5ターン：被ダメ75%減少",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "5ターン"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B3",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": null,
+          "monsterNameJa": null,
+          "iconUrl": null,
+          "types": [],
+          "hp": "約2,554万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "【根性】(HP50%↑)",
+              "tags": [
+                "根性"
+              ],
+              "gimmickIds": [
+                "根性"
+              ],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "3ターン：7コンボ吸収",
+              "tags": [],
+              "gimmickIds": [
+                "コンボ吸収"
+              ],
+              "damage": null,
+              "turns": "3ターン"
+            },
+            {
+              "raw": "3ターン：状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "3ターン"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B4",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": null,
+          "monsterNameJa": null,
+          "iconUrl": null,
+          "types": [],
+          "hp": "100万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "【半減】",
+              "tags": [
+                "半減"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "自身の属性を火or水or木に変化",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "3ターン：弱点属性のドロップが消せなくなる",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "3ターン"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B5",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": null,
+          "monsterNameJa": null,
+          "iconUrl": null,
+          "types": [],
+          "hp": "6000万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "999ターン：状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "999ターン"
+            },
+            {
+              "raw": "1ターン：から2色を属性吸収",
+              "tags": [],
+              "gimmickIds": [
+                "属性吸収"
+              ],
+              "damage": null,
+              "turns": "1ターン"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B6",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": null,
+          "monsterNameJa": null,
+          "iconUrl": null,
+          "types": [],
+          "hp": "3億",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "【根性】(HP95%↑)",
+              "tags": [
+                "根性"
+              ],
+              "gimmickIds": [
+                "根性"
+              ],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "999ターン：状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "999ターン"
+            },
+            {
+              "raw": "1ターン：覚醒無効",
+              "tags": [],
+              "gimmickIds": [
+                "覚醒無効"
+              ],
+              "damage": null,
+              "turns": "1ターン"
+            },
+            {
+              "raw": "1ターン：スキル封印",
+              "tags": [],
+              "gimmickIds": [
+                "スキル封印"
+              ],
+              "damage": null,
+              "turns": "1ターン"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

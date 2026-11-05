@@ -1,0 +1,154 @@
+{
+  "appmediaPostId": 77848931,
+  "titleJa": "【パズドラ】潜在属性軽減ラッシュの高速周回パーティ",
+  "titleEn": "潜在属性軽減ラッシュの高速周回パーティ",
+  "sourceUrl": "https://appmedia.jp/pazudora/77848931",
+  "modified": "2026-10-09T19:07:00",
+  "importedAt": "2026-11-04T20:05:46.781Z",
+  "maxDamage": null,
+  "requiredGimmicks": [
+    {
+      "id": "ダメジ無効",
+      "labelJa": "ダメージ無効",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/6dd217d2eb879afbc4f87c25f0d706fe.jpg",
+      "category": "required"
+    }
+  ],
+  "cautionGimmicks": [
+    {
+      "id": "コンボ吸収",
+      "labelJa": "コンボ吸収",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/f0ce23fe72f6de2f99d74960e3ed42f5.jpg",
+      "category": "caution"
+    }
+  ],
+  "floors": [
+    {
+      "floor": "B1",
+      "spawnNote": "3体出現",
+      "spawns": [
+        {
+          "monsterId": 2212,
+          "monsterNameJa": "潜在たまドラ☆火ダメージ軽減",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/2212.webp",
+          "types": [],
+          "hp": "25億",
+          "defense": "50億",
+          "effects": [
+            {
+              "raw": "【各潜在軽減と同じ属性を半減】",
+              "tags": [
+                "各潜在軽減と同じ属性を半減"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B6",
+      "spawnNote": "1体出現",
+      "spawns": [
+        {
+          "monsterId": 5421,
+          "monsterNameJa": "キョウリ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/5421.webp",
+          "types": [
+            "ドラゴンタイプ",
+            "攻撃タイプ",
+            "神タイプ"
+          ],
+          "hp": "20億",
+          "defense": "50億",
+          "effects": [
+            {
+              "raw": "2ターン：20億以上無効",
+              "tags": [],
+              "gimmickIds": [
+                "ダメジ無効"
+              ],
+              "damage": null,
+              "turns": "2ターン"
+            }
+          ]
+        },
+        {
+          "monsterId": 5126,
+          "monsterNameJa": "セリカ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/5126.webp",
+          "types": [
+            "ドラゴンタイプ",
+            "攻撃タイプ",
+            "回復タイプ"
+          ],
+          "hp": "20億",
+          "defense": "50億",
+          "effects": [
+            {
+              "raw": "2ターン：15コンボ以下吸収",
+              "tags": [],
+              "gimmickIds": [
+                "ダメジ吸収",
+                "コンボ無効"
+              ],
+              "damage": null,
+              "turns": "2ターン"
+            }
+          ]
+        },
+        {
+          "monsterId": 5128,
+          "monsterNameJa": "キオ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/5128.webp",
+          "types": [
+            "ドラゴンタイプ",
+            "攻撃タイプ",
+            "体力タイプ"
+          ],
+          "hp": "20億",
+          "defense": "50億",
+          "effects": [
+            {
+              "raw": "2ターン：被ダメージ75%軽減",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "2ターン"
+            }
+          ]
+        },
+        {
+          "monsterId": 5423,
+          "monsterNameJa": "イナ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/5423.webp",
+          "types": [
+            "ドラゴンタイプ",
+            "攻撃タイプ",
+            "悪魔タイプ"
+          ],
+          "hp": "20億",
+          "defense": "50億",
+          "effects": [
+            {
+              "raw": "全ドロップ変化",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

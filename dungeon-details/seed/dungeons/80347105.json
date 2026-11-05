@@ -5,6 +5,13 @@
   "sourceUrl": "https://appmedia.jp/pazudora/80347105",
   "modified": "2026-10-09T19:07:00",
   "importedAt": "2026-10-28T17:31:14.675Z",
+  "maxDamage": {
+    "value": 175000000,
+    "floor": "B3",
+    "monsterId": 13548,
+    "monsterNameJa": "試練ルシファー",
+    "raw": "175,000,000ダメージの連続攻撃"
+  },
   "requiredGimmicks": [
     {
       "id": "バインド",

@@ -1,0 +1,644 @@
+{
+  "appmediaPostId": 843830,
+  "titleJa": "【パズドラ】ゼローグ∞降臨の攻略と安定周回パーティ",
+  "titleEn": "ゼローグ∞降臨の攻略と安定周回パーティ",
+  "sourceUrl": "https://appmedia.jp/pazudora/843830",
+  "modified": "2024-08-18T23:55:39",
+  "importedAt": "2026-11-04T20:02:48.716Z",
+  "maxDamage": {
+    "value": 9086,
+    "floor": "B4",
+    "monsterId": 975,
+    "monsterNameJa": "アルビダ",
+    "raw": "9,086ダメージ+ランダム1色変化"
+  },
+  "requiredGimmicks": [
+    {
+      "id": "属性吸収",
+      "labelJa": "属性吸収",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/4746bd4875547bda46945a5e543d2566.jpg",
+      "category": "required"
+    }
+  ],
+  "cautionGimmicks": [
+    {
+      "id": "スキル遅延",
+      "labelJa": "スキル遅延",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/1cc1e8c018ea83a40f76d55aef4962f9.jpg",
+      "category": "caution"
+    },
+    {
+      "id": "コンボ吸収",
+      "labelJa": "コンボ吸収",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/f0ce23fe72f6de2f99d74960e3ed42f5.jpg",
+      "category": "caution"
+    }
+  ],
+  "floors": [
+    {
+      "floor": "B1",
+      "spawnNote": "7体出現",
+      "spawns": [
+        {
+          "monsterId": 152,
+          "monsterNameJa": "ドラゴンシード",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/152.webp",
+          "types": [],
+          "hp": "約1.4万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B2",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": 252,
+          "monsterNameJa": "ルビドラ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/252.webp",
+          "types": [],
+          "hp": "約170",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "各色ランダム出現",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 303,
+          "monsterNameJa": "ホノペンドラ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/303.webp",
+          "types": [],
+          "hp": "約5万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "各色ランダム出現",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B3",
+      "spawnNote": "3体出現",
+      "spawns": [
+        {
+          "monsterId": 1545,
+          "monsterNameJa": "闇シードラ(進化前)",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/1545.webp",
+          "types": [
+            "体力タイプ"
+          ],
+          "hp": "17",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "10ターン：吸収",
+              "tags": [],
+              "gimmickIds": [
+                "属性吸収"
+              ],
+              "damage": null,
+              "turns": "10ターン"
+            }
+          ]
+        },
+        {
+          "monsterId": 1546,
+          "monsterNameJa": "闇シードラ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/1546.webp",
+          "types": [
+            "体力タイプ"
+          ],
+          "hp": "約30.2万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "10ターン：吸収",
+              "tags": [],
+              "gimmickIds": [
+                "属性吸収"
+              ],
+              "damage": null,
+              "turns": "10ターン"
+            }
+          ]
+        },
+        {
+          "monsterId": 1545,
+          "monsterNameJa": "闇シードラ(進化前)",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/1545.webp",
+          "types": [
+            "体力タイプ"
+          ],
+          "hp": "17",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "10ターン：吸収",
+              "tags": [],
+              "gimmickIds": [
+                "属性吸収"
+              ],
+              "damage": null,
+              "turns": "10ターン"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B4",
+      "spawnNote": "1体出現",
+      "spawns": [
+        {
+          "monsterId": 974,
+          "monsterNameJa": "バーソロミュー",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/974.webp",
+          "types": [
+            "ドラゴンタイプ"
+          ],
+          "hp": "約146万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "20ターン：状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "20ターン"
+            }
+          ]
+        },
+        {
+          "monsterId": 975,
+          "monsterNameJa": "アルビダ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/975.webp",
+          "types": [
+            "ドラゴンタイプ"
+          ],
+          "hp": "約171万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "9,086ダメージ+ランダム1色変化",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": "9,086ダメージ",
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 976,
+          "monsterNameJa": "キャプテンキッド",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/976.webp",
+          "types": [
+            "ドラゴンタイプ"
+          ],
+          "hp": "約120万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "10ターン：状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "10ターン"
+            }
+          ]
+        },
+        {
+          "monsterId": 977,
+          "monsterNameJa": "アン＆メアリー",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/977.webp",
+          "types": [
+            "ドラゴンタイプ"
+          ],
+          "hp": "約180万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "4,774ダメージ",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": "4,774ダメージ",
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 978,
+          "monsterNameJa": "ティーチ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/978.webp",
+          "types": [
+            "ドラゴンタイプ"
+          ],
+          "hp": "約170万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B5",
+      "spawnNote": "1体出現",
+      "spawns": [
+        {
+          "monsterId": 540,
+          "monsterNameJa": "シンゲン",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/540.webp",
+          "types": [
+            "ドラゴンタイプ",
+            "体力タイプ"
+          ],
+          "hp": "約181万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "6,253ダメージ",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": "6,253ダメージ",
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 541,
+          "monsterNameJa": "ケンシン",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/541.webp",
+          "types": [
+            "ドラゴンタイプ",
+            "攻撃タイプ"
+          ],
+          "hp": "約3万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 542,
+          "monsterNameJa": "マサムネ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/542.webp",
+          "types": [
+            "ドラゴンタイプ",
+            "攻撃タイプ"
+          ],
+          "hp": "約158万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 543,
+          "monsterNameJa": "ヒデヨシ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/543.webp",
+          "types": [
+            "ドラゴンタイプ",
+            "体力タイプ"
+          ],
+          "hp": "約164万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 544,
+          "monsterNameJa": "ノブナガ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/544.webp",
+          "types": [
+            "ドラゴンタイプ",
+            "攻撃タイプ"
+          ],
+          "hp": "約208万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B6",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": 252,
+          "monsterNameJa": "ルビドラ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/252.webp",
+          "types": [],
+          "hp": "166",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "各色ランダム出現",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 303,
+          "monsterNameJa": "ホノペンドラ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/303.webp",
+          "types": [],
+          "hp": "約5万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "各色ランダム出現",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B7",
+      "spawnNote": "2体出現",
+      "spawns": [
+        {
+          "monsterId": 617,
+          "monsterNameJa": "超キングルビドラ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/617.webp",
+          "types": [
+            "強化合成タイプ"
+          ],
+          "hp": "約8.3万HP:約5.3万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "各色ランダム出現",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B8",
+      "spawnNote": "3体出現",
+      "spawns": [
+        {
+          "monsterId": 2299,
+          "monsterNameJa": "ホノぷれドラ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/2299.webp",
+          "types": [
+            "売却用タイプ"
+          ],
+          "hp": "50HP:50",
+          "defense": "1000万",
+          "effects": [
+            {
+              "raw": "各色ランダム出現",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B9",
+      "spawnNote": "3体出現",
+      "spawns": [
+        {
+          "monsterId": 256,
+          "monsterNameJa": "ハイサファドラ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/256.webp",
+          "types": [
+            "強化合成タイプ"
+          ],
+          "hp": "595",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 682,
+          "monsterNameJa": "ヘビーメタルドラゴン",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/682.webp",
+          "types": [
+            "ドラゴンタイプ"
+          ],
+          "hp": "400万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 177,
+          "monsterNameJa": "ハイメタドラ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/177.webp",
+          "types": [
+            "強化合成タイプ"
+          ],
+          "hp": "595",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B10",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": 1846,
+          "monsterNameJa": "ゼローグ∞(進化前)",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/1846.webp",
+          "types": [
+            "ドラゴンタイプ"
+          ],
+          "hp": "32HP:32",
+          "defense": "1000万",
+          "effects": [
+            {
+              "raw": "全員2ターンスキル遅延",
+              "tags": [],
+              "gimmickIds": [
+                "スキル遅延"
+              ],
+              "damage": null,
+              "turns": "2ターン"
+            },
+            {
+              "raw": "1ターン：5コンボ以下吸収",
+              "tags": [],
+              "gimmickIds": [
+                "ダメジ吸収",
+                "コンボ無効"
+              ],
+              "damage": null,
+              "turns": "1ターン"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B11",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": 1847,
+          "monsterNameJa": "ゼローグ∞",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/1847.webp",
+          "types": [
+            "ドラゴンタイプ",
+            "体力タイプ",
+            "悪魔タイプ"
+          ],
+          "hp": "約1061万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "999ターン：状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "999ターン"
+            },
+            {
+              "raw": "1ターン：被ダメージ75%減少",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "1ターン"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

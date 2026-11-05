@@ -1,0 +1,399 @@
+{
+  "appmediaPostId": 794122,
+  "titleJa": "【パズドラ】エルメ降臨の攻略と安定周回パーティ",
+  "titleEn": "エルメ降臨の攻略と安定周回パーティ",
+  "sourceUrl": "https://appmedia.jp/pazudora/794122",
+  "modified": "2023-04-18T14:38:59",
+  "importedAt": "2026-11-04T19:58:22.720Z",
+  "maxDamage": null,
+  "requiredGimmicks": [],
+  "cautionGimmicks": [],
+  "floors": [
+    {
+      "floor": "B1",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": null,
+          "monsterNameJa": null,
+          "iconUrl": null,
+          "types": [],
+          "hp": null,
+          "defense": null,
+          "effects": [
+            {
+              "raw": "3ターンの間、5コンボ以下吸収",
+              "tags": [],
+              "gimmickIds": [
+                "ダメジ吸収",
+                "コンボ無効"
+              ],
+              "damage": null,
+              "turns": "3ターン"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B2",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": null,
+          "monsterNameJa": null,
+          "iconUrl": null,
+          "types": [],
+          "hp": null,
+          "defense": null,
+          "effects": [
+            {
+              "raw": "3ターンの間、操作時間が2秒減少",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "3ターン"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B3",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": null,
+          "monsterNameJa": null,
+          "iconUrl": null,
+          "types": [],
+          "hp": null,
+          "defense": null,
+          "effects": [
+            {
+              "raw": "3ターンの間、スキル封印",
+              "tags": [],
+              "gimmickIds": [
+                "スキル封印"
+              ],
+              "damage": null,
+              "turns": "3ターン"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B4",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": null,
+          "monsterNameJa": null,
+          "iconUrl": null,
+          "types": [],
+          "hp": null,
+          "defense": null,
+          "effects": [
+            {
+              "raw": "スキル使用に必要なターン数を3ターン遅延",
+              "tags": [],
+              "gimmickIds": [
+                "スキル遅延"
+              ],
+              "damage": null,
+              "turns": "3ターン"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B5",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": null,
+          "monsterNameJa": null,
+          "iconUrl": null,
+          "types": [],
+          "hp": null,
+          "defense": null,
+          "effects": [
+            {
+              "raw": "1ターンの間、操作開始位置を指定",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "1ターン"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B6",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": null,
+          "monsterNameJa": null,
+          "iconUrl": null,
+          "types": [],
+          "hp": null,
+          "defense": null,
+          "effects": [
+            {
+              "raw": "999ターンの間、状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "999ターン"
+            }
+          ]
+        },
+        {
+          "monsterId": null,
+          "monsterNameJa": null,
+          "iconUrl": null,
+          "types": [],
+          "hp": null,
+          "defense": null,
+          "effects": [
+            {
+              "raw": "999ターンの間、状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "999ターン"
+            }
+          ]
+        },
+        {
+          "monsterId": null,
+          "monsterNameJa": null,
+          "iconUrl": null,
+          "types": [],
+          "hp": null,
+          "defense": null,
+          "effects": [
+            {
+              "raw": "999ターンの間、状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "999ターン"
+            }
+          ]
+        },
+        {
+          "monsterId": null,
+          "monsterNameJa": null,
+          "iconUrl": null,
+          "types": [],
+          "hp": null,
+          "defense": null,
+          "effects": [
+            {
+              "raw": "999ターンの間、状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "999ターン"
+            }
+          ]
+        },
+        {
+          "monsterId": null,
+          "monsterNameJa": null,
+          "iconUrl": null,
+          "types": [],
+          "hp": null,
+          "defense": null,
+          "effects": [
+            {
+              "raw": "999ターンの間、状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "999ターン"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B7",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": null,
+          "monsterNameJa": null,
+          "iconUrl": null,
+          "types": [],
+          "hp": null,
+          "defense": null,
+          "effects": [
+            {
+              "raw": "10ターンの間、4コンボ以下の攻撃を吸収",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "10ターン"
+            }
+          ]
+        },
+        {
+          "monsterId": null,
+          "monsterNameJa": null,
+          "iconUrl": null,
+          "types": [],
+          "hp": null,
+          "defense": null,
+          "effects": [
+            {
+              "raw": "10ターンの間、4コンボ以下の攻撃を吸収",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "10ターン"
+            }
+          ]
+        },
+        {
+          "monsterId": null,
+          "monsterNameJa": null,
+          "iconUrl": null,
+          "types": [],
+          "hp": null,
+          "defense": null,
+          "effects": [
+            {
+              "raw": "10ターンの間、4コンボ以下の攻撃を吸収",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "10ターン"
+            }
+          ]
+        },
+        {
+          "monsterId": null,
+          "monsterNameJa": null,
+          "iconUrl": null,
+          "types": [],
+          "hp": null,
+          "defense": null,
+          "effects": [
+            {
+              "raw": "10ターンの間、4コンボ以下の攻撃を吸収",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "10ターン"
+            }
+          ]
+        },
+        {
+          "monsterId": null,
+          "monsterNameJa": null,
+          "iconUrl": null,
+          "types": [],
+          "hp": null,
+          "defense": null,
+          "effects": [
+            {
+              "raw": "10ターンの間、4コンボ以下の攻撃を吸収",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "10ターン"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B9",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": null,
+          "monsterNameJa": null,
+          "iconUrl": null,
+          "types": [],
+          "hp": null,
+          "defense": null,
+          "effects": [
+            {
+              "raw": "999ターンの間、6コンボ以下の攻撃を吸収",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "999ターン"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B10",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": null,
+          "monsterNameJa": null,
+          "iconUrl": null,
+          "types": [],
+          "hp": null,
+          "defense": null,
+          "effects": [
+            {
+              "raw": "999ターンの間、状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "999ターン"
+            }
+          ]
+        },
+        {
+          "monsterId": null,
+          "monsterNameJa": null,
+          "iconUrl": null,
+          "types": [],
+          "hp": null,
+          "defense": null,
+          "effects": [
+            {
+              "raw": "を13個ランダムに生成",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": null,
+          "monsterNameJa": null,
+          "iconUrl": null,
+          "types": [],
+          "hp": null,
+          "defense": null,
+          "effects": [
+            {
+              "raw": "13個のドロップをランダムにロック",
+              "tags": [],
+              "gimmickIds": [
+                "ロック"
+              ],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

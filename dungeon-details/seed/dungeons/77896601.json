@@ -1,0 +1,293 @@
+{
+  "appmediaPostId": 77896601,
+  "titleJa": "【パズドラ】聖獣達の楽園降臨の攻略と安定周回パーティ",
+  "titleEn": "聖獣達の楽園降臨の攻略と安定周回パーティ",
+  "sourceUrl": "https://appmedia.jp/pazudora/77896601",
+  "modified": "2024-06-06T17:43:20",
+  "importedAt": "2026-11-04T20:04:24.843Z",
+  "maxDamage": {
+    "value": 10893,
+    "floor": "B5",
+    "monsterId": 753,
+    "monsterNameJa": "ハク(進化前)",
+    "raw": "10893ダメージ"
+  },
+  "requiredGimmicks": [],
+  "cautionGimmicks": [
+    {
+      "id": "スキル封印",
+      "labelJa": "スキル封印",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/9ea56767eeca2102dc58c51c636431e1.jpg",
+      "category": "caution"
+    },
+    {
+      "id": "暗闇_超暗闇",
+      "labelJa": "暗闇/超暗闇",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/e4395a43ec751369282762d0477ade70.jpg",
+      "category": "caution"
+    }
+  ],
+  "floors": [
+    {
+      "floor": "B1",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": 321,
+          "monsterNameJa": "虹の番人",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/321.webp",
+          "types": [
+            "進化タイプ"
+          ],
+          "hp": "約138万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B2",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": 749,
+          "monsterNameJa": "メイメイ(進化前)",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/749.webp",
+          "types": [
+            "神タイプ"
+          ],
+          "hp": "46",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "何もしない",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B3",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": 747,
+          "monsterNameJa": "カリン(進化前)",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/747.webp",
+          "types": [
+            "神タイプ"
+          ],
+          "hp": "約160万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "何もしない",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B4",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": 745,
+          "monsterNameJa": "レイラン(進化前)",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/745.webp",
+          "types": [
+            "神タイプ"
+          ],
+          "hp": "約153万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "何もしない",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B5",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": 753,
+          "monsterNameJa": "ハク(進化前)",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/753.webp",
+          "types": [
+            "神タイプ"
+          ],
+          "hp": "約146万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "10893ダメージ",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": "10893ダメージ",
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B6",
+      "spawnNote": "3体出現",
+      "spawns": [
+        {
+          "monsterId": 160,
+          "monsterNameJa": "ミスリット",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/160.webp",
+          "types": [
+            "進化タイプ"
+          ],
+          "hp": "35,400",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 234,
+          "monsterNameJa": "神秘の仮面",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/234.webp",
+          "types": [
+            "進化タイプ"
+          ],
+          "hp": "20",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 797,
+          "monsterNameJa": "たまドラ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/797.webp",
+          "types": [],
+          "hp": "20",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B7",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": 751,
+          "monsterNameJa": "サクヤ(進化前)",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/751.webp",
+          "types": [
+            "神タイプ"
+          ],
+          "hp": "約192万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "全ドロップ暗闇",
+              "tags": [],
+              "gimmickIds": [
+                "暗闇_超暗闇"
+              ],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B8",
+      "spawnNote": "1体出現",
+      "spawns": [
+        {
+          "monsterId": 781,
+          "monsterNameJa": "ファガン",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/781.webp",
+          "types": [
+            "神タイプ",
+            "ドラゴンタイプ"
+          ],
+          "hp": "約404万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "味方HP全回復",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 1342,
+          "monsterNameJa": "究極ファガン",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/1342.webp",
+          "types": [
+            "ドラゴンタイプ",
+            "体力タイプ"
+          ],
+          "hp": "約436万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "5ターン：スキル封印",
+              "tags": [],
+              "gimmickIds": [
+                "スキル封印"
+              ],
+              "damage": null,
+              "turns": "5ターン"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

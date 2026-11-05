@@ -1,13 +1,14 @@
 import { useMemo, useState } from "react";
+import type { DungeonSummary } from "../dungeon-details/types";
 import {
   CUSTOM_DUNGEON_ID,
-  DUNGEON_CATALOG_ENTRIES,
   dungeonCategories,
   filterDungeonEntries,
   NO_DUNGEON_ID,
   type DungeonCatalogEntry,
 } from "../lib/team-build/dungeon-catalog";
 import { describeDungeonModifiers } from "../lib/team-build/dungeon-modifiers";
+import { maxHitForEntry } from "../lib/team-build/dungeon-sources";
 import type {
   CustomDungeonModifiers,
   TeamBuildConfig,
@@ -16,6 +17,9 @@ import type {
 type Props = {
   open: boolean;
   config: TeamBuildConfig;
+  /** Catalog merged with the imported floor tables (useDungeonEntries). */
+  entries: DungeonCatalogEntry[];
+  seedsByPostId: Map<number, DungeonSummary>;
   onChange: (next: TeamBuildConfig) => void;
   onClose: () => void;
   /** Opens the manual awakening modifier modal (kept as an advanced path). */
@@ -33,6 +37,8 @@ function Chip({ text }: { text: string }) {
         ? "border-[var(--color-pad-dark)]/50 text-[var(--color-pad-dark)]"
         : text.startsWith("Multiplayer")
           ? "border-[var(--color-secondary)]/50 text-[var(--color-secondary-strong)]"
+          : text.startsWith("Max hit")
+            ? "border-[var(--color-negative)]/50 text-red-300"
           : /×0(\.|$)/.test(text)
             ? "border-[var(--color-negative)]/50 text-red-300"
             : "border-[var(--color-positive)]/50 text-emerald-300";
@@ -203,16 +209,24 @@ function CustomEditor({
 export function DungeonPickerModal({
   open,
   config,
+  entries: allEntries,
+  seedsByPostId,
   onChange,
   onClose,
   onOpenAdvanced,
 }: Props) {
   const [query, setQuery] = useState("");
   const entries = useMemo(
-    () => filterDungeonEntries(DUNGEON_CATALOG_ENTRIES, query),
-    [query]
+    () => filterDungeonEntries(allEntries, query),
+    [allEntries, query]
   );
   const categories = useMemo(() => dungeonCategories(entries), [entries]);
+  // Hardest hit from the linked floor table, shown next to the stat chips.
+  const chipsFor = (d: DungeonCatalogEntry): string[] => {
+    const chips = describeDungeonModifiers(d.stat, d);
+    const max = maxHitForEntry(d, seedsByPostId);
+    return max ? [...chips, `Max hit ${max.value.toLocaleString("en-US")}`] : chips;
+  };
   if (!open) return null;
 
   const select = (id: string) => onChange({ ...config, dungeonId: id });
@@ -237,7 +251,7 @@ export function DungeonPickerModal({
         <header className="flex shrink-0 items-center gap-2 border-b border-white/[0.06] px-3 py-2">
           <h2 className="text-sm font-bold text-[var(--color-fg-strong)]">Dungeon</h2>
           <span className="rounded-full border border-[var(--color-secondary)]/40 bg-[var(--color-secondary-muted)] px-1.5 py-px font-mono text-[9px] font-bold tabular-nums text-[var(--color-secondary-strong)]">
-            {DUNGEON_CATALOG_ENTRIES.length} listed
+            {allEntries.length} listed
           </span>
           <div className="ml-auto flex gap-1">
             <button
@@ -307,7 +321,7 @@ export function DungeonPickerModal({
                       selected={current === d.id}
                       title={d.nameEn}
                       subtitle={d.nameJa + (d.notes ? ` · ${d.notes}` : "")}
-                      chips={describeDungeonModifiers(d.stat, d)}
+                      chips={chipsFor(d)}
                       onSelect={() => select(d.id)}
                       sourceUrl={d.sourceUrl}
                     />

@@ -333,3 +333,54 @@ Awakenings of an assist with Awoken Assist (49) count for the base card: flat 1/
 ## 10. Badges (updated 2026-11-04)
 
 Team-wide: HP +10 / +15 %, RCV +50 / +70 %, ATK +10 / +15 %, Skill Boost++ / Status Resist (all stats +50 %), shape / colour attack badges (HP & RCV +5 %), type badges (type ATK ×5 + team HP & RCV +5 %, Ver.22.0), collab / event badge (ATK +50 %, HP & RCV +15 %), collab / event+ (ATK ×2.5, HP & RCV +30 %), idol (ATK ×3, HP & RCV +30 %). Collab / idol badges apply to matching monsters in-game; the calculator applies them to every slot.
+
+## 11. Trial mode — Resilience (added 2026-11-05)
+
+The ⇒ button at the end of the team row opens the trial panel; it runs checks against the
+current team for the dungeon selected in **Team settings** (one list, one selection). The picker
+list is the static catalog (stat modifiers) merged with the floor tables imported in **Dungeon
+details** (`web/src/lib/team-build/dungeon-sources.ts`): catalog entries link to their AppMedia
+post through `appmediaPostId` (9 linked on 2026-11-05) and show the hardest hit as a "Max hit"
+chip; imported tables the catalog does not know yet are appended under *Floor table only
+(AppMedia)* with neutral modifiers. Only *Resilience* is implemented; Mimic check, Recover check,
+Assist recover and Average / Max damage are listed greyed out.
+
+**Dungeon max hit** — `maxDamage` is computed once at import
+(`dungeon-details/lib/max-damage.mjs`: largest `<number>ダメージ` across every effect line of
+the 先制ギミック早見表, boosted value of "4,000,000(7倍時：28,000,000)ダメージ" wins) and stored in
+the seed JSON / SQLite; the list API returns it and the Dungeons page shows it as a chip.
+`make dungeon-max-damage` backfills older seeds (rewrites only seeds whose value changed). Example:
+鳳凰チャレンジ = 21,930,000 (B15 Gフェニックス). Digit groups must be well formed (`\d{1,3}(,\d{3})+`
+or plain digits); a source typo such as AppMedia's `7,800,0000ダメージ` in 紅蓮チャレンジ B8 (Game8 lists
+7,800,000) is skipped with a warning instead of being read as 78,000,000 — the dungeon's max then falls
+back to the next line (45,900,000 on B12, which GameWith confirms as 最大4590万).
+
+**Catalog max hits** — `make dungeon-max-hits` (`dungeon-details/scripts/resolve-catalog-max-hits.mjs`)
+resolves every catalog entry: AppMedia guide found via the entry's source URL, the 降臨 / ゲリラ /
+テクニカル index posts or WP search (title must contain the boss name as a whole word, 裏 must agree;
+nicknames 百式 / 千手 / 万寿 / 凶兆 / 億兆 / 極悪チャレンジ are tried too). Guides with the
+先制ギミック早見表 are imported as seeds (`appmediaPostId`; seeds whose table parses to zero
+effect lines are pruned again); older guides, the arena series' per-floor ダンジョンデータ posts and
+Kamigame dungeon pages are read with `dungeon-details/lib/enemy-tables.mjs` (tables under
+出現 / 敵 / モンスター / ダンジョンデータ / 先制 / 行動 / floor headings, or mentioning 先制;
+largest value across candidate posts) and stored in `entry.maxHit`. The web
+merges both through `maxHitForEntry` (floor table wins). Damage parsing accepts 万 / 億 units
+("2,193万ダメージ") and ignores thresholds ("10億ダメージ吸収", "…ダメージ以上無効"). Prose
+mentions outside tables are not read, so a conditional hit quoted only in the walkthrough text is missed.
+
+**Formula** (`web/src/lib/team-build/resilience.ts`):
+
+```
+effective max HP = team HP (LS HP × badge × dungeon × team awk, from compute-stats) × active HP buff
+damage taken     = max hit × (1 − LS shield leader) × (1 − LS shield helper) × (1 − active shield)
+survives         = damage taken < effective max HP        (equal damage is lethal)
+effective HP     = effective max HP / Π(1 − shield)       (∞ for a 100 % shield)
+```
+
+- Leader-skill shields use dadguide `leader_skills.max_shield` (the conditional maximum); a
+  checkbox excludes them.
+- Active effects are parsed from `active_skills.desc_en`: `reduce damage taken by N%` and
+  `Nx HP` / `Nx HP & RCV` / `Nx all stats` (per `;` clause, evolving actives tagged by stage,
+  "recover N% of max HP" is not a buff; clauses with "for each / every <awakening>" scale with the
+  team and are skipped). Card and assist actives are both listed; the user picks
+  at most one HP buff and one shield (they never stack with each other in game).

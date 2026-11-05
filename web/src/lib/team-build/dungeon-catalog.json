@@ -65,7 +65,8 @@
       },
       "superGravity": 0.001,
       "sourceUrl": "https://appmedia.jp/pazudora/78441527",
-      "notes": "confirmed (kamigame + appmedia)"
+      "notes": "confirmed (kamigame + appmedia)",
+      "appmediaPostId": 78441527
     },
     {
       "id": "unknown-nova-ultimate-evil-lifeform",
@@ -83,7 +84,8 @@
       },
       "superGravity": 0.002,
       "sourceUrl": "https://kamigame.jp/puzzle-dragons/%E3%81%8A%E5%BD%B9%E7%AB%8B%E3%81%A1%E6%83%85%E5%A0%B1%E3%83%BB%E3%82%B3%E3%83%A9%E3%83%A0/%E8%B6%85%E9%87%8D%E5%8A%9B%E6%94%BB%E7%95%A5.html",
-      "notes": "confirmed (kamigame + appmedia)"
+      "notes": "confirmed (kamigame + appmedia)",
+      "appmediaPostId": 77608267
     },
     {
       "id": "ura-unknown-nova-eternal-myriad-dragon",
@@ -101,7 +103,13 @@
       },
       "superGravity": 0.0025,
       "sourceUrl": "https://appmedia.jp/?p=77008214",
-      "notes": "confirmed sun (appmedia + GameWith + altema); divisor appmedia"
+      "notes": "confirmed sun (appmedia + GameWith + altema); divisor appmedia",
+      "maxHit": {
+        "value": 5775000,
+        "raw": "3ターン目以降、5,775,000ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/77008214",
+        "source": "appmedia"
+      }
     },
     {
       "id": "ura-unknown-nova-thousand-dragon-of-the-azure-sky",
@@ -119,7 +127,13 @@
       },
       "superGravity": 0.004,
       "sourceUrl": "https://appmedia.jp/?p=76853093",
-      "notes": "divisor from appmedia only"
+      "notes": "divisor from appmedia only",
+      "maxHit": {
+        "value": 5750000,
+        "raw": "5,750,000ダメージの連続攻撃",
+        "sourceUrl": "https://appmedia.jp/pazudora/76853093",
+        "source": "appmedia"
+      }
     },
     {
       "id": "unknown-nova-trillion-dragon-of-annihilation",
@@ -137,7 +151,13 @@
       },
       "superGravity": 0.005,
       "sourceUrl": "https://appmedia.jp/?p=75753553",
-      "notes": "confirmed; no sun/moon marker; no-continue; no RCV debuff"
+      "notes": "confirmed; no sun/moon marker; no-continue; no RCV debuff",
+      "maxHit": {
+        "value": 80000000,
+        "raw": "以降、毎ターン80,000,000ダメージ(攻撃力10倍)の連続攻撃",
+        "sourceUrl": "https://appmedia.jp/pazudora/77337470",
+        "source": "appmedia"
+      }
     },
     {
       "id": "ura-unknown-nova-trillion-dragon-of-annihilation",
@@ -155,7 +175,13 @@
       },
       "superGravity": 0.005,
       "sourceUrl": "https://appmedia.jp/?p=77337470",
-      "notes": "confirmed; no sun/moon marker; no RCV debuff"
+      "notes": "confirmed; no sun/moon marker; no RCV debuff",
+      "maxHit": {
+        "value": 80000000,
+        "raw": "以降、毎ターン80,000,000ダメージ(攻撃力10倍)の連続攻撃",
+        "sourceUrl": "https://appmedia.jp/pazudora/77337470",
+        "source": "appmedia"
+      }
     },
     {
       "id": "unknown-nova-hundred-trillion-dragon-of-chaos",
@@ -173,7 +199,8 @@
       },
       "superGravity": 0.01,
       "sourceUrl": "https://kamigame.jp/puzzle-dragons/%E3%81%8A%E5%BD%B9%E7%AB%8B%E3%81%A1%E6%83%85%E5%A0%B1%E3%83%BB%E3%82%B3%E3%83%A9%E3%83%A0/%E8%B6%85%E9%87%8D%E5%8A%9B%E6%94%BB%E7%95%A5.html",
-      "notes": "confirmed (kamigame + appmedia); no sun/moon marker"
+      "notes": "confirmed (kamigame + appmedia); no sun/moon marker",
+      "appmediaPostId": 76761143
     },
     {
       "id": "ura-unknown-nova-hundred-dragon-of-blazing-flames",
@@ -191,7 +218,13 @@
       },
       "superGravity": 0.01,
       "sourceUrl": "https://appmedia.jp/?p=76310704",
-      "notes": "confirmed (appmedia + game8); no-continue"
+      "notes": "confirmed (appmedia + game8); no-continue",
+      "maxHit": {
+        "value": 8326400,
+        "raw": "ランダムで属性変化+8,326,400ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/76310704",
+        "source": "appmedia"
+      }
     },
     {
       "id": "ura-unknown-nova-hundred-trillion-dragon-of-chaos",
@@ -209,7 +242,8 @@
       },
       "superGravity": 0.01,
       "sourceUrl": "https://appmedia.jp/?p=77447767",
-      "notes": "confirmed (appmedia + GameWith tag); no sun/moon marker"
+      "notes": "confirmed (appmedia + GameWith tag); no sun/moon marker",
+      "appmediaPostId": 77447767
     },
     {
       "id": "unknown-nova-eternal-myriad-dragon",
@@ -227,7 +261,13 @@
       },
       "superGravity": 0.0125,
       "sourceUrl": "https://appmedia.jp/?p=76189906",
-      "notes": "confirmed (appmedia + kamigame + altema)"
+      "notes": "confirmed (appmedia + kamigame + altema)",
+      "maxHit": {
+        "value": 250000000,
+        "raw": "5連続攻撃：2.5億ダメージ(10倍時)",
+        "sourceUrl": "https://appmedia.jp/pazudora/76197925",
+        "source": "appmedia"
+      }
     },
     {
       "id": "unknown-nova-thousand-dragon-of-the-azure-sky",
@@ -245,7 +285,13 @@
       },
       "superGravity": 0.0125,
       "sourceUrl": "https://appmedia.jp/?p=75936865",
-      "notes": "confirmed (appmedia + kamigame)"
+      "notes": "confirmed (appmedia + kamigame)",
+      "maxHit": {
+        "value": 277500000,
+        "raw": "5連続攻撃：277,500,000ダメージ(10倍時)",
+        "sourceUrl": "https://appmedia.jp/pazudora/75943690",
+        "source": "appmedia"
+      }
     },
     {
       "id": "unknown-nova-hundred-dragon-of-blazing-flames",
@@ -263,7 +309,13 @@
       },
       "superGravity": 0.02,
       "sourceUrl": "https://appmedia.jp/?p=75753553",
-      "notes": "confirmed; no-continue; moon per appmedia + GameWith"
+      "notes": "confirmed; no-continue; moon per appmedia + GameWith",
+      "maxHit": {
+        "value": 120500000,
+        "raw": "5連続攻撃：12,050,000(120,500,000)ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/75790300",
+        "source": "appmedia"
+      }
     },
     {
       "id": "returning-supernova-rampaging-ultimate-evil-lifeform",
@@ -291,7 +343,8 @@
           "rcv": 1
         }
       ],
-      "notes": "confirmed (appmedia + altema); ATK x6/10000; Balanced type HP x1.5"
+      "notes": "confirmed (appmedia + altema); ATK x6/10000; Balanced type HP x1.5",
+      "appmediaPostId": 78589298
     },
     {
       "id": "returning-supernova-hundred-trillion-dragon-of-five-extremes",
@@ -319,7 +372,8 @@
           "rcv": 1
         }
       ],
-      "notes": "confirmed (appmedia + altema); ATK x7/10000; Physical type HP x1.5; no sun/moon"
+      "notes": "confirmed (appmedia + altema); ATK x7/10000; Physical type HP x1.5; no sun/moon",
+      "appmediaPostId": 78343169
     },
     {
       "id": "returning-supernova-abyssal-myriad-dragon",
@@ -347,7 +401,8 @@
           "rcv": 1
         }
       ],
-      "notes": "divisor appmedia only; Healer type HP x1.5 (stage-list tag)"
+      "notes": "divisor appmedia only; Healer type HP x1.5 (stage-list tag)",
+      "appmediaPostId": 78034112
     },
     {
       "id": "returning-supernova-star-shattering-trillion-dragon",
@@ -375,7 +430,8 @@
           "rcv": 1
         }
       ],
-      "notes": "confirmed; God type HP x1.5"
+      "notes": "confirmed; God type HP x1.5",
+      "appmediaPostId": 78201716
     },
     {
       "id": "returning-supernova-thousand-dragon-of-purification",
@@ -393,7 +449,8 @@
       },
       "superGravity": 0.001,
       "sourceUrl": "https://appmedia.jp/?p=77888135",
-      "notes": "confirmed (appmedia + kamigame)"
+      "notes": "confirmed (appmedia + kamigame)",
+      "appmediaPostId": 77888135
     },
     {
       "id": "returning-supernova-hundred-dragon-of-smoldering-embers",
@@ -411,7 +468,8 @@
       },
       "superGravity": 0.0016,
       "sourceUrl": "https://appmedia.jp/?p=77744415",
-      "notes": "confirmed (appmedia + kamigame)"
+      "notes": "confirmed (appmedia + kamigame)",
+      "appmediaPostId": 77744415
     },
     {
       "id": "guardian-celestial-bodies-guardian-of-the-moon",
@@ -429,7 +487,8 @@
       },
       "superGravity": 0.0004,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/531389",
-      "notes": "confirmed (GameWith + kamigame); 60-min, no-continue"
+      "notes": "confirmed (GameWith + kamigame); 60-min, no-continue",
+      "appmediaPostId": 79524656
     },
     {
       "id": "guardian-celestial-bodies-guardian-of-the-sun",
@@ -447,7 +506,8 @@
       },
       "superGravity": 0.0004,
       "sourceUrl": "https://kamigame.jp/puzzle-dragons/%E3%83%80%E3%83%B3%E3%82%B8%E3%83%A7%E3%83%B3/%E3%83%86%E3%82%AF%E3%83%8B%E3%82%AB%E3%83%AB%E3%83%80%E3%83%B3%E3%82%B8%E3%83%A7%E3%83%B3/%E5%AE%88%E9%9C%8A%E3%81%AE%E5%A4%A9%E4%BD%93.html",
-      "notes": "sun confirmed; divisors kamigame only; 60-min solo"
+      "notes": "sun confirmed; divisors kamigame only; 60-min solo",
+      "appmediaPostId": 79702964
     },
     {
       "id": "guardian-celestial-bodies-guardian-of-venus",
@@ -465,7 +525,8 @@
       },
       "superGravity": 0.0004,
       "sourceUrl": "https://kamigame.jp/puzzle-dragons/%E3%83%80%E3%83%B3%E3%82%B8%E3%83%A7%E3%83%B3/%E3%83%86%E3%82%AF%E3%83%8B%E3%82%AB%E3%83%AB%E3%83%80%E3%83%B3%E3%82%B8%E3%83%A7%E3%83%B3/%E5%AE%88%E9%9C%8A%E3%81%AE%E5%A4%A9%E4%BD%93.html",
-      "notes": "unverified: kamigame only (moon per appmedia)"
+      "notes": "unverified: kamigame only (moon per appmedia)",
+      "appmediaPostId": 79234541
     },
     {
       "id": "guardian-celestial-bodies-guardian-of-jupiter",
@@ -483,7 +544,8 @@
       },
       "superGravity": 0.0005,
       "sourceUrl": "https://kamigame.jp/puzzle-dragons/%E3%83%80%E3%83%B3%E3%82%B8%E3%83%A7%E3%83%B3/%E3%83%86%E3%82%AF%E3%83%8B%E3%82%AB%E3%83%AB%E3%83%80%E3%83%B3%E3%82%B8%E3%83%A7%E3%83%B3/%E5%AE%88%E9%9C%8A%E3%81%AE%E5%A4%A9%E4%BD%93.html",
-      "notes": "confirmed (kamigame + altema); no sun/moon marker; battles 12 vs 15 differ"
+      "notes": "confirmed (kamigame + altema); no sun/moon marker; battles 12 vs 15 differ",
+      "appmediaPostId": 78777542
     },
     {
       "id": "guardian-celestial-bodies-guardian-of-mercury",
@@ -501,7 +563,8 @@
       },
       "superGravity": 0.0005,
       "sourceUrl": "https://kamigame.jp/puzzle-dragons/%E3%83%80%E3%83%B3%E3%82%B8%E3%83%A7%E3%83%B3/%E3%83%86%E3%82%AF%E3%83%8B%E3%82%AB%E3%83%AB%E3%83%80%E3%83%B3%E3%82%B8%E3%83%A7%E3%83%B3/%E5%AE%88%E9%9C%8A%E3%81%AE%E5%A4%A9%E4%BD%93.html",
-      "notes": "unverified: kamigame only; no sun/moon marker"
+      "notes": "unverified: kamigame only; no sun/moon marker",
+      "appmediaPostId": 79039100
     },
     {
       "id": "ephemeral-sky-realm-god-king-of-the-heavenly-vault",
@@ -519,6 +582,7 @@
       },
       "superGravity": 0.001667,
       "sourceUrl": "https://appmedia.jp/?p=80347105",
+      "appmediaPostId": 80347105,
       "notes": "appmedia only (two pages agree)"
     },
     {
@@ -537,6 +601,7 @@
       },
       "superGravity": 0.002,
       "sourceUrl": "https://altema.jp/pazudora/dungeon/1141",
+      "appmediaPostId": 80048764,
       "notes": "ATK confirmed (altema + game8); RCV 1/18 altema only; no-continue"
     },
     {
@@ -555,6 +620,7 @@
       },
       "superGravity": 0.002,
       "sourceUrl": "https://appmedia.jp/?p=79768151",
+      "appmediaPostId": 79768151,
       "notes": "confirmed (kamigame + appmedia); sun per GameWith; 60-min solo"
     },
     {
@@ -583,7 +649,8 @@
           "rcv": 2.5
         }
       ],
-      "notes": "confirmed (GameWith + appmedia + official); Torrent: Water RCV x2.5, skill heals halved"
+      "notes": "confirmed (GameWith + appmedia + official); Torrent: Water RCV x2.5, skill heals halved",
+      "appmediaPostId": 80520466
     },
     {
       "id": "abyssal-heavy-realm-spirit-king-of-the-great-tree",
@@ -601,6 +668,7 @@
       },
       "superGravity": 0.000286,
       "sourceUrl": "https://appmedia.jp/?p=80128597",
+      "appmediaPostId": 80128597,
       "conditional": [
         {
           "attributes": [
@@ -629,6 +697,7 @@
       },
       "superGravity": 0.0003,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/551905",
+      "appmediaPostId": 79887656,
       "notes": "confirmed; ATK ~1/3333 (3/10000 assumed); Scorching: max HP -10%, RCV x1/2"
     },
     {
@@ -647,6 +716,7 @@
       },
       "superGravity": 0.0002,
       "sourceUrl": "https://altema.jp/pazudora/dungeon/1134",
+      "appmediaPostId": 79970458,
       "notes": "altema only; 1.4-billion challenge; leader change disabled"
     },
     {
@@ -665,7 +735,8 @@
       },
       "superGravity": 0.0005,
       "sourceUrl": "https://appmedia.jp/?p=79140893",
-      "notes": "confirmed (appmedia + altema + game8); 1.1-billion challenge"
+      "notes": "confirmed (appmedia + altema + game8); 1.1-billion challenge",
+      "appmediaPostId": 79140893
     },
     {
       "id": "infinity-colosseum-roaring-phoenix-emperor",
@@ -683,6 +754,7 @@
       },
       "superGravity": 0.0005,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/578912",
+      "appmediaPostId": 80439652,
       "notes": "confirmed (GameWith + altema + official)"
     },
     {
@@ -701,7 +773,8 @@
       },
       "superGravity": 0.0005,
       "sourceUrl": "https://appmedia.jp/pazudora/78260648",
-      "notes": "confirmed (appmedia + altema); 1-billion challenge; no sun/moon"
+      "notes": "confirmed (appmedia + altema); 1-billion challenge; no sun/moon",
+      "appmediaPostId": 78260648
     },
     {
       "id": "infinity-colosseum-ura-unknown-nova-rush",
@@ -719,7 +792,8 @@
       },
       "superGravity": 0.0005,
       "sourceUrl": "https://game8.jp/pazudora/723726",
-      "notes": "kamigame only; leader change disabled; battles 13 vs 15 differ"
+      "notes": "kamigame only; leader change disabled; battles 13 vs 15 differ",
+      "appmediaPostId": 78656984
     },
     {
       "id": "infinity-colosseum-silver-winged-white-swift-emperor",
@@ -737,6 +811,7 @@
       },
       "superGravity": null,
       "sourceUrl": "https://game8.jp/pazudora/723726",
+      "appmediaPostId": 79335344,
       "notes": "super gravity present but divisor not published; ATK left at x1; no sun/moon"
     },
     {
@@ -755,6 +830,7 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
+      "appmediaPostId": 79620137,
       "notes": "sun per appmedia; super gravity + altitude present, divisors unknown (left x1)"
     },
     {
@@ -791,7 +867,15 @@
       },
       "superGravity": 0.01,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/379820",
-      "notes": "confirmed tier"
+      "notes": "confirmed tier",
+      "maxHit": {
+        "value": 2516909,
+        "raw": "・2,516,909ダメージ",
+        "floor": "19F",
+        "monsterNameJa": "神王妃・ヘラ",
+        "sourceUrl": "https://kamigame.jp/puzzle-dragons/%E3%83%80%E3%83%B3%E3%82%B8%E3%83%A7%E3%83%B3/%E3%82%B9%E3%83%9A%E3%82%B7%E3%83%A3%E3%83%AB%E3%83%80%E3%83%B3%E3%82%B8%E3%83%A7%E3%83%B3/%E7%84%A1%E9%99%90%E5%9B%9E%E5%BB%8A%E3%80%90%E8%B6%85%E9%87%8D%E5%8A%9B%E3%80%91.html",
+        "source": "kamigame"
+      }
     },
     {
       "id": "infinite-corridor-super-gravity-tier-1-80",
@@ -809,7 +893,15 @@
       },
       "superGravity": 0.0125,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/379820",
-      "notes": "confirmed tier"
+      "notes": "confirmed tier",
+      "maxHit": {
+        "value": 2516909,
+        "raw": "・2,516,909ダメージ",
+        "floor": "19F",
+        "monsterNameJa": "神王妃・ヘラ",
+        "sourceUrl": "https://kamigame.jp/puzzle-dragons/%E3%83%80%E3%83%B3%E3%82%B8%E3%83%A7%E3%83%B3/%E3%82%B9%E3%83%9A%E3%82%B7%E3%83%A3%E3%83%AB%E3%83%80%E3%83%B3%E3%82%B8%E3%83%A7%E3%83%B3/%E7%84%A1%E9%99%90%E5%9B%9E%E5%BB%8A%E3%80%90%E8%B6%85%E9%87%8D%E5%8A%9B%E3%80%91.html",
+        "source": "kamigame"
+      }
     },
     {
       "id": "infinite-corridor-super-gravity-tier-1-50",
@@ -827,7 +919,15 @@
       },
       "superGravity": 0.02,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/379820",
-      "notes": "confirmed tier; higher tiers conflict (kamigame 400 vs GameWith 200/250)"
+      "notes": "confirmed tier; higher tiers conflict (kamigame 400 vs GameWith 200/250)",
+      "maxHit": {
+        "value": 2516909,
+        "raw": "・2,516,909ダメージ",
+        "floor": "19F",
+        "monsterNameJa": "神王妃・ヘラ",
+        "sourceUrl": "https://kamigame.jp/puzzle-dragons/%E3%83%80%E3%83%B3%E3%82%B8%E3%83%A7%E3%83%B3/%E3%82%B9%E3%83%9A%E3%82%B7%E3%83%A3%E3%83%AB%E3%83%80%E3%83%B3%E3%82%B8%E3%83%A7%E3%83%B3/%E7%84%A1%E9%99%90%E5%9B%9E%E5%BB%8A%E3%80%90%E8%B6%85%E9%87%8D%E5%8A%9B%E3%80%91.html",
+        "source": "kamigame"
+      }
     },
     {
       "id": "catastrophic-colosseum-celestial-motion-of-heaven-and-hades",
@@ -845,7 +945,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "confirmed moon (appmedia + GameWith)"
+      "notes": "confirmed moon (appmedia + GameWith)",
+      "maxHit": {
+        "value": 80000000,
+        "raw": "4~5連続攻撃：6,400,000(80,000,000)ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/27221986",
+        "source": "appmedia"
+      }
     },
     {
       "id": "catastrophic-colosseum-guiding-radiance-and-ruinous-darkness",
@@ -863,7 +969,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://www.appbank.net/2023/01/18/iphone-application/2378228.php",
-      "notes": "confirmed; RCV x1/2, no super gravity"
+      "notes": "confirmed; RCV x1/2, no super gravity",
+      "maxHit": {
+        "value": 1100000,
+        "raw": "1,100,000ダメージ+1ターン：回復力半減",
+        "sourceUrl": "https://appmedia.jp/pazudora/76395511",
+        "source": "appmedia"
+      }
     },
     {
       "id": "catastrophic-colosseum-star-breaking-wings-of-ruin",
@@ -881,7 +993,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "confirmed moon (appmedia + GameWith)"
+      "notes": "confirmed moon (appmedia + GameWith)",
+      "maxHit": {
+        "value": 202500,
+        "raw": "※既に回復力が減少しているなら202,500ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/6580633",
+        "source": "appmedia"
+      }
     },
     {
       "id": "co-op-ultimate-arena",
@@ -917,7 +1035,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "confirmed moon (appmedia + GameWith)"
+      "notes": "confirmed moon (appmedia + GameWith)",
+      "maxHit": {
+        "value": 13844250,
+        "raw": "5連続攻撃：9,229,500(13,844,250)ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/26923501",
+        "source": "appmedia"
+      }
     },
     {
       "id": "transcendent-colosseum-star-guiding-heavenly-wings",
@@ -935,7 +1059,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "confirmed moon (appmedia + GameWith)"
+      "notes": "confirmed moon (appmedia + GameWith)",
+      "maxHit": {
+        "value": 37414,
+        "raw": "37,414ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/27204457",
+        "source": "appmedia"
+      }
     },
     {
       "id": "ultimate-arena-alien-existence",
@@ -953,7 +1083,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "unverified: appmedia only"
+      "notes": "unverified: appmedia only",
+      "maxHit": {
+        "value": 9360000,
+        "raw": "10連続攻撃:6,240,000(9,360,000)ダメージ+自身の属性をランダムに変化(1回のみ使用)",
+        "sourceUrl": "https://appmedia.jp/pazudora/2784019",
+        "source": "appmedia"
+      }
     },
     {
       "id": "ultimate-arena-goddess-of-two-poles-1-2-3",
@@ -971,7 +1107,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "confirmed sun (appmedia + altema) for Arena 1, 2 and 3"
+      "notes": "confirmed sun (appmedia + altema) for Arena 1, 2 and 3",
+      "maxHit": {
+        "value": 46238,
+        "raw": "先制46,238ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/4311226",
+        "source": "appmedia"
+      }
     },
     {
       "id": "ultimate-arena-incarnation-of-worlds",
@@ -989,7 +1131,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "unverified: appmedia only"
+      "notes": "unverified: appmedia only",
+      "maxHit": {
+        "value": 6208000,
+        "raw": "8連続攻撃：3,104,000(6,208,000)ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/4594813",
+        "source": "appmedia"
+      }
     },
     {
       "id": "ultimate-arena-three-hands-of-fate",
@@ -1007,7 +1155,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "confirmed sun (appmedia + altema)"
+      "notes": "confirmed sun (appmedia + altema)",
+      "maxHit": {
+        "value": 3240000,
+        "raw": "3,240,000ダメージの連続攻撃",
+        "sourceUrl": "https://appmedia.jp/pazudora/1738308",
+        "source": "appmedia"
+      }
     },
     {
       "id": "ura-ultimate-arena-alien-existence",
@@ -1025,7 +1179,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "unverified: appmedia only"
+      "notes": "unverified: appmedia only",
+      "maxHit": {
+        "value": 16848000,
+        "raw": "10連続攻撃：11,232,000(16,848,000)ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/3667360",
+        "source": "appmedia"
+      }
     },
     {
       "id": "ura-ultimate-arena-goddess-of-two-poles",
@@ -1043,7 +1203,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "unverified: appmedia only"
+      "notes": "unverified: appmedia only",
+      "maxHit": {
+        "value": 268920,
+        "raw": "268,920ダメージの連続攻撃",
+        "sourceUrl": "https://appmedia.jp/pazudora/1011588",
+        "source": "appmedia"
+      }
     },
     {
       "id": "ura-ultimate-arena-incarnation-of-worlds",
@@ -1061,7 +1227,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "unverified: appmedia only"
+      "notes": "unverified: appmedia only",
+      "maxHit": {
+        "value": 14336000,
+        "raw": "10連続攻撃：7,168,000(14,336,000)ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/4760746",
+        "source": "appmedia"
+      }
     },
     {
       "id": "ura-ultimate-arena-three-hands-of-fate",
@@ -1079,7 +1251,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "unverified: appmedia only"
+      "notes": "unverified: appmedia only",
+      "maxHit": {
+        "value": 7852000,
+        "raw": "10連続攻撃：3,926,000(7,852,000)ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/2891260",
+        "source": "appmedia"
+      }
     },
     {
       "id": "mystic-dimension-bird-beyond-dimensions",
@@ -1097,7 +1275,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "confirmed moon; no duplicate monsters"
+      "notes": "confirmed moon; no duplicate monsters",
+      "maxHit": {
+        "value": 3800000,
+        "raw": "初回行動HP50%以上で380万ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/76042532",
+        "source": "appmedia"
+      }
     },
     {
       "id": "mystic-dimension-guide-of-dimensions",
@@ -1115,7 +1299,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "confirmed moon (appmedia; GameWith lists parent)"
+      "notes": "confirmed moon (appmedia; GameWith lists parent)",
+      "maxHit": {
+        "value": 9452500,
+        "raw": "10連続攻撃：9,452,500ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/6524761",
+        "source": "appmedia"
+      }
     },
     {
       "id": "mystic-dimension-visitor-of-the-fourth-dimension",
@@ -1133,7 +1323,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "confirmed moon (appmedia + GameWith)"
+      "notes": "confirmed moon (appmedia + GameWith)",
+      "maxHit": {
+        "value": 329000000,
+        "raw": "5連続攻撃、計32,900,000ダメージ (10倍時：329,000,000ダメージ)",
+        "sourceUrl": "https://appmedia.jp/pazudora/27032662",
+        "source": "appmedia"
+      }
     },
     {
       "id": "ura-mystic-dimension-bird-beyond-dimensions",
@@ -1151,7 +1347,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "confirmed moon; no duplicate monsters"
+      "notes": "confirmed moon; no duplicate monsters",
+      "maxHit": {
+        "value": 202676250,
+        "raw": "5連続攻撃：28,953,750(202,676,250)ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/75610948",
+        "source": "appmedia"
+      }
     },
     {
       "id": "ura-mystic-dimension-guide-of-dimensions",
@@ -1169,7 +1371,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "confirmed moon; variants add a type stat boost (values not published)"
+      "notes": "confirmed moon; variants add a type stat boost (values not published)",
+      "maxHit": {
+        "value": 121003250,
+        "raw": "5連続攻撃：121,003,250ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/26760424",
+        "source": "appmedia"
+      }
     },
     {
       "id": "ura-mystic-dimension-visitor-of-the-fourth-dimension",
@@ -1187,7 +1395,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "confirmed moon; rarity <=6 boost (value not published)"
+      "notes": "confirmed moon; rarity <=6 boost (value not published)",
+      "maxHit": {
+        "value": 658000000,
+        "raw": "5連続攻撃、計65,800,000ダメージ (10倍時：658,000,000ダメージ)",
+        "sourceUrl": "https://appmedia.jp/pazudora/27494763",
+        "source": "appmedia"
+      }
     },
     {
       "id": "new-demon-king-challenge-ura-demon-corridor-super-gravity",
@@ -1205,7 +1419,13 @@
       },
       "superGravity": 0.01,
       "sourceUrl": "https://appmedia.jp/?p=76346926",
-      "notes": "confirmed; event 2022-12; 30-min; no duplicate monsters; marker not stated"
+      "notes": "confirmed; event 2022-12; 30-min; no duplicate monsters; marker not stated",
+      "maxHit": {
+        "value": 1560341,
+        "raw": "1,560,341ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/76346926",
+        "source": "appmedia"
+      }
     },
     {
       "id": "shura-realm-absolute-of-the-mechanical-castle",
@@ -1223,7 +1443,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "confirmed moon; all five attributes required"
+      "notes": "confirmed moon; all five attributes required",
+      "maxHit": {
+        "value": 212400000,
+        "raw": "23,600,000(212,400,000)ダメージ+自身の属性がランダムに変化",
+        "sourceUrl": "https://appmedia.jp/pazudora/6082033",
+        "source": "appmedia"
+      }
     },
     {
       "id": "shura-realm-guardian-of-the-demon-gate",
@@ -1241,7 +1467,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "confirmed moon (appmedia; GameWith lists parent)"
+      "notes": "confirmed moon (appmedia; GameWith lists parent)",
+      "maxHit": {
+        "value": 6660000,
+        "raw": "10連続攻撃：6,660,000ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/5025955",
+        "source": "appmedia"
+      }
     },
     {
       "id": "shura-realm-ruler-of-the-demon-corridor",
@@ -1259,7 +1491,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "confirmed moon; no duplicate monsters"
+      "notes": "confirmed moon; no duplicate monsters",
+      "maxHit": {
+        "value": 8450000,
+        "raw": "5連続攻撃：4,225,000(8,450,000)ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/5393890",
+        "source": "appmedia"
+      }
     },
     {
       "id": "ura-shura-realm-absolute-of-the-mechanical-castle",
@@ -1277,7 +1515,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "confirmed moon; all five attributes required"
+      "notes": "confirmed moon; all five attributes required",
+      "maxHit": {
+        "value": 351360000,
+        "raw": "39,040,000(351,360,000)ダメージ+自身の属性をランダムに変化",
+        "sourceUrl": "https://appmedia.jp/pazudora/75491101",
+        "source": "appmedia"
+      }
     },
     {
       "id": "ura-shura-realm-guardian-of-the-demon-gate",
@@ -1295,7 +1539,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "confirmed moon (appmedia; GameWith lists parent)"
+      "notes": "confirmed moon (appmedia; GameWith lists parent)",
+      "maxHit": {
+        "value": 6660000,
+        "raw": "※失敗すると666万ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/5087977",
+        "source": "appmedia"
+      }
     },
     {
       "id": "ura-shura-realm-ruler-of-the-demon-corridor",
@@ -1313,7 +1563,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "confirmed moon; no duplicate monsters"
+      "notes": "confirmed moon; no duplicate monsters",
+      "maxHit": {
+        "value": 43960000,
+        "raw": "6,280,000(43,960,000)ダメージ+ランダムで自身の属性が変化",
+        "sourceUrl": "https://appmedia.jp/pazudora/5807324",
+        "source": "appmedia"
+      }
     },
     {
       "id": "super-gravity-dragon-rush-1-2",
@@ -1331,7 +1587,8 @@
       },
       "superGravity": 0.01,
       "sourceUrl": "https://game8.jp/pazudora/524909",
-      "notes": "confirmed (kamigame + altema); event; no-continue"
+      "notes": "confirmed (kamigame + altema); event; no-continue",
+      "appmediaPostId": 77574286
     },
     {
       "id": "knight-descended-super-flame-knight",
@@ -1349,7 +1606,8 @@
       },
       "superGravity": 0.02,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
-      "notes": "moon per GameWith only; ATK 1/50 confirmed (kamigame + appmedia); all attributes required"
+      "notes": "moon per GameWith only; ATK 1/50 confirmed (kamigame + appmedia); all attributes required",
+      "appmediaPostId": 76036547
     },
     {
       "id": "amen-descended",
@@ -1367,7 +1625,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
-      "notes": "unverified: GameWith moon list only"
+      "notes": "unverified: GameWith moon list only",
+      "appmediaPostId": 26795791
     },
     {
       "id": "apophis-descended",
@@ -1385,7 +1644,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
-      "notes": "unverified: GameWith moon list only"
+      "notes": "unverified: GameWith moon list only",
+      "appmediaPostId": 6370969
     },
     {
       "id": "beleth-descended",
@@ -1403,7 +1663,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
-      "notes": "unverified: GameWith moon list only"
+      "notes": "unverified: GameWith moon list only",
+      "maxHit": {
+        "value": 9977920,
+        "raw": "4連続攻撃：997,792(9,977,920)ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/4765660",
+        "source": "appmedia"
+      }
     },
     {
       "id": "brahma-descended",
@@ -1421,7 +1687,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
-      "notes": "unverified: GameWith moon list only"
+      "notes": "unverified: GameWith moon list only",
+      "maxHit": {
+        "value": 6208000,
+        "raw": "8連続攻撃：3,104,000(6,208,000)ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/3720676",
+        "source": "appmedia"
+      }
     },
     {
       "id": "bull-demon-king-descended",
@@ -1439,7 +1711,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
-      "notes": "unverified: GameWith sun list only"
+      "notes": "unverified: GameWith sun list only",
+      "maxHit": {
+        "value": 2148000,
+        "raw": "8連続攻撃：1,432,000(2,148,000)ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/5434888",
+        "source": "appmedia"
+      }
     },
     {
       "id": "chi-lin-descended",
@@ -1457,7 +1735,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
-      "notes": "unverified: GameWith sun list only"
+      "notes": "unverified: GameWith sun list only",
+      "maxHit": {
+        "value": 372800,
+        "raw": "10連続攻撃:372,800ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/3087325",
+        "source": "appmedia"
+      }
     },
     {
       "id": "demonius-descended",
@@ -1475,7 +1759,14 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
-      "notes": "unverified: GameWith moon list only"
+      "notes": "unverified: GameWith moon list only",
+      "appmediaPostId": 712448,
+      "maxHit": {
+        "value": 1508760,
+        "raw": "1,508,760ダメージの連続攻撃",
+        "sourceUrl": "https://appmedia.jp/pazudora/712448",
+        "source": "appmedia"
+      }
     },
     {
       "id": "dipsior-descended",
@@ -1493,7 +1784,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://altema.jp/pazudora/killerlist/128",
-      "notes": "unverified: altema sun list only"
+      "notes": "unverified: altema sun list only",
+      "appmediaPostId": 78984320
     },
     {
       "id": "dorothy-descended",
@@ -1511,7 +1803,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
-      "notes": "unverified: GameWith sun list only"
+      "notes": "unverified: GameWith sun list only",
+      "maxHit": {
+        "value": 716000,
+        "raw": "5連続攻撃：358,000(716,000)ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/3546973",
+        "source": "appmedia"
+      }
     },
     {
       "id": "eir-descended",
@@ -1529,7 +1827,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
-      "notes": "unverified: GameWith moon list only"
+      "notes": "unverified: GameWith moon list only",
+      "maxHit": {
+        "value": 7372500,
+        "raw": "連続攻撃:737,250(7,372,500)ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/2121523",
+        "source": "appmedia"
+      }
     },
     {
       "id": "elme-descended",
@@ -1547,7 +1851,14 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
-      "notes": "unverified: GameWith moon list only"
+      "notes": "unverified: GameWith moon list only",
+      "appmediaPostId": 794122,
+      "maxHit": {
+        "value": 362196,
+        "raw": "10ターン間、覚醒スキルを無効化(すでに覚醒無効の場合は30,183ダメージ)+362,196ダメージ+ランダム1色をに変化",
+        "sourceUrl": "https://appmedia.jp/pazudora/794122",
+        "source": "appmedia"
+      }
     },
     {
       "id": "eris-descended",
@@ -1565,7 +1876,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
-      "notes": "unverified: GameWith moon list only"
+      "notes": "unverified: GameWith moon list only",
+      "maxHit": {
+        "value": 1303000,
+        "raw": "1,303,000ダメージの連続攻撃",
+        "sourceUrl": "https://appmedia.jp/pazudora/3414886",
+        "source": "appmedia"
+      }
     },
     {
       "id": "gainaut-descended",
@@ -1583,7 +1900,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
-      "notes": "unverified: GameWith sun list only"
+      "notes": "unverified: GameWith sun list only",
+      "appmediaPostId": 212896
     },
     {
       "id": "gawain-descended",
@@ -1601,7 +1919,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
-      "notes": "unverified: GameWith sun list only"
+      "notes": "unverified: GameWith sun list only",
+      "maxHit": {
+        "value": 3510000,
+        "raw": "5連続攻撃：1,170,000(3,510,000)ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/5086768",
+        "source": "appmedia"
+      }
     },
     {
       "id": "hera-beorc-descended",
@@ -1619,7 +1943,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://altema.jp/pazudora/killerlist/128",
-      "notes": "unverified: altema sun list only"
+      "notes": "unverified: altema sun list only",
+      "maxHit": {
+        "value": 177776,
+        "raw": "177,776ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/357814",
+        "source": "appmedia"
+      }
     },
     {
       "id": "hoppo-descended",
@@ -1637,7 +1967,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
-      "notes": "unverified: GameWith moon list only"
+      "notes": "unverified: GameWith moon list only",
+      "appmediaPostId": 5891821
     },
     {
       "id": "irene-descended",
@@ -1655,7 +1986,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
-      "notes": "unverified: GameWith moon list only"
+      "notes": "unverified: GameWith moon list only",
+      "appmediaPostId": 6198601
     },
     {
       "id": "jabberwock-descended",
@@ -1673,7 +2005,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
-      "notes": "unverified: GameWith moon list only"
+      "notes": "unverified: GameWith moon list only",
+      "maxHit": {
+        "value": 784800,
+        "raw": "10連続攻撃：392,400(784,800)ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/4044484",
+        "source": "appmedia"
+      }
     },
     {
       "id": "jurond-descended",
@@ -1691,7 +2029,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
-      "notes": "confirmed sun (GameWith + altema)"
+      "notes": "confirmed sun (GameWith + altema)",
+      "maxHit": {
+        "value": 2476500,
+        "raw": "5連続攻撃：2,476,500ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/5714780",
+        "source": "appmedia"
+      }
     },
     {
       "id": "khonsu-descended",
@@ -1709,7 +2053,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
-      "notes": "unverified: GameWith moon list only"
+      "notes": "unverified: GameWith moon list only",
+      "appmediaPostId": 26910409
     },
     {
       "id": "kuroganemaru-descended",
@@ -1727,7 +2072,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
-      "notes": "unverified: GameWith moon list only"
+      "notes": "unverified: GameWith moon list only",
+      "maxHit": {
+        "value": 284560,
+        "raw": "連続攻撃:284,560ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/1545189",
+        "source": "appmedia"
+      }
     },
     {
       "id": "libertas-descended",
@@ -1745,7 +2096,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
-      "notes": "unverified: GameWith sun list only"
+      "notes": "unverified: GameWith sun list only",
+      "appmediaPostId": 2991154
     },
     {
       "id": "lindworm-descended",
@@ -1763,7 +2115,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
-      "notes": "unverified: GameWith sun list only"
+      "notes": "unverified: GameWith sun list only",
+      "maxHit": {
+        "value": 1233280,
+        "raw": "4連続攻撃:1,233,280ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/2565100",
+        "source": "appmedia"
+      }
     },
     {
       "id": "linthia-descended",
@@ -1781,7 +2139,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
-      "notes": "unverified: GameWith sun list only"
+      "notes": "unverified: GameWith sun list only",
+      "appmediaPostId": 158352
     },
     {
       "id": "lion-dance-nordis-descended",
@@ -1817,7 +2176,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
-      "notes": "unverified: GameWith moon list only"
+      "notes": "unverified: GameWith moon list only",
+      "maxHit": {
+        "value": 438000,
+        "raw": "6連続攻撃：438,000ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/2613115",
+        "source": "appmedia"
+      }
     },
     {
       "id": "manticore-descended",
@@ -1835,7 +2200,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://altema.jp/pazudora/killerlist/128",
-      "notes": "unverified: altema sun list only"
+      "notes": "unverified: altema sun list only",
+      "maxHit": {
+        "value": 248424,
+        "raw": "10連続攻撃：207,020(248,424)ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/1753668",
+        "source": "appmedia"
+      }
     },
     {
       "id": "mut-descended",
@@ -1853,7 +2224,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
-      "notes": "unverified: GameWith moon list only"
+      "notes": "unverified: GameWith moon list only",
+      "appmediaPostId": 27108508
     },
     {
       "id": "myr-descended",
@@ -1871,7 +2243,14 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
-      "notes": "unverified: GameWith moon list only"
+      "notes": "unverified: GameWith moon list only",
+      "appmediaPostId": 305237,
+      "maxHit": {
+        "value": 20423,
+        "raw": "盤面を暗闇状態にする＋20,423ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/305237",
+        "source": "appmedia"
+      }
     },
     {
       "id": "new-year-nordis-descended",
@@ -1889,7 +2268,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
-      "notes": "confirmed sun (GameWith + altema)"
+      "notes": "confirmed sun (GameWith + altema)",
+      "maxHit": {
+        "value": 677000,
+        "raw": "677,000ダメージ+2ターン：スキル封印",
+        "sourceUrl": "https://appmedia.jp/pazudora/77473069",
+        "source": "appmedia"
+      }
     },
     {
       "id": "nidhogg-descended",
@@ -1907,7 +2292,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
-      "notes": "unverified: GameWith moon list only"
+      "notes": "unverified: GameWith moon list only",
+      "appmediaPostId": 2334250
     },
     {
       "id": "nimue-descended",
@@ -1925,7 +2311,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
-      "notes": "unverified: GameWith moon list only"
+      "notes": "unverified: GameWith moon list only",
+      "maxHit": {
+        "value": 1387260,
+        "raw": "6連続攻撃：924,840(1,387,260)ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/4630390",
+        "source": "appmedia"
+      }
     },
     {
       "id": "nordis-descended",
@@ -1943,7 +2335,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
-      "notes": "confirmed sun (GameWith + altema)"
+      "notes": "confirmed sun (GameWith + altema)",
+      "maxHit": {
+        "value": 18239,
+        "raw": "(闇属性がいない場合は18,239ダメージ)",
+        "sourceUrl": "https://appmedia.jp/pazudora/848411",
+        "source": "appmedia"
+      }
     },
     {
       "id": "odin-dragon-descended",
@@ -1961,7 +2359,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
-      "notes": "unverified: GameWith moon list only"
+      "notes": "unverified: GameWith moon list only",
+      "appmediaPostId": 75279129
     },
     {
       "id": "panera-descended",
@@ -1979,7 +2378,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
-      "notes": "unverified: GameWith moon list only"
+      "notes": "unverified: GameWith moon list only",
+      "appmediaPostId": 2026450
     },
     {
       "id": "pixel-valkyrie-descended",
@@ -1997,7 +2397,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
-      "notes": "unverified: GameWith moon list only"
+      "notes": "unverified: GameWith moon list only",
+      "maxHit": {
+        "value": 646500,
+        "raw": "5連続攻撃：646,500ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/4904218",
+        "source": "appmedia"
+      }
     },
     {
       "id": "pixel-zeus-and-hera-descended",
@@ -2015,7 +2421,15 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
-      "notes": "unverified: GameWith moon list only"
+      "notes": "unverified: GameWith moon list only",
+      "maxHit": {
+        "value": 833600,
+        "raw": "833,600ダメージ",
+        "floor": null,
+        "monsterNameJa": null,
+        "sourceUrl": "https://kamigame.jp/puzzle-dragons/%E3%83%80%E3%83%B3%E3%82%B8%E3%83%A7%E3%83%B3/%E9%99%8D%E8%87%A8/%E3%83%89%E3%83%83%E3%83%88%E3%82%BC%E3%82%A6%E3%82%B9%EF%BC%86%E3%83%98%E3%83%A9%E9%99%8D%E8%87%A8.html",
+        "source": "kamigame"
+      }
     },
     {
       "id": "quetzalcoatl-descended",
@@ -2033,7 +2447,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
-      "notes": "unverified: GameWith sun list only"
+      "notes": "unverified: GameWith sun list only",
+      "maxHit": {
+        "value": 479670,
+        "raw": "479,670ダメージ+全ドロップを",
+        "sourceUrl": "https://appmedia.jp/pazudora/2733598",
+        "source": "appmedia"
+      }
     },
     {
       "id": "ra-dragon-descended",
@@ -2051,7 +2471,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
-      "notes": "unverified: GameWith moon list only"
+      "notes": "unverified: GameWith moon list only",
+      "appmediaPostId": 75808912
     },
     {
       "id": "ratatoskr-descended",
@@ -2069,7 +2490,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
-      "notes": "unverified: GameWith sun list only"
+      "notes": "unverified: GameWith sun list only",
+      "appmediaPostId": 6682114
     },
     {
       "id": "raziel-descended",
@@ -2087,7 +2509,14 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
-      "notes": "unverified: GameWith sun list only"
+      "notes": "unverified: GameWith sun list only",
+      "appmediaPostId": 4512964,
+      "maxHit": {
+        "value": 281600000,
+        "raw": "8連続攻撃：3,200,000(281,600,000)ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/4512964",
+        "source": "appmedia"
+      }
     },
     {
       "id": "regaloban-descended",
@@ -2105,7 +2534,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
-      "notes": "unverified: GameWith moon list only"
+      "notes": "unverified: GameWith moon list only",
+      "appmediaPostId": 6587629
     },
     {
       "id": "reincarnated-dragon-swordsman-descended",
@@ -2123,7 +2553,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
-      "notes": "unverified: GameWith sun list only"
+      "notes": "unverified: GameWith sun list only",
+      "appmediaPostId": 75462700
     },
     {
       "id": "reincarnated-rushana-descended",
@@ -2141,7 +2572,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
-      "notes": "unverified: GameWith sun list only"
+      "notes": "unverified: GameWith sun list only",
+      "appmediaPostId": 6025015
     },
     {
       "id": "reiwa-descended",
@@ -2159,7 +2591,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
-      "notes": "unverified: GameWith moon list only"
+      "notes": "unverified: GameWith moon list only",
+      "appmediaPostId": 3343831
     },
     {
       "id": "rushana-descended",
@@ -2177,7 +2610,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
-      "notes": "unverified: GameWith sun list only"
+      "notes": "unverified: GameWith sun list only",
+      "appmediaPostId": 985362
     },
     {
       "id": "sacred-ruins-of-the-gods-reincarnated-athena-non-descended",
@@ -2195,7 +2629,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "confirmed moon (appmedia + GameWith)"
+      "notes": "confirmed moon (appmedia + GameWith)",
+      "maxHit": {
+        "value": 18877320,
+        "raw": "2,696,760(18,877,320)ダメージ+覚醒スキルを無効化",
+        "sourceUrl": "https://appmedia.jp/pazudora/27122023",
+        "source": "appmedia"
+      }
     },
     {
       "id": "sacred-ruins-of-the-gods-reincarnated-hera-luna-descended",
@@ -2213,7 +2653,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "confirmed sun (appmedia + GameWith + altema)"
+      "notes": "confirmed sun (appmedia + GameWith + altema)",
+      "maxHit": {
+        "value": 20000000,
+        "raw": "2連続攻撃：2000万ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/27394983",
+        "source": "appmedia"
+      }
     },
     {
       "id": "sacred-ruins-of-the-gods-reincarnated-valkyrie-ciel-descended",
@@ -2231,7 +2677,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "confirmed sun (appmedia + GameWith + altema)"
+      "notes": "confirmed sun (appmedia + GameWith + altema)",
+      "maxHit": {
+        "value": 18877320,
+        "raw": "2,696,760(18,877,320)ダメージ+覚醒スキルを無効化",
+        "sourceUrl": "https://appmedia.jp/pazudora/26959621",
+        "source": "appmedia"
+      }
     },
     {
       "id": "sacred-ruins-of-the-gods-reincarnated-zeus-giga-descended",
@@ -2249,7 +2701,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "confirmed sun (appmedia + GameWith + altema)"
+      "notes": "confirmed sun (appmedia + GameWith + altema)",
+      "maxHit": {
+        "value": 67230000,
+        "raw": "10連続攻撃：67,230,000ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/27203416",
+        "source": "appmedia"
+      }
     },
     {
       "id": "scarlet-descended",
@@ -2267,7 +2725,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
-      "notes": "unverified: GameWith moon list only"
+      "notes": "unverified: GameWith moon list only",
+      "appmediaPostId": 416955
     },
     {
       "id": "scathach-descended",
@@ -2285,7 +2744,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
-      "notes": "unverified: GameWith moon list only"
+      "notes": "unverified: GameWith moon list only",
+      "maxHit": {
+        "value": 8381400,
+        "raw": "3連続攻撃：3,352,560(8,381,400)ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/5269837",
+        "source": "appmedia"
+      }
     },
     {
       "id": "scheherazade-descended",
@@ -2303,7 +2768,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
-      "notes": "unverified: GameWith moon list only"
+      "notes": "unverified: GameWith moon list only",
+      "maxHit": {
+        "value": 769500,
+        "raw": "5連続攻撃：513,000(769,500)ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/3271456",
+        "source": "appmedia"
+      }
     },
     {
       "id": "senri-descended",
@@ -2321,7 +2792,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
-      "notes": "unverified: GameWith sun list only"
+      "notes": "unverified: GameWith sun list only",
+      "maxHit": {
+        "value": 1818400,
+        "raw": "10連続攻撃：912,200(1,818,400)ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/3902881",
+        "source": "appmedia"
+      }
     },
     {
       "id": "shiva-dragon-descended",
@@ -2339,7 +2816,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
-      "notes": "unverified: GameWith moon list only"
+      "notes": "unverified: GameWith moon list only",
+      "appmediaPostId": 75658111
     },
     {
       "id": "shuten-doji-descended",
@@ -2357,7 +2835,15 @@
       },
       "superGravity": null,
       "sourceUrl": "https://altema.jp/pazudora/killerlist/128",
-      "notes": "unverified: altema sun list only"
+      "notes": "unverified: altema sun list only",
+      "maxHit": {
+        "value": 171830,
+        "raw": "171,830ダメージ",
+        "floor": null,
+        "monsterNameJa": null,
+        "sourceUrl": "https://kamigame.jp/puzzle-dragons/%E3%83%80%E3%83%B3%E3%82%B8%E3%83%A7%E3%83%B3/%E9%99%8D%E8%87%A8/%E9%85%92%E5%91%91%E7%AB%A5%E5%AD%90%E9%99%8D%E8%87%A8%EF%BC%81%E3%80%907%C3%976%E3%83%9E%E3%82%B9%E3%80%91.html",
+        "source": "kamigame"
+      }
     },
     {
       "id": "sol-and-mani-descended",
@@ -2375,7 +2861,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
-      "notes": "unverified: GameWith sun list only"
+      "notes": "unverified: GameWith sun list only",
+      "maxHit": {
+        "value": 361440,
+        "raw": "4連続攻撃：361,440ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/2222935",
+        "source": "appmedia"
+      }
     },
     {
       "id": "special-descended-rush-dragon-demon-realm",
@@ -2411,7 +2903,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://altema.jp/pazudora/killerlist/128",
-      "notes": "unverified: altema only"
+      "notes": "unverified: altema only",
+      "maxHit": {
+        "value": 680400,
+        "raw": "453,600(680,400)ダメージ+全ドロップを",
+        "sourceUrl": "https://appmedia.jp/pazudora/1267719",
+        "source": "appmedia"
+      }
     },
     {
       "id": "ultimate-descended-rush-hyakka-ryoran-1-2-5",
@@ -2429,7 +2927,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "confirmed sun (appmedia + GameWith + altema); 5 = Hyakka Challenge"
+      "notes": "confirmed sun (appmedia + GameWith + altema); 5 = Hyakka Challenge",
+      "appmediaPostId": 79314791
     },
     {
       "id": "ultimate-descended-rush-hyakka-ryoran-3-4",
@@ -2447,7 +2946,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "confirmed moon (appmedia + GameWith); 4 = Ryoran Challenge"
+      "notes": "confirmed moon (appmedia + GameWith); 4 = Ryoran Challenge",
+      "appmediaPostId": 79314791
     },
     {
       "id": "ultimate-devil-rush-heavenly-demon-realm",
@@ -2537,7 +3037,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
-      "notes": "confirmed sun (GameWith + altema)"
+      "notes": "confirmed sun (GameWith + altema)",
+      "appmediaPostId": 4323196
     },
     {
       "id": "volsung-descended",
@@ -2555,7 +3056,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
-      "notes": "unverified: GameWith moon list only"
+      "notes": "unverified: GameWith moon list only",
+      "maxHit": {
+        "value": 526125,
+        "raw": "全モンスターを5ターンの間、バインド状態にする+526,125ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/222020",
+        "source": "appmedia"
+      }
     },
     {
       "id": "weldor-descended",
@@ -2573,7 +3080,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://altema.jp/pazudora/killerlist/128",
-      "notes": "unverified: altema sun list only"
+      "notes": "unverified: altema sun list only",
+      "appmediaPostId": 369547
     },
     {
       "id": "zaerog-infinity-descended",
@@ -2591,7 +3099,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
-      "notes": "unverified: GameWith moon list only"
+      "notes": "unverified: GameWith moon list only",
+      "appmediaPostId": 843830
     },
     {
       "id": "zahhak-descended",
@@ -2609,7 +3118,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
-      "notes": "unverified: GameWith moon list only"
+      "notes": "unverified: GameWith moon list only",
+      "maxHit": {
+        "value": 269250,
+        "raw": "179,500(269,250)ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/2884759",
+        "source": "appmedia"
+      }
     },
     {
       "id": "zerenbas-descended",
@@ -2627,7 +3142,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430644",
-      "notes": "confirmed sun (GameWith + altema)"
+      "notes": "confirmed sun (GameWith + altema)",
+      "maxHit": {
+        "value": 2174200,
+        "raw": "7連続攻撃：2,174,200ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/5004139",
+        "source": "appmedia"
+      }
     },
     {
       "id": "zilregato-descended",
@@ -2645,7 +3166,13 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
-      "notes": "unverified: GameWith moon list only"
+      "notes": "unverified: GameWith moon list only",
+      "maxHit": {
+        "value": 454500,
+        "raw": "10連続攻撃：303,000(454,500)ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/1384740",
+        "source": "appmedia"
+      }
     },
     {
       "id": "cat-dragon-mountain-forest",
@@ -2681,7 +3208,15 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "unverified: appmedia only; no duplicate monsters (Technical EX1)"
+      "notes": "unverified: appmedia only; no duplicate monsters (Technical EX1)",
+      "maxHit": {
+        "value": 6440,
+        "raw": "・6,440ダメージ",
+        "floor": null,
+        "monsterNameJa": "朧夜の闇忍・服部半蔵",
+        "sourceUrl": "https://kamigame.jp/puzzle-dragons/%E3%83%80%E3%83%B3%E3%82%B8%E3%83%A7%E3%83%B3/%E3%83%86%E3%82%AF%E3%83%8B%E3%82%AB%E3%83%AB%E3%83%80%E3%83%B3%E3%82%B8%E3%83%A7%E3%83%B3/%E7%8A%AC%E9%BE%8D%E3%81%AE%E5%BF%8D%E9%87%8C.html",
+        "source": "kamigame"
+      }
     },
     {
       "id": "dragon-knight-princess-sanctuary",
@@ -2807,7 +3342,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "unverified: appmedia only (Technical EX2)"
+      "notes": "unverified: appmedia only (Technical EX2)",
+      "appmediaPostId": 840571
     },
     {
       "id": "legendary-airspace",
@@ -2825,7 +3361,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "unverified: appmedia only (Technical EX2)"
+      "notes": "unverified: appmedia only (Technical EX2)",
+      "appmediaPostId": 75241518
     },
     {
       "id": "legendary-mountain-path",
@@ -2843,7 +3380,14 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "confirmed sun (appmedia + altema) (Technical EX2)"
+      "notes": "confirmed sun (appmedia + altema) (Technical EX2)",
+      "appmediaPostId": 75239826,
+      "maxHit": {
+        "value": 258325,
+        "raw": "5連続攻撃 計258,325ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/75239826",
+        "source": "appmedia"
+      }
     },
     {
       "id": "legendary-ruins",
@@ -2861,7 +3405,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "unverified: appmedia only (Technical EX2)"
+      "notes": "unverified: appmedia only (Technical EX2)",
+      "appmediaPostId": 75241506
     },
     {
       "id": "legendary-sea-of-trees",
@@ -2879,7 +3424,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "unverified: appmedia only (Technical EX2)"
+      "notes": "unverified: appmedia only (Technical EX2)",
+      "appmediaPostId": 75241356
     },
     {
       "id": "legendary-skyway",
@@ -2897,7 +3443,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "confirmed sun (appmedia + altema) (Technical EX2)"
+      "notes": "confirmed sun (appmedia + altema) (Technical EX2)",
+      "appmediaPostId": 75240549
     },
     {
       "id": "legendary-snowfield",
@@ -2915,7 +3462,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "confirmed sun (appmedia + altema) (Technical EX2)"
+      "notes": "confirmed sun (appmedia + altema) (Technical EX2)",
+      "appmediaPostId": 75241299
     },
     {
       "id": "machine-athena-descended",
@@ -2933,7 +3481,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "unverified: appmedia only (Technical EX2)"
+      "notes": "unverified: appmedia only (Technical EX2)",
+      "appmediaPostId": 360099
     },
     {
       "id": "machine-dragon-giant-base",
@@ -2969,7 +3518,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "unverified: appmedia only (Technical EX2)"
+      "notes": "unverified: appmedia only (Technical EX2)",
+      "appmediaPostId": 158344
     },
     {
       "id": "machine-noah-descended",
@@ -2987,7 +3537,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "unverified: appmedia only (Technical EX2)"
+      "notes": "unverified: appmedia only (Technical EX2)",
+      "appmediaPostId": 2645668
     },
     {
       "id": "machine-zeus-descended",
@@ -3005,7 +3556,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "unverified: appmedia only; no recovery (RCV 0)"
+      "notes": "unverified: appmedia only; no recovery (RCV 0)",
+      "appmediaPostId": 212833
     },
     {
       "id": "paradise-of-the-holy-beasts",
@@ -3023,7 +3575,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/27375504",
-      "notes": "unverified: appmedia only (Technical EX2)"
+      "notes": "unverified: appmedia only (Technical EX2)",
+      "appmediaPostId": 77896601
     },
     {
       "id": "pirate-dragon-hidden-cave",
@@ -3095,7 +3648,8 @@
       },
       "superGravity": 0.0025,
       "sourceUrl": "https://appmedia.jp/?p=79537394",
-      "notes": "appmedia only; no-continue"
+      "notes": "appmedia only; no-continue",
+      "appmediaPostId": 79537394
     },
     {
       "id": "january-2026-quest-lv9",
@@ -3113,7 +3667,8 @@
       },
       "superGravity": 0.0025,
       "sourceUrl": "https://appmedia.jp/?p=79633016",
-      "notes": "appmedia only; super altitude 1/4 but no recovery, so RCV 0"
+      "notes": "appmedia only; super altitude 1/4 but no recovery, so RCV 0",
+      "appmediaPostId": 79633016
     },
     {
       "id": "november-2026-quest-lv5",
@@ -3185,7 +3740,8 @@
       },
       "superGravity": 0.02,
       "sourceUrl": "https://kamigame.jp/puzzle-dragons/%E3%81%8A%E5%BD%B9%E7%AB%8B%E3%81%A1%E6%83%85%E5%A0%B1%E3%83%BB%E3%82%B3%E3%83%A9%E3%83%A0/%E8%B6%85%E9%87%8D%E5%8A%9B%E6%94%BB%E7%95%A5.html",
-      "notes": "unverified: kamigame table only"
+      "notes": "unverified: kamigame table only",
+      "appmediaPostId": 76467937
     },
     {
       "id": "4000-days-anniversary-challenge",
@@ -3203,7 +3759,8 @@
       },
       "superGravity": 0.02,
       "sourceUrl": "https://kamigame.jp/puzzle-dragons/%E3%81%8A%E5%BD%B9%E7%AB%8B%E3%81%A1%E6%83%85%E5%A0%B1%E3%83%BB%E3%82%B3%E3%83%A9%E3%83%A0/%E8%B6%85%E9%87%8D%E5%8A%9B%E6%94%BB%E7%95%A5.html",
-      "notes": "unverified: kamigame table only"
+      "notes": "unverified: kamigame table only",
+      "appmediaPostId": 76441777
     },
     {
       "id": "rainbow-medal-challenge-super-gravity",
@@ -3221,7 +3778,13 @@
       },
       "superGravity": 0.02,
       "sourceUrl": "https://kamigame.jp/puzzle-dragons/%E3%81%8A%E5%BD%B9%E7%AB%8B%E3%81%A1%E6%83%85%E5%A0%B1%E3%83%BB%E3%82%B3%E3%83%A9%E3%83%A0/%E8%B6%85%E9%87%8D%E5%8A%9B%E6%94%BB%E7%95%A5.html",
-      "notes": "unverified: kamigame table only"
+      "notes": "unverified: kamigame table only",
+      "maxHit": {
+        "value": 8775000,
+        "raw": "※通常攻撃は8,775,000ダメージ",
+        "sourceUrl": "https://appmedia.jp/pazudora/76879154",
+        "source": "appmedia"
+      }
     },
     {
       "id": "62-million-downloads-challenge",
@@ -3275,7 +3838,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://altema.jp/pazudora/killerlist/128",
-      "notes": "unverified: altema sun list only; event/collab"
+      "notes": "unverified: altema sun list only; event/collab",
+      "appmediaPostId": 77235410
     },
     {
       "id": "demon-slayer-collab-dungeon",
@@ -3329,7 +3893,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
-      "notes": "unverified: GameWith moon list only; event/collab"
+      "notes": "unverified: GameWith moon list only; event/collab",
+      "appmediaPostId": 77403008
     },
     {
       "id": "eco-collab",
@@ -3383,7 +3948,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
-      "notes": "unverified: GameWith moon list only; event/collab"
+      "notes": "unverified: GameWith moon list only; event/collab",
+      "appmediaPostId": 77447704
     },
     {
       "id": "latent-attribute-resist-rush",
@@ -3401,7 +3967,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
-      "notes": "unverified: GameWith moon list only; event/collab"
+      "notes": "unverified: GameWith moon list only; event/collab",
+      "appmediaPostId": 77848931
     },
     {
       "id": "latent-parameter-enhance-rush",
@@ -3419,7 +3986,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
-      "notes": "unverified: GameWith moon list only; event/collab"
+      "notes": "unverified: GameWith moon list only; event/collab",
+      "appmediaPostId": 77849051
     },
     {
       "id": "merry-christmas-in-the-arena",
@@ -3437,7 +4005,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
-      "notes": "unverified: GameWith moon list only; event/collab"
+      "notes": "unverified: GameWith moon list only; event/collab",
+      "appmediaPostId": 76288525
     },
     {
       "id": "november-2026-quest-lv3",
@@ -3483,7 +4052,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://appmedia.jp/pazudora/80534632",
-      "notes": "confirmed (appmedia + GameWith); fixed helper; no ATK debuff"
+      "notes": "confirmed (appmedia + GameWith); fixed helper; no ATK debuff",
+      "appmediaPostId": 80534632
     },
     {
       "id": "puzzle-and-dragons-z-colosseum",
@@ -3501,7 +4071,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://altema.jp/pazudora/killerlist/128",
-      "notes": "unverified: altema sun list only; event/collab"
+      "notes": "unverified: altema sun list only; event/collab",
+      "appmediaPostId": 78060281
     },
     {
       "id": "santa-zeus-dios-descended",
@@ -3519,7 +4090,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
-      "notes": "unverified: GameWith moon list only; event/collab"
+      "notes": "unverified: GameWith moon list only; event/collab",
+      "appmediaPostId": 79579928
     },
     {
       "id": "shura-challenge",
@@ -3537,7 +4109,8 @@
       },
       "superGravity": null,
       "sourceUrl": "https://xn--0ck4aw2h.gamewith.jp/article/show/430645",
-      "notes": "unverified: GameWith moon list only; event/collab"
+      "notes": "unverified: GameWith moon list only; event/collab",
+      "appmediaPostId": 77473816
     },
     {
       "id": "tower-of-departure",

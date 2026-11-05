@@ -32,6 +32,15 @@ export type DungeonFloor = {
   spawns: DungeonSpawn[];
 };
 
+/** Hardest hit of the preemptive table (computed at import, see dungeon-details/lib/max-damage.mjs). */
+export type DungeonMaxDamage = {
+  value: number;
+  floor: string | null;
+  monsterId: number | null;
+  monsterNameJa: string | null;
+  raw: string;
+};
+
 export type DungeonRecord = {
   appmediaPostId: number;
   titleJa: string;
@@ -39,6 +48,7 @@ export type DungeonRecord = {
   sourceUrl: string;
   modified: string | null;
   importedAt: string;
+  maxDamage?: DungeonMaxDamage | null;
   requiredGimmicks: GimmickChip[];
   cautionGimmicks: GimmickChip[];
   floors: DungeonFloor[];
@@ -51,6 +61,8 @@ export type DungeonSummary = {
   sourceUrl: string;
   modified: string | null;
   importedAt: string;
+  /** Null for seeds imported before the field existed. */
+  maxDamage?: DungeonMaxDamage | null;
 };
 
 export type DungeonListResponse = {

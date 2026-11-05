@@ -5,6 +5,13 @@
   "sourceUrl": "https://appmedia.jp/pazudora/79887656",
   "modified": "2026-06-25T21:45:00",
   "importedAt": "2026-06-28T18:05:56.225Z",
+  "maxDamage": {
+    "value": 45900000,
+    "floor": "B12",
+    "monsterId": 13586,
+    "monsterNameJa": "ヴォルガント(変身)",
+    "raw": "ダメージは45,000,000~45,900,000ダメージ(4.5倍)"
+  },
   "requiredGimmicks": [
     {
       "id": "覚醒無効",

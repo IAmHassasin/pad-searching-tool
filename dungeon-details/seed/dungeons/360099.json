@@ -1,0 +1,571 @@
+{
+  "appmediaPostId": 360099,
+  "titleJa": "【パズドラ】マシンアテナ降臨の攻略と安定周回パーティ",
+  "titleEn": "マシンアテナ降臨の攻略と安定周回パーティ",
+  "sourceUrl": "https://appmedia.jp/pazudora/360099",
+  "modified": "2026-09-08T09:20:39",
+  "importedAt": "2026-11-04T20:04:02.095Z",
+  "maxDamage": {
+    "value": 128276,
+    "floor": "B22",
+    "monsterId": 2531,
+    "monsterNameJa": "シェダル",
+    "raw": "128,276ダメージの連続攻撃"
+  },
+  "requiredGimmicks": [
+    {
+      "id": "スキル遅延",
+      "labelJa": "スキル遅延",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/1cc1e8c018ea83a40f76d55aef4962f9.jpg",
+      "category": "required"
+    },
+    {
+      "id": "覚醒無効",
+      "labelJa": "覚醒無効",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/94f35b4f6637877fdd4c08962ea72f6e.jpg",
+      "category": "required"
+    },
+    {
+      "id": "ダメジ吸収",
+      "labelJa": "ダメージ吸収",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/9f33f03e399a645c0e456358077fd72e.jpg",
+      "category": "required"
+    },
+    {
+      "id": "コンボ吸収",
+      "labelJa": "コンボ吸収",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/f0ce23fe72f6de2f99d74960e3ed42f5.jpg",
+      "category": "required"
+    },
+    {
+      "id": "ダメジ無効",
+      "labelJa": "ダメージ無効",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/6dd217d2eb879afbc4f87c25f0d706fe.jpg",
+      "category": "required"
+    },
+    {
+      "id": "根性",
+      "labelJa": "根性",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/e944d5f979d7c45988a839e173aa2934.jpg",
+      "category": "required"
+    }
+  ],
+  "cautionGimmicks": [
+    {
+      "id": "属性吸収",
+      "labelJa": "属性吸収",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/4746bd4875547bda46945a5e543d2566.jpg",
+      "category": "caution"
+    },
+    {
+      "id": "超暗闇",
+      "labelJa": "超暗闇",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/e4395a43ec751369282762d0477ade70.jpg",
+      "category": "caution"
+    },
+    {
+      "id": "お邪魔目覚め",
+      "labelJa": "お邪魔目覚め",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/5000/12/c5ae2473e51cd5e5ddb9dcdbf38f2672.jpg",
+      "category": "caution"
+    },
+    {
+      "id": "毒_猛毒",
+      "labelJa": "毒/猛毒",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/07/Poison-1.png",
+      "category": "caution"
+    }
+  ],
+  "floors": [
+    {
+      "floor": "B13",
+      "spawnNote": "13体出現",
+      "spawns": [
+        {
+          "monsterId": 2196,
+          "monsterNameJa": "アクアギア",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/2196.webp",
+          "types": [
+            "マシンタイプ",
+            "悪魔タイプ"
+          ],
+          "hp": "2280",
+          "defense": "93.3万",
+          "effects": [
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 82,
+          "monsterNameJa": "アースゴーレム",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/82.webp",
+          "types": [
+            "体力タイプ",
+            "マシンタイプ"
+          ],
+          "hp": "1.24億",
+          "defense": "60万",
+          "effects": [
+            {
+              "raw": "3ターン：指定7マス超暗闇",
+              "tags": [],
+              "gimmickIds": [
+                "超暗闇",
+                "暗闇_超暗闇"
+              ],
+              "damage": null,
+              "turns": "3ターン"
+            }
+          ]
+        },
+        {
+          "monsterId": 2655,
+          "monsterNameJa": "イエローガジェット",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/2655.webp",
+          "types": [
+            "マシンタイプ"
+          ],
+          "hp": "2488万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "56,354ダメージ+1個生成",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": "56,354ダメージ",
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B22",
+      "spawnNote": "22体出現",
+      "spawns": [
+        {
+          "monsterId": 2531,
+          "monsterNameJa": "シェダル",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/2531.webp",
+          "types": [
+            "マシンタイプ",
+            "ドラゴンタイプ"
+          ],
+          "hp": "3億4032万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "128,276ダメージの連続攻撃",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": "128,276ダメージ",
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 2529,
+          "monsterNameJa": "カフ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/2529.webp",
+          "types": [
+            "マシンタイプ",
+            "ドラゴンタイプ"
+          ],
+          "hp": "2億9239万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "10ターン：目覚め",
+              "tags": [],
+              "gimmickIds": [
+                "指定色目覚め"
+              ],
+              "damage": null,
+              "turns": "10ターン"
+            },
+            {
+              "raw": "【撃破時】",
+              "tags": [
+                "撃破時"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "6個生成",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B33",
+      "spawnNote": "33体出現",
+      "spawns": [
+        {
+          "monsterId": 2195,
+          "monsterNameJa": "フレイムギア",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/2195.webp",
+          "types": [
+            "マシンタイプ",
+            "悪魔タイプ"
+          ],
+          "hp": "2280",
+          "defense": "93.3万",
+          "effects": [
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 82,
+          "monsterNameJa": "アースゴーレム",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/82.webp",
+          "types": [
+            "体力タイプ",
+            "マシンタイプ"
+          ],
+          "hp": "1.24億",
+          "defense": "60万",
+          "effects": [
+            {
+              "raw": "3ターン：指定7マス超暗闇",
+              "tags": [],
+              "gimmickIds": [
+                "超暗闇",
+                "暗闇_超暗闇"
+              ],
+              "damage": null,
+              "turns": "3ターン"
+            }
+          ]
+        },
+        {
+          "monsterId": 2653,
+          "monsterNameJa": "ブルーガジェット",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/2653.webp",
+          "types": [
+            "マシンタイプ"
+          ],
+          "hp": "2639万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "3個生成",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B4",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": 1458,
+          "monsterNameJa": "フォークロア",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/1458.webp",
+          "types": [
+            "ドラゴンタイプ",
+            "悪魔タイプ",
+            "マシンタイプ"
+          ],
+          "hp": "7億9166万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "47,754ダメージ+3ターン：覚醒無効",
+              "tags": [],
+              "gimmickIds": [
+                "覚醒無効"
+              ],
+              "damage": "47,754ダメージ",
+              "turns": "3ターン"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B53",
+      "spawnNote": "53体出現",
+      "spawns": [
+        {
+          "monsterId": 2199,
+          "monsterNameJa": "ダークギア",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/2199.webp",
+          "types": [
+            "マシンタイプ",
+            "悪魔タイプ"
+          ],
+          "hp": "2280",
+          "defense": "93.3万",
+          "effects": [
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 82,
+          "monsterNameJa": "アースゴーレム",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/82.webp",
+          "types": [
+            "体力タイプ",
+            "マシンタイプ"
+          ],
+          "hp": "1.24億",
+          "defense": "60万",
+          "effects": [
+            {
+              "raw": "3ターン：指定7マス超暗闇",
+              "tags": [],
+              "gimmickIds": [
+                "超暗闇",
+                "暗闇_超暗闇"
+              ],
+              "damage": null,
+              "turns": "3ターン"
+            }
+          ]
+        },
+        {
+          "monsterId": 2652,
+          "monsterNameJa": "ブルーガジェット",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/2652.webp",
+          "types": [
+            "マシンタイプ"
+          ],
+          "hp": "2368万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "53,580ダメージ+3個生成",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": "53,580ダメージ",
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B6",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": 2187,
+          "monsterNameJa": "アルナイル",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/2187.webp",
+          "types": [
+            "マシンタイプ",
+            "ドラゴンタイプ"
+          ],
+          "hp": "3億1743万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "999ターン：状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "999ターン"
+            },
+            {
+              "raw": "4ターン：6コンボ以下吸収",
+              "tags": [],
+              "gimmickIds": [
+                "ダメジ吸収",
+                "コンボ無効"
+              ],
+              "damage": null,
+              "turns": "4ターン"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B7",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": 2741,
+          "monsterNameJa": "転生エンシェントドラゴンナイト",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/2741.webp",
+          "types": [
+            "ドラゴンタイプ",
+            "バランスタイプ",
+            "マシンタイプ"
+          ],
+          "hp": "6600",
+          "defense": "300万",
+          "effects": [
+            {
+              "raw": "10ターン：100以上無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "10ターン"
+            },
+            {
+              "raw": "69,081ダメージの連続攻撃",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": "69,081ダメージ",
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B8",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": 2987,
+          "monsterNameJa": "スタージャスティス",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/2987.webp",
+          "types": [
+            "マシンタイプ",
+            "体力タイプ"
+          ],
+          "hp": "11億3140万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "【根性】",
+              "tags": [
+                "根性"
+              ],
+              "gimmickIds": [
+                "根性"
+              ],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "999ターン：状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "999ターン"
+            },
+            {
+              "raw": "全員スキル遅延4ターン",
+              "tags": [],
+              "gimmickIds": [
+                "スキル遅延"
+              ],
+              "damage": null,
+              "turns": "4ターン"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B9",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": 2298,
+          "monsterNameJa": "クラジュマキナ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/2298.webp",
+          "types": [
+            "マシンタイプ"
+          ],
+          "hp": "6億7083万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "5ターン：吸収",
+              "tags": [],
+              "gimmickIds": [
+                "属性吸収"
+              ],
+              "damage": null,
+              "turns": "5ターン"
+            },
+            {
+              "raw": "84,330ダメージ+をに変化",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": "84,330ダメージ",
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B10",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": 3074,
+          "monsterNameJa": "マシンアテナ",
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/3074.webp",
+          "types": [
+            "マシンタイプ"
+          ],
+          "hp": "25.2億",
+          "defense": "20万",
+          "effects": [
+            {
+              "raw": "全員スキル遅延4ターン",
+              "tags": [],
+              "gimmickIds": [
+                "スキル遅延"
+              ],
+              "damage": null,
+              "turns": "4ターン"
+            },
+            {
+              "raw": "999ターン：状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "999ターン"
+            },
+            {
+              "raw": "99ターン：400万以上吸収",
+              "tags": [],
+              "gimmickIds": [
+                "ダメジ吸収"
+              ],
+              "damage": null,
+              "turns": "99ターン"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

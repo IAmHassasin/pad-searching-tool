@@ -40,7 +40,27 @@ export type DungeonCatalogEntry = {
   /** Type / attribute limited boosts applied per member. */
   conditional?: ConditionalStatBoost[];
   sourceUrl: string;
+  /**
+   * AppMedia post id of the imported floor table for this dungeon
+   * (Dungeon details) — carries the hardest hit used by the trial.
+   */
+  appmediaPostId?: number | null;
+  /**
+   * Hardest hit when no floor table is imported: scraped from a Kamigame
+   * enemy table or an older AppMedia guide by
+   * dungeon-details/scripts/resolve-catalog-max-hits.mjs.
+   */
+  maxHit?: DungeonMaxHit | null;
   notes?: string;
+};
+
+export type DungeonMaxHit = {
+  value: number;
+  raw: string;
+  sourceUrl: string;
+  source: "appmedia" | "kamigame";
+  floor?: string | null;
+  monsterNameJa?: string | null;
 };
 
 export type DungeonCatalog = {

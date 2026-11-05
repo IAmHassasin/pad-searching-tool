@@ -13,16 +13,17 @@ import {
 import { QuickSearchIdInput } from "../components/quick-search/QuickSearchIdInput";
 import { QuickSearchLayout } from "../components/quick-search/QuickSearchLayout";
 import { MonsterNameTranslationProvider } from "../hooks/useLiveMonsterNames";
+import { useDungeonEntries } from "../hooks/useDungeonEntries";
 import { useMobileWebview } from "../hooks/useMobileWebview";
 import { useResizablePanel } from "../hooks/useResizablePanel";
 import { useTeamDraft } from "../hooks/useTeamDraft";
 import { parseRegularAwakenings } from "../lib/awakenings";
 import { computeTeamStats } from "../lib/team-build/compute-stats";
-import { DUNGEON_CATALOG_ENTRIES } from "../lib/team-build/dungeon-catalog";
 import {
   describeDungeonModifiers,
   resolveDungeonModifiers,
 } from "../lib/team-build/dungeon-modifiers";
+import { maxHitForEntry, seedForEntry } from "../lib/team-build/dungeon-sources";
 import {
   combineLeaderMultipliers,
   leaderMultipliersForMember,
@@ -52,6 +53,7 @@ import { DungeonPickerModal } from "./DungeonPickerModal";
 import { TeamAwakeningPanel } from "./TeamAwakeningPanel";
 import { TeamAwakeningSummary } from "./TeamAwakeningSummary";
 import { TeamCardSheet } from "./TeamCardSheet";
+import { TeamTrialPanel } from "./TeamTrialPanel";
 
 function parseId(raw: string): number | null {
   const n = Number(raw.trim());
@@ -425,6 +427,8 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
   const qs = useQuickSearch();
   const [awkOpen, setAwkOpen] = useState(false);
   const [dungeonOpen, setDungeonOpen] = useState(false);
+  // Trial mode: test the team against an imported dungeon (panel under the totals).
+  const [trialOpen, setTrialOpen] = useState(false);
   // null = no slot selected: the page shows the team-wide awakening summary.
   const [selectedSlot, setSelectedSlot] = useState<number | null>(null);
   const [idsOpen, setIdsOpen] = useState(false);
@@ -497,9 +501,19 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
     });
   }, [monstersById, setConfig]);
 
+  // One dungeon list for the picker and the trial: catalog + imported floor tables.
+  const dungeonSources = useDungeonEntries();
   const dungeon = useMemo(
-    () => resolveDungeonModifiers(config, DUNGEON_CATALOG_ENTRIES),
-    [config]
+    () => resolveDungeonModifiers(config, dungeonSources.entries),
+    [config, dungeonSources.entries]
+  );
+  const trialSeed = useMemo(
+    () => seedForEntry(dungeon.entry, dungeonSources.seedsByPostId),
+    [dungeon.entry, dungeonSources.seedsByPostId]
+  );
+  const trialMaxHit = useMemo(
+    () => maxHitForEntry(dungeon.entry, dungeonSources.seedsByPostId),
+    [dungeon.entry, dungeonSources.seedsByPostId]
   );
   const dungeonChips = useMemo(
     () =>
@@ -747,6 +761,22 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
                       dungeonLabel={dungeonActiveLabel}
                     />
                   </div>
+                  <button
+                    type="button"
+                    onClick={() => setTrialOpen((v) => !v)}
+                    aria-pressed={trialOpen}
+                    title="Trial — test this team against a dungeon"
+                    className={`pressable flex w-11 shrink-0 flex-col items-center justify-center gap-1.5 self-stretch rounded-2xl border ${
+                      trialOpen
+                        ? "border-[var(--color-accent)]/70 bg-[var(--color-accent-muted)] text-[var(--color-accent-strong)] shadow-[var(--shadow-glow)]"
+                        : "border-white/[0.06] bg-[var(--color-panel)]/90 text-[var(--color-muted)] hover:border-[var(--color-border-strong)] hover:bg-[var(--color-hover)] hover:text-[var(--color-accent-strong)]"
+                    }`}
+                  >
+                    <span aria-hidden className="text-xl leading-none">
+                      ⇒
+                    </span>
+                    <span className="ds-label rotate-180 [writing-mode:vertical-rl]">Trial</span>
+                  </button>
                 </div>
               </div>
 
@@ -754,7 +784,8 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
                 Click a slot to edit it or pick a replacement from the quick search on the left.
                 Slot stats include stat awakenings, assist, leader skill
                 {dungeonActiveLabel ? " and the selected dungeon" : ""}; totals add the badge and
-                Enhanced Team HP / RCV awakenings.
+                Enhanced Team HP / RCV awakenings. The ⇒ button opens the trial: test the team
+                against an imported dungeon.
               </p>
 
               <div className="mb-3 grid grid-cols-3 gap-2 sm:gap-3">
@@ -777,6 +808,23 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
                   accent={STAT_TEXT.rcv}
                 />
               </div>
+
+              {trialOpen && (
+                <TeamTrialPanel
+                  config={config}
+                  monstersById={monstersById}
+                  teamHp={summary.teamHp}
+                  slotLabel={slotLabel}
+                  entry={dungeon.entry}
+                  dungeonLabel={dungeon.label}
+                  seed={trialSeed}
+                  maxHit={trialMaxHit}
+                  listStatus={dungeonSources.listStatus}
+                  listError={dungeonSources.listError}
+                  onOpenDungeon={() => setDungeonOpen(true)}
+                  onClose={() => setTrialOpen(false)}
+                />
+              )}
 
               {/* Team-level settings: badge + dungeon in one bar */}
               <section className="ds-card mb-3 p-3">
@@ -993,6 +1041,8 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
       <DungeonPickerModal
         open={dungeonOpen && !awkOpen}
         config={config}
+        entries={dungeonSources.entries}
+        seedsByPostId={dungeonSources.seedsByPostId}
         onChange={(next) => setConfig(next)}
         onClose={() => setDungeonOpen(false)}
         onOpenAdvanced={() => setAwkOpen(true)}

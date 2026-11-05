@@ -11,7 +11,7 @@ DUNGEON_URLS ?= dungeon-details/seed/dungeon-urls.txt
 
 COMPOSE := docker compose -f docker-compose.yml -f docker-compose.cloud.yml
 
-.PHONY: help up down awakenings-manifest seed-db dungeon-master dungeon-import
+.PHONY: help up down awakenings-manifest seed-db dungeon-master dungeon-import dungeon-max-damage dungeon-max-hits
 
 help:
 	@echo "PAD Searching Tool — local Makefile"
@@ -32,6 +32,8 @@ help:
 	@echo "  make dungeon-master URL=<url>    — merge master from one AppMedia page"
 	@echo "  make dungeon-import              — parse all URLs in $(DUNGEON_URLS)"
 	@echo "  make dungeon-import URL=<url>    — parse one dungeon"
+	@echo "  make dungeon-max-damage          — recompute maxDamage of every seed JSON (no fetch)"
+	@echo "  make dungeon-max-hits            — resolve the max hit of every team-build catalog entry (AppMedia → Kamigame)"
 	@echo ""
 	@echo "Oracle Cloud (iac/):"
 	@echo "  cd iac && make apply"
@@ -59,6 +61,13 @@ ifdef URL
 else
 	node dungeon-details/scripts/build-gimmick-master.mjs --urls $(DUNGEON_URLS)
 endif
+
+dungeon-max-hits:
+	node dungeon-details/scripts/resolve-catalog-max-hits.mjs
+
+dungeon-max-damage:
+	node dungeon-details/scripts/backfill-max-damage.mjs \
+		--sqlite dungeon-details/seed/dungeons.sqlite
 
 dungeon-import:
 ifdef URL

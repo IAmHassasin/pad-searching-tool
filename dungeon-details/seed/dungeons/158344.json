@@ -1,0 +1,575 @@
+{
+  "appmediaPostId": 158344,
+  "titleJa": "【パズドラ】マシンヘラ降臨の攻略と安定周回パーティ",
+  "titleEn": "マシンヘラ降臨の攻略と安定周回パーティ",
+  "sourceUrl": "https://appmedia.jp/pazudora/158344",
+  "modified": "2024-09-22T14:07:34",
+  "importedAt": "2026-11-04T20:04:09.443Z",
+  "maxDamage": {
+    "value": 47036,
+    "floor": "B81",
+    "monsterId": 2531,
+    "monsterNameJa": null,
+    "raw": "47,036ダメージの連続攻撃"
+  },
+  "requiredGimmicks": [
+    {
+      "id": "ダメジ吸収",
+      "labelJa": "ダメージ吸収",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/9f33f03e399a645c0e456358077fd72e.jpg",
+      "category": "required"
+    },
+    {
+      "id": "スキル封印",
+      "labelJa": "スキル封印",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/9ea56767eeca2102dc58c51c636431e1.jpg",
+      "category": "required"
+    }
+  ],
+  "cautionGimmicks": [
+    {
+      "id": "属性吸収",
+      "labelJa": "属性吸収",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/4746bd4875547bda46945a5e543d2566.jpg",
+      "category": "caution"
+    },
+    {
+      "id": "お邪魔目覚め",
+      "labelJa": "お邪魔目覚め",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/5000/12/c5ae2473e51cd5e5ddb9dcdbf38f2672.jpg",
+      "category": "caution"
+    },
+    {
+      "id": "操作時間短縮",
+      "labelJa": "操作時間短縮",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/26b05cda1cd7b9b7603ee9be84deee89.jpg",
+      "category": "caution"
+    },
+    {
+      "id": "お邪魔",
+      "labelJa": "お邪魔",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/07/Dead.png",
+      "category": "caution"
+    },
+    {
+      "id": "毒_猛毒",
+      "labelJa": "毒/猛毒",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/07/Poison.png",
+      "category": "caution"
+    },
+    {
+      "id": "バインド",
+      "labelJa": "バインド",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/ca135b43895b408e8542d36745a59692.jpg",
+      "category": "caution"
+    },
+    {
+      "id": "暗闇",
+      "labelJa": "暗闇",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/038178ecc69073adb8de353ff0064f5c.jpg",
+      "category": "caution"
+    },
+    {
+      "id": "覚醒無効",
+      "labelJa": "覚醒無効",
+      "iconUrl": "https://appmedia.jp/wp-content/uploads/2016/12/94f35b4f6637877fdd4c08962ea72f6e.jpg",
+      "category": "caution"
+    }
+  ],
+  "floors": [
+    {
+      "floor": "B12",
+      "spawnNote": "12体出現",
+      "spawns": [
+        {
+          "monsterId": 85,
+          "monsterNameJa": null,
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/85.jpg",
+          "types": [
+            "マシンタイプ",
+            "体力タイプ"
+          ],
+          "hp": "161万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "スキル遅延1ターン",
+              "tags": [],
+              "gimmickIds": [
+                "スキル遅延"
+              ],
+              "damage": null,
+              "turns": "1ターン"
+            },
+            {
+              "raw": "※3ターン行動",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "3ターン"
+            }
+          ]
+        },
+        {
+          "monsterId": 87,
+          "monsterNameJa": null,
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/87.jpg",
+          "types": [
+            "マシンタイプ",
+            "体力タイプ"
+          ],
+          "hp": "168万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "スキル遅延1ターン",
+              "tags": [],
+              "gimmickIds": [
+                "スキル遅延"
+              ],
+              "damage": null,
+              "turns": "1ターン"
+            },
+            {
+              "raw": "※3ターン行動",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "3ターン"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B23",
+      "spawnNote": "23体出現",
+      "spawns": [
+        {
+          "monsterId": 2195,
+          "monsterNameJa": null,
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/2195.jpg",
+          "types": [
+            "マシンタイプ",
+            "悪魔タイプ"
+          ],
+          "hp": "38",
+          "defense": "93万",
+          "effects": [
+            {
+              "raw": "※5属性からランダム3体出現",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "【出現モンスター一覧】",
+              "tags": [
+                "出現モンスター一覧"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B31",
+      "spawnNote": "31体出現",
+      "spawns": [
+        {
+          "monsterId": 897,
+          "monsterNameJa": null,
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/897.jpg",
+          "types": [
+            "マシンタイプ",
+            "体力タイプ"
+          ],
+          "hp": "551～558万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "※5属性からランダム1体出現",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "先制なし",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "【出現モンスター一覧】",
+              "tags": [
+                "出現モンスター一覧"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B4",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": 2186,
+          "monsterNameJa": null,
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/2186.jpg",
+          "types": [
+            "マシンタイプ",
+            "攻撃タイプ"
+          ],
+          "hp": "646万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "10ターン：100万以上吸収",
+              "tags": [],
+              "gimmickIds": [
+                "ダメジ吸収"
+              ],
+              "damage": null,
+              "turns": "10ターン"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B51",
+      "spawnNote": "51体出現",
+      "spawns": [
+        {
+          "monsterId": 1272,
+          "monsterNameJa": null,
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/1272.jpg",
+          "types": [
+            "マシンタイプ",
+            "体力タイプ"
+          ],
+          "hp": "510万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "3ターン：スキル封印",
+              "tags": [],
+              "gimmickIds": [
+                "スキル封印"
+              ],
+              "damage": null,
+              "turns": "3ターン"
+            }
+          ]
+        },
+        {
+          "monsterId": 1273,
+          "monsterNameJa": null,
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/1273.jpg",
+          "types": [
+            "マシンタイプ",
+            "体力タイプ"
+          ],
+          "hp": "627万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "10ターン：目覚め",
+              "tags": [],
+              "gimmickIds": [
+                "指定色目覚め"
+              ],
+              "damage": null,
+              "turns": "10ターン"
+            }
+          ]
+        },
+        {
+          "monsterId": 1274,
+          "monsterNameJa": null,
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/1274.jpg",
+          "types": [
+            "マシンタイプ",
+            "体力タイプ"
+          ],
+          "hp": "510万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "999ターン：状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "999ターン"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B62",
+      "spawnNote": "62体出現",
+      "spawns": [
+        {
+          "monsterId": 2337,
+          "monsterNameJa": null,
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/2337.jpg",
+          "types": [
+            "マシンタイプ",
+            "ドラゴンタイプ"
+          ],
+          "hp": "585万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "999ターン：状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "999ターン"
+            }
+          ]
+        },
+        {
+          "monsterId": 2334,
+          "monsterNameJa": null,
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/2334.jpg",
+          "types": [
+            "マシンタイプ",
+            "ドラゴンタイプ"
+          ],
+          "hp": "585万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "5ターン：吸収",
+              "tags": [],
+              "gimmickIds": [
+                "属性吸収"
+              ],
+              "damage": null,
+              "turns": "5ターン"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B71",
+      "spawnNote": "71体出現",
+      "spawns": [
+        {
+          "monsterId": 1206,
+          "monsterNameJa": null,
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/1206.jpg",
+          "types": [
+            "ドラゴンタイプ",
+            "マシンタイプ",
+            "神タイプ"
+          ],
+          "hp": "1142万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "999ターン：状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "999ターン"
+            }
+          ]
+        },
+        {
+          "monsterId": 1207,
+          "monsterNameJa": null,
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/1207.jpg",
+          "types": [
+            "ドラゴンタイプ",
+            "マシンタイプ",
+            "悪魔タイプ"
+          ],
+          "hp": "1275万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "999ターン：状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "999ターン"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B81",
+      "spawnNote": "81体出現",
+      "spawns": [
+        {
+          "monsterId": 2531,
+          "monsterNameJa": null,
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/2531.jpg",
+          "types": [
+            "マシンタイプ",
+            "ドラゴンタイプ"
+          ],
+          "hp": "567万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "47,036ダメージの連続攻撃",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": "47,036ダメージ",
+              "turns": null
+            }
+          ]
+        },
+        {
+          "monsterId": 2530,
+          "monsterNameJa": null,
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/2530.jpg",
+          "types": [
+            "マシンタイプ",
+            "ドラゴンタイプ"
+          ],
+          "hp": "522万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "15ターン：目覚め",
+              "tags": [],
+              "gimmickIds": [
+                "指定色目覚め"
+              ],
+              "damage": null,
+              "turns": "15ターン"
+            },
+            {
+              "raw": "※既に目覚め状態の場合、22,199ダメージ",
+              "tags": [],
+              "gimmickIds": [
+                "指定色目覚め"
+              ],
+              "damage": "22,199ダメージ",
+              "turns": null
+            },
+            {
+              "raw": "【撃破時】",
+              "tags": [
+                "撃破時"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "7ターン：操作時間3秒減少",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "7ターン"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B9",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": 2128,
+          "monsterNameJa": null,
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/2128.jpg",
+          "types": [
+            "体力タイプ",
+            "マシンタイプ",
+            "悪魔タイプ"
+          ],
+          "hp": "1069万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "5ターン：被ダメージ半減",
+              "tags": [],
+              "gimmickIds": [
+                "ダメジ無効"
+              ],
+              "damage": null,
+              "turns": "5ターン"
+            },
+            {
+              "raw": "※2ターン行動",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "2ターン"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "floor": "B10",
+      "spawnNote": null,
+      "spawns": [
+        {
+          "monsterId": 2526,
+          "monsterNameJa": null,
+          "iconUrl": "https://appmedia.jp/wp-content/themes/appmedia/lib/pazudora/img/kobetu/icon/2526.jpg",
+          "types": [
+            "マシンタイプ"
+          ],
+          "hp": "4187万",
+          "defense": null,
+          "effects": [
+            {
+              "raw": "【半減】",
+              "tags": [
+                "半減"
+              ],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": null
+            },
+            {
+              "raw": "2ターン：吸収",
+              "tags": [],
+              "gimmickIds": [
+                "属性吸収"
+              ],
+              "damage": null,
+              "turns": "2ターン"
+            },
+            {
+              "raw": "999ターン：状態異常無効",
+              "tags": [],
+              "gimmickIds": [],
+              "damage": null,
+              "turns": "999ターン"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

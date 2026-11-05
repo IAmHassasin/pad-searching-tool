@@ -5,6 +5,13 @@
   "sourceUrl": "https://appmedia.jp/pazudora/80128597",
   "modified": "2026-09-09T19:14:00",
   "importedAt": "2026-09-09T20:23:09.854Z",
+  "maxDamage": {
+    "value": 25000000,
+    "floor": "B15",
+    "monsterId": 13817,
+    "monsterNameJa": "アドネア(変身)",
+    "raw": "25,000,000ダメージ+2ターン：覚醒無効"
+  },
   "requiredGimmicks": [
     {
       "id": "バインド",

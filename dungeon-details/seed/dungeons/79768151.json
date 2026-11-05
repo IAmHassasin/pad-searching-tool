@@ -5,6 +5,13 @@
   "sourceUrl": "https://appmedia.jp/pazudora/79768151",
   "modified": "2026-06-25T21:45:00",
   "importedAt": "2026-06-28T18:05:55.728Z",
+  "maxDamage": {
+    "value": 39000000,
+    "floor": "B12",
+    "monsterId": 13495,
+    "monsterNameJa": "ネフェル&アネモス(変身)",
+    "raw": "39,000,000ダメージ(3.9倍時)+全ドロップ変化"
+  },
   "requiredGimmicks": [
     {
       "id": "バインド",

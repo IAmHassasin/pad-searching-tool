@@ -5,6 +5,13 @@
   "sourceUrl": "https://appmedia.jp/pazudora/79620137",
   "modified": "2026-06-25T21:45:00",
   "importedAt": "2026-06-28T18:05:55.490Z",
+  "maxDamage": {
+    "value": 208750000,
+    "floor": "B15",
+    "monsterId": 10301,
+    "monsterNameJa": "ノヴァ(変身)",
+    "raw": "208,750,000ダメージの連続攻撃"
+  },
   "requiredGimmicks": [
     {
       "id": "ダメジ無効",
