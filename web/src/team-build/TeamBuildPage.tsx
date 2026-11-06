@@ -29,6 +29,8 @@ import {
   leaderMultipliersForMember,
 } from "../lib/team-build/leader-skill";
 import { lb110Percent, maxMonsterLevel } from "../lib/team-build/level-scaling";
+import { maxOutMembers } from "../lib/team-build/max-out";
+import { transformableSlots, transformMembers } from "../lib/team-build/transform";
 import { grantedAssistAwakenings } from "../lib/team-build/passive-awakenings";
 import { describeSlotContributions } from "../lib/team-build/stat-contributions";
 import {
@@ -50,6 +52,7 @@ import {
 } from "../lib/team-build/types";
 import type { MonsterRecord } from "../types";
 import { DungeonPickerModal } from "./DungeonPickerModal";
+import { ScreenshotImportModal } from "./ScreenshotImportModal";
 import { TeamAwakeningPanel } from "./TeamAwakeningPanel";
 import { TeamAwakeningSummary } from "./TeamAwakeningSummary";
 import { TeamCardSheet } from "./TeamCardSheet";
@@ -432,8 +435,11 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
   // null = no slot selected: the page shows the team-wide awakening summary.
   const [selectedSlot, setSelectedSlot] = useState<number | null>(null);
   const [idsOpen, setIdsOpen] = useState(false);
+  const [screenshotOpen, setScreenshotOpen] = useState(false);
   const [importText, setImportText] = useState("");
   const [importMsg, setImportMsg] = useState<string | null>(null);
+  /** Feedback line under the team actions (Max all / Transform). */
+  const [actionMsg, setActionMsg] = useState<string | null>(null);
   const [copyMsg, setCopyMsg] = useState<string | null>(null);
   const awkPanel = useResizablePanel({
     storageKey: "team-awakenings",
@@ -617,6 +623,24 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
     setTimeout(() => setImportMsg(null), 4000);
   };
 
+  const showActionMsg = (message: string) => {
+    setActionMsg(message);
+    setTimeout(() => setActionMsg(null), 6000);
+  };
+  const transformable = useMemo(
+    () => transformableSlots(config.members, monstersById),
+    [config.members, monstersById]
+  );
+
+  const handleScreenshotApply = (members: TeamMemberConfig[]) => {
+    setConfig((c) => ({ ...c, members }));
+    setScreenshotOpen(false);
+    // The message and the imported id lines live in the Team IDs section: open it.
+    setIdsOpen(true);
+    setImportMsg("Team imported from screenshot.");
+    setTimeout(() => setImportMsg(null), 4000);
+  };
+
   const exportedMonsters = exportTeamIdString(config);
   const exportedEquipment = exportTeamEqString(config);
   const exportedTsubaki = exportTeamTsubakiString(config);
@@ -725,6 +749,55 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
         <div className="flex min-h-0 flex-1 overflow-hidden">
           <div className="min-h-0 min-w-0 flex-1 overflow-auto p-3 sm:p-4">
             <div className="mx-auto max-w-5xl">
+              {/* Team actions: fill the team from a screenshot, max every card, transform */}
+              <div className="mb-2 flex flex-wrap items-center justify-center gap-2">
+                <button
+                  type="button"
+                  className="ds-btn-primary pressable min-h-10 px-4 text-xs font-semibold"
+                  onClick={() => setScreenshotOpen(true)}
+                  title="Import the team from an Edit Team screenshot (choose, drop or paste an image)"
+                >
+                  From screenshot…
+                </button>
+                <button
+                  type="button"
+                  className="ds-btn pressable min-h-10 px-4 text-xs font-semibold"
+                  onClick={() => {
+                    const members = maxOutMembers(config.members, monstersById);
+                    setConfig((c) => ({ ...c, members: maxOutMembers(c.members, monstersById) }));
+                    const levels = members
+                      .map((m) => (m.monsterId ? String(m.level) : "–"))
+                      .join(" · ");
+                    showActionMsg(`Max all: Lv ${levels}, +297 on every card and assist.`);
+                  }}
+                  title="Every card to its max level (Lv.99 for transform forms) and +297, assists +297 too"
+                >
+                  Max all
+                </button>
+                {transformable.length > 0 && (
+                  <button
+                    type="button"
+                    className="ds-btn pressable min-h-10 px-4 text-xs font-semibold"
+                    onClick={() => {
+                      const slots = transformable.map((i) => slotLabel(i)).join(", ");
+                      setConfig((c) => ({
+                        ...c,
+                        members: transformMembers(c.members, monstersById),
+                      }));
+                      showActionMsg(`Transformed ${slots} into their post-transform form.`);
+                    }}
+                    title={`Swap ${transformable.map((i) => slotLabel(i)).join(", ")} for the post-transform form (max Lv.99)`}
+                  >
+                    Transform ({transformable.length})
+                  </button>
+                )}
+              </div>
+              {actionMsg && (
+                <p className="mb-2 text-center text-[10px] text-[var(--color-amber-text)]">
+                  {actionMsg}
+                </p>
+              )}
+
               {/* Team row — PAD layout: Leader | 4 subs | Helper (scrolls horizontally on narrow screens) */}
               <div className="-mx-3 overflow-x-auto px-3 pb-2 sm:mx-0 sm:px-0">
                 <div className="mx-auto flex w-max items-end gap-2">
@@ -1053,6 +1126,12 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
         settings={config.awkSettings}
         onChange={(awkSettings) => setConfig((c) => ({ ...c, awkSettings }))}
         onClose={() => setAwkOpen(false)}
+      />
+      <ScreenshotImportModal
+        open={screenshotOpen}
+        members={config.members}
+        onApply={handleScreenshotApply}
+        onClose={() => setScreenshotOpen(false)}
       />
     </div>
   );

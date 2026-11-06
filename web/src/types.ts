@@ -22,6 +22,8 @@ export type MonsterRecord = {
   cost?: number | null;
   /** dadguide `transformations.to_monster_id` — post-transform form; max Lv.99. */
   is_transform_form?: boolean | number | null;
+  /** Forms this card can transform into in a dungeon (`/monsters/lookup` only); [] = none. */
+  transform_to_ids?: number[] | null;
   /** Max latent slots (6 or 8). */
   latent_slots?: number | null;
   rarity?: number | null;

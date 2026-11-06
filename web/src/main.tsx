@@ -12,6 +12,7 @@ import { OneTouchPage } from "./one-touch/OneTouchPage";
 import { CustomCardPage } from "./custom-card/CustomCardPage";
 import { TeamBuildPage } from "./team-build/TeamBuildPage";
 import { TierMakerPage } from "./tier-maker/TierMakerPage";
+import { AppUpdateLaunch } from "./components/AppUpdateLaunch";
 import { SupportLaunch } from "./components/SupportLaunch";
 import "./index.css";
 
@@ -64,6 +65,7 @@ createRoot(document.getElementById("root")!).render(
       <AdminSessionProvider>
         <Root />
         <SupportLaunch />
+        <AppUpdateLaunch />
       </AdminSessionProvider>
     </QueryClientProvider>
   </StrictMode>

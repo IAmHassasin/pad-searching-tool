@@ -1,5 +1,6 @@
 # Continuous delivery for main:
-#   test -> (build APK | deploy to Oracle VM) -> GitHub release with APK + changelog
+#   test -> (build APK + web bundle | deploy to Oracle VM) -> GitHub release with APK, web bundle,
+#   update.json (read by the Android app's in-app updater) and changelog
 #
 # Required repository secrets (see scripts/ci/set-github-secrets.sh):
 #   PROD_ENV_FILE                  full contents of the production .env
@@ -70,7 +71,7 @@ jobs:
           echo "Release version: v${version}"
 
   apk:
-    name: Build Android APK
+    name: Build Android APK and web bundle
     needs: test
     runs-on: ubuntu-latest
     steps:
@@ -105,19 +106,33 @@ jobs:
       - name: Install web dependencies
         run: npm ci --prefix web
 
-      - name: Build APK
+      # The web bundle zip must come from the same build the APK embeds, so both are
+      # produced here: android:apk runs the Vite build (dist-android) before Gradle.
+      - name: Build APK, web bundle and update manifest
         env:
           ORG_GRADLE_PROJECT_appVersionCode: ${{ github.run_number }}
           ORG_GRADLE_PROJECT_appVersionName: ${{ needs.test.outputs.version }}
+          APP_VERSION: ${{ needs.test.outputs.version }}
+          APP_VERSION_CODE: ${{ github.run_number }}
+          TAG: ${{ needs.test.outputs.tag }}
         run: |
           chmod +x web/android/gradlew
           npm run android:apk --prefix web
-          mv releases/pad-searching-tool.apk "releases/pad-searching-tool-${{ needs.test.outputs.tag }}.apk"
+          mkdir -p dist-release
+          mv releases/pad-searching-tool.apk "dist-release/pad-searching-tool-${TAG}.apk"
+          (cd web/dist-android && zip -qr "../../dist-release/web-bundle-${TAG}.zip" .)
+          node scripts/ci/write-update-manifest.mjs \
+            --tag "$TAG" \
+            --version-code "$APP_VERSION_CODE" \
+            --native-api-level-file web/native-api-level.json \
+            --apk "dist-release/pad-searching-tool-${TAG}.apk" \
+            --bundle "dist-release/web-bundle-${TAG}.zip" \
+            --out dist-release/update.json
 
       - uses: actions/upload-artifact@v4
         with:
-          name: apk
-          path: releases/pad-searching-tool-${{ needs.test.outputs.tag }}.apk
+          name: release-assets
+          path: dist-release/
           if-no-files-found: error
           retention-days: 7
 
@@ -189,6 +204,8 @@ jobs:
 
   release:
     name: GitHub release
+    # The API is deployed before the release exists, so a published web bundle never runs
+    # against an older backend.
     needs: [test, apk, deploy]
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
@@ -201,19 +218,23 @@ jobs:
 
       - uses: actions/download-artifact@v4
         with:
-          name: apk
+          name: release-assets
           path: dist-release
 
       - name: Generate changelog
         run: bash scripts/ci/generate-changelog.sh "${{ needs.test.outputs.tag }}" release-notes.md
 
+      # Draft first, publish last: the app resolves releases/latest/download/update.json, which
+      # must never point at a release whose assets are still uploading.
       - name: Create release
         env:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ needs.test.outputs.tag }}
         run: |
-          gh release create "$TAG" dist-release/*.apk \
+          gh release create "$TAG" \
+            --draft \
             --target "$GITHUB_SHA" \
             --title "$TAG" \
-            --notes-file release-notes.md \
-            --latest
+            --notes-file release-notes.md
+          gh release upload "$TAG" dist-release/*
+          gh release edit "$TAG" --draft=false --latest

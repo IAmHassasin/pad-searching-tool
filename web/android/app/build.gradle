@@ -1,7 +1,14 @@
 apply plugin: 'com.android.application'
 
+// Native shell compatibility level, shared with the web build (web/native-api-level.json).
+// Bump that file whenever the native shell changes (plugins, Capacitor upgrade, manifest).
+def nativeApiLevel = new groovy.json.JsonSlurper().parse(file("../../native-api-level.json")).nativeApiLevel as Integer
+
 android {
     namespace = "com.hassasin.padsearchingtool"
+    buildFeatures {
+        buildConfig = true
+    }
     compileSdk = rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "com.hassasin.padsearchingtool"
@@ -10,6 +17,7 @@ android {
         // CI passes -PappVersionCode / -PappVersionName (via ORG_GRADLE_PROJECT_* env vars).
         versionCode((project.findProperty('appVersionCode') ?: '1') as Integer)
         versionName((project.findProperty('appVersionName') ?: '1.0') as String)
+        buildConfigField "int", "NATIVE_API_LEVEL", "${nativeApiLevel}"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
