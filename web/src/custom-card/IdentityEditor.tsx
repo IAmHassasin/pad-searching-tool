@@ -36,6 +36,17 @@ export function IdentityEditor({ draft, onChange }: Props) {
           />
         </label>
         <label className="block text-[11px] text-[var(--color-muted)] sm:col-span-2">
+          Original name (shown under the name)
+          <input
+            type="text"
+            lang="ja"
+            value={draft.nameJa}
+            onChange={(e) => onChange({ nameJa: e.target.value })}
+            className="ds-input mt-0.5 min-h-9 w-full px-2.5 py-1 text-sm"
+            placeholder="e.g. 転生ポチャッコ"
+          />
+        </label>
+        <label className="block text-[11px] text-[var(--color-muted)] sm:col-span-2">
           Rarity (stars):{" "}
           <span className="font-mono font-bold text-[var(--color-accent-strong)] tabular-nums">
             {draft.rarity}

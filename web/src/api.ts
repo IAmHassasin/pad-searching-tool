@@ -278,6 +278,38 @@ export function translateMonsterNames(ids: number[]) {
   });
 }
 
+/** Japanese → English for up to 10 short texts (names, skill text) through the server's translation path. */
+export function translateLabels(texts: string[], titleCase = true) {
+  if (texts.length > 10) {
+    return Promise.reject(new Error("translateLabels accepts at most 10 texts per request."));
+  }
+  const list = texts;
+  if (!list.length) return Promise.resolve({ texts: [] as string[] });
+  return getJson<{ texts: string[] }>("/api/translate/labels", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ texts: list, titleCase }),
+  });
+}
+
+export type SkillCorpusMatch = {
+  kind: "active" | "leader";
+  id: number;
+  ja: string;
+  en: string;
+  /** `en` with the query's numbers carried over where that was unambiguous. */
+  enWithQueryNumbers?: string;
+  numbersComplete?: boolean;
+  score: number;
+};
+
+/** Closest catalog JP/EN skill texts for an OCR'd Japanese description. */
+export function fetchCorpusMatch(q: string, kind?: "active" | "leader") {
+  const params = new URLSearchParams({ q });
+  if (kind) params.set("kind", kind);
+  return getJson<{ matches: SkillCorpusMatch[] }>(`/api/translate/corpus-match?${params.toString()}`);
+}
+
 export function fetchMonstersByIds(ids: number[]) {
   const unique = [...new Set(ids.filter((id) => Number.isFinite(id) && id > 0))];
   if (!unique.length) {

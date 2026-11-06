@@ -82,7 +82,16 @@ export const CUSTOM_ACTIVE_SKILL_HEADERS: Record<
 
 export type CustomCardDraft = {
   name: string;
+  /** Original (Japanese) name, shown smaller under the English name when set. */
+  nameJa: string;
   number: number | null;
+  /** Level and bonuses as printed on a screenshot; shown on the card when set. */
+  level: number | null;
+  maxLevel: number | null;
+  plusHp: number | null;
+  plusAtk: number | null;
+  plusRcv: number | null;
+  cost: number | null;
   rarity: number;
   attribute1: number | null;
   attribute2: number | null;
@@ -122,7 +131,14 @@ export const MAX_ART_BYTES = 8 * 1024 * 1024;
 export function createEmptyDraft(): CustomCardDraft {
   return {
     name: "",
+    nameJa: "",
     number: null,
+    level: null,
+    maxLevel: null,
+    plusHp: null,
+    plusAtk: null,
+    plusRcv: null,
+    cost: null,
     rarity: 7,
     attribute1: 0,
     attribute2: null,

@@ -12,13 +12,20 @@ import { NameTranslationService } from "./name-translation.service";
 import { PatternSearchService } from "./pattern-search.service";
 import { PatternsController } from "./patterns.controller";
 import { PadsApiController } from "./pads-api.controller";
+import { SkillCorpusService } from "./skill-corpus.service";
 import { SourceRowsService } from "./source-rows.service";
+import { TranslateController } from "./translate.controller";
 import { VanishAwokenService } from "./vanish-awoken.service";
 import { VoidSuperGravityService } from "./void-super-gravity.service";
 
 @Module({
   imports: [TypeOrmModule.forFeature([PadCategorized])],
-  controllers: [PadsApiController, CategoryBundlesController, PatternsController],
+  controllers: [
+    PadsApiController,
+    CategoryBundlesController,
+    PatternsController,
+    TranslateController,
+  ],
   providers: [
     PatternCatalogService,
     EffectValueCatalogService,
@@ -26,6 +33,7 @@ import { VoidSuperGravityService } from "./void-super-gravity.service";
     MonsterRelationsService,
     NameTranslationService,
     SourceRowsService,
+    SkillCorpusService,
     AwokenSkillsService,
     CategoryBundlesService,
     FilterCategoriesService,

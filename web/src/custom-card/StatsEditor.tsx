@@ -53,7 +53,40 @@ export function StatsEditor({ draft, onChange }: Props) {
           value={draft.rcvMax}
           onValue={(rcvMax) => onChange({ rcvMax })}
         />
+        <StatInput
+          label="+HP"
+          value={draft.plusHp}
+          onValue={(plusHp) => onChange({ plusHp })}
+        />
+        <StatInput
+          label="+ATK"
+          value={draft.plusAtk}
+          onValue={(plusAtk) => onChange({ plusAtk })}
+        />
+        <StatInput
+          label="+RCV"
+          value={draft.plusRcv}
+          onValue={(plusRcv) => onChange({ plusRcv })}
+        />
+        <StatInput
+          label="Level"
+          value={draft.level}
+          onValue={(level) => onChange({ level })}
+        />
+        <StatInput
+          label="Max level"
+          value={draft.maxLevel}
+          onValue={(maxLevel) => onChange({ maxLevel })}
+        />
+        <StatInput
+          label="Cost"
+          value={draft.cost}
+          onValue={(cost) => onChange({ cost })}
+        />
       </div>
+      <p className="mt-1.5 text-[10px] text-[var(--color-muted)]">
+        Plus bonuses, level and cost are shown on the card only when set.
+      </p>
     </section>
   );
 }

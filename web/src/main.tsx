@@ -13,6 +13,7 @@ import { CustomCardPage } from "./custom-card/CustomCardPage";
 import { TeamBuildPage } from "./team-build/TeamBuildPage";
 import { TierMakerPage } from "./tier-maker/TierMakerPage";
 import { AppUpdateLaunch } from "./components/AppUpdateLaunch";
+import { TranslatePage } from "./translate/TranslatePage";
 import { SupportLaunch } from "./components/SupportLaunch";
 import "./index.css";
 
@@ -55,6 +56,9 @@ function Root() {
   }
   if (path === "/tier-maker") {
     return <TierMakerPage />;
+  }
+  if (path === "/translate") {
+    return <TranslatePage />;
   }
   return <App />;
 }

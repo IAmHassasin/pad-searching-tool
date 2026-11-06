@@ -18,7 +18,8 @@
     "@tanstack/react-virtual": "^3.14.12",
     "modern-screenshot": "^4.7.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "tesseract.js": "^6.0.1"
   },
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",

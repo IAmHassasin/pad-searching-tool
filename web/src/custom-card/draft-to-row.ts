@@ -20,6 +20,8 @@ export function draftToPreviewRow(draft: CustomCardDraft): MonsterRecord {
     monster_id: id,
     monster_no_na: id > 0 ? id : null,
     name_en: draft.name.trim() || "Custom",
+    name_jp: draft.nameJa.trim() || null,
+    cost: draft.cost,
     rarity: draft.rarity,
     attribute_1_id: draft.attribute1,
     attribute_2_id: draft.attribute2,

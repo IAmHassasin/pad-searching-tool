@@ -55,6 +55,32 @@ import { SuperAwakeningStrip } from "./SuperAwakeningStrip";
 
 const COMPACT_AWAKENING_ICON_SIZE = 16;
 
+/** Level, plus bonuses and cost as printed on an in-game screenshot (translate / custom cards). */
+export type CardStatsMeta = {
+  level?: number | null;
+  maxLevel?: number | null;
+  plusHp?: number | null;
+  plusAtk?: number | null;
+  plusRcv?: number | null;
+  cost?: number | null;
+};
+
+function plusText(value: number | null | undefined): string | null {
+  return value != null && value > 0 ? `(+${value})` : null;
+}
+
+function formatStatsMeta(meta: CardStatsMeta | null | undefined): string | null {
+  if (!meta) return null;
+  const parts: string[] = [];
+  if (meta.level != null) {
+    parts.push(meta.maxLevel != null ? `Lv.${meta.level} / ${meta.maxLevel}` : `Lv.${meta.level}`);
+  } else if (meta.maxLevel != null) {
+    parts.push(`Max Lv.${meta.maxLevel}`);
+  }
+  if (meta.cost != null) parts.push(`Cost ${meta.cost}`);
+  return parts.length ? parts.join(" · ") : null;
+}
+
 type Props = {
   row: MonsterRecord;
   evoActive?: boolean;
@@ -78,6 +104,10 @@ type Props = {
   hideUtilityLinks?: boolean;
   /** Show a header button that copies the whole card as a PNG to the clipboard. */
   copyImageButton?: boolean;
+  /** Secondary name (e.g. the original Japanese name) shown smaller under the name. */
+  nameSub?: string | null;
+  /** Level / plus / cost line as printed on a screenshot. */
+  statsMeta?: CardStatsMeta | null;
 };
 
 const PILL_BUTTON_CLASS =
@@ -319,11 +349,14 @@ export function MonsterDetailCard({
   framedIcon = false,
   hideUtilityLinks = false,
   copyImageButton = false,
+  nameSub = null,
+  statsMeta = null,
 }: Props) {
   const cardRef = useRef<HTMLElement>(null);
   const id = monsterRowId(row);
   const displayName = useMonsterNameTranslation().nameFor(row, "Unknown");
   const listedId = listedMonsterId(row);
+  const statsMetaLine = formatStatsMeta(statsMeta);
   const regular = parseRegularAwakenings(row.awakenings);
   const hasSuperAwks =
     resolveSuperAwakeningIds(row.awakenings, row.super_awakenings).length > 0;
@@ -450,6 +483,14 @@ export function MonsterDetailCard({
                 </LinkPillButton>
               )}
             </div>
+            {nameSub && (
+              <p
+                lang="ja"
+                className={`wrap-anywhere break-words font-medium leading-snug text-[#c9b08a] ${compact ? "text-[9px]" : "text-[10px]"}`}
+              >
+                {nameSub}
+              </p>
+            )}
           </div>
         </div>
       </header>
@@ -672,9 +713,14 @@ export function MonsterDetailCard({
               />
             ))}
           <div className={`min-w-0 flex-1 ${compact ? "space-y-0.5" : "space-y-1"}`}>
-            <StatRow label="HP" value={row.hp_max} compact={compact} />
-            <StatRow label="ATK" value={row.atk_max} compact={compact} />
-            <StatRow label="RCV" value={row.rcv_max} compact={compact} />
+            <StatRow label="HP" value={row.hp_max} compact={compact} extra={plusText(statsMeta?.plusHp)} />
+            <StatRow label="ATK" value={row.atk_max} compact={compact} extra={plusText(statsMeta?.plusAtk)} />
+            <StatRow label="RCV" value={row.rcv_max} compact={compact} extra={plusText(statsMeta?.plusRcv)} />
+            {statsMetaLine && (
+              <p className={`font-bold tabular-nums leading-none text-[#7fe3c9] ${compact ? "text-[9px]" : "text-[10px]"}`}>
+                {statsMetaLine}
+              </p>
+            )}
           </div>
           {listedId.region !== "none" && (
             <div className="shrink-0 rounded border border-[#3d2e1f] bg-black/50 px-1.5 py-1 text-center">

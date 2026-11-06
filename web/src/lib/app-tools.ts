@@ -42,6 +42,12 @@ export const APP_TOOLS: AppTool[] = [
     icon: "🎨",
   },
   {
+    href: "/translate",
+    label: "Translate",
+    description: "JP detail screenshot → English card",
+    icon: "🈯",
+  },
+  {
     href: "/dungeon-details",
     label: "Dungeons",
     description: "AppMedia floor tables",

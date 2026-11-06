@@ -1,5 +1,21 @@
 # Translate: JP monster-detail screenshot → English card — feasibility + plan (2026-11-06)
 
+> Status (2026-11-06, branch `feat/translate-card`): phases 1 and 2 implemented together.
+> Code: `web/src/lib/translate/*` (layout, digit templates, rarity, attributes, awakening and
+> inline-icon matching, tesseract.js OCR, corpus/translation client, draft builder),
+> `web/src/translate/TranslatePage.tsx`, server `src/api/translate.controller.ts` +
+> `skill-corpus*.ts` (`POST /api/translate/labels`, `GET /api/translate/corpus-match`),
+> scripts `build-digit-glyphs.ts` / `translate-screenshot.ts`, fixtures under
+> `web/src/lib/translate/fixtures/`. Deviations from the plan below: the header number is read
+> by tesseract's English model (the bold header font merges glyphs, so digit templates cover
+> only the stats font); inline orbs are classified by hue when the sprite template is not a
+> confident match; CDN art is used only when the CDN icon matches the thumbnail, or — for
+> five-digit numbers the catalog does not know and the CDN has no icon for yet — with a review
+> note. Verified on the four sample screenshots in a headless browser: numbers, rarity,
+> attributes and awakenings correct, skill text OCR 70–90 % confidence with the review table,
+> art/icon/JP sub-name/level/+99/cost rendered on the card. Not verified: a screenshot of a
+> card that is already in the catalog (known-card path), other devices, Android WebView.
+
 > Rev 2 (2026-11-06, after user decisions): **no budget → free libraries only**. Text reading uses
 > `tesseract.js` in the browser plus the repo's existing `google-translate-api-x` service and the
 > DB's JP/EN skill corpus. The earlier Claude-vision option is dropped (kept in §3C for the record).
@@ -65,7 +81,7 @@ Conclusions that shape the design:
   painted out, and the OCR word boxes are merged with the icon boxes in x-order so the JP string
   becomes e.g. `[lock]を解除し、[wood][dark][heart]を10個ずつ生成`.
 - The OCR'd JP text is **corrected against the DB corpus** before translation: fuzzy match
-  (character trigram similarity with digits normalised) against all `desc_ja`; a hit ≥ 0.92 replaces
+  (character trigram similarity with digits normalised) against all `desc_ja`; a hit ≥ 0.6 (Jaccard on trigrams; implemented value) replaces
   the OCR text with the clean DB text **and** gives the dadguide `desc_en` directly (numbers
   substituted) — no machine translation at all for reused skills. PAD skill text is formulaic
   enough that this will cover a large share of leader skills and many actives (share to be measured
