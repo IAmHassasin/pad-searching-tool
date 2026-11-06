@@ -12,6 +12,8 @@ import { OneTouchPage } from "./one-touch/OneTouchPage";
 import { CustomCardPage } from "./custom-card/CustomCardPage";
 import { TeamBuildPage } from "./team-build/TeamBuildPage";
 import { TierMakerPage } from "./tier-maker/TierMakerPage";
+import { AppUpdateLaunch } from "./components/AppUpdateLaunch";
+import { TranslatePage } from "./translate/TranslatePage";
 import { SupportLaunch } from "./components/SupportLaunch";
 import "./index.css";
 
@@ -55,6 +57,9 @@ function Root() {
   if (path === "/tier-maker") {
     return <TierMakerPage />;
   }
+  if (path === "/translate") {
+    return <TranslatePage />;
+  }
   return <App />;
 }
 
@@ -64,6 +69,7 @@ createRoot(document.getElementById("root")!).render(
       <AdminSessionProvider>
         <Root />
         <SupportLaunch />
+        <AppUpdateLaunch />
       </AdminSessionProvider>
     </QueryClientProvider>
   </StrictMode>

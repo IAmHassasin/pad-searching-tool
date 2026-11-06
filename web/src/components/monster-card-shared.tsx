@@ -32,10 +32,13 @@ export function StatRow({
   label,
   value,
   compact = false,
+  extra = null,
 }: {
   label: string;
   value: number | null | undefined;
   compact?: boolean;
+  /** Short suffix after the value, e.g. "(+99)". */
+  extra?: string | null;
 }) {
   return (
     <div
@@ -49,6 +52,9 @@ export function StatRow({
       <span className="font-bold tabular-nums text-[var(--pst-stat-value,#fff)]">
         {value?.toLocaleString() ?? "—"}
       </span>
+      {extra && (
+        <span className="font-bold tabular-nums text-[#f0e040]">{extra}</span>
+      )}
     </div>
   );
 }

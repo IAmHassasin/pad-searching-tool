@@ -10,6 +10,13 @@ type Props = {
 export const CustomCardPreview = forwardRef<HTMLDivElement, Props>(
   function CustomCardPreview({ draft }, ref) {
     const row = draftToPreviewRow(draft);
+    const hasMeta =
+      draft.level != null ||
+      draft.maxLevel != null ||
+      draft.plusHp != null ||
+      draft.plusAtk != null ||
+      draft.plusRcv != null ||
+      draft.cost != null;
     return (
       <div ref={ref} className="mx-auto w-full max-w-[360px]">
         <MonsterDetailCard
@@ -18,6 +25,19 @@ export const CustomCardPreview = forwardRef<HTMLDivElement, Props>(
           iconSrc={draft.iconObjectUrl}
           framedIcon
           hideUtilityLinks
+          nameSub={draft.nameJa.trim() || null}
+          statsMeta={
+            hasMeta
+              ? {
+                  level: draft.level,
+                  maxLevel: draft.maxLevel,
+                  plusHp: draft.plusHp,
+                  plusAtk: draft.plusAtk,
+                  plusRcv: draft.plusRcv,
+                  cost: draft.cost,
+                }
+              : null
+          }
         />
       </div>
     );

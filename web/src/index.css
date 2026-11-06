@@ -270,6 +270,21 @@ body {
   animation: ds-fade-in 160ms ease-out;
 }
 
+/* Blinking red outline for a choice the user should double-check (screenshot import). */
+@keyframes ds-review-blink {
+  0%,
+  100% {
+    box-shadow: 0 0 0 2px var(--color-negative);
+  }
+  50% {
+    box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.15);
+  }
+}
+
+@utility animate-review-blink {
+  animation: ds-review-blink 1s ease-in-out infinite;
+}
+
 /* Global so responsive variants (e.g. `sm:animate-fade-in`) are covered too. */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -280,6 +295,10 @@ body {
   }
   .animate-support-pet {
     animation: none !important;
+  }
+  .animate-review-blink {
+    animation: none !important;
+    box-shadow: 0 0 0 2px var(--color-negative);
   }
   .pressable:active {
     transform: none;

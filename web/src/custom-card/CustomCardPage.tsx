@@ -4,6 +4,7 @@ import { ArtCropModal, applyArtCropFromUrl } from "./ArtCropModal";
 import { ArtUploadPanel } from "./ArtUploadPanel";
 import { AttributeTypeEditor } from "./AttributeTypeEditor";
 import { AwakeningEditor } from "./AwakeningEditor";
+import { CopyCardImageButton } from "./CopyCardImageButton";
 import { CustomCardPreview } from "./CustomCardPreview";
 import { IdentityEditor } from "./IdentityEditor";
 import { IconCropModal } from "./IconCropModal";
@@ -22,8 +23,21 @@ function revokeUrl(url: string | null | undefined) {
   if (url) URL.revokeObjectURL(url);
 }
 
-export function CustomCardPage() {
-  const [draft, setDraft] = useState<CustomCardDraft>(() => createEmptyDraft());
+type Props = {
+  /** Draft to start from (e.g. handed over by the translate page); the editor owns it afterwards. */
+  initialDraft?: CustomCardDraft | null;
+  /** Rendered instead of the page title when embedded in another page. */
+  embeddedTitle?: string;
+  /** Called with every draft change (so an embedding page can keep the user's edits). */
+  onDraftChange?: (draft: CustomCardDraft) => void;
+};
+
+export function CustomCardPage({ initialDraft = null, embeddedTitle, onDraftChange }: Props = {}) {
+  const [draft, setDraft] = useState<CustomCardDraft>(() => initialDraft ?? createEmptyDraft());
+
+  useEffect(() => {
+    onDraftChange?.(draft);
+  }, [draft, onDraftChange]);
   const [artError, setArtError] = useState<string | null>(null);
   const [artCropOpen, setArtCropOpen] = useState(false);
   const [iconCropOpen, setIconCropOpen] = useState(false);
@@ -164,18 +178,21 @@ export function CustomCardPage() {
   return (
     <div className="flex min-h-full flex-col bg-[var(--color-surface)] text-[var(--color-fg)]">
       <PageHeader
-        title="Custom Card"
+        title={embeddedTitle ?? "Custom Card"}
         subtitle="Build a PAD-style detail card and download as PNG"
         maxWidthClass="max-w-7xl"
         actions={
-          <button
-            type="button"
-            onClick={() => void handleDownload()}
-            disabled={exporting}
-            className="ds-btn-primary pressable min-h-9 px-3 text-sm whitespace-nowrap disabled:cursor-not-allowed"
-          >
-            {exporting ? "Exporting…" : "Download PNG"}
-          </button>
+          <div className="flex items-center gap-2">
+            <CopyCardImageButton targetRef={previewRef} />
+            <button
+              type="button"
+              onClick={() => void handleDownload()}
+              disabled={exporting}
+              className="ds-btn-primary pressable min-h-9 px-3 text-sm whitespace-nowrap disabled:cursor-not-allowed"
+            >
+              {exporting ? "Exporting…" : "Download PNG"}
+            </button>
+          </div>
         }
       >
         {exportMsg && (

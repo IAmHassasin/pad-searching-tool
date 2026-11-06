@@ -147,6 +147,7 @@ export function MonsterDetailPanel({
       onSelectChangeTarget={handleSelectChangeTarget}
       changeTargetLoadingId={changeTargetLoadingId}
       compact={sidebar && !showFullArt}
+      copyImageButton
     />
   );
 

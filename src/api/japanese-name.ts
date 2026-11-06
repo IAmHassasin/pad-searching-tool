@@ -129,7 +129,9 @@ export async function translateJapaneseLabels(
   labels: string[],
   cache: Map<string, string>,
   translateBatch: (texts: string[]) => Promise<string[]>,
-  batchSize = NAME_TRANSLATION_BATCH_SIZE
+  batchSize = NAME_TRANSLATION_BATCH_SIZE,
+  /** Title-case the result (names); false keeps sentence case (skill descriptions). */
+  titleCase = true
 ): Promise<string[]> {
   const pending: string[] = [];
   const queued = new Set<string>();
@@ -153,7 +155,7 @@ export async function translateJapaneseLabels(
     }
     chunk.forEach((source, index) => {
       const raw = translated?.[index]?.trim();
-      const english = raw ? titleCaseTranslatedName(raw) : source;
+      const english = raw ? (titleCase ? titleCaseTranslatedName(raw) : raw) : source;
       if (translated) cache.set(source, english);
     });
   }

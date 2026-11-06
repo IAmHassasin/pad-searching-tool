@@ -77,6 +77,61 @@ Regenerate the committed APK after UI/native changes with `npm run android:apk` 
 To point the app at a different backend (e.g. local dev), edit `VITE_API_BASE` in
 `web/.env.android` before `android:sync`.
 
+### In-app updates (Android)
+
+The Android app updates itself from this repository's **GitHub Releases**; users do not have to
+sideload a new APK by hand. Every CD run publishes three assets per release:
+
+| Asset | Used for |
+|-------|----------|
+| `pad-searching-tool-v1.0.N.apk` | first install, and in-app **APK updates** (in-place upgrade, data kept) |
+| `web-bundle-v1.0.N.zip` | in-app **web bundle updates**: the React build is downloaded into app storage and served instead of the assets packaged in the APK — no install prompt, no restart of the native shell |
+| `update.json` | manifest the app reads from `releases/latest/download/update.json` (version, SHA-256 + size of both assets, `nativeApiLevel`) |
+
+How the app picks the channel (`web/src/lib/app-update/decide.ts`):
+
+- release not newer than what runs → nothing;
+- release `nativeApiLevel` > the level compiled into the installed APK → **APK** channel
+  (Android asks to confirm the install; needs "Install unknown apps" for this app once);
+- otherwise → **web bundle** channel.
+
+**`web/native-api-level.json`** is the single source of that level for Gradle
+(`BuildConfig.NATIVE_API_LEVEL`), Vite (`__NATIVE_API_LEVEL__`) and the manifest. **Bump it in the
+same PR as any native-shell change** (new Capacitor plugin, Capacitor major upgrade, manifest or
+Gradle change); otherwise phones would receive a web bundle that expects native code they do not
+have.
+
+Pieces: `web/android/app/src/main/java/.../AppUpdatePlugin.java` (download, SHA-256 check,
+unzip with zip-slip guard, switch of Capacitor's server path, crash-loop rollback, APK install
+intent), `web/src/lib/app-update/` (manifest validation, channel decision, throttling, native
+calls), `web/src/hooks/useAppUpdate.ts` + `web/src/components/AppUpdateLaunch.tsx` (version chip
+and dialog, Android only), `scripts/ci/write-update-manifest.mjs` (manifest). The release is
+created as a draft and published only after all assets are uploaded, so `latest/download/update.json`
+never points at a half-uploaded release.
+
+Behaviour notes:
+
+- Automatic checks run 3 s after launch and on resume, at most every 6 h; "Check for updates" in
+  the dialog is immediate. "Later" hides that version until the next one.
+- A downloaded bundle must call `notifyReady` on its first launch; if it does not (crash, blank
+  page), the next launch restores the previous bundle or the built-in assets and the dialog
+  shows a rollback notice.
+- Installing a newer APK drops every downloaded bundle (the APK embeds newer assets).
+- A **locally built debug APK** (`npm run android:apk`) is signed with your own debug keystore
+  and reports versionCode 1, so it can take web bundle updates but **cannot install the CI APK
+  over itself** (signature mismatch). Point a debug build at a test release with
+  `VITE_UPDATE_MANIFEST_URL` in `web/.env.android`.
+
+Device test checklist before relying on a release (manual, needs a phone or emulator):
+
+1. Install CI APK v1.0.N → publish v1.0.N+1 (web-only change) → chip shows "Update", tap Update
+   now → app restarts on N+1, team drafts intact, kill + relaunch still N+1.
+2. Rollback: point a debug build at a draft release whose zip has a broken `index.html` → after
+   the update the next launch shows the rollback notice and the previous version.
+3. Android "Clear storage" → app starts on the built-in assets.
+4. Bump `nativeApiLevel` on a test release → dialog offers "Download & install" → installer
+   upgrades in place, data kept, bundles pruned.
+
 ## Deploy to Oracle Cloud (Terraform + Makefile)
 
 Infrastructure is defined in **`iac/`** (Terraform). OCI API key: **`key/api_key_name.pem`**. VM SSH key is generated to **`key/vm_ssh.pem`** on first `terraform apply`.

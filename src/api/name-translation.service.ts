@@ -10,6 +10,8 @@ import {
 } from "./japanese-name";
 
 const MAX_LOOKUP_IDS = 40;
+/** Label / text caches are cleared once they hold this many entries. */
+const MAX_CACHED_LABELS = 5000;
 
 type NameRow = {
   monster_id: number;
@@ -37,6 +39,8 @@ export class NameTranslationService {
   private readonly logger = new Logger(NameTranslationService.name);
   private readonly cache = new Map<number, CachedMonsterName>();
   private readonly labelCache = new Map<string, string>();
+  /** Sentence-case results (skill text) are cached apart from title-cased labels. */
+  private readonly textCache = new Map<string, string>();
   /** One upstream batch at a time so a fast scroll does not stampede Google. */
   private chain: Promise<void> = Promise.resolve();
 
@@ -51,18 +55,27 @@ export class NameTranslationService {
   }
 
   /** Same Japanese-to-English batch path as monster names on the search screen. */
-  translateLabels(labels: string[]): Promise<string[]> {
+  translateLabels(labels: string[], titleCase = true): Promise<string[]> {
     if (!labels.length) return Promise.resolve([]);
+    const cache = titleCase ? this.labelCache : this.textCache;
+    // Free text from the public endpoint must not grow the cache without bound.
+    if (cache.size >= MAX_CACHED_LABELS) cache.clear();
     return this.enqueue(() =>
-      translateJapaneseLabels(labels, this.labelCache, async (texts) => {
-        try {
-          return await translateJapaneseBatch(texts);
-        } catch (error) {
-          const message = error instanceof Error ? error.message : "unknown error";
-          this.logger.warn(`Label translation failed: ${message}`);
-          throw error;
-        }
-      })
+      translateJapaneseLabels(
+        labels,
+        cache,
+        async (texts) => {
+          try {
+            return await translateJapaneseBatch(texts);
+          } catch (error) {
+            const message = error instanceof Error ? error.message : "unknown error";
+            this.logger.warn(`Label translation failed: ${message}`);
+            throw error;
+          }
+        },
+        undefined,
+        titleCase
+      )
     );
   }
 

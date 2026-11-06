@@ -9,6 +9,11 @@ import {
   getSourceColumnWhitelistFromEnv,
   projectSourceRows,
 } from "../transform/source-row-projection";
+import {
+  attachTransformTargets,
+  rowMonsterId,
+  type TransformEdge,
+} from "./transform-targets";
 import { VanishAwokenService } from "./vanish-awoken.service";
 import { VoidSuperGravityService } from "./void-super-gravity.service";
 
@@ -118,7 +123,29 @@ export class MonsterRelationsService {
       ...new Set(ids.filter((id) => Number.isFinite(id) && id > 0)),
     ];
     if (!unique.length) return [];
-    return this.fetchMonstersByIds(unique);
+    const rows = await this.fetchMonstersByIds(unique);
+    return this.withTransformTargets(rows);
+  }
+
+  /** Adds `transform_to_ids` from dadguide `transformations`; rows unchanged when absent. */
+  private async withTransformTargets(
+    rows: Record<string, unknown>[]
+  ): Promise<Record<string, unknown>[]> {
+    const ids = rows
+      .map(rowMonsterId)
+      .filter((id): id is number => id != null);
+    if (!ids.length) return rows;
+    try {
+      const edges = (await this.dataSource.query(
+        `SELECT from_monster_id, to_monster_id FROM transformations
+         WHERE from_monster_id IN (${ids.map(() => "?").join(", ")})`,
+        ids
+      )) as TransformEdge[];
+      return attachTransformTargets(rows, edges);
+    } catch {
+      // Sources without a transformations table keep the plain rows.
+      return rows;
+    }
   }
 
   async getEvoTree(monsterId: number): Promise<{

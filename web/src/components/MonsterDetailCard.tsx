@@ -1,5 +1,16 @@
-import type { CSSProperties, ReactNode } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type ReactNode,
+  type RefObject,
+} from "react";
 import cardBackground from "../assets/pad/background.png";
+import {
+  SCREENSHOT_IGNORE_ATTR,
+  copyElementImageToClipboard,
+} from "../lib/copy-element-image";
 import { useMonsterNameTranslation } from "../hooks/useLiveMonsterNames";
 import { monsterRowId } from "../lib/filters";
 import { listedMonsterId } from "../lib/result-id-scope";
@@ -44,6 +55,32 @@ import { SuperAwakeningStrip } from "./SuperAwakeningStrip";
 
 const COMPACT_AWAKENING_ICON_SIZE = 16;
 
+/** Level, plus bonuses and cost as printed on an in-game screenshot (translate / custom cards). */
+export type CardStatsMeta = {
+  level?: number | null;
+  maxLevel?: number | null;
+  plusHp?: number | null;
+  plusAtk?: number | null;
+  plusRcv?: number | null;
+  cost?: number | null;
+};
+
+function plusText(value: number | null | undefined): string | null {
+  return value != null && value > 0 ? `(+${value})` : null;
+}
+
+function formatStatsMeta(meta: CardStatsMeta | null | undefined): string | null {
+  if (!meta) return null;
+  const parts: string[] = [];
+  if (meta.level != null) {
+    parts.push(meta.maxLevel != null ? `Lv.${meta.level} / ${meta.maxLevel}` : `Lv.${meta.level}`);
+  } else if (meta.maxLevel != null) {
+    parts.push(`Max Lv.${meta.maxLevel}`);
+  }
+  if (meta.cost != null) parts.push(`Cost ${meta.cost}`);
+  return parts.length ? parts.join(" · ") : null;
+}
+
 type Props = {
   row: MonsterRecord;
   evoActive?: boolean;
@@ -65,7 +102,90 @@ type Props = {
   framedIcon?: boolean;
   /** Hide Google / Assist Resonance links (export / custom card). */
   hideUtilityLinks?: boolean;
+  /** Show a header button that copies the whole card as a PNG to the clipboard. */
+  copyImageButton?: boolean;
+  /** Secondary name (e.g. the original Japanese name) shown smaller under the name. */
+  nameSub?: string | null;
+  /** Level / plus / cost line as printed on a screenshot. */
+  statsMeta?: CardStatsMeta | null;
 };
+
+const PILL_BUTTON_CLASS =
+  "rounded border border-[#6b4f2a]/90 bg-[#2f2118]/95 px-1.5 py-0.5 text-[#e8dcc8] shadow-md transition-colors hover:border-[#c9a84a] hover:text-white";
+const PILL_BUTTON_STYLE: CSSProperties = {
+  fontSize: 11,
+  fontWeight: 700,
+  lineHeight: 1.25,
+};
+
+type CopyImageState = "idle" | "copying" | "copied" | "failed";
+const COPY_IMAGE_FEEDBACK_MS = 1800;
+
+function CopyImageButton({
+  targetRef,
+}: {
+  targetRef: RefObject<HTMLElement | null>;
+}) {
+  const [state, setState] = useState<CopyImageState>("idle");
+  const [error, setError] = useState<string | null>(null);
+  const resetTimer = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (resetTimer.current != null) window.clearTimeout(resetTimer.current);
+    };
+  }, []);
+
+  const scheduleReset = () => {
+    if (resetTimer.current != null) window.clearTimeout(resetTimer.current);
+    resetTimer.current = window.setTimeout(() => {
+      setState("idle");
+      setError(null);
+    }, COPY_IMAGE_FEEDBACK_MS);
+  };
+
+  const handleCopy = async () => {
+    const element = targetRef.current;
+    if (!element || state === "copying") return;
+    setState("copying");
+    setError(null);
+    try {
+      await copyElementImageToClipboard(element);
+      setState("copied");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Copy failed");
+      setState("failed");
+    }
+    scheduleReset();
+  };
+
+  // The label stays "Copy" while capturing so the header layout in the image
+  // matches what is on screen.
+  const label =
+    state === "copied" ? "Copied!" : state === "failed" ? "Failed" : "Copy";
+  const stateClass =
+    state === "copied"
+      ? "!border-[#6b8f3c] !text-[#b6e07a]"
+      : state === "failed"
+        ? "!border-[#b23b3b] !text-[#ff9c9c]"
+        : "";
+
+  return (
+    <button
+      type="button"
+      onClick={() => void handleCopy()}
+      disabled={state === "copying"}
+      aria-busy={state === "copying"}
+      aria-live="polite"
+      title={error ?? "Copy this card as an image to the clipboard"}
+      style={PILL_BUTTON_STYLE}
+      className={`shrink-0 disabled:cursor-wait ${PILL_BUTTON_CLASS} ${stateClass}`}
+      {...{ [SCREENSHOT_IGNORE_ATTR]: "" }}
+    >
+      {label}
+    </button>
+  );
+}
 
 function RelationToggleButton({
   label,
@@ -228,10 +348,15 @@ export function MonsterDetailCard({
   showAttributes = false,
   framedIcon = false,
   hideUtilityLinks = false,
+  copyImageButton = false,
+  nameSub = null,
+  statsMeta = null,
 }: Props) {
+  const cardRef = useRef<HTMLElement>(null);
   const id = monsterRowId(row);
   const displayName = useMonsterNameTranslation().nameFor(row, "Unknown");
   const listedId = listedMonsterId(row);
+  const statsMetaLine = formatStatsMeta(statsMeta);
   const regular = parseRegularAwakenings(row.awakenings);
   const hasSuperAwks =
     resolveSuperAwakeningIds(row.awakenings, row.super_awakenings).length > 0;
@@ -297,6 +422,7 @@ export function MonsterDetailCard({
 
   return (
     <article
+      ref={cardRef}
       className={`relative w-full overflow-hidden bg-black ${
         compact
           ? "rounded-lg border border-[#a8842f]/80"
@@ -346,6 +472,7 @@ export function MonsterDetailCard({
               >
                 {displayName}
               </h3>
+              {copyImageButton && <CopyImageButton targetRef={cardRef} />}
               {googleSearchUrl && (
                 <LinkPillButton
                   href={googleSearchUrl}
@@ -356,6 +483,14 @@ export function MonsterDetailCard({
                 </LinkPillButton>
               )}
             </div>
+            {nameSub && (
+              <p
+                lang="ja"
+                className={`wrap-anywhere break-words font-medium leading-snug text-[#c9b08a] ${compact ? "text-[9px]" : "text-[10px]"}`}
+              >
+                {nameSub}
+              </p>
+            )}
           </div>
         </div>
       </header>
@@ -578,9 +713,14 @@ export function MonsterDetailCard({
               />
             ))}
           <div className={`min-w-0 flex-1 ${compact ? "space-y-0.5" : "space-y-1"}`}>
-            <StatRow label="HP" value={row.hp_max} compact={compact} />
-            <StatRow label="ATK" value={row.atk_max} compact={compact} />
-            <StatRow label="RCV" value={row.rcv_max} compact={compact} />
+            <StatRow label="HP" value={row.hp_max} compact={compact} extra={plusText(statsMeta?.plusHp)} />
+            <StatRow label="ATK" value={row.atk_max} compact={compact} extra={plusText(statsMeta?.plusAtk)} />
+            <StatRow label="RCV" value={row.rcv_max} compact={compact} extra={plusText(statsMeta?.plusRcv)} />
+            {statsMetaLine && (
+              <p className={`font-bold tabular-nums leading-none text-[#7fe3c9] ${compact ? "text-[9px]" : "text-[10px]"}`}>
+                {statsMetaLine}
+              </p>
+            )}
           </div>
           {listedId.region !== "none" && (
             <div className="shrink-0 rounded border border-[#3d2e1f] bg-black/50 px-1.5 py-1 text-center">
