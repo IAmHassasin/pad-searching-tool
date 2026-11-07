@@ -119,12 +119,6 @@ export type MonsterFilters = {
   attributeSlots: AttributeSlotFilters;
   attributeMatch: "any" | "all";
   types: Set<number>;
-  hpMin: number | null;
-  hpMax: number | null;
-  atkMin: number | null;
-  atkMax: number | null;
-  rcvMin: number | null;
-  rcvMax: number | null;
   idQuery: string;
   /** Ordered stack — duplicates allowed (e.g. three × HP+). */
   awakeningIds: number[];
@@ -156,12 +150,6 @@ export const EMPTY_MONSTER_FILTERS: MonsterFilters = {
   attributeSlots: [new Set(), new Set(), new Set()],
   attributeMatch: "all",
   types: new Set(),
-  hpMin: null,
-  hpMax: null,
-  atkMin: null,
-  atkMax: null,
-  rcvMin: null,
-  rcvMax: null,
   idQuery: "",
   awakeningIds: [],
   excludedAwakeningIds: [],

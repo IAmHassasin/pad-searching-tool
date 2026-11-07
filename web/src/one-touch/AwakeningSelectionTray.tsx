@@ -1,4 +1,6 @@
 import { AwakeningSpriteIcon } from "../components/AwakeningSpriteIcon";
+import { MOBILE_SHEET_BOTTOM_CLASS } from "../components/MobileSheet";
+import { useMobileWebview } from "../hooks/useMobileWebview";
 import { buildOneTouchMonsterSearchUrl } from "../lib/monster-search-url";
 import type { AwakeningSelectionEntry } from "./types";
 
@@ -15,6 +17,7 @@ export function AwakeningSelectionTray({
   onRemove,
   onClear,
 }: Props) {
+  const isMobile = useMobileWebview();
   if (!entries.length) return null;
 
   const searchUrl = buildOneTouchMonsterSearchUrl(
@@ -22,7 +25,14 @@ export function AwakeningSelectionTray({
   );
 
   return (
-    <div className="glass-bar animate-sheet-in fixed inset-x-0 bottom-0 z-40 rounded-t-2xl border-t border-white/10 px-3 pt-3 pb-[calc(env(safe-area-inset-bottom)+0.5rem)] shadow-[0_-8px_24px_rgba(0,0,0,0.45)] sm:px-4">
+    // Mobile: sit above MobileBottomNav instead of under it.
+    <div
+      className={`glass-bar animate-sheet-in fixed inset-x-0 z-40 rounded-t-2xl border-t border-white/10 px-3 pt-3 shadow-[0_-8px_24px_rgba(0,0,0,0.45)] sm:px-4 ${
+        isMobile
+          ? `${MOBILE_SHEET_BOTTOM_CLASS} pb-2`
+          : "bottom-0 pb-[calc(env(safe-area-inset-bottom)+0.5rem)]"
+      }`}
+    >
       <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-2 sm:gap-3">
         <span className="ds-label w-full sm:w-auto">
           Search queue (match all)

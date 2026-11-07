@@ -11,16 +11,23 @@ export function hasActiveMonsterFilters(filters: MonsterFilters): boolean {
     filters.rarity.size > 0 ||
     hasAttributeSlotFilters(filters.attributeSlots) ||
     filters.types.size > 0 ||
-    filters.hpMin != null ||
-    filters.hpMax != null ||
-    filters.atkMin != null ||
-    filters.atkMax != null ||
-    filters.rcvMin != null ||
-    filters.rcvMax != null ||
     filters.idQuery.trim().length > 0 ||
     filters.awakeningIds.length > 0 ||
     filters.excludedAwakeningIds.length > 0 ||
     filters.vanishOnly ||
     filters.vanishAwakeningIds.length > 0
+  );
+}
+
+/**
+ * Number of active quick-chip filters (Rarity / Attribute / Type), each
+ * counted once however many values it holds — drives the mobile header
+ * badge and the "n active" chip summaries.
+ */
+export function countMonsterChipFilters(filters: MonsterFilters): number {
+  return (
+    (filters.rarity.size > 0 ? 1 : 0) +
+    (hasAttributeSlotFilters(filters.attributeSlots) ? 1 : 0) +
+    (filters.types.size > 0 ? 1 : 0)
   );
 }

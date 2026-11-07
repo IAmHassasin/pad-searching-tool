@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { StrictMode } from "react";
+import { StrictMode, type ReactNode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
 import { AdminSessionProvider } from "./hooks/useAdminSession";
@@ -13,6 +13,9 @@ import { CustomCardPage } from "./custom-card/CustomCardPage";
 import { TeamBuildPage } from "./team-build/TeamBuildPage";
 import { TierMakerPage } from "./tier-maker/TierMakerPage";
 import { AppUpdateLaunch } from "./components/AppUpdateLaunch";
+import { MobileBottomNav } from "./components/MobileBottomNav";
+import { MOBILE_NAV_BOTTOM_PADDING_CLASS } from "./components/MobileSheet";
+import { useMobileWebview } from "./hooks/useMobileWebview";
 import { TranslatePage } from "./translate/TranslatePage";
 import { SupportLaunch } from "./components/SupportLaunch";
 import "./index.css";
@@ -24,6 +27,25 @@ const queryClient = new QueryClient({
     },
   },
 });
+
+/**
+ * Mobile view: every page gets the fixed bottom nav. The wrapper is the
+ * scroll container (not the document) so its bottom padding lands after the
+ * content of `min-h-full` pages, while `h-full` layouts (search, team
+ * build) resolve against the padded box and end above the nav.
+ */
+function MobileShell({ children }: { children: ReactNode }) {
+  const isMobile = useMobileWebview();
+  if (!isMobile) return <>{children}</>;
+  return (
+    <>
+      <div className={`h-full overflow-y-auto ${MOBILE_NAV_BOTTOM_PADDING_CLASS}`}>
+        {children}
+      </div>
+      <MobileBottomNav />
+    </>
+  );
+}
 
 function Root() {
   const path = window.location.pathname.replace(/\/+$/, "") || "/";
@@ -67,7 +89,9 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <AdminSessionProvider>
-        <Root />
+        <MobileShell>
+          <Root />
+        </MobileShell>
         <SupportLaunch />
         <AppUpdateLaunch />
       </AdminSessionProvider>

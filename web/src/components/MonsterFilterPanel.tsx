@@ -8,10 +8,9 @@ import {
   MonsterAttributeFilter,
   MonsterTypeFilter,
   MonsterFilterClearButton,
-  MonsterIdFilter,
+  MonsterIdSearchInput,
   MonsterMoreFiltersGroup,
   MonsterRarityFilter,
-  MonsterStatsFilter,
   hasActiveMonsterFilters,
 } from "./filters/monster-filter-shared";
 import { MonsterAwakeningFilter } from "./filters/awakening-filter-shared";
@@ -21,13 +20,7 @@ type Props = {
   onChange: (next: MonsterFilters) => void;
 };
 
-type MonsterFilterSection =
-  | "rarity"
-  | "attribute"
-  | "type"
-  | "stats"
-  | "id"
-  | "awakening";
+type MonsterFilterSection = "rarity" | "attribute" | "type" | "awakening";
 
 const MONSTER_FILTER_SECTIONS: {
   id: MonsterFilterSection;
@@ -37,8 +30,6 @@ const MONSTER_FILTER_SECTIONS: {
   { id: "rarity", label: "R★" },
   { id: "attribute", label: "Attr" },
   { id: "type", label: "Type" },
-  { id: "stats", label: "Stats" },
-  { id: "id", label: "ID" },
 ];
 
 function FilterSectionTabBar({
@@ -99,14 +90,6 @@ function MonsterFilterSectionContent({
     case "type":
       return (
         <MonsterTypeFilter filters={filters} onChange={onChange} defaultOpen />
-      );
-    case "stats":
-      return (
-        <MonsterStatsFilter filters={filters} onChange={onChange} defaultOpen />
-      );
-    case "id":
-      return (
-        <MonsterIdFilter filters={filters} onChange={onChange} defaultOpen />
       );
     case "awakening":
       return (
@@ -170,9 +153,16 @@ export function MonsterFilterPanel({ filters, onChange }: Props) {
             </button>
           </div>
 
+          {/* Default way in: ID / NA# / name, always visible above Awakenings. */}
+          <MonsterIdSearchInput
+            filters={filters}
+            onChange={onChange}
+            className="mt-2"
+          />
+
           <div className="mt-2 flex items-start justify-between gap-2">
             <p className="text-[10px] text-[var(--color-faint)]">
-              Tap chips to filter stats & attributes
+              Exact ID or NA#, name, or group · tap chips to filter
             </p>
             {active && (
               <MonsterFilterClearButton filters={filters} onChange={onChange} />
@@ -210,7 +200,11 @@ export function MonsterFilterPanel({ filters, onChange }: Props) {
                 fillHeight
               />
             </div>
-            <MonsterMoreFiltersGroup filters={filters} onChange={onChange} />
+            <MonsterMoreFiltersGroup
+              filters={filters}
+              onChange={onChange}
+              includeIdFilter={false}
+            />
           </div>
         )}
       </div>
