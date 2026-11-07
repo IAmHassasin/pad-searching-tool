@@ -67,16 +67,24 @@ export function MobileSheet({
   children,
 }: Props) {
   const sheetRef = useRef<HTMLDivElement>(null);
+  // Callers pass a fresh arrow each render; keep the latest in a ref so the
+  // effects below only re-run on open/close (re-focusing on every keystroke
+  // would steal focus from inputs inside the sheet).
+  const onCloseRef = useRef(onClose);
+  onCloseRef.current = onClose;
+
+  useEffect(() => {
+    if (open) sheetRef.current?.focus({ preventScroll: true });
+  }, [open]);
 
   useEffect(() => {
     if (!open) return;
-    sheetRef.current?.focus({ preventScroll: true });
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") onCloseRef.current();
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [open, onClose]);
+  }, [open]);
 
   if (!open) return null;
 
@@ -90,6 +98,7 @@ export function MobileSheet({
       <div
         ref={sheetRef}
         role="dialog"
+        aria-modal="true"
         tabIndex={-1}
         aria-label={label}
         className={`animate-sheet-in fixed inset-x-0 z-50 flex max-h-[min(72dvh,36rem,calc(100dvh-8rem))] min-h-[min(40dvh,calc(100dvh-8rem))] flex-col rounded-t-3xl border-t border-white/10 bg-[var(--color-surface)] shadow-[0_-12px_32px_-8px_rgba(0,0,0,0.7)] outline-none ${MOBILE_SHEET_BOTTOM_CLASS}`}

@@ -167,7 +167,7 @@ function SidebarContent({ onClose }: { onClose: () => void }) {
           onChange={setMonsterFilters}
           compact
           title="Monster"
-          idleSummary="rarity · attribute · type · stats · id"
+          idleSummary="rarity · attribute · type · id"
         />
         <SkillPatternSelectionBar
           filters={skillFilters}

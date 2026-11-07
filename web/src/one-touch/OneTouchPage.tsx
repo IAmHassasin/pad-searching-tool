@@ -82,7 +82,7 @@ export function OneTouchPage() {
       <main
         className={`mx-auto grid w-full max-w-7xl flex-1 gap-4 px-3 py-4 sm:px-4 lg:items-stretch ${
           SHOW_AWAKENING_LOOKUP ? "lg:grid-cols-2" : ""
-        } ${selection.entries.length ? "pb-40 sm:pb-28" : ""}`}
+        } ${selection.entries.length ? "pb-56 sm:pb-44 xl:pb-28" : ""}`}
       >
         {SHOW_AWAKENING_LOOKUP ? (
           <AwakeningLookupPanel

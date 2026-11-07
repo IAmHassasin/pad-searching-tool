@@ -1,4 +1,3 @@
-import { type ReactNode } from "react";
 import { EMPTY_MONSTER_FILTERS, type MonsterFilters } from "../../types";
 import {
   MONSTER_ATTRIBUTES,
@@ -561,8 +560,6 @@ export function MonsterMoreFiltersGroup({
   compact = false,
   title = "More filters",
   idleSummary,
-  headerExtra,
-  contentClassName,
   includeIdFilter = true,
 }: {
   filters: MonsterFilters;
@@ -571,8 +568,6 @@ export function MonsterMoreFiltersGroup({
   title?: string;
   /** Shown when no filters are active. Empty string hides the idle summary. */
   idleSummary?: string;
-  headerExtra?: ReactNode;
-  contentClassName?: string;
   /** False when the host renders MonsterIdSearchInput itself. */
   includeIdFilter?: boolean;
 }) {
@@ -596,8 +591,6 @@ export function MonsterMoreFiltersGroup({
       compact={compact}
       defaultOpen={false}
       className="shrink-0"
-      headerExtra={headerExtra}
-      contentClassName={contentClassName}
     >
       <div className="space-y-2">
         <MonsterRarityFilter filters={filters} onChange={onChange} compact={compact} />

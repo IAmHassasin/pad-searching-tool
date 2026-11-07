@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useMonsterNameTranslation } from "../hooks/useLiveMonsterNames";
 import { useTruncatedTitle } from "../hooks/useTruncatedTitle";
 import type { AwkModifierSettings } from "../lib/awakening-stat-modifier";
-import { hasAttributeSlotFilters } from "../lib/monster-attributes";
 import {
   RESULT_DISPLAY_TABS,
   displayTabFromSections,
@@ -58,7 +57,9 @@ import {
 
 type SkillSheetMode = "leader_skill" | "active_skill" | "awakening" | "by_text";
 
-/** Quick-chip sections of the monster filter sheet; `all` = header button. */
+/** Quick-chip sections of the monster filter sheet; `all` = header button.
+ * Chip summaries count selected values; the app-bar badge counts groups
+ * (countMonsterChipFilters) — see MobileMonsterFilterButton. */
 export type MobileMonsterSheetSection = "attribute" | "rarity" | "type" | "all";
 
 type Props = {
@@ -215,7 +216,7 @@ function MobileQuickChipRow({
             type="button"
             onClick={() => onOpen(chip.section)}
             aria-haspopup="dialog"
-            aria-pressed={active}
+            data-active={active || undefined}
             className={`ds-pill pressable min-h-8 shrink-0 px-3 text-[11px] font-semibold ${
               active ? "ds-pill-active" : ""
             }`}
@@ -254,10 +255,7 @@ function MobileMonsterFilterSheet({
   matchCount: number;
   loading: boolean;
 }) {
-  const hasChips =
-    filters.rarity.size > 0 ||
-    hasAttributeSlotFilters(filters.attributeSlots) ||
-    filters.types.size > 0;
+  const hasChips = countMonsterChipFilters(filters) > 0;
   const openAll = section === "all";
 
   return (

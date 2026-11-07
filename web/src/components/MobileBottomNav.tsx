@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { APP_TOOLS, currentAppPath, isAppToolActive } from "../lib/app-tools";
 import { splitMobileNavTools } from "../lib/mobile-nav";
+import { useAdminSession } from "../hooks/useAdminSession";
 import { AdminLaunch } from "./AdminLaunch";
 import { MOBILE_NAV_HEIGHT_CLASS, MobileSheet } from "./MobileSheet";
 
@@ -50,6 +51,7 @@ function navTone(active: boolean): string {
  */
 export function MobileBottomNav() {
   const [othersOpen, setOthersOpen] = useState(false);
+  const { adminEnabled } = useAdminSession();
   const current = currentAppPath();
   const othersActive = OTHER_TOOLS.some((tool) =>
     isAppToolActive(tool.href, current)
@@ -64,7 +66,7 @@ export function MobileBottomNav() {
         title="Others"
       >
         <nav
-          aria-label="Other tools"
+          aria-label="Other tools list"
           className="min-h-0 flex-1 overflow-y-auto px-3 py-2"
         >
           <ul className="space-y-1">
@@ -108,10 +110,12 @@ export function MobileBottomNav() {
               );
             })}
           </ul>
-          <div className="mt-3 flex items-center justify-between gap-2 border-t border-[var(--color-border)] pt-3">
-            <span className="ds-label">Admin</span>
-            <AdminLaunch variant="header" />
-          </div>
+          {adminEnabled && (
+            <div className="mt-3 flex items-center justify-between gap-2 border-t border-[var(--color-border)] pt-3">
+              <span className="ds-label">Admin</span>
+              <AdminLaunch variant="header" />
+            </div>
+          )}
         </nav>
       </MobileSheet>
 

@@ -29,16 +29,19 @@ const queryClient = new QueryClient({
 });
 
 /**
- * Mobile view: every page gets the fixed bottom nav; the page itself is
- * padded so fixed-height layouts (search, team build) and document-scrolling
- * pages alike end above it.
+ * Mobile view: every page gets the fixed bottom nav. The wrapper is the
+ * scroll container (not the document) so its bottom padding lands after the
+ * content of `min-h-full` pages, while `h-full` layouts (search, team
+ * build) resolve against the padded box and end above the nav.
  */
 function MobileShell({ children }: { children: ReactNode }) {
   const isMobile = useMobileWebview();
   if (!isMobile) return <>{children}</>;
   return (
     <>
-      <div className={`h-full ${MOBILE_NAV_BOTTOM_PADDING_CLASS}`}>{children}</div>
+      <div className={`h-full overflow-y-auto ${MOBILE_NAV_BOTTOM_PADDING_CLASS}`}>
+        {children}
+      </div>
       <MobileBottomNav />
     </>
   );

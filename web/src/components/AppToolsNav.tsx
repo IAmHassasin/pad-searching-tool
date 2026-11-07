@@ -1,8 +1,8 @@
 import { APP_TOOLS, currentAppPath, isAppToolActive } from "../lib/app-tools";
 
 type Props = {
-  /** `bar` — desktop pill ribbon; `compact` — denser pills for mobile; `inline` — ribbon without bar chrome (PageHeader) */
-  variant?: "bar" | "compact" | "inline";
+  /** `bar` — desktop pill ribbon; `inline` — ribbon without bar chrome (PageHeader). Mobile uses MobileBottomNav. */
+  variant?: "bar" | "inline";
   className?: string;
 };
 
@@ -40,9 +40,8 @@ function ToolIcon({
 export function AppToolsNav({ variant = "bar", className = "" }: Props) {
   const current = currentAppPath();
 
-  // All variants share the segmented pill ribbon; they differ in density and
-  // whether the ribbon owns its own bar chrome.
-  const compact = variant === "compact";
+  // Both variants share the segmented pill ribbon; they differ in whether
+  // the ribbon owns its own bar chrome.
   const inline = variant === "inline";
 
   const ribbon = (
@@ -55,17 +54,11 @@ export function AppToolsNav({ variant = "bar", className = "" }: Props) {
             href={tool.href}
             title={tool.description}
             aria-current={active ? "page" : undefined}
-            className={`ds-pill pressable shrink-0 font-semibold ${
-              compact
-                ? "min-h-9 px-3 text-[11px]"
-                : "min-h-9 px-3.5 text-xs"
-            } ${active ? "ds-pill-active" : ""}`}
+            className={`ds-pill pressable min-h-9 shrink-0 px-3.5 text-xs font-semibold ${
+              active ? "ds-pill-active" : ""
+            }`}
           >
-            <ToolIcon
-              imageUrl={tool.imageUrl}
-              icon={tool.icon}
-              size={compact ? 14 : 16}
-            />
+            <ToolIcon imageUrl={tool.imageUrl} icon={tool.icon} size={16} />
             <span>{tool.label}</span>
           </a>
         );
@@ -83,9 +76,7 @@ export function AppToolsNav({ variant = "bar", className = "" }: Props) {
 
   return (
     <nav
-      className={`shrink-0 border-b border-[var(--color-border)] bg-[var(--color-surface)] ${
-        compact ? "px-3 py-2" : "px-4 py-2"
-      } ${className}`}
+      className={`shrink-0 border-b border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-2 ${className}`}
       aria-label="Tools"
     >
       {ribbon}
