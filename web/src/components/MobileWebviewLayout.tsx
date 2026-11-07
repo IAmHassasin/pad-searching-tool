@@ -1,8 +1,14 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useState } from "react";
 import { useMonsterNameTranslation } from "../hooks/useLiveMonsterNames";
 import { useTruncatedTitle } from "../hooks/useTruncatedTitle";
 import type { AwkModifierSettings } from "../lib/awakening-stat-modifier";
-import type { ResultDisplaySections } from "../lib/result-display";
+import { hasAttributeSlotFilters } from "../lib/monster-attributes";
+import {
+  RESULT_DISPLAY_TABS,
+  displayTabFromSections,
+  sectionsForDisplayTab,
+  type ResultDisplaySections,
+} from "../lib/result-display";
 import type { ResultIdScope } from "../lib/result-id-scope";
 import { listedMonsterId } from "../lib/result-id-scope";
 import type { ResultQuickFilter } from "../lib/result-quick-filter";
@@ -18,6 +24,11 @@ import type {
 } from "../types";
 import { MonsterDetailPanel } from "./MonsterDetailPanel";
 import { ModernOnlySearchHint } from "./ModernOnlySearchHint";
+import {
+  MOBILE_FAB_BOTTOM_CLASS,
+  MobileSheet,
+  SheetIconButton,
+} from "./MobileSheet";
 import { ResultIdScopeSwitcher } from "./ResultIdScopeSwitcher";
 import { ResultsDisplayControls } from "./ResultsDisplayControls";
 import { ResultsList, type TeamDraftPanelProps } from "./ResultsList";
@@ -31,9 +42,12 @@ import {
 } from "./filters/effect-tuning";
 import {
   MonsterActiveFilterChips,
+  MonsterAttributeFilter,
   MonsterFilterClearButton,
-  MonsterMoreFiltersGroup,
-  hasActiveMonsterFilters,
+  MonsterIdSearchInput,
+  MonsterRarityFilter,
+  MonsterTypeFilter,
+  countMonsterChipFilters,
 } from "./filters/monster-filter-shared";
 import { MonsterAwakeningFilter } from "./filters/awakening-filter-shared";
 import {
@@ -42,11 +56,10 @@ import {
   SkillTextSearchSection,
 } from "./filters/skill-pattern-shared";
 
-type BottomPanelMode =
-  | "leader_skill"
-  | "active_skill"
-  | "awakening"
-  | "by_text";
+type SkillSheetMode = "leader_skill" | "active_skill" | "awakening" | "by_text";
+
+/** Quick-chip sections of the monster filter sheet; `all` = header button. */
+export type MobileMonsterSheetSection = "attribute" | "rarity" | "type" | "all";
 
 type Props = {
   monsterFilters: MonsterFilters;
@@ -77,79 +90,273 @@ type Props = {
   modernOnly?: boolean;
   minMonsterId?: number;
   teamDraft?: TeamDraftPanelProps;
+  /** Monster filter sheet (quick chips + header sliders button) — owned by App so the app bar can open it. */
+  monsterSheet: MobileMonsterSheetSection | null;
+  onMonsterSheetChange: (next: MobileMonsterSheetSection | null) => void;
 };
 
-const PANEL_TITLES: Record<BottomPanelMode, string> = {
+const SKILL_SHEET_TITLES: Record<SkillSheetMode, string> = {
   leader_skill: "Leader skill",
   active_skill: "Active skill",
   awakening: "Awakenings",
   by_text: "By text",
 };
 
-const DOCK_ITEMS: {
-  mode: BottomPanelMode;
-  label: string;
-  glyph: string;
-  title?: string;
-}[] = [
+const SKILL_SHEET_TABS: { mode: SkillSheetMode; label: string; glyph: string }[] = [
   { mode: "leader_skill", label: "Leader", glyph: "♛" },
   { mode: "active_skill", label: "Active", glyph: "⚡" },
-  { mode: "awakening", label: "Awk", glyph: "✦" },
+  { mode: "awakening", label: "Awakenings", glyph: "✦" },
   { mode: "by_text", label: "Text", glyph: "Aa" },
 ];
 
-function IconButton({
+function SlidersIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      className={className}
+      aria-hidden
+    >
+      <path d="M2 4.5h12M2 8h12M2 11.5h12" />
+      <circle cx="5" cy="4.5" r="1.4" fill="var(--color-surface)" />
+      <circle cx="10.5" cy="8" r="1.4" fill="var(--color-surface)" />
+      <circle cx="6.5" cy="11.5" r="1.4" fill="var(--color-surface)" />
+    </svg>
+  );
+}
+
+/**
+ * App-bar button (sliders icon + active badge) that opens the full monster
+ * filter sheet. Rendered by App inside the mobile header.
+ */
+export function MobileMonsterFilterButton({
+  filters,
+  open,
   onClick,
-  label,
-  children,
-  expanded,
 }: {
+  filters: MonsterFilters;
+  open: boolean;
   onClick: () => void;
-  label: string;
-  children: ReactNode;
-  expanded?: boolean;
 }) {
+  const count = countMonsterChipFilters(filters);
   return (
     <button
       type="button"
       onClick={onClick}
-      aria-label={label}
-      aria-expanded={expanded}
-      className="pressable flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/5 text-sm leading-none text-[var(--color-muted)] hover:bg-white/10 hover:text-[var(--color-fg-strong)]"
+      aria-haspopup="dialog"
+      aria-expanded={open}
+      aria-label={`Monster filters${count > 0 ? ` (${count} active)` : ""}`}
+      title="Monster filters"
+      className={`pressable relative flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border ${
+        count > 0 || open
+          ? "border-[var(--color-accent)]/60 bg-[var(--color-accent-muted)] text-[var(--color-accent-strong)] shadow-[var(--shadow-glow)]"
+          : "border-[var(--color-border)] bg-[var(--color-inset)] text-[var(--color-muted)] hover:border-[var(--color-border-strong)] hover:text-[var(--color-fg-strong)]"
+      }`}
     >
-      <span aria-hidden>{children}</span>
+      <SlidersIcon className="h-4 w-4" />
+      {count > 0 && (
+        <span className="absolute -top-1.5 -right-1.5 min-w-4 rounded-full bg-[var(--color-secondary)] px-1 font-mono text-[9px] font-bold leading-4 tabular-nums text-slate-950 shadow-[var(--shadow-glow-cyan)]">
+          {count}
+        </span>
+      )}
     </button>
   );
 }
 
-function MobileMonsterFilterBar({
+function quickChipSummary(
+  section: Exclude<MobileMonsterSheetSection, "all">,
+  filters: MonsterFilters
+): string | null {
+  switch (section) {
+    case "attribute": {
+      const n = filters.attributeSlots.reduce((sum, slot) => sum + slot.size, 0);
+      return n > 0 ? String(n) : null;
+    }
+    case "rarity":
+      return filters.rarity.size > 0 ? String(filters.rarity.size) : null;
+    case "type":
+      return filters.types.size > 0 ? String(filters.types.size) : null;
+  }
+}
+
+const QUICK_CHIPS: {
+  section: Exclude<MobileMonsterSheetSection, "all">;
+  label: string;
+  glyph: string;
+}[] = [
+  { section: "attribute", label: "Attribute", glyph: "◉" },
+  { section: "rarity", label: "Rarity", glyph: "★" },
+  { section: "type", label: "Type", glyph: "⬢" },
+];
+
+function MobileQuickChipRow({
   filters,
-  onChange,
+  onOpen,
 }: {
   filters: MonsterFilters;
-  onChange: (next: MonsterFilters) => void;
+  onOpen: (section: MobileMonsterSheetSection) => void;
 }) {
-  const active = hasActiveMonsterFilters(filters);
+  return (
+    <div
+      className="flex flex-nowrap items-center gap-1.5 overflow-x-auto px-3 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      role="group"
+      aria-label="Quick filters"
+    >
+      {QUICK_CHIPS.map((chip) => {
+        const summary = quickChipSummary(chip.section, filters);
+        const active = summary != null;
+        return (
+          <button
+            key={chip.section}
+            type="button"
+            onClick={() => onOpen(chip.section)}
+            aria-haspopup="dialog"
+            aria-pressed={active}
+            className={`ds-pill pressable min-h-8 shrink-0 px-3 text-[11px] font-semibold ${
+              active ? "ds-pill-active" : ""
+            }`}
+          >
+            <span aria-hidden className="text-xs leading-none">
+              {chip.glyph}
+            </span>
+            <span>{chip.label}</span>
+            {active && (
+              <span className="rounded-full bg-[var(--color-accent)]/20 px-1.5 font-mono text-[10px] tabular-nums">
+                {summary}
+              </span>
+            )}
+            <span aria-hidden className="text-[10px] opacity-70">
+              ▾
+            </span>
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+function MobileMonsterFilterSheet({
+  section,
+  filters,
+  onChange,
+  onClose,
+  matchCount,
+  loading,
+}: {
+  section: MobileMonsterSheetSection | null;
+  filters: MonsterFilters;
+  onChange: (next: MonsterFilters) => void;
+  onClose: () => void;
+  matchCount: number;
+  loading: boolean;
+}) {
+  const hasChips =
+    filters.rarity.size > 0 ||
+    hasAttributeSlotFilters(filters.attributeSlots) ||
+    filters.types.size > 0;
+  const openAll = section === "all";
 
   return (
-    <section className="shrink-0 border-b border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2">
-      {active && (
-        <MonsterActiveFilterChips filters={filters} onChange={onChange} />
-      )}
-      <MonsterMoreFiltersGroup
-        filters={filters}
-        onChange={onChange}
-        compact
-        title="Monster"
-        idleSummary=""
-        headerExtra={
-          active ? (
-            <MonsterFilterClearButton filters={filters} onChange={onChange} />
-          ) : null
-        }
-        contentClassName="max-h-[40vh] space-y-1.5 overflow-y-auto"
-      />
-    </section>
+    <MobileSheet
+      open={section != null}
+      onClose={onClose}
+      label="Monster filters"
+      title="Monster filters"
+      headerExtra={<MonsterFilterClearButton filters={filters} onChange={onChange} />}
+      footer={<SheetResultsFooter matchCount={matchCount} loading={loading} onClose={onClose} />}
+    >
+      {/* Re-mount per requested section so its accordion opens on tap. */}
+      <div key={section ?? "closed"} className="min-h-0 flex-1 space-y-2 overflow-y-auto px-3 py-2">
+        {hasChips && <MonsterActiveFilterChips filters={filters} onChange={onChange} />}
+        <MonsterAttributeFilter
+          filters={filters}
+          onChange={onChange}
+          compact
+          defaultOpen={openAll || section === "attribute"}
+        />
+        <MonsterRarityFilter
+          filters={filters}
+          onChange={onChange}
+          compact
+          defaultOpen={openAll || section === "rarity"}
+        />
+        <MonsterTypeFilter
+          filters={filters}
+          onChange={onChange}
+          compact
+          defaultOpen={openAll || section === "type"}
+        />
+      </div>
+    </MobileSheet>
+  );
+}
+
+function SheetResultsFooter({
+  matchCount,
+  loading,
+  onClose,
+}: {
+  matchCount: number;
+  loading: boolean;
+  onClose: () => void;
+}) {
+  return (
+    <>
+      <p className="min-w-0 flex-1 text-[11px] leading-tight text-[var(--color-muted)]">
+        Matching database
+        <span className="block font-mono text-xs font-semibold text-[var(--color-fg-strong)]">
+          {loading ? "Searching…" : `${matchCount.toLocaleString()} found`}
+        </span>
+      </p>
+      <button
+        type="button"
+        onClick={onClose}
+        className="ds-btn-primary pressable h-11 shrink-0 px-5 text-sm"
+      >
+        Show results
+      </button>
+    </>
+  );
+}
+
+function MobileDisplayTabs({
+  sections,
+  onChange,
+}: {
+  sections: ResultDisplaySections;
+  onChange: (next: ResultDisplaySections) => void;
+}) {
+  const activeTab = displayTabFromSections(sections);
+  return (
+    <div
+      role="tablist"
+      aria-label="Card content"
+      className="mx-3 grid grid-cols-4 gap-0.5 rounded-xl border border-[var(--color-border)] bg-[var(--color-inset)] p-0.5"
+    >
+      {RESULT_DISPLAY_TABS.map((tab) => {
+        const active = activeTab === tab.id;
+        return (
+          <button
+            key={tab.id}
+            type="button"
+            role="tab"
+            aria-selected={active}
+            onClick={() => onChange(sectionsForDisplayTab(tab.id, sections))}
+            className={`pressable min-h-8 rounded-lg text-[11px] font-semibold ${
+              active
+                ? "bg-[var(--color-accent-muted)] text-[var(--color-accent-strong)] shadow-[var(--shadow-glow)]"
+                : "text-[var(--color-muted)] hover:text-[var(--color-fg-strong)]"
+            }`}
+          >
+            {tab.label}
+          </button>
+        );
+      })}
+    </div>
   );
 }
 
@@ -175,9 +382,9 @@ function MobileDetailPanel({
   if (collapsed) {
     return (
       <aside className="flex w-10 shrink-0 flex-col items-center border-l border-[var(--color-border)] bg-[var(--color-inset)] py-2">
-        <IconButton onClick={onToggleCollapsed} label="Expand details" expanded={false}>
+        <SheetIconButton onClick={onToggleCollapsed} label="Expand details" expanded={false}>
           ‹
-        </IconButton>
+        </SheetIconButton>
         <span className="ds-label mt-2 [writing-mode:vertical-rl]">Detail</span>
       </aside>
     );
@@ -204,12 +411,12 @@ function MobileDetailPanel({
         >
           {displayName}
         </p>
-        <IconButton onClick={onToggleCollapsed} label="Collapse details" expanded>
+        <SheetIconButton onClick={onToggleCollapsed} label="Collapse details" expanded>
           ›
-        </IconButton>
-        <IconButton onClick={onClose} label="Close details">
+        </SheetIconButton>
+        <SheetIconButton onClick={onClose} label="Close details">
           ✕
-        </IconButton>
+        </SheetIconButton>
       </div>
       <div className="relative min-h-0 flex-1 overflow-auto py-1 pl-1 pr-2">
         <MonsterDetailPanel
@@ -223,7 +430,11 @@ function MobileDetailPanel({
   );
 }
 
-function MobileFilterDock({
+/**
+ * Floating "Filters (n active)" button + the Leader / Active / Awakenings /
+ * Text sheet (same content the former 4-button dock opened).
+ */
+function MobileSkillFilterFab({
   monsterFilters,
   onMonsterFiltersChange,
   skillFilters,
@@ -235,6 +446,7 @@ function MobileFilterDock({
   effectFamilies,
   matchCount,
   loading,
+  hidden,
 }: {
   monsterFilters: MonsterFilters;
   onMonsterFiltersChange: (next: MonsterFilters) => void;
@@ -247,33 +459,16 @@ function MobileFilterDock({
   effectFamilies: EffectFamilyDef[] | undefined;
   matchCount: number;
   loading: boolean;
+  /** Another sheet is open — keep the FAB out of the way. */
+  hidden: boolean;
 }) {
-  const [openMode, setOpenMode] = useState<BottomPanelMode | null>(null);
-  const sheetRef = useRef<HTMLDivElement>(null);
-
-  // Move focus into the sheet when it opens or switches mode so screen
-  // readers announce it; Escape closes it.
-  useEffect(() => {
-    if (openMode) sheetRef.current?.focus({ preventScroll: true });
-  }, [openMode]);
-
-  const toggleMode = (mode: BottomPanelMode) => {
-    setOpenMode((current) => (current === mode ? null : mode));
-  };
-  const closeSheet = () => setOpenMode(null);
-
-  useEffect(() => {
-    if (!openMode) return;
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpenMode(null);
-    };
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [openMode]);
+  const [open, setOpen] = useState(false);
+  const [mode, setMode] = useState<SkillSheetMode>("leader_skill");
+  const closeSheet = () => setOpen(false);
 
   const hasCd =
     skillFilters.activeCdMin != null || skillFilters.activeCdMax != null;
-  const counts: Record<BottomPanelMode, number> = {
+  const counts: Record<SkillSheetMode, number> = {
     leader_skill:
       skillFilters.selectedPatterns.filter(
         (p) => p.skillType === "leader_skill"
@@ -296,18 +491,20 @@ function MobileFilterDock({
       skillFilters.leaderSkillText.trim(),
     ].filter(Boolean).length,
   };
+  const totalActive =
+    counts.leader_skill + counts.active_skill + counts.awakening + counts.by_text;
 
-  const resetMode = (mode: BottomPanelMode) => {
-    switch (mode) {
+  const resetMode = (target: SkillSheetMode) => {
+    switch (target) {
       case "leader_skill":
       case "active_skill":
         // Dropping the chips also prunes their value / turn ranges (App).
         onSkillFiltersChange({
           ...skillFilters,
           selectedPatterns: skillFilters.selectedPatterns.filter(
-            (p) => p.skillType !== mode
+            (p) => p.skillType !== target
           ),
-          ...(mode === "active_skill"
+          ...(target === "active_skill"
             ? { activeCdMin: null, activeCdMax: null }
             : {}),
         });
@@ -333,209 +530,185 @@ function MobileFilterDock({
 
   return (
     <>
-      {openMode && (
-        // Pointer-only dismiss target; keyboard users have Escape and the ✕ button.
-        <div
-          aria-hidden
-          className="animate-fade-in fixed inset-0 z-[45] bg-black/45"
-          onClick={closeSheet}
-        />
-      )}
-
-      {/* Only lift the dock above page modals (z-50) while its own sheet is open. */}
-      <section
-        className={`relative shrink-0 px-3 pt-1.5 pb-[calc(env(safe-area-inset-bottom)+0.5rem)] ${
-          openMode ? "z-50" : "z-30"
-        }`}
-      >
-        {openMode && (
-          // Non-modal sheet: the dock stays interactive to switch modes.
-          // Height is capped by the space left above the dock (app bar +
-          // tools ribbon + dock ≈ 12rem) so the sheet header never clips.
+      <MobileSheet
+        open={open}
+        onClose={closeSheet}
+        label={`${SKILL_SHEET_TITLES[mode]} filters`}
+        title={
+          <span className="flex items-center gap-2">
+            {SKILL_SHEET_TITLES[mode]}
+            <span className="inline-flex items-center gap-1 rounded-full border border-[var(--color-secondary)]/40 bg-[var(--color-secondary-muted)] px-1.5 py-0.5 font-mono text-[9px] font-bold uppercase tracking-wider text-[var(--color-secondary-strong)]">
+              <span
+                aria-hidden
+                className="h-1.5 w-1.5 animate-pulse rounded-full bg-[var(--color-secondary)]"
+              />
+              Live
+            </span>
+          </span>
+        }
+        headerExtra={
+          counts[mode] > 0 ? (
+            <button
+              type="button"
+              onClick={() => resetMode(mode)}
+              className="pressable inline-flex h-8 items-center gap-1 rounded-lg px-2 text-xs font-semibold text-[var(--color-negative)] hover:bg-[var(--color-negative)]/10"
+            >
+              <span aria-hidden>↺</span>
+              Reset
+            </button>
+          ) : null
+        }
+        subheader={
           <div
-            ref={sheetRef}
-            role="dialog"
-            tabIndex={-1}
-            aria-label={`${PANEL_TITLES[openMode]} filters`}
-            className="animate-sheet-in absolute inset-x-0 bottom-full flex max-h-[min(70dvh,36rem,calc(100dvh-12rem))] min-h-[min(40dvh,calc(100dvh-12rem))] flex-col rounded-t-3xl border-t border-white/10 bg-[var(--color-surface)] shadow-[0_-12px_32px_-8px_rgba(0,0,0,0.7)] outline-none"
+            role="tablist"
+            aria-label="Filter groups"
+            className="grid grid-cols-4 gap-1"
           >
-            <div className="flex shrink-0 justify-center pt-2 pb-1" aria-hidden>
-              <span className="h-1.5 w-12 rounded-full bg-slate-600" />
-            </div>
-            <div className="flex shrink-0 items-center gap-2 px-4 pb-2">
-              <h2 className="text-base font-bold text-[var(--color-fg-strong)]">
-                {PANEL_TITLES[openMode]}
-              </h2>
-              <span className="inline-flex items-center gap-1 rounded-full border border-[var(--color-secondary)]/40 bg-[var(--color-secondary-muted)] px-1.5 py-0.5 font-mono text-[9px] font-bold uppercase tracking-wider text-[var(--color-secondary-strong)]">
-                <span
-                  aria-hidden
-                  className="h-1.5 w-1.5 animate-pulse rounded-full bg-[var(--color-secondary)]"
-                />
-                Live
-              </span>
-              <span className="flex-1" />
-              {counts[openMode] > 0 && (
+            {SKILL_SHEET_TABS.map((tab) => {
+              const active = mode === tab.mode;
+              const count = counts[tab.mode];
+              return (
                 <button
+                  key={tab.mode}
                   type="button"
-                  onClick={() => resetMode(openMode)}
-                  className="pressable inline-flex h-8 items-center gap-1 rounded-lg px-2 text-xs font-semibold text-[var(--color-negative)] hover:bg-[var(--color-negative)]/10"
+                  role="tab"
+                  aria-selected={active}
+                  onClick={() => setMode(tab.mode)}
+                  className={`ds-pill pressable relative min-h-9 justify-center px-1 text-[11px] font-semibold ${
+                    active ? "ds-pill-active" : ""
+                  }`}
                 >
-                  <span aria-hidden>↺</span>
-                  Reset
-                </button>
-              )}
-              <IconButton onClick={closeSheet} label="Close filter sheet">
-                ✕
-              </IconButton>
-            </div>
-
-            <div className="flex min-h-0 flex-1 flex-col border-t border-[var(--color-border)]">
-              {openMode === "awakening" ? (
-                <div className="min-h-0 flex-1 overflow-y-auto px-3 py-2">
-                  <MonsterAwakeningFilter
-                    filters={monsterFilters}
-                    onChange={onMonsterFiltersChange}
-                    compact
-                  />
-                </div>
-              ) : openMode === "by_text" ? (
-                <div className="min-h-0 flex-1 overflow-y-auto px-3 py-2">
-                  <SkillTextSearchSection
-                    filters={skillFilters}
-                    onChange={onSkillFiltersChange}
-                    compact
-                    embedded
-                  />
-                </div>
-              ) : (
-                <>
-                  {patternGroupsLoading && (
-                    <p className="shrink-0 px-3 pt-2 text-xs text-[var(--color-muted)]">
-                      Loading groups…
-                    </p>
+                  <span aria-hidden className="font-mono text-xs leading-none">
+                    {tab.glyph}
+                  </span>
+                  <span className="truncate">{tab.label}</span>
+                  {count > 0 && (
+                    <span className="absolute -top-1.5 right-1 min-w-4 rounded-full bg-[var(--color-secondary)] px-1 font-mono text-[9px] font-bold leading-4 tabular-nums text-slate-950 shadow-[var(--shadow-glow-cyan)]">
+                      {count}
+                    </span>
                   )}
-                  <div className="shrink-0 px-3 pt-2">
-                    <SkillPatternSelectionBar
+                </button>
+              );
+            })}
+          </div>
+        }
+        footer={<SheetResultsFooter matchCount={matchCount} loading={loading} onClose={closeSheet} />}
+      >
+        {mode === "awakening" ? (
+          <div className="min-h-0 flex-1 overflow-y-auto px-3 py-2">
+            <MonsterAwakeningFilter
+              filters={monsterFilters}
+              onChange={onMonsterFiltersChange}
+              compact
+            />
+          </div>
+        ) : mode === "by_text" ? (
+          <div className="min-h-0 flex-1 overflow-y-auto px-3 py-2">
+            <SkillTextSearchSection
+              filters={skillFilters}
+              onChange={onSkillFiltersChange}
+              compact
+              embedded
+            />
+          </div>
+        ) : (
+          <>
+            {patternGroupsLoading && (
+              <p className="shrink-0 px-3 pt-2 text-xs text-[var(--color-muted)]">
+                Loading groups…
+              </p>
+            )}
+            <div className="shrink-0 px-3 pt-2">
+              <SkillPatternSelectionBar
+                filters={skillFilters}
+                onChange={onSkillFiltersChange}
+                compact
+              />
+              <UnscopedEffectRangeChips
+                effectFilters={advancedEffectFilters}
+                onEffectFiltersChange={onAdvancedEffectFiltersChange}
+                families={effectFamilies}
+                selectedPatterns={skillFilters.selectedPatterns}
+              />
+            </div>
+            <div className="min-h-0 flex-1 overflow-y-auto px-3 pb-2">
+              {patternGroups && mode === "leader_skill" && (
+                <SkillPatternGroup
+                  title="Leader skill"
+                  skillType="leader_skill"
+                  categories={patternGroups.leader_skill_filters}
+                  filters={skillFilters}
+                  onChange={onSkillFiltersChange}
+                  compact
+                  afterTags={
+                    <SelectedEffectTuning
+                      skillType="leader_skill"
+                      skillFilters={skillFilters}
+                      effectFilters={advancedEffectFilters}
+                      onEffectFiltersChange={onAdvancedEffectFiltersChange}
+                      families={effectFamilies}
+                      compact
+                    />
+                  }
+                />
+              )}
+              {patternGroups && mode === "active_skill" && (
+                <SkillPatternGroup
+                  title="Active skill"
+                  skillType="active_skill"
+                  categories={patternGroups.active_skill_filters}
+                  filters={skillFilters}
+                  onChange={onSkillFiltersChange}
+                  compact
+                  iconOnly={!skillFilters.activeSkillAdvancedFilters}
+                  defaultOpen
+                  beforeTags={
+                    <ActiveSkillCooldownField
                       filters={skillFilters}
                       onChange={onSkillFiltersChange}
                       compact
                     />
-                    <UnscopedEffectRangeChips
+                  }
+                  afterTags={
+                    <SelectedEffectTuning
+                      skillType="active_skill"
+                      skillFilters={skillFilters}
                       effectFilters={advancedEffectFilters}
                       onEffectFiltersChange={onAdvancedEffectFiltersChange}
                       families={effectFamilies}
-                      selectedPatterns={skillFilters.selectedPatterns}
+                      compact
                     />
-                  </div>
-                  <div className="min-h-0 flex-1 overflow-y-auto px-3 pb-2">
-                    {patternGroups && openMode === "leader_skill" && (
-                      <SkillPatternGroup
-                        title="Leader skill"
-                        skillType="leader_skill"
-                        categories={patternGroups.leader_skill_filters}
-                        filters={skillFilters}
-                        onChange={onSkillFiltersChange}
-                        compact
-                        afterTags={
-                          <SelectedEffectTuning
-                            skillType="leader_skill"
-                            skillFilters={skillFilters}
-                            effectFilters={advancedEffectFilters}
-                            onEffectFiltersChange={onAdvancedEffectFiltersChange}
-                            families={effectFamilies}
-                            compact
-                          />
-                        }
-                      />
-                    )}
-                    {patternGroups && openMode === "active_skill" && (
-                      <SkillPatternGroup
-                        title="Active skill"
-                        skillType="active_skill"
-                        categories={patternGroups.active_skill_filters}
-                        filters={skillFilters}
-                        onChange={onSkillFiltersChange}
-                        compact
-                        iconOnly={!skillFilters.activeSkillAdvancedFilters}
-                        defaultOpen
-                        beforeTags={
-                          <ActiveSkillCooldownField
-                            filters={skillFilters}
-                            onChange={onSkillFiltersChange}
-                            compact
-                          />
-                        }
-                        afterTags={
-                          <SelectedEffectTuning
-                            skillType="active_skill"
-                            skillFilters={skillFilters}
-                            effectFilters={advancedEffectFilters}
-                            onEffectFiltersChange={onAdvancedEffectFiltersChange}
-                            families={effectFamilies}
-                            compact
-                          />
-                        }
-                      />
-                    )}
-                  </div>
-                </>
+                  }
+                />
               )}
             </div>
-
-            <div className="flex shrink-0 items-center gap-3 border-t border-white/10 bg-[var(--color-inset)]/80 px-4 py-2.5">
-              <p className="min-w-0 flex-1 text-[11px] leading-tight text-[var(--color-muted)]">
-                Matching database
-                <span className="block font-mono text-xs font-semibold text-[var(--color-fg-strong)]">
-                  {loading ? "Searching…" : `${matchCount.toLocaleString()} found`}
-                </span>
-              </p>
-              <button
-                type="button"
-                onClick={closeSheet}
-                className="ds-btn-primary pressable h-11 shrink-0 px-5 text-sm"
-              >
-                Show results
-              </button>
-            </div>
-          </div>
+          </>
         )}
+      </MobileSheet>
 
-        <nav
-          aria-label="Filters"
-          className="glass-bar grid h-14 grid-cols-4 gap-0.5 rounded-full border border-white/10 p-1 shadow-[var(--shadow-float)]"
-        >
-          {DOCK_ITEMS.map((item) => {
-            const active = openMode === item.mode;
-            const count = counts[item.mode];
-            return (
-              <button
-                key={item.mode}
-                type="button"
-                onClick={() => toggleMode(item.mode)}
-                aria-expanded={active}
-                title={item.title}
-                className={`pressable relative flex min-w-0 flex-col items-center justify-center gap-0.5 rounded-full text-[11px] font-semibold leading-none ${
-                  active
-                    ? "bg-[var(--color-accent-muted)] text-[var(--color-accent-strong)] shadow-[var(--shadow-glow)]"
-                    : count > 0
-                      ? "text-[var(--color-fg-strong)] hover:bg-white/5"
-                      : "text-[var(--color-muted)] hover:bg-white/5"
-                }`}
-              >
-                <span aria-hidden className="font-mono text-sm leading-none">
-                  {item.glyph}
-                </span>
-                <span>{item.label}</span>
-                {count > 0 && (
-                  <span className="absolute top-0.5 right-[18%] min-w-4 rounded-full bg-[var(--color-secondary)] px-1 font-mono text-[9px] font-bold leading-4 tabular-nums text-slate-950 shadow-[var(--shadow-glow-cyan)]">
-                    {count}
-                  </span>
-                )}
-              </button>
-            );
-          })}
-        </nav>
-      </section>
+      {!open && !hidden && (
+        <div className={`pointer-events-none fixed right-3 z-30 ${MOBILE_FAB_BOTTOM_CLASS}`}>
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            aria-haspopup="dialog"
+            aria-expanded={open}
+            className={`glass-bar pressable pointer-events-auto inline-flex min-h-11 items-center gap-2 rounded-full border px-4 text-sm font-semibold shadow-[var(--shadow-float)] ${
+              totalActive > 0
+                ? "border-[var(--color-accent)]/60 text-[var(--color-accent-strong)]"
+                : "border-white/10 text-[var(--color-fg-strong)]"
+            }`}
+          >
+            <SlidersIcon className="h-4 w-4" />
+            <span>
+              Filters
+              {totalActive > 0 && (
+                <span className="font-mono tabular-nums"> ({totalActive} active)</span>
+              )}
+            </span>
+          </button>
+        </div>
+      )}
     </>
   );
 }
@@ -569,6 +742,8 @@ export function MobileWebviewLayout({
   modernOnly,
   minMonsterId,
   teamDraft,
+  monsterSheet,
+  onMonsterSheetChange,
 }: Props) {
   const [detailCollapsed, setDetailCollapsed] = useState(false);
   const showDetail = selected != null;
@@ -580,51 +755,66 @@ export function MobileWebviewLayout({
 
   return (
     <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
-      <MobileMonsterFilterBar
-        filters={monsterFilters}
-        onChange={onMonsterFiltersChange}
-      />
+      <section className="shrink-0 border-b border-[var(--color-border)] bg-[var(--color-surface)]">
+        <div className="px-3 pt-2 pb-2">
+          <MonsterIdSearchInput
+            filters={monsterFilters}
+            onChange={onMonsterFiltersChange}
+          />
+        </div>
+        <MobileQuickChipRow filters={monsterFilters} onOpen={onMonsterSheetChange} />
+      </section>
 
       <main className="flex min-h-0 flex-1 flex-col overflow-hidden">
-        <header className="flex shrink-0 flex-nowrap items-center justify-between gap-1.5 overflow-x-auto border-b border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-1.5">
-          <div className="flex shrink-0 items-center gap-1.5">
-            <h2 className="ds-label text-[var(--color-fg)]">Results</h2>
-            <ResultsQuickFilter
-              value={resultQuickFilter}
-              onChange={onResultQuickFilterChange}
-              compact
-            />
-            <ResultIdScopeSwitcher
-              value={resultIdScope}
-              onChange={onResultIdScopeChange}
-              compact
-            />
-          </div>
-          <div className="flex shrink-0 items-center gap-1.5">
-            <ResultsDisplayControls
-              sections={displaySections}
-              onSectionsChange={onDisplaySectionsChange}
-              compact
-            />
-            <ResultsSortControls
-              sort={resultSort}
-              onSortChange={onResultSortChange}
-              awkSettings={awkModifierSettings}
-              onAwkSettingsChange={onAwkModifierSettingsChange}
-              compact
-            />
-            <p className="font-mono text-[10px] tabular-nums text-[var(--color-muted)]">
+        <header className="shrink-0 space-y-1.5 border-b border-[var(--color-border)] bg-[var(--color-surface)] pt-2 pb-1.5">
+          <MobileDisplayTabs
+            sections={displaySections}
+            onChange={onDisplaySectionsChange}
+          />
+          <div className="flex flex-nowrap items-center justify-between gap-2 overflow-x-auto px-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <p
+              className="shrink-0 font-mono text-[10px] tabular-nums text-[var(--color-muted)]"
+              aria-live="polite"
+            >
               {loading ? (
                 `Loading… ${loadProgress ?? 0}`
               ) : (
                 <>
-                  <span className="text-[var(--color-accent-strong)]">
-                    {rows.length}
+                  <span aria-hidden className="text-[var(--color-positive)]">
+                    ●{" "}
                   </span>
-                  {` / ${totalLoaded}`}
+                  <span className="text-[var(--color-accent-strong)]">
+                    {rows.length.toLocaleString()}
+                  </span>
+                  {` monster${rows.length === 1 ? "" : "s"} matched`}
+                  {rows.length !== totalLoaded && ` · ${totalLoaded.toLocaleString()} loaded`}
                 </>
               )}
             </p>
+            <div className="flex shrink-0 items-center gap-1.5">
+              <ResultsQuickFilter
+                value={resultQuickFilter}
+                onChange={onResultQuickFilterChange}
+                compact
+              />
+              <ResultIdScopeSwitcher
+                value={resultIdScope}
+                onChange={onResultIdScopeChange}
+                compact
+              />
+              <ResultsDisplayControls
+                sections={displaySections}
+                onSectionsChange={onDisplaySectionsChange}
+                compact
+              />
+              <ResultsSortControls
+                sort={resultSort}
+                onSortChange={onResultSortChange}
+                awkSettings={awkModifierSettings}
+                onAwkSettingsChange={onAwkModifierSettingsChange}
+                compact
+              />
+            </div>
           </div>
         </header>
 
@@ -668,7 +858,16 @@ export function MobileWebviewLayout({
         </div>
       </main>
 
-      <MobileFilterDock
+      <MobileMonsterFilterSheet
+        section={monsterSheet}
+        filters={monsterFilters}
+        onChange={onMonsterFiltersChange}
+        onClose={() => onMonsterSheetChange(null)}
+        matchCount={rows.length}
+        loading={loading}
+      />
+
+      <MobileSkillFilterFab
         monsterFilters={monsterFilters}
         onMonsterFiltersChange={onMonsterFiltersChange}
         skillFilters={skillFilters}
@@ -680,6 +879,7 @@ export function MobileWebviewLayout({
         effectFamilies={effectFamilies}
         matchCount={rows.length}
         loading={loading}
+        hidden={monsterSheet != null}
       />
     </div>
   );

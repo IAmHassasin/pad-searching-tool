@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { pstLogoUrl } from "../lib/pst-brand";
+import { useMobileWebview } from "../hooks/useMobileWebview";
 import { AppToolsNav } from "./AppToolsNav";
 
 type Props = {
@@ -31,6 +32,9 @@ export function PageHeader({
   maxWidthClass = "max-w-6xl",
   hideToolsNav = false,
 }: Props) {
+  // Mobile view navigates through MobileBottomNav instead of the ribbon.
+  const isMobile = useMobileWebview();
+  const showToolsNav = !hideToolsNav && !isMobile;
   return (
     <>
       <div className="glass-bar sticky top-0 z-40 shrink-0 border-b border-white/[0.08]">
@@ -62,10 +66,10 @@ export function PageHeader({
         </div>
       </div>
 
-      {(!hideToolsNav || back || children) && (
+      {(showToolsNav || back || children) && (
         <header className="shrink-0 border-b border-[var(--color-border)] bg-[var(--color-surface)]">
           <div className={`mx-auto space-y-2.5 px-3 py-2.5 sm:px-4 ${maxWidthClass}`}>
-            {!hideToolsNav && <AppToolsNav variant="inline" />}
+            {showToolsNav && <AppToolsNav variant="inline" />}
             {back && (
               <a
                 href={back.href}

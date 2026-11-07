@@ -10,7 +10,11 @@ import {
 import { AdminLaunch } from "./components/AdminLaunch";
 import { AppBrand } from "./components/AppBrand";
 import { AppToolsNav } from "./components/AppToolsNav";
-import { MobileWebviewLayout } from "./components/MobileWebviewLayout";
+import {
+  MobileMonsterFilterButton,
+  MobileWebviewLayout,
+  type MobileMonsterSheetSection,
+} from "./components/MobileWebviewLayout";
 import { MonsterFilterPanel } from "./components/MonsterFilterPanel";
 import { ResultsPanel } from "./components/ResultsPanel";
 import { SkillFilterPanel } from "./components/SkillFilterPanel";
@@ -96,6 +100,8 @@ export default function App() {
     useState<ResultQuickFilter>(null);
   const [resultIdScope, setResultIdScope] = useState<ResultIdScope>("all");
   const [shareMsg, setShareMsg] = useState<string | null>(null);
+  const [mobileMonsterSheet, setMobileMonsterSheet] =
+    useState<MobileMonsterSheetSection | null>(null);
   const isMobileWebview = useMobileWebview();
   const teamDraft = useTeamDraft();
 
@@ -161,12 +167,6 @@ export default function App() {
       ),
       attributeMatch: debouncedMonster.attributeMatch,
       types: [...debouncedMonster.types].sort(),
-      hpMin: debouncedMonster.hpMin,
-      hpMax: debouncedMonster.hpMax,
-      atkMin: debouncedMonster.atkMin,
-      atkMax: debouncedMonster.atkMax,
-      rcvMin: debouncedMonster.rcvMin,
-      rcvMax: debouncedMonster.rcvMax,
       idQuery: debouncedMonster.idQuery,
       awakeningIds: debouncedMonster.awakeningIds,
       excludedAwakeningIds: debouncedMonster.excludedAwakeningIds,
@@ -330,11 +330,20 @@ export default function App() {
           >
             {isMobileWebview ? "Share" : "Share filter"}
           </button>
-          <AdminLaunch variant="chip" compact={isMobileWebview} />
+          {isMobileWebview ? (
+            <MobileMonsterFilterButton
+              filters={monsterFilters}
+              open={mobileMonsterSheet != null}
+              onClick={() => setMobileMonsterSheet("all")}
+            />
+          ) : (
+            <AdminLaunch variant="chip" />
+          )}
         </div>
       </header>
 
-      <AppToolsNav variant={isMobileWebview ? "compact" : "bar"} />
+      {/* Mobile navigates through MobileBottomNav (main.tsx). */}
+      {!isMobileWebview && <AppToolsNav variant="bar" />}
 
       {apiError && (
         <p className="shrink-0 border-b border-[var(--color-negative)]/30 bg-[var(--color-negative)]/10 px-4 py-2 text-sm text-red-200">
@@ -377,6 +386,8 @@ export default function App() {
           modernOnly={snapshot?.modernOnly}
           minMonsterId={snapshot?.minMonsterId}
           teamDraft={teamDraftProps}
+          monsterSheet={mobileMonsterSheet}
+          onMonsterSheetChange={setMobileMonsterSheet}
         />
       ) : (
         // Plain flex row, not a grid: below `xl` (1280px) isMobileWebview is

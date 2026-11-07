@@ -171,12 +171,6 @@ function monsterParams(q: URLSearchParams, f: MonsterFilters) {
     q.set("attributeMatch", f.attributeMatch);
   }
   setCsv(q, "types", [...f.types]);
-  if (f.hpMin != null) q.set("hpMin", String(f.hpMin));
-  if (f.hpMax != null) q.set("hpMax", String(f.hpMax));
-  if (f.atkMin != null) q.set("atkMin", String(f.atkMin));
-  if (f.atkMax != null) q.set("atkMax", String(f.atkMax));
-  if (f.rcvMin != null) q.set("rcvMin", String(f.rcvMin));
-  if (f.rcvMax != null) q.set("rcvMax", String(f.rcvMax));
   if (f.idQuery.trim()) q.set("idQuery", f.idQuery.trim());
   setCsv(q, "awakeningIds", f.awakeningIds);
   if (f.awakeningIds.length > 0) q.set("awakeningMatch", "all");

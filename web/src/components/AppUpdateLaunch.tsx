@@ -46,10 +46,12 @@ export function AppUpdateLaunch() {
   if (!update.enabled) return null;
 
   const onSearch = window.location.pathname.replace(/\/+$/, "") === "";
-  const bottom =
-    isMobile && onSearch
-      ? "calc(env(safe-area-inset-bottom) + 5.25rem)"
-      : "calc(env(safe-area-inset-bottom) + 1.25rem)";
+  // Mobile: sit above the bottom nav; on search also above the Filters FAB.
+  const bottom = isMobile
+    ? onSearch
+      ? "calc(env(safe-area-inset-bottom) + 7.5rem)"
+      : "calc(env(safe-area-inset-bottom) + 4.5rem)"
+    : "calc(env(safe-area-inset-bottom) + 1.25rem)";
   const { text, tone } = chipLabel(update);
   const toneClass =
     tone === "accent"

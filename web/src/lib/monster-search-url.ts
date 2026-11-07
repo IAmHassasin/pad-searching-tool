@@ -132,12 +132,8 @@ export function parseMonsterFiltersFromSearch(
     attributeSlots,
     attributeMatch,
     types: new Set(parseTypesFromSearch(search) ?? []),
-    hpMin: parseOptionalNumberParam(search, "hpMin"),
-    hpMax: parseOptionalNumberParam(search, "hpMax"),
-    atkMin: parseOptionalNumberParam(search, "atkMin"),
-    atkMax: parseOptionalNumberParam(search, "atkMax"),
-    rcvMin: parseOptionalNumberParam(search, "rcvMin"),
-    rcvMax: parseOptionalNumberParam(search, "rcvMax"),
+    // Legacy hpMin/hpMax/atkMin/atkMax/rcvMin/rcvMax params on old share
+    // links are intentionally ignored (stats range filter removed).
     idQuery: parseStringParam(search, "idQuery"),
     awakeningIds: parseAwakeningIdsFromSearch(search) ?? [],
     excludedAwakeningIds: parseExcludedAwakeningIdsFromSearch(search) ?? [],
@@ -228,12 +224,6 @@ export function buildSearchParamsFromFilters(
     q.set("attributeMatch", monsterFilters.attributeMatch);
   }
   setCsv(q, "types", [...monsterFilters.types]);
-  if (monsterFilters.hpMin != null) q.set("hpMin", String(monsterFilters.hpMin));
-  if (monsterFilters.hpMax != null) q.set("hpMax", String(monsterFilters.hpMax));
-  if (monsterFilters.atkMin != null) q.set("atkMin", String(monsterFilters.atkMin));
-  if (monsterFilters.atkMax != null) q.set("atkMax", String(monsterFilters.atkMax));
-  if (monsterFilters.rcvMin != null) q.set("rcvMin", String(monsterFilters.rcvMin));
-  if (monsterFilters.rcvMax != null) q.set("rcvMax", String(monsterFilters.rcvMax));
   if (monsterFilters.idQuery.trim()) q.set("idQuery", monsterFilters.idQuery.trim());
   setCsv(q, "awakeningIds", monsterFilters.awakeningIds);
   if (monsterFilters.awakeningIds.length > 0) q.set("awakeningMatch", "all");

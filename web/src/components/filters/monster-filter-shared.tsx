@@ -10,7 +10,10 @@ import { PAD_AWAKENING } from "../../lib/pad-constants";
 import { MonsterAttributeSpriteIcon } from "../MonsterAttributeSpriteIcon";
 import { MonsterTypeSpriteIcon } from "../MonsterTypeSpriteIcon";
 import { CollapsibleFilterSection } from "./collapsible-filter-section";
-import { hasActiveMonsterFilters } from "../../lib/filters";
+import {
+  countMonsterChipFilters,
+  hasActiveMonsterFilters,
+} from "../../lib/filters";
 
 export { MONSTER_TYPES };
 
@@ -44,7 +47,7 @@ export function toggleSet(set: Set<number>, n: number): Set<number> {
   return next;
 }
 
-export { hasActiveMonsterFilters };
+export { countMonsterChipFilters, hasActiveMonsterFilters };
 
 export function FilterChip({
   label,
@@ -183,31 +186,6 @@ function TypeFilterIconChip({
     >
       <MonsterTypeSpriteIcon typeId={typeId} size={size} title={label} />
     </button>
-  );
-}
-
-/** Labeled numeric input — the shared min/max convention (HP/ATK/RCV today,
- * advanced effect-value ranges reuse it too). Exported for that reuse. */
-export function numInput(
-  label: string,
-  value: number | null,
-  onChange: (v: number | null) => void,
-  disabled = false
-) {
-  return (
-    <label className="ds-label flex flex-col gap-1">
-      {label}
-      <input
-        type="number"
-        disabled={disabled}
-        className="ds-input px-2 py-1 font-mono text-sm font-medium normal-case tabular-nums tracking-normal transition-colors disabled:cursor-not-allowed disabled:opacity-40"
-        value={value ?? ""}
-        onChange={(e) => {
-          const v = e.target.value;
-          onChange(v === "" ? null : Number(v));
-        }}
-      />
-    </label>
   );
 }
 
@@ -474,58 +452,65 @@ export function MonsterTypeFilter({
   );
 }
 
-export function MonsterStatsFilter({
+/**
+ * Always-visible ID / NA# / name search (the default way in). Same
+ * `idQuery` field as MonsterIdFilter — this is just the prominent shell.
+ */
+export function MonsterIdSearchInput({
   filters,
   onChange,
   compact = false,
-  defaultOpen = false,
+  className = "",
 }: {
   filters: MonsterFilters;
   onChange: (next: MonsterFilters) => void;
   compact?: boolean;
-  defaultOpen?: boolean;
+  className?: string;
 }) {
-  const activeCount = [
-    filters.hpMin,
-    filters.hpMax,
-    filters.atkMin,
-    filters.atkMax,
-    filters.rcvMin,
-    filters.rcvMax,
-  ].filter((v) => v != null).length;
-
+  const hasQuery = filters.idQuery.length > 0;
   return (
-    <CollapsibleFilterSection
-      title="Stats range"
-      summary={
-        activeCount > 0
-          ? `${activeCount} bound${activeCount === 1 ? "" : "s"}`
-          : "HP / ATK / RCV"
-      }
-      compact={compact}
-      defaultOpen={defaultOpen}
-    >
-      <div className="grid grid-cols-2 gap-2">
-        {numInput("HP min", filters.hpMin, (hpMin) =>
-          onChange({ ...filters, hpMin })
-        )}
-        {numInput("HP max", filters.hpMax, (hpMax) =>
-          onChange({ ...filters, hpMax })
-        )}
-        {numInput("ATK min", filters.atkMin, (atkMin) =>
-          onChange({ ...filters, atkMin })
-        )}
-        {numInput("ATK max", filters.atkMax, (atkMax) =>
-          onChange({ ...filters, atkMax })
-        )}
-        {numInput("RCV min", filters.rcvMin, (rcvMin) =>
-          onChange({ ...filters, rcvMin })
-        )}
-        {numInput("RCV max", filters.rcvMax, (rcvMax) =>
-          onChange({ ...filters, rcvMax })
-        )}
-      </div>
-    </CollapsibleFilterSection>
+    <div className={`relative ${className}`}>
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-y-0 left-2.5 flex items-center text-[var(--color-faint)]"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 16 16"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          className={compact ? "h-3.5 w-3.5" : "h-4 w-4"}
+        >
+          <circle cx="7" cy="7" r="4.5" />
+          <path d="m10.5 10.5 3 3" />
+        </svg>
+      </span>
+      <input
+        type="search"
+        inputMode="search"
+        enterKeyHint="search"
+        aria-label="Search by ID, NA# or name"
+        placeholder="ID, NA# or name…"
+        className={`ds-input w-full font-mono transition-colors [&::-webkit-search-cancel-button]:appearance-none ${
+          compact ? "h-9 pl-8 pr-9 text-sm" : "h-10 pl-9 pr-10 text-sm"
+        }`}
+        value={filters.idQuery}
+        onChange={(e) => onChange({ ...filters, idQuery: e.target.value })}
+      />
+      {hasQuery && (
+        <button
+          type="button"
+          onClick={() => onChange({ ...filters, idQuery: "" })}
+          aria-label="Clear search"
+          title="Clear search"
+          className="pressable absolute inset-y-0 right-1.5 my-auto flex h-7 w-7 items-center justify-center rounded-lg text-sm leading-none text-[var(--color-muted)] hover:bg-white/10 hover:text-[var(--color-fg-strong)]"
+        >
+          <span aria-hidden>✕</span>
+        </button>
+      )}
+    </div>
   );
 }
 
@@ -565,9 +550,10 @@ export function MonsterIdFilter({
 }
 
 /**
- * Rarity/Attribute/Type/Stats/ID pinned as one compact, collapsed-by-default
- * group so Awakenings (the most-used filter) can claim the panel's vertical
- * space by default instead of competing with five separate accordion rows.
+ * Rarity/Attribute/Type (+ ID unless the host shows the search box itself)
+ * pinned as one compact, collapsed-by-default group so Awakenings (the
+ * most-used filter) can claim the panel's vertical space by default instead
+ * of competing with separate accordion rows.
  */
 export function MonsterMoreFiltersGroup({
   filters,
@@ -577,6 +563,7 @@ export function MonsterMoreFiltersGroup({
   idleSummary,
   headerExtra,
   contentClassName,
+  includeIdFilter = true,
 }: {
   filters: MonsterFilters;
   onChange: (next: MonsterFilters) => void;
@@ -586,24 +573,21 @@ export function MonsterMoreFiltersGroup({
   idleSummary?: string;
   headerExtra?: ReactNode;
   contentClassName?: string;
+  /** False when the host renders MonsterIdSearchInput itself. */
+  includeIdFilter?: boolean;
 }) {
   const activeCount =
-    (filters.rarity.size > 0 ? 1 : 0) +
-    (hasAttributeSlotFilters(filters.attributeSlots) ? 1 : 0) +
-    (filters.types.size > 0 ? 1 : 0) +
-    ([filters.hpMin, filters.hpMax, filters.atkMin, filters.atkMax, filters.rcvMin, filters.rcvMax].some(
-      (v) => v != null
-    )
-      ? 1
-      : 0) +
-    (filters.idQuery.trim() ? 1 : 0);
+    countMonsterChipFilters(filters) +
+    (includeIdFilter && filters.idQuery.trim() ? 1 : 0);
 
   const summary =
     activeCount > 0
       ? `${activeCount} active`
       : idleSummary !== undefined
         ? idleSummary
-        : "rarity · attribute · type · stats · id";
+        : includeIdFilter
+          ? "rarity · attribute · type · id"
+          : "rarity · attribute · type";
 
   return (
     <CollapsibleFilterSection
@@ -619,8 +603,9 @@ export function MonsterMoreFiltersGroup({
         <MonsterRarityFilter filters={filters} onChange={onChange} compact={compact} />
         <MonsterAttributeFilter filters={filters} onChange={onChange} compact={compact} />
         <MonsterTypeFilter filters={filters} onChange={onChange} compact={compact} />
-        <MonsterStatsFilter filters={filters} onChange={onChange} compact={compact} />
-        <MonsterIdFilter filters={filters} onChange={onChange} compact={compact} />
+        {includeIdFilter && (
+          <MonsterIdFilter filters={filters} onChange={onChange} compact={compact} />
+        )}
       </div>
     </CollapsibleFilterSection>
   );

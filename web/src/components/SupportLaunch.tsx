@@ -56,10 +56,12 @@ function usePetFollow(nodeRef: RefObject<HTMLElement | null>, paused: boolean) {
 type Point = { x: number; y: number };
 const SUPPORT_POS_KEY = "pst.supportButtonPos";
 const SUPPORT_ICON_SIZE = 44;
+/** Mobile bottom nav height (MobileBottomNav) the dragged pet must clear. */
+const MOBILE_NAV_CLEARANCE_PX = 56;
 
 function clampPoint(x: number, y: number, size: number): Point {
   const maxX = Math.max(8, window.innerWidth - size - 8);
-  const maxY = Math.max(8, window.innerHeight - size - 8);
+  const maxY = Math.max(8, window.innerHeight - size - 8 - MOBILE_NAV_CLEARANCE_PX);
   return {
     x: Math.min(maxX, Math.max(8, x)),
     y: Math.min(maxY, Math.max(8, y)),
@@ -95,7 +97,6 @@ export function SupportLaunch() {
   });
   const suppressClick = useRef(false);
   const isMobile = useMobileWebview();
-  const onSearch = window.location.pathname.replace(/\/+$/, "") === "";
   usePetFollow(petRef, open || dragging);
 
   useEffect(() => {
@@ -109,10 +110,10 @@ export function SupportLaunch() {
     return () => window.removeEventListener("resize", clamp);
   }, [isMobile]);
 
-  const bottom =
-    isMobile && onSearch
-      ? "calc(env(safe-area-inset-bottom) + 5.25rem)"
-      : "calc(env(safe-area-inset-bottom) + 1.25rem)";
+  // Mobile: clear the bottom nav on every page.
+  const bottom = isMobile
+    ? "calc(env(safe-area-inset-bottom) + 4.5rem)"
+    : "calc(env(safe-area-inset-bottom) + 1.25rem)";
   const placed = isMobile && pos != null;
 
   const onPointerDown = (event: PointerEvent<HTMLButtonElement>) => {
