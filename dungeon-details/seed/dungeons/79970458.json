@@ -12,6 +12,188 @@
     "monsterNameJa": "レーヴェン&ラジョア",
     "raw": "43,200,000ダメージ(4.5倍時)+以下①~③いずれか使用"
   },
+  "floorSummary": [
+    {
+      "index": 1,
+      "label": "B1",
+      "floor": 1,
+      "maxHit": {
+        "value": 40000,
+        "monsterId": 4192,
+        "monsterNameJa": "ヤミマキドラ",
+        "raw": "40,000ダメージ+4ターン：盤面5×4マス"
+      },
+      "partCount": null
+    },
+    {
+      "index": 2,
+      "label": "B2",
+      "floor": 2,
+      "maxHit": {
+        "value": 6800000,
+        "monsterId": 6576,
+        "monsterNameJa": "闇三蔵法師",
+        "raw": "6,800,000ダメージ+2ターン：攻撃力激減"
+      },
+      "partCount": null
+    },
+    {
+      "index": 3,
+      "label": "B3",
+      "floor": 3,
+      "maxHit": {
+        "value": 5500000,
+        "monsterId": 8785,
+        "monsterNameJa": "ガイズ",
+        "raw": "5,500,000ダメージ+全ドロップ変化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 4,
+      "label": "B4",
+      "floor": 4,
+      "maxHit": {
+        "value": 7200000,
+        "monsterId": 13300,
+        "monsterNameJa": "ミゲイル",
+        "raw": "7,200,000ダメージ+左端縦1列、右端縦1列変化"
+      },
+      "partCount": 1
+    },
+    {
+      "index": 5,
+      "label": "B5",
+      "floor": 5,
+      "maxHit": {
+        "value": 8670000,
+        "monsterId": 12446,
+        "monsterNameJa": "リアナ",
+        "raw": "8,670,000ダメージ+全ドロップ変化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 6,
+      "label": "B6",
+      "floor": 6,
+      "maxHit": {
+        "value": 34848000,
+        "monsterId": 9868,
+        "monsterNameJa": "ジィルクロム",
+        "raw": "34,848,000ダメージ(5倍時)の連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 7,
+      "label": "B7",
+      "floor": 7,
+      "maxHit": {
+        "value": 9345000,
+        "monsterId": 1947,
+        "monsterNameJa": "ガディウス",
+        "raw": "9,345,000ダメージ+3ターン：2コンボ減算"
+      },
+      "partCount": null
+    },
+    {
+      "index": 8,
+      "label": "B8",
+      "floor": 8,
+      "maxHit": {
+        "value": 7070000,
+        "monsterId": 9385,
+        "monsterNameJa": "ティエラ",
+        "raw": "7,070,000ダメージ+操作開始位置を左下に固定"
+      },
+      "partCount": null
+    },
+    {
+      "index": 9,
+      "label": "B9",
+      "floor": 9,
+      "maxHit": {
+        "value": 9384000,
+        "monsterId": 10195,
+        "monsterNameJa": "メタルアルレシャ",
+        "raw": "9,384,000ダメージ+1ターン：被ダメージ半減"
+      },
+      "partCount": null
+    },
+    {
+      "index": 10,
+      "label": "B10",
+      "floor": 10,
+      "maxHit": {
+        "value": 8370000,
+        "monsterId": 9932,
+        "monsterNameJa": "グランエルヴ(変身)",
+        "raw": "8,370,000ダメージ+1ターン：50億以上無効"
+      },
+      "partCount": null
+    },
+    {
+      "index": 11,
+      "label": "B11",
+      "floor": 11,
+      "maxHit": {
+        "value": 10395000,
+        "monsterId": 10113,
+        "monsterNameJa": "試練アルテミス",
+        "raw": "10,395,000ダメージ+をに変化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 12,
+      "label": "B12",
+      "floor": 12,
+      "maxHit": {
+        "value": 43200000,
+        "monsterId": 12698,
+        "monsterNameJa": "レーヴェン&ラジョア",
+        "raw": "43,200,000ダメージ(4.5倍時)+以下①~③いずれか使用"
+      },
+      "partCount": null
+    },
+    {
+      "index": 13,
+      "label": "B13",
+      "floor": 13,
+      "maxHit": {
+        "value": 10200000,
+        "monsterId": 10285,
+        "monsterNameJa": "火イルム",
+        "raw": "10,200,000ダメージの連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 14,
+      "label": "B14",
+      "floor": 14,
+      "maxHit": {
+        "value": 12075000,
+        "monsterId": 10303,
+        "monsterNameJa": "ゴウテン",
+        "raw": "12,075,000ダメージ+1ターン：アシスト無効"
+      },
+      "partCount": null
+    },
+    {
+      "index": 15,
+      "label": "B15",
+      "floor": 15,
+      "maxHit": {
+        "value": 11934000,
+        "monsterId": 10304,
+        "monsterNameJa": "ゴウテン(変身)",
+        "raw": "11,934,000ダメージの連続攻撃"
+      },
+      "partCount": null
+    }
+  ],
   "requiredGimmicks": [
     {
       "id": "覚醒無効",

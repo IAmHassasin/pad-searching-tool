@@ -12,6 +12,183 @@
     "monsterNameJa": "Gフェニックス(変身)",
     "raw": "21,930,000ダメージの連続攻撃"
   },
+  "floorSummary": [
+    {
+      "index": 1,
+      "label": "B1",
+      "floor": 1,
+      "maxHit": {
+        "value": 3200000,
+        "monsterId": 14125,
+        "monsterNameJa": "ハート5のトランプ兵",
+        "raw": "3,200,000ダメージ+99ターン：攻撃力2倍"
+      },
+      "partCount": null
+    },
+    {
+      "index": 2,
+      "label": "B2",
+      "floor": 2,
+      "maxHit": {
+        "value": 11615000,
+        "monsterId": 14101,
+        "monsterNameJa": "ハーティア(変身)",
+        "raw": "11,615,000ダメージ+1ターン：覚醒無効"
+      },
+      "partCount": null
+    },
+    {
+      "index": 3,
+      "label": "B3",
+      "floor": 3,
+      "maxHit": {
+        "value": 12120000,
+        "monsterId": 14098,
+        "monsterNameJa": "ダイン(変身)",
+        "raw": "12,120,000ダメージ+2ターン：20億以上無効"
+      },
+      "partCount": null
+    },
+    {
+      "index": 4,
+      "label": "B4",
+      "floor": 4,
+      "maxHit": {
+        "value": 12600000,
+        "monsterId": 13650,
+        "monsterNameJa": "ぬらりひょん",
+        "raw": "12,600,000ダメージ+1ターン：2×2マス雲"
+      },
+      "partCount": null
+    },
+    {
+      "index": 5,
+      "label": "B5",
+      "floor": 5,
+      "maxHit": {
+        "value": 13500000,
+        "monsterId": 12121,
+        "monsterNameJa": "マール(変身)",
+        "raw": "13,500,000ダメージ+4ターン：アシスト無効"
+      },
+      "partCount": null
+    },
+    {
+      "index": 6,
+      "label": "B6",
+      "floor": 6,
+      "maxHit": {
+        "value": 16275000,
+        "monsterId": 12439,
+        "monsterNameJa": "ロゼッタ(変身2)",
+        "raw": "16,275,000ダメージ+3ターン：攻撃力1.1倍"
+      },
+      "partCount": null
+    },
+    {
+      "index": 7,
+      "label": "B7",
+      "floor": 7,
+      "maxHit": {
+        "value": 17600000,
+        "monsterId": 12249,
+        "monsterNameJa": "カルキノス",
+        "raw": "17,600,000ダメージ+1ターン：3×3マス雲"
+      },
+      "partCount": null
+    },
+    {
+      "index": 8,
+      "label": "B8",
+      "floor": 8,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 9,
+      "label": "B9",
+      "floor": 9,
+      "maxHit": {
+        "value": 16500000,
+        "monsterId": 11077,
+        "monsterNameJa": "ライル(変身)",
+        "raw": "16,500,000ダメージ+左から縦列変化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 10,
+      "label": "B10",
+      "floor": 10,
+      "maxHit": {
+        "value": 19000000,
+        "monsterId": 13509,
+        "monsterNameJa": "しづる(変身)",
+        "raw": "19,000,000ダメージ+ドロップリフレッシュ"
+      },
+      "partCount": null
+    },
+    {
+      "index": 11,
+      "label": "B11",
+      "floor": 11,
+      "maxHit": {
+        "value": 19100000,
+        "monsterId": 13485,
+        "monsterNameJa": "ブラムベル",
+        "raw": "19,100,000ダメージ+4ターン：サブ上限値20億"
+      },
+      "partCount": null
+    },
+    {
+      "index": 12,
+      "label": "B12",
+      "floor": 12,
+      "maxHit": {
+        "value": 19300000,
+        "monsterId": 10501,
+        "monsterNameJa": "ボルフィード",
+        "raw": "19,300,000ダメージ+全ドロップ変化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 13,
+      "label": "B13",
+      "floor": 13,
+      "maxHit": {
+        "value": 19500000,
+        "monsterId": 12591,
+        "monsterNameJa": "ソロモン(変身)",
+        "raw": "19,500,000ダメージ+3ターン：2マスルーレット"
+      },
+      "partCount": null
+    },
+    {
+      "index": 14,
+      "label": "B14",
+      "floor": 14,
+      "maxHit": {
+        "value": 20400000,
+        "monsterId": 14130,
+        "monsterNameJa": "Gフェニックス",
+        "raw": "20,400,000ダメージの連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 15,
+      "label": "B15",
+      "floor": 15,
+      "maxHit": {
+        "value": 21930000,
+        "monsterId": 14131,
+        "monsterNameJa": "Gフェニックス(変身)",
+        "raw": "21,930,000ダメージの連続攻撃"
+      },
+      "partCount": null
+    }
+  ],
   "requiredGimmicks": [
     {
       "id": "覚醒無効",

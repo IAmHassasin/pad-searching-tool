@@ -11,7 +11,7 @@ DUNGEON_URLS ?= dungeon-details/seed/dungeon-urls.txt
 
 COMPOSE := docker compose -f docker-compose.yml -f docker-compose.cloud.yml
 
-.PHONY: help up down awakenings-manifest seed-db dungeon-master dungeon-import dungeon-max-damage dungeon-max-hits icon-index
+.PHONY: help up down awakenings-manifest seed-db dungeon-master dungeon-import dungeon-max-damage dungeon-floor-summary dungeon-max-hits icon-index
 
 help:
 	@echo "PAD Searching Tool — local Makefile"
@@ -33,6 +33,7 @@ help:
 	@echo "  make dungeon-import              — parse all URLs in $(DUNGEON_URLS)"
 	@echo "  make dungeon-import URL=<url>    — parse one dungeon"
 	@echo "  make dungeon-max-damage          — recompute maxDamage of every seed JSON (no fetch)"
+	@echo "  make dungeon-floor-summary       — repair glued floor labels, recompute maxDamage + floorSummary (no fetch)"
 	@echo "  make dungeon-max-hits            — resolve the max hit of every team-build catalog entry (AppMedia → Kamigame)"
 	@echo ""
 	@echo "Team build:"
@@ -73,6 +74,10 @@ icon-index:
 
 dungeon-max-damage:
 	node dungeon-details/scripts/backfill-max-damage.mjs \
+		--sqlite dungeon-details/seed/dungeons.sqlite
+
+dungeon-floor-summary:
+	node dungeon-details/scripts/backfill-floor-summary.mjs \
 		--sqlite dungeon-details/seed/dungeons.sqlite
 
 dungeon-import:

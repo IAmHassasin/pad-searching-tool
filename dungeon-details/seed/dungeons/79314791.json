@@ -12,6 +12,68 @@
     "monsterNameJa": "究極コンス",
     "raw": "50,000,000ダメージの連続攻撃"
   },
+  "floorSummary": [
+    {
+      "index": 1,
+      "label": "B1",
+      "floor": 1,
+      "maxHit": {
+        "value": 50000000,
+        "monsterId": 7797,
+        "monsterNameJa": "究極コンス",
+        "raw": "50,000,000ダメージの連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 2,
+      "label": "B2",
+      "floor": 2,
+      "maxHit": {
+        "value": 2782500,
+        "monsterId": 10543,
+        "monsterNameJa": "シルドラン",
+        "raw": "2,782,500ダメージの連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 3,
+      "label": "B3",
+      "floor": 3,
+      "maxHit": {
+        "value": 5600000,
+        "monsterId": 9691,
+        "monsterNameJa": "超転生デスファリオン",
+        "raw": "5,600,000ダメージ+全ドロップ変化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 4,
+      "label": "B4",
+      "floor": 4,
+      "maxHit": {
+        "value": 10800000,
+        "monsterId": 12252,
+        "monsterNameJa": "新ゴクレグス",
+        "raw": "9,000,000ダメージ(1.2倍時：10,800,000ダメージ)の連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 5,
+      "label": "B5",
+      "floor": 5,
+      "maxHit": {
+        "value": 8085000,
+        "monsterId": 11560,
+        "monsterNameJa": "火アグリゲート",
+        "raw": "8,085,000ダメージの連続攻撃"
+      },
+      "partCount": null
+    }
+  ],
   "requiredGimmicks": [
     {
       "id": "バインド",

@@ -18,19 +18,39 @@ import { useMobileWebview } from "../hooks/useMobileWebview";
 import { useResizablePanel } from "../hooks/useResizablePanel";
 import { useTeamDraft } from "../hooks/useTeamDraft";
 import { parseRegularAwakenings } from "../lib/awakenings";
-import { computeTeamStats } from "../lib/team-build/compute-stats";
+import {
+  computeTeamStats,
+  partBreakCopiesForSlot,
+} from "../lib/team-build/compute-stats";
+import {
+  clampPartsBroken,
+  MAX_PARTS_BROKEN,
+  PART_BREAK_AWAKENING_ID,
+} from "../lib/part-break";
 import {
   describeDungeonModifiers,
   resolveDungeonModifiers,
 } from "../lib/team-build/dungeon-modifiers";
 import { maxHitForEntry, seedForEntry } from "../lib/team-build/dungeon-sources";
 import {
+  defaultPartsBroken,
+  hasUsableFloorTable,
+  teamHpAtState,
+  totalPartsBroken,
+  type FloorState,
+} from "../lib/team-build/floor-trial";
+import {
   combineLeaderMultipliers,
   leaderMultipliersForMember,
 } from "../lib/team-build/leader-skill";
 import { lb110Percent, maxMonsterLevel } from "../lib/team-build/level-scaling";
 import { maxOutMembers } from "../lib/team-build/max-out";
-import { transformableSlots, transformMembers } from "../lib/team-build/transform";
+import {
+  detransformableSlots,
+  detransformMembers,
+  transformableSlots,
+  transformMembers,
+} from "../lib/team-build/transform";
 import { grantedAssistAwakenings } from "../lib/team-build/passive-awakenings";
 import { describeSlotContributions } from "../lib/team-build/stat-contributions";
 import {
@@ -39,6 +59,9 @@ import {
   exportTeamTsubakiString,
   importTeamIdString,
 } from "../lib/team-build/team-import-export";
+import { exportTeamBuildImgString } from "../lib/team-build/buildimg-export";
+import { buildTeamImageLayout } from "../lib/team-build/team-image-layout";
+import { TeamImageExport } from "./TeamImageExport";
 import {
   listSuperAwakeningOptions,
   superAwakeningLabel,
@@ -52,11 +75,17 @@ import {
 } from "../lib/team-build/types";
 import type { MonsterRecord } from "../types";
 import { DungeonPickerModal } from "./DungeonPickerModal";
+import { SavedTeamsPanel } from "./SavedTeamsPanel";
 import { ScreenshotImportModal } from "./ScreenshotImportModal";
+import { PdcExportModal } from "./PdcExportModal";
+import { pdcTeamToPst, type PdcTeam } from "../lib/team-build/pdc-team-string";
 import { TeamAwakeningPanel } from "./TeamAwakeningPanel";
 import { TeamAwakeningSummary } from "./TeamAwakeningSummary";
 import { TeamCardSheet } from "./TeamCardSheet";
 import { TeamTrialPanel } from "./TeamTrialPanel";
+
+/** Part Break Bonus is driven by the Team settings parts counter, not the manual list. */
+const HIDDEN_MANUAL_AWAKENING_IDS: readonly number[] = [PART_BREAK_AWAKENING_ID];
 
 function parseId(raw: string): number | null {
   const n = Number(raw.trim());
@@ -436,9 +465,15 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
   const [selectedSlot, setSelectedSlot] = useState<number | null>(null);
   const [idsOpen, setIdsOpen] = useState(false);
   const [screenshotOpen, setScreenshotOpen] = useState(false);
+  const [pdcOpen, setPdcOpen] = useState(false);
+  // Kept while the page is mounted so reopening the PDC export keeps what was typed.
+  const [pdcTitle, setPdcTitle] = useState("");
+  const [pdcMemo, setPdcMemo] = useState("");
+  /** Last team imported from a PDC QR: its latents / assist levels go back out on export. */
+  const [pdcSource, setPdcSource] = useState<PdcTeam | null>(null);
   const [importText, setImportText] = useState("");
   const [importMsg, setImportMsg] = useState<string | null>(null);
-  /** Feedback line under the team actions (Max all / Transform). */
+  /** Feedback line under the team actions (Max all / Transform / De-transform). */
   const [actionMsg, setActionMsg] = useState<string | null>(null);
   const [copyMsg, setCopyMsg] = useState<string | null>(null);
   const awkPanel = useResizablePanel({
@@ -532,10 +567,52 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
       }),
     [dungeon]
   );
+  // With a usable floor table, broken parts are chosen per floor (Trial) and the team
+  // totals use every part broken over the dungeon; otherwise the Team settings counter.
+  const floorTable = useMemo(() => trialSeed?.floorSummary ?? [], [trialSeed]);
+  const floorMode = hasUsableFloorTable(floorTable);
+  const [floorPartsState, setFloorPartsState] = useState<{
+    postId: number;
+    parts: Map<number, number>;
+  } | null>(null);
+  const floorParts = useMemo(
+    () =>
+      trialSeed && floorPartsState?.postId === trialSeed.appmediaPostId
+        ? floorPartsState.parts
+        : defaultPartsBroken(floorTable),
+    [trialSeed, floorPartsState, floorTable]
+  );
+  const setFloorParts = useCallback(
+    (parts: Map<number, number>) => {
+      if (trialSeed) setFloorPartsState({ postId: trialSeed.appmediaPostId, parts });
+    },
+    [trialSeed]
+  );
+  // Same cap as the multiplier, so the summary shows the count actually applied.
+  const floorPartsTotal = floorMode
+    ? clampPartsBroken(totalPartsBroken(floorTable, floorParts))
+    : 0;
+  /** Config the totals use: Part Break count from the floor table when it drives it. */
+  const statsConfig = useMemo(
+    () => (floorMode ? { ...config, partsBroken: floorPartsTotal } : config),
+    [config, floorMode, floorPartsTotal]
+  );
   const summary = useMemo(
-    () => computeTeamStats(config, monstersById, dungeon),
+    () => computeTeamStats(statsConfig, monstersById, dungeon),
+    [statsConfig, monstersById, dungeon]
+  );
+  /** Team HP at a floor state (Aging by floor, cumulative broken parts) for the Trial. */
+  const trialHpAt = useCallback(
+    (state: FloorState) => teamHpAtState(config, monstersById, dungeon, state),
     [config, monstersById, dungeon]
   );
+  /** Slots carrying Part Break Bonus (131): the parts control only shows when there is one. */
+  const partBreakSlots = summary.members.filter(
+    (m) =>
+      m.monster != null &&
+      partBreakCopiesForSlot(m.monster, m.eq, m.config.selectedSuperAwakening) > 0
+  ).length;
+  const partsBroken = config.partsBroken ?? 0;
   const dungeonActiveLabel =
     config.dungeonId && config.dungeonId !== "none" ? dungeon.label : null;
 
@@ -631,6 +708,22 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
     () => transformableSlots(config.members, monstersById),
     [config.members, monstersById]
   );
+  const detransformable = useMemo(
+    () => detransformableSlots(config.members, monstersById),
+    [config.members, monstersById]
+  );
+
+  const handlePdcApply = (team: PdcTeam) => {
+    const { warnings } = pdcTeamToPst(team, config);
+    setConfig((c) => pdcTeamToPst(team, c).config);
+    setPdcSource(team);
+    setScreenshotOpen(false);
+    setIdsOpen(true);
+    setImportMsg(
+      warnings.length ? `Team imported from PDC QR. ${warnings.join(" ")}` : "Team imported from PDC QR."
+    );
+    setTimeout(() => setImportMsg(null), 6000);
+  };
 
   const handleScreenshotApply = (members: TeamMemberConfig[]) => {
     setConfig((c) => ({ ...c, members }));
@@ -644,6 +737,11 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
   const exportedMonsters = exportTeamIdString(config);
   const exportedEquipment = exportTeamEqString(config);
   const exportedTsubaki = exportTeamTsubakiString(config);
+  const exportedBuildImg = exportTeamBuildImgString(config);
+  const teamImageLayout = useMemo(
+    () => buildTeamImageLayout(config.members, (id) => monstersById.get(id)),
+    [config.members, monstersById]
+  );
 
   const monsterOf = useCallback(
     (raw: string): MonsterRecord | null => {
@@ -689,12 +787,12 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
       member: selectedMember,
       row: selectedMonster,
       eq: selectedEq,
-      config,
+      config: statsConfig,
       dungeon,
       teamAwakenings,
       leaderMult,
     });
-  }, [selectedMonster, selectedEq, selectedMember, config, dungeon, monstersById]);
+  }, [selectedMonster, selectedEq, selectedMember, config, statsConfig, dungeon, monstersById]);
 
   const awakeningPanel =
     selectedSlot != null && selectedMember ? (
@@ -725,7 +823,10 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
               type="button"
               className="pressable min-h-9 rounded-lg px-2 text-[11px] font-semibold text-[var(--color-muted)] hover:bg-[var(--color-negative)]/10 hover:text-[var(--color-negative)]"
               onClick={() => {
-                if (window.confirm("Clear all team slots?")) clearMembers();
+                if (window.confirm("Clear all team slots?")) {
+                  clearMembers();
+                  setPdcSource(null);
+                }
               }}
             >
               Reset team
@@ -749,7 +850,7 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
         <div className="flex min-h-0 flex-1 overflow-hidden">
           <div className="min-h-0 min-w-0 flex-1 overflow-auto p-3 sm:p-4">
             <div className="mx-auto max-w-5xl">
-              {/* Team actions: fill the team from a screenshot, max every card, transform */}
+              {/* Team actions: fill the team from a screenshot, max every card, transform / de-transform */}
               <div className="mb-2 flex flex-wrap items-center justify-center gap-2">
                 <button
                   type="button"
@@ -768,9 +869,9 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
                     const levels = members
                       .map((m) => (m.monsterId ? String(m.level) : "–"))
                       .join(" · ");
-                    showActionMsg(`Max all: Lv ${levels}, +297 on every card and assist.`);
+                    showActionMsg(`Max all: Lv ${levels}, +891 on every card, +297 on every assist.`);
                   }}
-                  title="Every card to its max level (Lv.99 for transform forms) and +297, assists +297 too"
+                  title="Every card to its max level (Lv.99 for transform forms) and +891; assists +297 (limit-break plus does not raise the assist bonus)"
                 >
                   Max all
                 </button>
@@ -791,6 +892,31 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
                     Transform ({transformable.length})
                   </button>
                 )}
+                {detransformable.length > 0 && (
+                  <button
+                    type="button"
+                    className="ds-btn pressable min-h-10 px-4 text-xs font-semibold"
+                    onClick={() => {
+                      const slots = detransformable.map((i) => slotLabel(i)).join(", ");
+                      setConfig((c) => ({
+                        ...c,
+                        members: detransformMembers(c.members, monstersById),
+                      }));
+                      showActionMsg(`De-transformed ${slots} back to their pre-transform form.`);
+                    }}
+                    title={`Swap ${detransformable.map((i) => slotLabel(i)).join(", ")} back to the pre-transform form`}
+                  >
+                    De-transform ({detransformable.length})
+                  </button>
+                )}
+                <button
+                  type="button"
+                  className="ds-btn pressable min-h-10 px-4 text-xs font-semibold"
+                  onClick={() => setPdcOpen(true)}
+                  title="PDC-style team image with a QR code that PDC (パズドラダメージ計算) can scan"
+                >
+                  Export as PDC
+                </button>
               </div>
               {actionMsg && (
                 <p className="mb-2 text-center text-[10px] text-[var(--color-amber-text)]">
@@ -887,6 +1013,9 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
                   config={config}
                   monstersById={monstersById}
                   teamHp={summary.teamHp}
+                  hpAt={trialHpAt}
+                  floorPartsBroken={floorParts}
+                  onFloorPartsBrokenChange={setFloorParts}
                   slotLabel={slotLabel}
                   entry={dungeon.entry}
                   dungeonLabel={dungeon.label}
@@ -903,6 +1032,7 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
               <section className="ds-card mb-3 p-3">
                 <h2 className="ds-label mb-2">Team settings</h2>
                 <div className="grid gap-3 sm:grid-cols-[minmax(0,240px)_minmax(0,1fr)]">
+                  <div className="flex flex-col gap-3">
                   <label className="flex flex-col gap-1 text-sm">
                     <span className="text-xs text-[var(--color-muted)]">Badge</span>
                     <select
@@ -919,6 +1049,68 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
                       ))}
                     </select>
                   </label>
+                  {partBreakSlots > 0 && floorMode && (
+                    <div className="flex flex-col gap-1 text-sm">
+                      <span className="text-xs text-[var(--color-muted)]">
+                        Parts broken · {partBreakSlots} card{partBreakSlots === 1 ? "" : "s"} with Part Break Bonus
+                      </span>
+                      <p className="text-xs text-[var(--color-fg)]">
+                        <span className="font-mono font-semibold tabular-nums text-[var(--color-fg-strong)]">
+                          {floorPartsTotal}
+                        </span>{" "}
+                        {floorTable.some((f) => f.partCount)
+                          ? "from the floor table — set per floor in Trial ⇒"
+                          : "— this dungeon's floor table has no breakable parts"}
+                      </p>
+                    </div>
+                  )}
+                  {partBreakSlots > 0 && !floorMode && (
+                    <div className="flex flex-col gap-1 text-sm">
+                      <span
+                        className="text-xs text-[var(--color-muted)]"
+                        title="Part Break Bonus (awakening 131): ×1.2 per broken part per copy; copies add (×1.4 for two)"
+                      >
+                        Parts broken · {partBreakSlots} card{partBreakSlots === 1 ? "" : "s"} with Part Break Bonus
+                      </span>
+                      <div className="flex items-center gap-1.5">
+                        <button
+                          type="button"
+                          aria-label="One part fewer"
+                          disabled={partsBroken <= 0}
+                          onClick={() =>
+                            setConfig((c) => ({
+                              ...c,
+                              partsBroken: clampPartsBroken((c.partsBroken ?? 0) - 1),
+                            }))
+                          }
+                          className="ds-btn pressable h-8 w-8 text-sm disabled:opacity-40"
+                        >
+                          −
+                        </button>
+                        <span className="min-w-8 text-center font-mono text-sm font-semibold tabular-nums text-[var(--color-fg-strong)]">
+                          {partsBroken}
+                        </span>
+                        <button
+                          type="button"
+                          aria-label="One part more"
+                          disabled={partsBroken >= MAX_PARTS_BROKEN}
+                          onClick={() =>
+                            setConfig((c) => ({
+                              ...c,
+                              partsBroken: clampPartsBroken((c.partsBroken ?? 0) + 1),
+                            }))
+                          }
+                          className="ds-btn pressable h-8 w-8 text-sm disabled:opacity-40"
+                        >
+                          +
+                        </button>
+                        <span className="text-[10px] text-[var(--color-muted)]">
+                          ×1.2 per part per copy
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                  </div>
                   <div className="flex min-w-0 flex-col gap-1 text-sm">
                     <span className="text-xs text-[var(--color-muted)]">Dungeon</span>
                     <button
@@ -954,6 +1146,12 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
                   </div>
                 </div>
               </section>
+
+              <SavedTeamsPanel
+                config={config}
+                monstersById={monstersById}
+                onLoad={(team) => setConfig(team.config)}
+              />
 
               {/* Team IDs — collapsed by default */}
               <section className="ds-card mb-4 p-3">
@@ -1000,10 +1198,19 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
                       buttonLabel="Copy for Tsubaki"
                       onCopy={() => copyToClipboard(exportedTsubaki, "Tsubaki")}
                     />
+                    <CopyRow
+                      label="Build img"
+                      value={exportedBuildImg}
+                      accent="text-[var(--color-secondary-strong)]"
+                      buttonLabel="Copy ^buildimg"
+                      onCopy={() => copyToClipboard(exportedBuildImg, "Tsubaki ^buildimg")}
+                    />
+                    <TeamImageExport layout={teamImageLayout} fileName="team-build.png" />
                     <p className="text-[10px] text-[var(--color-muted)]">
                       Order: leader · 4 subs · helper. Empty slot ={" "}
                       <code className="font-mono font-bold text-[var(--color-accent-strong)]">1</code>.
-                      Import: line 1 monsters, line 2 equipment.
+                      Import: line 1 monsters, line 2 equipment. ^buildimg: empty slot = sdr, +891
+                      exports as +297 (Tsubaki has no limit-break plus).
                     </p>
                     <div className="flex flex-col gap-2 sm:flex-row">
                       <textarea
@@ -1124,6 +1331,7 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
         open={awkOpen}
         stat="hp"
         settings={config.awkSettings}
+        hiddenIds={HIDDEN_MANUAL_AWAKENING_IDS}
         onChange={(awkSettings) => setConfig((c) => ({ ...c, awkSettings }))}
         onClose={() => setAwkOpen(false)}
       />
@@ -1131,7 +1339,19 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
         open={screenshotOpen}
         members={config.members}
         onApply={handleScreenshotApply}
+        onApplyPdc={handlePdcApply}
         onClose={() => setScreenshotOpen(false)}
+      />
+      <PdcExportModal
+        open={pdcOpen}
+        config={config}
+        monstersById={monstersById}
+        previous={pdcSource}
+        title={pdcTitle}
+        memo={pdcMemo}
+        onTitleChange={setPdcTitle}
+        onMemoChange={setPdcMemo}
+        onClose={() => setPdcOpen(false)}
       />
     </div>
   );

@@ -12,6 +12,93 @@
     "monsterNameJa": null,
     "raw": "56,335ダメージ"
   },
+  "floorSummary": [
+    {
+      "index": 1,
+      "label": "B1",
+      "floor": 1,
+      "maxHit": {
+        "value": 53580,
+        "monsterId": 2652,
+        "monsterNameJa": null,
+        "raw": "53,580ダメージ"
+      },
+      "partCount": null
+    },
+    {
+      "index": 2,
+      "label": "B2",
+      "floor": 2,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 3,
+      "label": "B3",
+      "floor": 3,
+      "maxHit": {
+        "value": 56335,
+        "monsterId": 2655,
+        "monsterNameJa": null,
+        "raw": "56,335ダメージ"
+      },
+      "partCount": null
+    },
+    {
+      "index": 4,
+      "label": "B4",
+      "floor": 4,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 5,
+      "label": "B5",
+      "floor": 5,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 6,
+      "label": "B6",
+      "floor": 6,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 7,
+      "label": "B7",
+      "floor": 7,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 8,
+      "label": "B8",
+      "floor": 8,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 9,
+      "label": "B9",
+      "floor": 9,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 10,
+      "label": "B10",
+      "floor": 10,
+      "maxHit": {
+        "value": 30000,
+        "monsterId": 4794,
+        "monsterNameJa": null,
+        "raw": "※バフがないときは30,000ダメージ"
+      },
+      "partCount": null
+    }
+  ],
   "requiredGimmicks": [
     {
       "id": "ダメジ吸収",
@@ -78,8 +165,8 @@
   ],
   "floors": [
     {
-      "floor": "B13",
-      "spawnNote": "13体出現",
+      "floor": "B1",
+      "spawnNote": "3体出現",
       "spawns": [
         {
           "monsterId": 2652,

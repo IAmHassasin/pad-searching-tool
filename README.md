@@ -54,6 +54,13 @@ COMMUNITY_DB_URL=https://...
 
 In the UI header: **Admin login** → **Refresh community DB**. Same logic as `npm run pad -- merge`, without SSH.
 
+After the merge, the same job fetches the latest GameWith vanish assists. Assists missing from the
+baked base DB (`seed/gamewith-vanish.sqlite`) go into a delta DB (`$DATA_DIR/gamewith-vanish-delta.sqlite`,
+override with `VANISH_AWOKEN_DELTA_SQLITE_PATH`). Searches read the base first and the delta only for
+monsters the base lacks; delta rows the base later covers are deleted when the delta is attached.
+A GameWith failure does not fail the refresh — the admin panel shows it as a warning.
+CD rebuilds the base DB (`scripts/import-gamewith-vanish-db.mjs`) before each deploy.
+
 ## Android app (Capacitor)
 
 `web/android/` is a Capacitor-wrapped build of the React UI — a native shell that

@@ -12,6 +12,65 @@
     "monsterNameJa": "スワロウテイル",
     "raw": "1,826,202ダメージ+3ターン：目覚め"
   },
+  "floorSummary": [
+    {
+      "index": 1,
+      "label": "B1",
+      "floor": 1,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 2,
+      "label": "B2",
+      "floor": 2,
+      "maxHit": {
+        "value": 673675,
+        "monsterId": 3721,
+        "monsterNameJa": "カジン",
+        "raw": "673,675ダメージ+右から縦1,2,3列目変化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 3,
+      "label": "B3",
+      "floor": 3,
+      "maxHit": {
+        "value": 735669,
+        "monsterId": 2876,
+        "monsterNameJa": "トア",
+        "raw": "735,669ダメージ+全ドロップ変化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 4,
+      "label": "B4",
+      "floor": 4,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 5,
+      "label": "B5",
+      "floor": 5,
+      "maxHit": {
+        "value": 1826202,
+        "monsterId": 1601,
+        "monsterNameJa": "スワロウテイル",
+        "raw": "1,826,202ダメージ+3ターン：目覚め"
+      },
+      "partCount": null
+    },
+    {
+      "index": 6,
+      "label": "B6",
+      "floor": 6,
+      "maxHit": null,
+      "partCount": null
+    }
+  ],
   "requiredGimmicks": [
     {
       "id": "覚醒無効",

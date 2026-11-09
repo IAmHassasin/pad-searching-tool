@@ -12,6 +12,171 @@
     "monsterNameJa": "タイハクセイ",
     "raw": "19,200,000ダメージ(4.8倍時)の連続攻撃"
   },
+  "floorSummary": [
+    {
+      "index": 1,
+      "label": "乱入",
+      "floor": null,
+      "maxHit": {
+        "value": 1975000,
+        "monsterId": 6585,
+        "monsterNameJa": "光ソフィ",
+        "raw": "1,975,000ダメージ+5ターン：弱化目覚め(40%)"
+      },
+      "partCount": 1
+    },
+    {
+      "index": 2,
+      "label": "B1",
+      "floor": 1,
+      "maxHit": {
+        "value": 25350,
+        "monsterId": 13,
+        "monsterNameJa": "プテーラ",
+        "raw": "25,350ダメージ+7ターン：10億以上無効"
+      },
+      "partCount": null
+    },
+    {
+      "index": 3,
+      "label": "B2",
+      "floor": 2,
+      "maxHit": {
+        "value": 2970000,
+        "monsterId": 3237,
+        "monsterNameJa": "イシュタル",
+        "raw": "2,970,000ダメージ+3ターン：2×2マス雲"
+      },
+      "partCount": null
+    },
+    {
+      "index": 4,
+      "label": "B3",
+      "floor": 3,
+      "maxHit": {
+        "value": 14004000,
+        "monsterId": 9931,
+        "monsterNameJa": "グランエルヴ",
+        "raw": "14,004,000ダメージ(3.6倍時)の連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 5,
+      "label": "B4",
+      "floor": 4,
+      "maxHit": {
+        "value": 3900000,
+        "monsterId": 10756,
+        "monsterNameJa": "試練ヴィーナス",
+        "raw": "3,900,000ダメージ+1ターン：20億以上吸収"
+      },
+      "partCount": null
+    },
+    {
+      "index": 6,
+      "label": "B5",
+      "floor": 5,
+      "maxHit": {
+        "value": 975000,
+        "monsterId": 1597,
+        "monsterNameJa": "ツィントン",
+        "raw": "975,000ダメージ+5ターン：チーム攻撃力激減(0.25倍)"
+      },
+      "partCount": null
+    },
+    {
+      "index": 7,
+      "label": "B6",
+      "floor": 6,
+      "maxHit": {
+        "value": 980000,
+        "monsterId": 581,
+        "monsterNameJa": "ケルピー",
+        "raw": "980,000ダメージ+1ターン：スキル封印"
+      },
+      "partCount": null
+    },
+    {
+      "index": 8,
+      "label": "B7",
+      "floor": 7,
+      "maxHit": {
+        "value": 16000000,
+        "monsterId": 12137,
+        "monsterNameJa": "アリーシア(変身)",
+        "raw": "16,000,000ダメージ(4倍時)+ドロップ2個トゲ"
+      },
+      "partCount": null
+    },
+    {
+      "index": 9,
+      "label": "B8",
+      "floor": 8,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 10,
+      "label": "B9",
+      "floor": 9,
+      "maxHit": {
+        "value": 2460000,
+        "monsterId": 10144,
+        "monsterNameJa": "堕ルシ&天ルシ(変身)",
+        "raw": "2,460,000ダメージの連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 11,
+      "label": "B10",
+      "floor": 10,
+      "maxHit": {
+        "value": 3735000,
+        "monsterId": 10655,
+        "monsterNameJa": "サクヤオリジン",
+        "raw": "3,735,000ダメージ+1ターン：吸収"
+      },
+      "partCount": null
+    },
+    {
+      "index": 12,
+      "label": "B11",
+      "floor": 11,
+      "maxHit": {
+        "value": 19035000,
+        "monsterId": 12267,
+        "monsterNameJa": "試練ファガンRAI",
+        "raw": "19,035,000ダメージ(4.5倍時)の連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 13,
+      "label": "B12",
+      "floor": 12,
+      "maxHit": {
+        "value": 3612500,
+        "monsterId": 12857,
+        "monsterNameJa": "ハクレイ",
+        "raw": "3,612,500ダメージ+5ターン：アシスト無効"
+      },
+      "partCount": null
+    },
+    {
+      "index": 14,
+      "label": "B13",
+      "floor": 13,
+      "maxHit": {
+        "value": 19200000,
+        "monsterId": 12858,
+        "monsterNameJa": "タイハクセイ",
+        "raw": "19,200,000ダメージ(4.8倍時)の連続攻撃"
+      },
+      "partCount": 3
+    }
+  ],
   "requiredGimmicks": [
     {
       "id": "バインド",

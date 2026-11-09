@@ -12,6 +12,60 @@
     "monsterNameJa": null,
     "raw": "※既に7×6なら142,000ダメージ"
   },
+  "floorSummary": [
+    {
+      "index": 1,
+      "label": "B1",
+      "floor": 1,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 2,
+      "label": "B2",
+      "floor": 2,
+      "maxHit": {
+        "value": 142000,
+        "monsterId": 3536,
+        "monsterNameJa": null,
+        "raw": "※既に7×6なら142,000ダメージ"
+      },
+      "partCount": null
+    },
+    {
+      "index": 3,
+      "label": "B3",
+      "floor": 3,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 4,
+      "label": "B4",
+      "floor": 4,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 5,
+      "label": "B5",
+      "floor": 5,
+      "maxHit": {
+        "value": 47400,
+        "monsterId": 3341,
+        "monsterNameJa": null,
+        "raw": "47,400ダメージ"
+      },
+      "partCount": null
+    },
+    {
+      "index": 6,
+      "label": "B6",
+      "floor": 6,
+      "maxHit": null,
+      "partCount": null
+    }
+  ],
   "requiredGimmicks": [
     {
       "id": "属性吸収",

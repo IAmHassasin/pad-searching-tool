@@ -65,6 +65,11 @@ export type TeamBuildConfig = {
   /** Entry id in the dungeon catalog; "none" = no dungeon, "custom" = `customDungeon`. */
   dungeonId: string;
   customDungeon: CustomDungeonModifiers;
+  /**
+   * Parts broken so far (Part Break Bonus, awakening 131) — applied to every card that
+   * has the awakening. Optional for older drafts / exports; missing = 0.
+   */
+  partsBroken?: number;
 };
 
 export const DEFAULT_CUSTOM_DUNGEON: CustomDungeonModifiers = {
@@ -164,5 +169,6 @@ export function defaultTeamBuildConfig(
     ],
     dungeonId: "none",
     customDungeon: { ...DEFAULT_CUSTOM_DUNGEON },
+    partsBroken: 0,
   };
 }

@@ -12,6 +12,195 @@
     "monsterNameJa": "試練ルシファー",
     "raw": "175,000,000ダメージの連続攻撃"
   },
+  "floorSummary": [
+    {
+      "index": 1,
+      "label": "乱入",
+      "floor": null,
+      "maxHit": {
+        "value": 8585000,
+        "monsterId": 10981,
+        "monsterNameJa": "レモック(変身)",
+        "raw": "8,585,000ダメージ+4ターン：吸収"
+      },
+      "partCount": 1
+    },
+    {
+      "index": 2,
+      "label": "B1",
+      "floor": 1,
+      "maxHit": {
+        "value": 45000,
+        "monsterId": 4642,
+        "monsterNameJa": "ネド",
+        "raw": "45,000ダメージ+全員4ターンスキル遅延"
+      },
+      "partCount": null
+    },
+    {
+      "index": 3,
+      "label": "B2",
+      "floor": 2,
+      "maxHit": {
+        "value": 6524600,
+        "monsterId": 5861,
+        "monsterNameJa": "転生ルミエル",
+        "raw": "6,524,600ダメージ+全ドロップ変化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 4,
+      "label": "B3",
+      "floor": 3,
+      "maxHit": {
+        "value": 175000000,
+        "monsterId": 13548,
+        "monsterNameJa": "試練ルシファー",
+        "raw": "175,000,000ダメージの連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 5,
+      "label": "B4",
+      "floor": 4,
+      "maxHit": {
+        "value": 7272000,
+        "monsterId": 3452,
+        "monsterNameJa": "木究極ヌト",
+        "raw": "7,272,000ダメージ+両端2列変化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 6,
+      "label": "B5",
+      "floor": 5,
+      "maxHit": {
+        "value": 40000000,
+        "monsterId": 1103,
+        "monsterNameJa": "究極エンジェル",
+        "raw": "40,000,000ダメージ(5倍時)+全ドロップ変化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 7,
+      "label": "B6",
+      "floor": 6,
+      "maxHit": {
+        "value": 3780000,
+        "monsterId": 4644,
+        "monsterNameJa": "ゴティーン",
+        "raw": "3,780,000ダメージ+5ターン：スキル封印"
+      },
+      "partCount": null
+    },
+    {
+      "index": 8,
+      "label": "B7",
+      "floor": 7,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 9,
+      "label": "B8",
+      "floor": 8,
+      "maxHit": {
+        "value": 9797000,
+        "monsterId": 5206,
+        "monsterNameJa": "転生マッハ",
+        "raw": "9,797,000ダメージ+全ドロップ変化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 10,
+      "label": "B9",
+      "floor": 9,
+      "maxHit": {
+        "value": 10710000,
+        "monsterId": 7278,
+        "monsterNameJa": "転生ウラノス",
+        "raw": "10,710,000ダメージ+999ターン：攻撃力5倍"
+      },
+      "partCount": null
+    },
+    {
+      "index": 11,
+      "label": "B10",
+      "floor": 10,
+      "maxHit": {
+        "value": 8484000,
+        "monsterId": 12717,
+        "monsterNameJa": "転生ハイレン",
+        "raw": "8,484,000ダメージ+全ドロップ変化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 12,
+      "label": "B11",
+      "floor": 11,
+      "maxHit": {
+        "value": 50242500,
+        "monsterId": 8465,
+        "monsterNameJa": "転生光メタトロン",
+        "raw": "50,242,500ダメージ(3.5倍時)の連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 13,
+      "label": "B12",
+      "floor": 12,
+      "maxHit": {
+        "value": 16160000,
+        "monsterId": 13554,
+        "monsterNameJa": "試練ウルド",
+        "raw": "16,160,000ダメージ+2ターン：チーム攻撃力激減"
+      },
+      "partCount": null
+    },
+    {
+      "index": 14,
+      "label": "B13",
+      "floor": 13,
+      "maxHit": {
+        "value": 16665000,
+        "monsterId": 13943,
+        "monsterNameJa": "ブレイブXゴッド",
+        "raw": "16,665,000ダメージ+2ターン：盤面7×6マス"
+      },
+      "partCount": null
+    },
+    {
+      "index": 15,
+      "label": "B14",
+      "floor": 14,
+      "maxHit": {
+        "value": 19440000,
+        "monsterId": 14018,
+        "monsterNameJa": "アレクセン",
+        "raw": "19,440,000ダメージの連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 16,
+      "label": "B15",
+      "floor": 15,
+      "maxHit": {
+        "value": 55200000,
+        "monsterId": 14019,
+        "monsterNameJa": "アレクセン(変身)",
+        "raw": "55,200,000ダメージ(3倍時)+全ドロップ変化"
+      },
+      "partCount": null
+    }
+  ],
   "requiredGimmicks": [
     {
       "id": "バインド",

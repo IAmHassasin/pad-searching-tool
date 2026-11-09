@@ -7,11 +7,88 @@
   "importedAt": "2026-11-04T20:04:09.443Z",
   "maxDamage": {
     "value": 47036,
-    "floor": "B81",
+    "floor": "B8",
     "monsterId": 2531,
     "monsterNameJa": null,
     "raw": "47,036ダメージの連続攻撃"
   },
+  "floorSummary": [
+    {
+      "index": 1,
+      "label": "B1",
+      "floor": 1,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 2,
+      "label": "B2",
+      "floor": 2,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 3,
+      "label": "B3",
+      "floor": 3,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 4,
+      "label": "B4",
+      "floor": 4,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 5,
+      "label": "B5",
+      "floor": 5,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 6,
+      "label": "B6",
+      "floor": 6,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 7,
+      "label": "B7",
+      "floor": 7,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 8,
+      "label": "B8",
+      "floor": 8,
+      "maxHit": {
+        "value": 47036,
+        "monsterId": 2531,
+        "monsterNameJa": null,
+        "raw": "47,036ダメージの連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 9,
+      "label": "B9",
+      "floor": 9,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 10,
+      "label": "B10",
+      "floor": 10,
+      "maxHit": null,
+      "partCount": null
+    }
+  ],
   "requiredGimmicks": [
     {
       "id": "ダメジ吸収",
@@ -78,8 +155,8 @@
   ],
   "floors": [
     {
-      "floor": "B12",
-      "spawnNote": "12体出現",
+      "floor": "B1",
+      "spawnNote": "2体出現",
       "spawns": [
         {
           "monsterId": 85,
@@ -142,8 +219,8 @@
       ]
     },
     {
-      "floor": "B23",
-      "spawnNote": "23体出現",
+      "floor": "B2",
+      "spawnNote": "3体出現",
       "spawns": [
         {
           "monsterId": 2195,
@@ -184,8 +261,8 @@
       ]
     },
     {
-      "floor": "B31",
-      "spawnNote": "31体出現",
+      "floor": "B3",
+      "spawnNote": "1体出現",
       "spawns": [
         {
           "monsterId": 897,
@@ -254,8 +331,8 @@
       ]
     },
     {
-      "floor": "B51",
-      "spawnNote": "51体出現",
+      "floor": "B5",
+      "spawnNote": "1体出現",
       "spawns": [
         {
           "monsterId": 1272,
@@ -324,8 +401,8 @@
       ]
     },
     {
-      "floor": "B62",
-      "spawnNote": "62体出現",
+      "floor": "B6",
+      "spawnNote": "2体出現",
       "spawns": [
         {
           "monsterId": 2337,
@@ -372,8 +449,8 @@
       ]
     },
     {
-      "floor": "B71",
-      "spawnNote": "71体出現",
+      "floor": "B7",
+      "spawnNote": "1体出現",
       "spawns": [
         {
           "monsterId": 1206,
@@ -420,8 +497,8 @@
       ]
     },
     {
-      "floor": "B81",
-      "spawnNote": "81体出現",
+      "floor": "B8",
+      "spawnNote": "1体出現",
       "spawns": [
         {
           "monsterId": 2531,

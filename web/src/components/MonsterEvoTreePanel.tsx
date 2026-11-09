@@ -6,6 +6,8 @@ import { MonsterRelationIcon } from "./MonsterRelationIcon";
 
 type TreeNode = {
   row: MonsterRecord;
+  /** How this node is reached from its parent; roots use "evolution". */
+  via: "evolution" | "transform";
   children: TreeNode[];
 };
 
@@ -16,25 +18,29 @@ function buildEvoTree(
 ): TreeNode[] {
   const byId = new Map(nodes.map((row) => [monsterRowId(row), row] as const));
   const childIds = new Set(edges.map((e) => e.to));
-  const childrenOf = new Map<number, number[]>();
+  const childrenOf = new Map<number, { id: number; via: TreeNode["via"] }[]>();
 
   for (const edge of edges) {
     const list = childrenOf.get(edge.from) ?? [];
-    list.push(edge.to);
+    if (list.some((c) => c.id === edge.to)) continue;
+    list.push({ id: edge.to, via: edge.kind === "transform" ? "transform" : "evolution" });
     childrenOf.set(edge.from, list);
   }
 
-  const toTree = (id: number, seen: Set<number>): TreeNode | null => {
+  const toTree = (
+    id: number,
+    seen: Set<number>,
+    via: TreeNode["via"] = "evolution"
+  ): TreeNode | null => {
     if (seen.has(id)) return null;
     const row = byId.get(id);
     if (!row) return null;
     const nextSeen = new Set(seen);
     nextSeen.add(id);
-    const childIdsForNode = childrenOf.get(id) ?? [];
-    const children = childIdsForNode
-      .map((childId) => toTree(childId, nextSeen))
+    const children = (childrenOf.get(id) ?? [])
+      .map((child) => toTree(child.id, nextSeen, child.via))
       .filter((n): n is TreeNode => n != null);
-    return { row, children };
+    return { row, via, children };
   };
 
   const roots: number[] = [];
@@ -47,7 +53,7 @@ function buildEvoTree(
   }
 
   if (!roots.length) {
-    return [...byId.values()].map((row) => ({ row, children: [] }));
+    return [...byId.values()].map((row) => ({ row, via: "evolution" as const, children: [] }));
   }
 
   const trees = roots
@@ -63,7 +69,7 @@ function buildEvoTree(
 
   for (const [id, row] of byId) {
     if (!placed.has(id)) {
-      trees.push({ row, children: [] });
+      trees.push({ row, via: "evolution", children: [] });
     }
   }
 
@@ -92,9 +98,19 @@ function EvoTreeBranch({
         <div className="flex min-w-0 flex-col gap-2 pl-1">
           {node.children.map((child) => (
             <div key={monsterRowId(child.row)} className="flex items-center gap-1">
-              <span className="text-[10px] text-[var(--color-faint)]" aria-hidden>
-                →
-              </span>
+              {child.via === "transform" ? (
+                <span
+                  className="text-[10px] font-semibold text-[var(--color-amber-text)]"
+                  title="Transforms in a dungeon"
+                  aria-label="transforms into"
+                >
+                  ⇢
+                </span>
+              ) : (
+                <span className="text-[10px] text-[var(--color-faint)]" aria-hidden>
+                  →
+                </span>
+              )}
               <EvoTreeBranch
                 node={child}
                 currentId={currentId}

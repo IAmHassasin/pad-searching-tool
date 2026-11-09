@@ -90,6 +90,8 @@ type Props = {
   changeTargetIds?: number[];
   onSelectChangeTarget?: (monsterId: number) => void;
   changeTargetLoadingId?: number | null;
+  /** Pre-transform forms; shown as a "Revert" strip using `onSelectChangeTarget`. */
+  revertTargetIds?: number[];
   /** Mobile sidebar: hide hero art, tighter layout. */
   compact?: boolean;
   /** Override full art URL (blob / data). */
@@ -342,6 +344,7 @@ export function MonsterDetailCard({
   changeTargetIds = [],
   onSelectChangeTarget,
   changeTargetLoadingId = null,
+  revertTargetIds = [],
   compact = false,
   artSrc = null,
   iconSrc = null,
@@ -550,6 +553,14 @@ export function MonsterDetailCard({
             {changeTargetIds.length > 0 && onSelectChangeTarget && (
               <MonsterChangeTargetStrip
                 targetIds={changeTargetIds}
+                onSelectTarget={onSelectChangeTarget}
+                loadingId={changeTargetLoadingId}
+              />
+            )}
+            {revertTargetIds.length > 0 && onSelectChangeTarget && (
+              <MonsterChangeTargetStrip
+                label="Revert"
+                targetIds={revertTargetIds}
                 onSelectTarget={onSelectChangeTarget}
                 loadingId={changeTargetLoadingId}
               />

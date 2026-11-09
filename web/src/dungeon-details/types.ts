@@ -63,6 +63,24 @@ export type DungeonSummary = {
   importedAt: string;
   /** Null for seeds imported before the field existed. */
   maxDamage?: DungeonMaxDamage | null;
+  /** Per-floor hardest hit + part count; missing / empty for older servers or seeds. */
+  floorSummary?: DungeonFloorSummary[];
+};
+
+export type DungeonFloorSummary = {
+  /** 1-based position in the floor table. */
+  index: number;
+  /** "B5", "乱入", … */
+  label: string;
+  /** Floor number when the label carries one (null for 乱入). */
+  floor: number | null;
+  maxHit: {
+    value: number;
+    monsterId: number | null;
+    monsterNameJa: string | null;
+    raw: string;
+  } | null;
+  partCount: number | null;
 };
 
 export type DungeonListResponse = {

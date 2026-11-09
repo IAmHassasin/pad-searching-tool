@@ -12,6 +12,180 @@
     "monsterNameJa": null,
     "raw": "5,940,000ダメージ+5ターン：コンボドロップ目覚め"
   },
+  "floorSummary": [
+    {
+      "index": 1,
+      "label": "B1",
+      "floor": 1,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 2,
+      "label": "B2",
+      "floor": 2,
+      "maxHit": {
+        "value": 880000,
+        "monsterId": 6341,
+        "monsterNameJa": "ゼレンバス",
+        "raw": "880,000ダメージ+ランダム1色変化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 3,
+      "label": "B3",
+      "floor": 3,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 4,
+      "label": "B4",
+      "floor": 4,
+      "maxHit": {
+        "value": 891000,
+        "monsterId": 1915,
+        "monsterNameJa": "鏡界の守護者・フィレム",
+        "raw": "891,000ダメージ+ランダム1色変化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 5,
+      "label": "B5",
+      "floor": 5,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 6,
+      "label": "B6",
+      "floor": 6,
+      "maxHit": {
+        "value": 153714,
+        "monsterId": 6678,
+        "monsterNameJa": "究極シラナキ",
+        "raw": "153,714ダメージ+5ターン：アシスト無効"
+      },
+      "partCount": null
+    },
+    {
+      "index": 7,
+      "label": "B7",
+      "floor": 7,
+      "maxHit": {
+        "value": 463100,
+        "monsterId": 7785,
+        "monsterNameJa": "マシロ(変身)",
+        "raw": "463,100ダメージ+1ターン：3体攻撃力激減"
+      },
+      "partCount": null
+    },
+    {
+      "index": 8,
+      "label": "B8",
+      "floor": 8,
+      "maxHit": {
+        "value": 2257200,
+        "monsterId": 6424,
+        "monsterNameJa": "転生マジェ",
+        "raw": "※盤面にがある場合、代わりに2,257,200ダメージ+→変化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 9,
+      "label": "B9",
+      "floor": 9,
+      "maxHit": {
+        "value": 113944,
+        "monsterId": 6418,
+        "monsterNameJa": "転生バリアス",
+        "raw": "113,944ダメージ+7ターン：指定4マス低速ルーレット"
+      },
+      "partCount": null
+    },
+    {
+      "index": 10,
+      "label": "B10",
+      "floor": 10,
+      "maxHit": {
+        "value": 961180,
+        "monsterId": 6412,
+        "monsterNameJa": "転生ラマモア",
+        "raw": "961,180ダメージ+4ターン：盤面6×5マス"
+      },
+      "partCount": null
+    },
+    {
+      "index": 11,
+      "label": "B11",
+      "floor": 11,
+      "maxHit": {
+        "value": 487025,
+        "monsterId": 3757,
+        "monsterNameJa": "火ネイ",
+        "raw": "487,025ダメージ+7ターン：吸収"
+      },
+      "partCount": null
+    },
+    {
+      "index": 12,
+      "label": "B12",
+      "floor": 12,
+      "maxHit": {
+        "value": 1082950,
+        "monsterId": 9381,
+        "monsterNameJa": "アウラ",
+        "raw": "1,082,950ダメージ+1ターン：吸収"
+      },
+      "partCount": null
+    },
+    {
+      "index": 13,
+      "label": "B13",
+      "floor": 13,
+      "maxHit": {
+        "value": 1007820,
+        "monsterId": 9365,
+        "monsterNameJa": "カミラ",
+        "raw": "1,007,820ダメージ+全ドロップ変化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 14,
+      "label": "B14",
+      "floor": 14,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 15,
+      "label": "B15",
+      "floor": 15,
+      "maxHit": {
+        "value": 5940000,
+        "monsterId": null,
+        "monsterNameJa": null,
+        "raw": "5,940,000ダメージ+5ターン：コンボドロップ目覚め"
+      },
+      "partCount": null
+    },
+    {
+      "index": 16,
+      "label": "B16",
+      "floor": 16,
+      "maxHit": {
+        "value": 550000,
+        "monsterId": null,
+        "monsterNameJa": null,
+        "raw": "550,000ダメージ+10ターン：攻撃力激減"
+      },
+      "partCount": null
+    }
+  ],
   "requiredGimmicks": [
     {
       "id": "バインド",

@@ -12,6 +12,53 @@
     "monsterNameJa": null,
     "raw": "31,584ダメージ"
   },
+  "floorSummary": [
+    {
+      "index": 1,
+      "label": "B3",
+      "floor": 3,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 2,
+      "label": "B4",
+      "floor": 4,
+      "maxHit": {
+        "value": 7351,
+        "monsterId": null,
+        "monsterNameJa": null,
+        "raw": "7,351ダメージ+盤面を真っ暗にする(木属性モンスターがいない時に使用)"
+      },
+      "partCount": null
+    },
+    {
+      "index": 3,
+      "label": "B6",
+      "floor": 6,
+      "maxHit": {
+        "value": 31584,
+        "monsterId": null,
+        "monsterNameJa": null,
+        "raw": "31,584ダメージ"
+      },
+      "partCount": null
+    },
+    {
+      "index": 4,
+      "label": "B7",
+      "floor": 7,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 5,
+      "label": "B8",
+      "floor": 8,
+      "maxHit": null,
+      "partCount": null
+    }
+  ],
   "requiredGimmicks": [],
   "cautionGimmicks": [],
   "floors": [

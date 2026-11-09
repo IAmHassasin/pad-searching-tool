@@ -12,6 +12,168 @@
     "monsterNameJa": "超転生呂布",
     "raw": "3,782,000ダメージ+を変化"
   },
+  "floorSummary": [
+    {
+      "index": 1,
+      "label": "B1",
+      "floor": 1,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 2,
+      "label": "B2",
+      "floor": 2,
+      "maxHit": {
+        "value": 3782000,
+        "monsterId": 8459,
+        "monsterNameJa": "超転生呂布",
+        "raw": "3,782,000ダメージ+を変化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 3,
+      "label": "B3",
+      "floor": 3,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 4,
+      "label": "B4",
+      "floor": 4,
+      "maxHit": {
+        "value": 1489200,
+        "monsterId": 7767,
+        "monsterNameJa": "超転生堕ルシ",
+        "raw": "1,489,200ダメージの連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 5,
+      "label": "B5",
+      "floor": 5,
+      "maxHit": {
+        "value": 1500000,
+        "monsterId": null,
+        "monsterNameJa": null,
+        "raw": "※スキル効果がない場合、1,500,000ダメージ"
+      },
+      "partCount": null
+    },
+    {
+      "index": 6,
+      "label": "B6",
+      "floor": 6,
+      "maxHit": {
+        "value": 1575000,
+        "monsterId": 6803,
+        "monsterNameJa": "超転生アンドロメダ",
+        "raw": "1,575,000ダメージ+全ドロップロック"
+      },
+      "partCount": null
+    },
+    {
+      "index": 7,
+      "label": "B7",
+      "floor": 7,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 8,
+      "label": "B8",
+      "floor": 8,
+      "maxHit": {
+        "value": 1326000,
+        "monsterId": null,
+        "monsterNameJa": null,
+        "raw": "1,326,000ダメージの連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 9,
+      "label": "B9",
+      "floor": 9,
+      "maxHit": {
+        "value": 1591200,
+        "monsterId": null,
+        "monsterNameJa": null,
+        "raw": "1,591,200ダメージの連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 10,
+      "label": "B10",
+      "floor": 10,
+      "maxHit": {
+        "value": 1659000,
+        "monsterId": 6528,
+        "monsterNameJa": "極醒風神",
+        "raw": "1,659,000ダメージ+2ターン：サブ攻撃力激減"
+      },
+      "partCount": null
+    },
+    {
+      "index": 11,
+      "label": "B11",
+      "floor": 11,
+      "maxHit": {
+        "value": 1417500,
+        "monsterId": 5131,
+        "monsterNameJa": "SARA",
+        "raw": "1,417,500ダメージ+1ターン：9コンボ以下吸収"
+      },
+      "partCount": null
+    },
+    {
+      "index": 12,
+      "label": "B12",
+      "floor": 12,
+      "maxHit": {
+        "value": 1680000,
+        "monsterId": 6047,
+        "monsterNameJa": "ドーナ",
+        "raw": "1,680,000ダメージ+3ターン：スキル封印"
+      },
+      "partCount": null
+    },
+    {
+      "index": 13,
+      "label": "B13",
+      "floor": 13,
+      "maxHit": {
+        "value": 1458000,
+        "monsterId": 5425,
+        "monsterNameJa": "レーヴェン",
+        "raw": "1,458,000ダメージ+1ターン：吸収"
+      },
+      "partCount": null
+    },
+    {
+      "index": 14,
+      "label": "B14",
+      "floor": 14,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 15,
+      "label": "B15",
+      "floor": 15,
+      "maxHit": {
+        "value": 2205000,
+        "monsterId": null,
+        "monsterNameJa": null,
+        "raw": "2,205,000ダメージ+全ドロップ変化"
+      },
+      "partCount": null
+    }
+  ],
   "requiredGimmicks": [
     {
       "id": "バインド",

@@ -8,6 +8,7 @@ import { DataSource } from "typeorm";
 import {
   equivalenceRulesAsBase,
   equivalenceRulesAsComposite,
+  requiredAwakeningCounts,
 } from "../awakening-equivalence";
 import { EffectValueCatalogService } from "../patterns/effect-value-catalog.service";
 import type {
@@ -483,10 +484,7 @@ export class PatternSearchService {
     if (hasAwakeningInclude || hasAwakeningExclude) {
       if (hasAwakeningInclude) {
         if (monster.awakeningMatch === "all") {
-          const required = new Map<number, number>();
-          for (const id of monster.awakeningIds!) {
-            required.set(id, (required.get(id) ?? 0) + 1);
-          }
+          const required = requiredAwakeningCounts(monster.awakeningIds!);
           const parts: string[] = [];
           for (const [id, minCount] of required) {
             parts.push(this.awakeningCountClause(id, minCount, params));

@@ -12,6 +12,101 @@
     "monsterNameJa": "クリフローディア",
     "raw": "①2,743,800ダメージの連続攻撃"
   },
+  "floorSummary": [
+    {
+      "index": 1,
+      "label": "乱入",
+      "floor": null,
+      "maxHit": {
+        "value": 2250000,
+        "monsterId": 10811,
+        "monsterNameJa": "進化クリファスカ",
+        "raw": "2,250,000ダメージ+2ターン：リーダーチェンジ"
+      },
+      "partCount": null
+    },
+    {
+      "index": 2,
+      "label": "B1",
+      "floor": 1,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 3,
+      "label": "B4",
+      "floor": 4,
+      "maxHit": {
+        "value": 2250000,
+        "monsterId": 13161,
+        "monsterNameJa": "クリミリー",
+        "raw": "2,250,000ダメージ+全ドロップ変化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 4,
+      "label": "B5",
+      "floor": 5,
+      "maxHit": {
+        "value": 2310000,
+        "monsterId": 13163,
+        "monsterNameJa": "クリハトホル",
+        "raw": "2,310,000ダメージ+3ターン：指定2マスルーレット"
+      },
+      "partCount": null
+    },
+    {
+      "index": 5,
+      "label": "B6",
+      "floor": 6,
+      "maxHit": {
+        "value": 1458000,
+        "monsterId": 1781,
+        "monsterNameJa": "サンタヘラ",
+        "raw": "1,458,000ダメージ+5ターン：弱化目覚め(30%)"
+      },
+      "partCount": null
+    },
+    {
+      "index": 6,
+      "label": "B7",
+      "floor": 7,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 7,
+      "label": "B8",
+      "floor": 8,
+      "maxHit": {
+        "value": 1290000,
+        "monsterId": 2524,
+        "monsterNameJa": "サンタクロース",
+        "raw": "1,290,000ダメージ+3ターン：落ちコンなし"
+      },
+      "partCount": null
+    },
+    {
+      "index": 8,
+      "label": "B9",
+      "floor": 9,
+      "maxHit": {
+        "value": 2743800,
+        "monsterId": 13165,
+        "monsterNameJa": "クリフローディア",
+        "raw": "①2,743,800ダメージの連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 9,
+      "label": "B10",
+      "floor": 10,
+      "maxHit": null,
+      "partCount": null
+    }
+  ],
   "requiredGimmicks": [
     {
       "id": "覚醒無効",

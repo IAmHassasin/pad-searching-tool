@@ -12,6 +12,67 @@
     "monsterNameJa": null,
     "raw": "196,462ダメージ"
   },
+  "floorSummary": [
+    {
+      "index": 1,
+      "label": "B1",
+      "floor": 1,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 2,
+      "label": "B2",
+      "floor": 2,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 3,
+      "label": "B3",
+      "floor": 3,
+      "maxHit": {
+        "value": 132096,
+        "monsterId": 1926,
+        "monsterNameJa": null,
+        "raw": "132,096ダメージ"
+      },
+      "partCount": null
+    },
+    {
+      "index": 4,
+      "label": "B4",
+      "floor": 4,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 5,
+      "label": "B5",
+      "floor": 5,
+      "maxHit": {
+        "value": 196462,
+        "monsterId": 3241,
+        "monsterNameJa": null,
+        "raw": "196,462ダメージ"
+      },
+      "partCount": null
+    },
+    {
+      "index": 6,
+      "label": "B6",
+      "floor": 6,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 7,
+      "label": "B7",
+      "floor": 7,
+      "maxHit": null,
+      "partCount": null
+    }
+  ],
   "requiredGimmicks": [
     {
       "id": "ダメジ吸収",

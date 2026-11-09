@@ -1,5 +1,6 @@
 import * as cheerio from "cheerio";
 import { absolutizeAppMediaUrl } from "./appmedia-fetch.mjs";
+import { floorNumber, parseFloorHeaderText } from "./floor-summary.mjs";
 import { buildPhraseLookup, matchGimmicksInLine } from "./gimmick-master.mjs";
 
 /**
@@ -87,6 +88,8 @@ export function parseDungeonFloorTable(html, masterEntries = []) {
   const floors = [];
   /** @type {Map<number, { cell: cheerio.Cheerio<any>, left: number }>} */
   const rowspanState = new Map();
+  /** Element of the floor cell seen on the previous row (rowspan repeats it). */
+  let lastFloorEl = null;
 
   table.find("tr").each((rowIdx, tr) => {
     if (rowIdx === 0) return;
@@ -99,8 +102,17 @@ export function parseDungeonFloorTable(html, masterEntries = []) {
     const effectCell = cols[2];
     if (!spawnCell || !effectCell) return;
 
-    const floorInfo = parseFloorHeader(floorCell);
     let floor = floors[floors.length - 1];
+    // A rowspan floor cell is repeated for each spawn row: it continues the current
+    // floor and must not be parsed again (re-splitting "B12体出現" after B1 fails).
+    const floorEl = floorCell?.get(0) ?? null;
+    const continuesFloor = floorEl != null && floorEl === lastFloorEl && floor != null;
+    lastFloorEl = floorEl;
+    const prevFloor =
+      [...floors].reverse().map((f) => floorNumber(f.floor)).find((n) => n != null) ?? 0;
+    const floorInfo = continuesFloor
+      ? { floor: floor.floor, spawnNote: null }
+      : parseFloorHeader(floorCell, prevFloor);
     if (floorInfo.floor && (!floor || floor.floor !== floorInfo.floor)) {
       floor = { floor: floorInfo.floor, spawnNote: floorInfo.spawnNote, spawns: [] };
       floors.push(floor);
@@ -117,20 +129,15 @@ export function parseDungeonFloorTable(html, masterEntries = []) {
   return floors;
 }
 
-/** @param {cheerio.Cheerio<any>|undefined} $td */
-function parseFloorHeader($td) {
+/**
+ * @param {cheerio.Cheerio<any>|undefined} $td
+ * @param {number} prevFloor last floor number of the table so far (0 at the start)
+ */
+function parseFloorHeader($td, prevFloor) {
   if (!$td?.length) return { floor: null, spawnNote: null };
   const text = $td.text().replace(/\s+/g, " ").trim();
-  const floorMatch = text.match(/B(\d+)/i);
-  const spawnNoteMatch = text.match(/(\d+体出現)/);
-  const spawnNote = spawnNoteMatch?.[1] ?? null;
-  if (floorMatch) {
-    return { floor: `B${floorMatch[1]}`, spawnNote };
-  }
-  if (/乱入/.test(text)) {
-    return { floor: "乱入", spawnNote };
-  }
-  return { floor: null, spawnNote };
+  // AppMedia sometimes omits the space ("B12体出現" = B1 with 2 spawns).
+  return parseFloorHeaderText(text, prevFloor);
 }
 
 /**

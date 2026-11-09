@@ -2,6 +2,7 @@ import {
   DEFAULT_AWK_MODIFIER_SETTINGS,
   type AwkModifierSettings,
 } from "../awakening-stat-modifier.ts";
+import { clampPartsBroken, PART_BREAK_AWAKENING_ID } from "../part-break.ts";
 import { BADGE_TEAM_PCT } from "./stat-reference.ts";
 import {
   DEFAULT_CUSTOM_DUNGEON,
@@ -156,7 +157,20 @@ export function sanitizeTeamBuildConfig(raw: unknown): TeamBuildConfig {
         ? raw.dungeonId
         : base.dungeonId,
     customDungeon: sanitizeCustomDungeon(raw.customDungeon),
+    partsBroken: sanitizePartsBroken(raw),
   };
+}
+
+/**
+ * Drafts saved before `partsBroken` existed kept the count in the manual awakening
+ * settings (`parts131`, only meaningful while 131 was enabled there).
+ */
+function sanitizePartsBroken(raw: Raw): number {
+  if (raw.partsBroken !== undefined) return clampPartsBroken(Number(raw.partsBroken));
+  const awk = isObject(raw.awkSettings) ? raw.awkSettings : null;
+  const enabled = awk && Array.isArray(awk.enabled) ? awk.enabled : [];
+  if (!enabled.includes(PART_BREAK_AWAKENING_ID)) return 0;
+  return clampPartsBroken(Number(awk?.parts131));
 }
 
 function defaultStorage(): StorageLike | null {

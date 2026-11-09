@@ -12,6 +12,127 @@
     "monsterNameJa": "新ゼンチョウガ",
     "raw": "8,100,000ダメージの連続攻撃"
   },
+  "floorSummary": [
+    {
+      "index": 1,
+      "label": "B1",
+      "floor": 1,
+      "maxHit": {
+        "value": 21000,
+        "monsterId": 5358,
+        "monsterNameJa": "アカオンマル",
+        "raw": "21,000ダメージ+5ターン：攻撃力激減(0.25倍)"
+      },
+      "partCount": null
+    },
+    {
+      "index": 2,
+      "label": "B2",
+      "floor": 2,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 3,
+      "label": "B3",
+      "floor": 3,
+      "maxHit": {
+        "value": 2121000,
+        "monsterId": 10702,
+        "monsterNameJa": "試練ラー",
+        "raw": "2,121,000ダメージ+全ドロップ変化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 4,
+      "label": "B4",
+      "floor": 4,
+      "maxHit": {
+        "value": 7800000,
+        "monsterId": 10701,
+        "monsterNameJa": "試練アテン",
+        "raw": "7,800,000ダメージ(10倍時)の連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 5,
+      "label": "B5",
+      "floor": 5,
+      "maxHit": {
+        "value": 7245000,
+        "monsterId": 10569,
+        "monsterNameJa": "カノ＆クロネ(変身)",
+        "raw": "7,245,000ダメージ(5倍時)の連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 6,
+      "label": "B6",
+      "floor": 6,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 7,
+      "label": "B7",
+      "floor": 7,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 8,
+      "label": "B8",
+      "floor": 8,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 9,
+      "label": "B9",
+      "floor": 9,
+      "maxHit": {
+        "value": 7590000,
+        "monsterId": 9868,
+        "monsterNameJa": "ジィルクロム",
+        "raw": "7,590,000ダメージ(5倍時)の連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 10,
+      "label": "B10",
+      "floor": 10,
+      "maxHit": {
+        "value": 2448000,
+        "monsterId": 10758,
+        "monsterNameJa": "試練ヘラ",
+        "raw": "2,448,000ダメージの連続攻撃+6ターン：20億以上無効"
+      },
+      "partCount": null
+    },
+    {
+      "index": 11,
+      "label": "B11",
+      "floor": 11,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 12,
+      "label": "B12",
+      "floor": 12,
+      "maxHit": {
+        "value": 8100000,
+        "monsterId": 11548,
+        "monsterNameJa": "新ゼンチョウガ",
+        "raw": "8,100,000ダメージの連続攻撃"
+      },
+      "partCount": 2
+    }
+  ],
   "requiredGimmicks": [
     {
       "id": "根性",

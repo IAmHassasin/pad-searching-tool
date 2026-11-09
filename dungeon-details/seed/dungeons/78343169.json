@@ -12,6 +12,152 @@
     "monsterNameJa": "アグリゲート(変身2)",
     "raw": "6ターン後、82,500,000ダメージの連続攻撃"
   },
+  "floorSummary": [
+    {
+      "index": 1,
+      "label": "B1",
+      "floor": 1,
+      "maxHit": {
+        "value": 26800,
+        "monsterId": 414,
+        "monsterNameJa": "ミツキ",
+        "raw": "26,800ダメージ+7ターン：25億以上吸収"
+      },
+      "partCount": null
+    },
+    {
+      "index": 2,
+      "label": "B2",
+      "floor": 2,
+      "maxHit": {
+        "value": 2142000,
+        "monsterId": 9615,
+        "monsterNameJa": "ヒカりん＆ワルりん(変身)",
+        "raw": "2,142,000ダメージの連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 3,
+      "label": "B3",
+      "floor": 3,
+      "maxHit": {
+        "value": 2200000,
+        "monsterId": 5989,
+        "monsterNameJa": "リシェイラ(変身)",
+        "raw": "2,200,000ダメージ+3ターン：LF攻撃力激減(0.01倍)"
+      },
+      "partCount": null
+    },
+    {
+      "index": 4,
+      "label": "B4",
+      "floor": 4,
+      "maxHit": {
+        "value": 2250000,
+        "monsterId": 6576,
+        "monsterNameJa": "ストーリー三蔵法師",
+        "raw": "2,250,000ダメージ+2ターン：回復力半減"
+      },
+      "partCount": null
+    },
+    {
+      "index": 5,
+      "label": "B5",
+      "floor": 5,
+      "maxHit": {
+        "value": 630000,
+        "monsterId": 3287,
+        "monsterNameJa": null,
+        "raw": "630,000ダメージ+サブ4ターンスキル遅延"
+      },
+      "partCount": null
+    },
+    {
+      "index": 6,
+      "label": "B6",
+      "floor": 6,
+      "maxHit": {
+        "value": 3060000,
+        "monsterId": 11541,
+        "monsterNameJa": "試練ツクヨミ",
+        "raw": "3,060,000ダメージ+2ターン：操作時間激減(0.25倍)"
+      },
+      "partCount": null
+    },
+    {
+      "index": 7,
+      "label": "B7",
+      "floor": 7,
+      "maxHit": {
+        "value": 9135000,
+        "monsterId": 11514,
+        "monsterNameJa": "三騎士(変身)",
+        "raw": "9,135,000ダメージ(3倍時)の連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 8,
+      "label": "B8",
+      "floor": 8,
+      "maxHit": {
+        "value": 3000000,
+        "monsterId": 11537,
+        "monsterNameJa": "試練カグツチ",
+        "raw": "3,000,000ダメージ+3ターン：サブ攻撃力激減(0.01倍)"
+      },
+      "partCount": null
+    },
+    {
+      "index": 9,
+      "label": "B9",
+      "floor": 9,
+      "maxHit": {
+        "value": 2409000,
+        "monsterId": 9997,
+        "monsterNameJa": "メタルアンタレス",
+        "raw": "2,409,000ダメージの連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 10,
+      "label": "B10",
+      "floor": 10,
+      "maxHit": {
+        "value": 4050000,
+        "monsterId": 10110,
+        "monsterNameJa": "試練アテナ",
+        "raw": "4,050,000ダメージの連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 11,
+      "label": "B11",
+      "floor": 11,
+      "maxHit": {
+        "value": 82500000,
+        "monsterId": 9872,
+        "monsterNameJa": "アグリゲート(変身2)",
+        "raw": "6ターン後、82,500,000ダメージの連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 12,
+      "label": "B12",
+      "floor": 12,
+      "maxHit": {
+        "value": 13860000,
+        "monsterId": 11553,
+        "monsterNameJa": "新アグリゲート",
+        "raw": "※1.5倍時、13,860,000ダメージの連続攻撃"
+      },
+      "partCount": 3
+    }
+  ],
   "requiredGimmicks": [
     {
       "id": "バインド",

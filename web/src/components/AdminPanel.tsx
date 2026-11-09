@@ -60,8 +60,22 @@ export function AdminPanel({
     try {
       const res = await adminRefreshDb(token);
       const n = res.import.tablesReplaced.length;
+      const v = res.vanish;
+      let vanishLine = "";
+      if (!v) {
+        // Older backend without the vanish step.
+      } else if (v.ok) {
+        vanishLine =
+          ` Vanish assists: ${v.inserted} added, ${v.updated} updated, ${v.pruned} pruned` +
+          ` (${v.deltaTotal} in delta DB).`;
+        if (v.unmappedNames.length) {
+          vanishLine += ` Unmapped awoken names: ${v.unmappedNames.join(", ")}.`;
+        }
+      } else {
+        setRefreshError(`Vanish assist update skipped: ${v.error}`);
+      }
       setRefreshResult(
-        `Refresh OK at ${res.finishedAt}. ${n} table(s) updated from community dump.`
+        `Refresh OK at ${res.finishedAt}. ${n} table(s) updated from community dump.${vanishLine}`
       );
       onRefreshComplete();
     } catch (err) {

@@ -8,6 +8,8 @@ type Props = {
   onSelectTarget: (monsterId: number) => void;
   loadingId?: number | null;
   iconSize?: number;
+  /** Strip label: "Change" for post-transform forms, "Revert" for pre-transform forms. */
+  label?: string;
 };
 
 export function MonsterChangeTargetStrip({
@@ -15,6 +17,7 @@ export function MonsterChangeTargetStrip({
   onSelectTarget,
   loadingId = null,
   iconSize = 40,
+  label = "Change",
 }: Props) {
   if (!targetIds.length) return null;
 
@@ -24,7 +27,7 @@ export function MonsterChangeTargetStrip({
         className={labelClass}
         style={{ fontSize: 11, fontWeight: 700, lineHeight: 1.25 }}
       >
-        Change
+        {label}
       </span>
       <div className="flex flex-wrap items-center gap-1">
         {targetIds.map((targetId) => {
@@ -35,7 +38,7 @@ export function MonsterChangeTargetStrip({
               type="button"
               onClick={() => onSelectTarget(targetId)}
               disabled={loading}
-              aria-label={`View monster #${targetId}`}
+              aria-label={`${label}: view monster #${targetId}`}
               title={`#${targetId}`}
               className="shrink-0 rounded border border-[#8b6914]/70 bg-[#1a1410] p-0.5 transition-shadow hover:border-[#c9a84a] hover:shadow-md disabled:opacity-60"
               style={{ width: iconSize, height: iconSize }}

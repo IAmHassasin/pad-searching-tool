@@ -12,6 +12,200 @@
     "monsterNameJa": "サンドルム",
     "raw": "45,000,000ダメージ(4.5倍時)+全ドロップ変化"
   },
+  "floorSummary": [
+    {
+      "index": 1,
+      "label": "乱入",
+      "floor": null,
+      "maxHit": {
+        "value": 6300000,
+        "monsterId": 6584,
+        "monsterNameJa": "火ソフィ",
+        "raw": "6,300,000ダメージ+1ターン：消せない"
+      },
+      "partCount": 1
+    },
+    {
+      "index": 2,
+      "label": "B1",
+      "floor": 1,
+      "maxHit": {
+        "value": 45000,
+        "monsterId": 10517,
+        "monsterNameJa": "ソルドーラ",
+        "raw": "45,000ダメージ+7ターン：状態異常無効"
+      },
+      "partCount": null
+    },
+    {
+      "index": 3,
+      "label": "B2",
+      "floor": 2,
+      "maxHit": {
+        "value": 8250000,
+        "monsterId": 3492,
+        "monsterNameJa": "転生アレス",
+        "raw": "8,250,000ダメージ+全ドロップ変化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 4,
+      "label": "B3",
+      "floor": 3,
+      "maxHit": {
+        "value": 2500000,
+        "monsterId": 191,
+        "monsterNameJa": "パイロデビル",
+        "raw": "2,500,000ダメージ+3ターン：2コンボ減算"
+      },
+      "partCount": null
+    },
+    {
+      "index": 5,
+      "label": "B4",
+      "floor": 4,
+      "maxHit": {
+        "value": 20000000,
+        "monsterId": 3332,
+        "monsterNameJa": "エルドラ",
+        "raw": "20,000,000ダメージ(4倍時)の連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 6,
+      "label": "B5",
+      "floor": 5,
+      "maxHit": {
+        "value": 6300000,
+        "monsterId": 1947,
+        "monsterNameJa": "ガディウス",
+        "raw": "6,300,000ダメージ+3ターン：2コンボ減算"
+      },
+      "partCount": null
+    },
+    {
+      "index": 7,
+      "label": "B6",
+      "floor": 6,
+      "maxHit": {
+        "value": 6000000,
+        "monsterId": 4183,
+        "monsterNameJa": "究極ルー",
+        "raw": "6,000,000ダメージ+2ターン：4体攻撃力激減"
+      },
+      "partCount": null
+    },
+    {
+      "index": 8,
+      "label": "B7",
+      "floor": 7,
+      "maxHit": {
+        "value": 8000000,
+        "monsterId": 3159,
+        "monsterNameJa": "究極ケプリ",
+        "raw": "8,000,000ダメージ+1ターン：盤面5×4マス"
+      },
+      "partCount": null
+    },
+    {
+      "index": 9,
+      "label": "B8",
+      "floor": 8,
+      "maxHit": {
+        "value": 8000000,
+        "monsterId": 3267,
+        "monsterNameJa": "アテン",
+        "raw": "8,000,000ダメージ+4ターン：最大HP半減"
+      },
+      "partCount": null
+    },
+    {
+      "index": 10,
+      "label": "B9",
+      "floor": 9,
+      "maxHit": {
+        "value": 7500000,
+        "monsterId": 3388,
+        "monsterNameJa": "超転生アマテラス",
+        "raw": "7,500,000ダメージ+6ターン：目覚め"
+      },
+      "partCount": null
+    },
+    {
+      "index": 11,
+      "label": "B10",
+      "floor": 10,
+      "maxHit": {
+        "value": 15000000,
+        "monsterId": 9381,
+        "monsterNameJa": "アウラ",
+        "raw": "15,000,000ダメージ(4倍時)+1ターン：盤面5×4マス"
+      },
+      "partCount": null
+    },
+    {
+      "index": 12,
+      "label": "B11",
+      "floor": 11,
+      "maxHit": {
+        "value": 8610000,
+        "monsterId": 3055,
+        "monsterNameJa": "木究極アルレシャ",
+        "raw": "8,610,000ダメージ+1ターン：ランダム1属性吸収"
+      },
+      "partCount": null
+    },
+    {
+      "index": 13,
+      "label": "B12",
+      "floor": 12,
+      "maxHit": {
+        "value": 8300000,
+        "monsterId": 3265,
+        "monsterNameJa": "超究極ラードラ",
+        "raw": "8,300,000ダメージ+1ターン：サブ2体バインド"
+      },
+      "partCount": null
+    },
+    {
+      "index": 14,
+      "label": "B13",
+      "floor": 13,
+      "maxHit": {
+        "value": 20000000,
+        "monsterId": 10149,
+        "monsterNameJa": "ラーホルアクティ",
+        "raw": "20,000,000ダメージの連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 15,
+      "label": "B14",
+      "floor": 14,
+      "maxHit": {
+        "value": 9000000,
+        "monsterId": 13375,
+        "monsterNameJa": "ソルディー",
+        "raw": "9,000,000ダメージ+全ドロップ変化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 16,
+      "label": "B15",
+      "floor": 15,
+      "maxHit": {
+        "value": 45000000,
+        "monsterId": 13376,
+        "monsterNameJa": "サンドルム",
+        "raw": "45,000,000ダメージ(4.5倍時)+全ドロップ変化"
+      },
+      "partCount": null
+    }
+  ],
   "requiredGimmicks": [
     {
       "id": "バインド",

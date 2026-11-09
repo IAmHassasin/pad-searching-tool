@@ -2,13 +2,15 @@ import type { MonsterRecord } from "../../types.ts";
 import type { MonsterLevelTarget } from "./types.ts";
 import {
   ASSIST_BONUS_PCT,
+  ASSIST_BONUS_PLUS_CAP,
   PLUS_ATK_PER_POINT,
   PLUS_HP_PER_POINT,
   PLUS_RCV_PER_POINT,
 } from "./stat-reference.ts";
 import { scaleStatForLevel } from "./level-scaling.ts";
 
-function sharesAssistAttribute(
+/** Assist bonus applies (main attributes match, or either side is attribute 6 "None"). */
+export function sharesAssistAttribute(
   base: MonsterRecord,
   assist: MonsterRecord
 ): boolean {
@@ -38,6 +40,15 @@ function assistStatAtLevel(
   return scaled + plusFlat;
 }
 
+/**
+ * Plus points of the assist that count toward the assist bonus: points gained through
+ * ＋限界突破 (above +99 per stat) are not reflected.
+ */
+export function assistBonusPlus(plusPoints: number): number {
+  const n = Number.isFinite(plusPoints) ? plusPoints : 0;
+  return Math.max(0, Math.min(ASSIST_BONUS_PLUS_CAP, n));
+}
+
 /** HP +10%, ATK +5%, RCV +15% of the assist's stats when main attributes match. */
 export function computeAssistBonus(
   base: MonsterRecord,
@@ -50,9 +61,9 @@ export function computeAssistBonus(
   if (!assist || !sharesAssistAttribute(base, assist)) {
     return { hp: 0, atk: 0, rcv: 0 };
   }
-  const assistHp = assistStatAtLevel(assist, eqLevel, "hp", eqPlusHp);
-  const assistAtk = assistStatAtLevel(assist, eqLevel, "atk", eqPlusAtk);
-  const assistRcv = assistStatAtLevel(assist, eqLevel, "rcv", eqPlusRcv);
+  const assistHp = assistStatAtLevel(assist, eqLevel, "hp", assistBonusPlus(eqPlusHp));
+  const assistAtk = assistStatAtLevel(assist, eqLevel, "atk", assistBonusPlus(eqPlusAtk));
+  const assistRcv = assistStatAtLevel(assist, eqLevel, "rcv", assistBonusPlus(eqPlusRcv));
   return {
     hp: Math.round(assistHp * (ASSIST_BONUS_PCT.hp / 100)),
     atk: Math.round(assistAtk * (ASSIST_BONUS_PCT.atk / 100)),

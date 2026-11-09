@@ -6,9 +6,11 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { fetchMonstersByIds } from "../api";
 import { parseChangeToMonsterIds } from "../lib/format-active-skill-desc";
 import { monsterRowId } from "../lib/filters";
+import { transformSources } from "../lib/team-build/transform";
 import type { MonsterRecord } from "../types";
 import { MonsterCollabGroupPanel } from "./MonsterCollabGroupPanel";
 import { MonsterDetailCard } from "./MonsterDetailCard";
@@ -113,6 +115,20 @@ export function MonsterDetailPanel({
     [row.active_skill_desc_en]
   );
 
+  // Search rows do not carry `transform_from_ids` (only `/monsters/lookup` does), so look the
+  // monster up once to know whether it is a post-transform form that can revert.
+  const hasTransformLinks = Array.isArray(row.transform_from_ids);
+  const lookupQuery = useQuery({
+    queryKey: ["monsters", "lookup", monsterId],
+    queryFn: () => fetchMonstersByIds([monsterId]),
+    enabled: !hasTransformLinks && monsterId > 0,
+    staleTime: 5 * 60_000,
+  });
+  const revertTargetIds = useMemo(
+    () => transformSources(hasTransformLinks ? row : lookupQuery.data?.rows[0]),
+    [hasTransformLinks, row, lookupQuery.data]
+  );
+
   useEffect(() => {
     setOverlay(null);
     setChangeTargetLoadingId(null);
@@ -146,6 +162,7 @@ export function MonsterDetailPanel({
       changeTargetIds={changeTargetIds}
       onSelectChangeTarget={handleSelectChangeTarget}
       changeTargetLoadingId={changeTargetLoadingId}
+      revertTargetIds={revertTargetIds}
       compact={sidebar && !showFullArt}
       copyImageButton
     />

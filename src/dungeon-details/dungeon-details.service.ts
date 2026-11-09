@@ -21,7 +21,56 @@ export type DungeonSummary = {
   importedAt: string;
   /** Null when the seed predates the field (run `make dungeon-max-damage`) or has no damage line. */
   maxDamage: DungeonMaxDamage | null;
+  /** Per-floor hardest hit + part count (dungeon-details/lib/floor-summary.mjs); empty before `make dungeon-floor-summary`. */
+  floorSummary: DungeonFloorSummary[];
 };
+
+export type DungeonFloorSummary = {
+  index: number;
+  label: string;
+  floor: number | null;
+  maxHit: {
+    value: number;
+    monsterId: number | null;
+    monsterNameJa: string | null;
+    raw: string;
+  } | null;
+  partCount: number | null;
+};
+
+function finitePositive(v: unknown): v is number {
+  return typeof v === "number" && Number.isFinite(v) && v > 0;
+}
+
+function readFloorSummary(raw: unknown): DungeonFloorSummary[] {
+  if (!Array.isArray(raw)) return [];
+  const out: DungeonFloorSummary[] = [];
+  for (const item of raw) {
+    if (typeof item !== "object" || item === null) continue;
+    const r = item as Record<string, unknown>;
+    if (!finitePositive(r.index) || typeof r.label !== "string") continue;
+    const hit =
+      typeof r.maxHit === "object" && r.maxHit !== null
+        ? (r.maxHit as Record<string, unknown>)
+        : null;
+    out.push({
+      index: r.index,
+      label: r.label,
+      floor: finitePositive(r.floor) ? r.floor : null,
+      maxHit:
+        hit && finitePositive(hit.value)
+          ? {
+              value: hit.value,
+              monsterId: typeof hit.monsterId === "number" ? hit.monsterId : null,
+              monsterNameJa: typeof hit.monsterNameJa === "string" ? hit.monsterNameJa : null,
+              raw: typeof hit.raw === "string" ? hit.raw : "",
+            }
+          : null,
+      partCount: finitePositive(r.partCount) ? Math.trunc(r.partCount) : null,
+    });
+  }
+  return out;
+}
 
 function readMaxDamage(raw: unknown): DungeonMaxDamage | null {
   if (typeof raw !== "object" || raw === null) return null;
@@ -116,9 +165,10 @@ export class DungeonDetailsService {
       .filter((name) => name.endsWith(".json"))
       .map((name) => {
         const raw = readFileSync(join(this.seedDir, name), "utf8");
-        const data = JSON.parse(raw) as Omit<DungeonSummary, "maxDamage"> & {
+        const data = JSON.parse(raw) as Omit<DungeonSummary, "maxDamage" | "floorSummary"> & {
           titleJa: string;
           maxDamage?: unknown;
+          floorSummary?: unknown;
         };
         return {
           appmediaPostId: data.appmediaPostId,
@@ -130,6 +180,7 @@ export class DungeonDetailsService {
           modified: data.modified ?? null,
           importedAt: data.importedAt,
           maxDamage: readMaxDamage(data.maxDamage),
+          floorSummary: readFloorSummary(data.floorSummary),
         };
       })
       .sort((a, b) => {

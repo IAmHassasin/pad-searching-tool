@@ -3,6 +3,7 @@ import type { DungeonSummary } from "../dungeon-details/types";
 import { stripPadTitle } from "../dungeon-details/utils";
 import type { DungeonCatalogEntry } from "../lib/team-build/dungeon-catalog";
 import type { ResolvedMaxHit } from "../lib/team-build/dungeon-sources";
+import { hasUsableFloorTable, type TeamHpAt } from "../lib/team-build/floor-trial";
 import {
   computeResilience,
   describeDefensiveEffect,
@@ -12,12 +13,18 @@ import {
 } from "../lib/team-build/resilience";
 import type { TeamBuildConfig } from "../lib/team-build/types";
 import type { MonsterRecord } from "../types";
+import { TrialFloorChecks } from "./TrialFloorChecks";
 
 type Props = {
   config: TeamBuildConfig;
   monstersById: Map<number, MonsterRecord>;
   /** Team total HP (LS HP × badge × dungeon × team awakenings). */
   teamHp: number;
+  /** Team HP at a floor state (Aging stage, broken parts) for the per-floor checks. */
+  hpAt: TeamHpAt;
+  /** Broken parts per floor index (shared with the team totals). */
+  floorPartsBroken: ReadonlyMap<number, number>;
+  onFloorPartsBrokenChange: (next: Map<number, number>) => void;
   slotLabel: (index: number) => string;
   /** Dungeon selected in Team settings (same list as the picker). */
   entry: DungeonCatalogEntry | null;
@@ -99,6 +106,38 @@ function OptionRadio({
   );
 }
 
+function LeaderShieldToggle({
+  checked,
+  onChange,
+  leaders,
+  slotLabel,
+}: {
+  checked: boolean;
+  onChange: (next: boolean) => void;
+  leaders: Array<{ index: number; shield: number }>;
+  slotLabel: (index: number) => string;
+}) {
+  return (
+    <label className="flex items-center gap-2 text-xs text-[var(--color-fg-strong)]">
+      <input
+        type="checkbox"
+        checked={checked}
+        onChange={(e) => onChange(e.target.checked)}
+        className="accent-[var(--color-accent)]"
+      />
+      <span>
+        Leader-skill shields (max):{" "}
+        {leaders.map((l, i) => (
+          <span key={l.index} className="font-mono tabular-nums">
+            {i > 0 ? " · " : ""}
+            {slotLabel(l.index)} {Math.round(l.shield * 100)}%
+          </span>
+        ))}
+      </span>
+    </label>
+  );
+}
+
 function StatRow({
   label,
   value,
@@ -130,6 +169,9 @@ export function TeamTrialPanel({
   config,
   monstersById,
   teamHp,
+  hpAt,
+  floorPartsBroken,
+  onFloorPartsBrokenChange,
   slotLabel,
   entry,
   dungeonLabel,
@@ -178,6 +220,10 @@ export function TeamTrialPanel({
     o.skillName ? `${o.monsterName} — ${o.skillName}` : o.monsterName;
 
   const hasDungeon = entry != null || config.dungeonId === "custom";
+  // Per-floor checks when the imported floor table has a summary with hits.
+  const floors = seed?.floorSummary ?? [];
+  const hasFloorTable = hasUsableFloorTable(floors);
+  const leaderShieldValues = includeLeaderShield ? leaders.map((l) => l.shield) : [];
 
   return (
     <section className="ds-card mb-3 p-3" aria-label="Trial">
@@ -297,6 +343,29 @@ export function TeamTrialPanel({
         <div className="min-w-0 space-y-3 rounded-xl border border-white/[0.06] bg-[var(--color-inset)]/40 p-2.5">
           <h3 className="ds-label text-[var(--color-accent-strong)]">Resilience</h3>
 
+          {hasFloorTable && seed && (
+            <>
+              <LeaderShieldToggle
+                checked={includeLeaderShield}
+                onChange={setIncludeLeaderShield}
+                leaders={leaders}
+                slotLabel={slotLabel}
+              />
+              <TrialFloorChecks
+                key={seed.appmediaPostId}
+                floors={floors}
+                partsBroken={floorPartsBroken}
+                onPartsBrokenChange={onFloorPartsBrokenChange}
+                hpAt={hpAt}
+                leaderShields={leaderShieldValues}
+                hpOptions={hpOptions}
+                shieldOptions={shieldOptions}
+                slotLabel={slotLabel}
+              />
+            </>
+          )}
+          {!hasFloorTable && (
+          <>
           <div className="space-y-1">
             <StatRow
               label="Dungeon max hit"
@@ -322,23 +391,12 @@ export function TeamTrialPanel({
             />
           </div>
 
-          <label className="flex items-center gap-2 text-xs text-[var(--color-fg-strong)]">
-            <input
-              type="checkbox"
-              checked={includeLeaderShield}
-              onChange={(e) => setIncludeLeaderShield(e.target.checked)}
-              className="accent-[var(--color-accent)]"
-            />
-            <span>
-              Leader-skill shields (max):{" "}
-              {leaders.map((l, i) => (
-                <span key={l.index} className="font-mono tabular-nums">
-                  {i > 0 ? " · " : ""}
-                  {slotLabel(l.index)} {Math.round(l.shield * 100)}%
-                </span>
-              ))}
-            </span>
-          </label>
+          <LeaderShieldToggle
+            checked={includeLeaderShield}
+            onChange={setIncludeLeaderShield}
+            leaders={leaders}
+            slotLabel={slotLabel}
+          />
 
           <div className="space-y-1">
             <p className="text-xs text-[var(--color-muted)]">HP buff active (one at a time)</p>
@@ -423,6 +481,8 @@ export function TeamTrialPanel({
               </p>
             )}
           </div>
+          </>
+          )}
         </div>
       </div>
     </section>

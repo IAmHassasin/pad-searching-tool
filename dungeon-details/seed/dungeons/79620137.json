@@ -12,6 +12,188 @@
     "monsterNameJa": "ノヴァ(変身)",
     "raw": "208,750,000ダメージの連続攻撃"
   },
+  "floorSummary": [
+    {
+      "index": 1,
+      "label": "B1",
+      "floor": 1,
+      "maxHit": {
+        "value": 25500,
+        "monsterId": 288,
+        "monsterNameJa": "ドラール",
+        "raw": "25,500ダメージ+7ターン：状態異常無効"
+      },
+      "partCount": null
+    },
+    {
+      "index": 2,
+      "label": "B2",
+      "floor": 2,
+      "maxHit": {
+        "value": 3850000,
+        "monsterId": 10260,
+        "monsterNameJa": "スーリア(変身)",
+        "raw": "3,850,000ダメージ+1ターン：ランダム1属性吸収"
+      },
+      "partCount": null
+    },
+    {
+      "index": 3,
+      "label": "B3",
+      "floor": 3,
+      "maxHit": {
+        "value": 4000000,
+        "monsterId": 10700,
+        "monsterNameJa": "試練ネフティス",
+        "raw": "4,000,000ダメージ+全ドロップ変化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 4,
+      "label": "B4",
+      "floor": 4,
+      "maxHit": {
+        "value": 900000,
+        "monsterId": 9535,
+        "monsterNameJa": "プラリット",
+        "raw": "900,000ダメージ+ドロップ2個トゲ"
+      },
+      "partCount": null
+    },
+    {
+      "index": 5,
+      "label": "B5",
+      "floor": 5,
+      "maxHit": {
+        "value": 24245000,
+        "monsterId": 10907,
+        "monsterNameJa": "三玩龍(変身)",
+        "raw": "5,049,000ダメージ(5倍時：24,245,000ダメージ)の連続攻撃+全ドロップ変化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 6,
+      "label": "B6",
+      "floor": 6,
+      "maxHit": {
+        "value": 4860000,
+        "monsterId": 12110,
+        "monsterNameJa": "巴御前",
+        "raw": "4,860,000ダメージ+3ターン：全員攻撃力激減(0.25倍)"
+      },
+      "partCount": 1
+    },
+    {
+      "index": 7,
+      "label": "B7",
+      "floor": 7,
+      "maxHit": {
+        "value": 3700000,
+        "monsterId": 6584,
+        "monsterNameJa": "火ソフィ",
+        "raw": "3,700,000ダメージ+ドロップリフレッシュ"
+      },
+      "partCount": null
+    },
+    {
+      "index": 8,
+      "label": "B8",
+      "floor": 8,
+      "maxHit": {
+        "value": 6800000,
+        "monsterId": 12266,
+        "monsterNameJa": "試練ハク",
+        "raw": "6,800,000ダメージ+999ターン：攻撃力1.2倍"
+      },
+      "partCount": null
+    },
+    {
+      "index": 9,
+      "label": "B9",
+      "floor": 9,
+      "maxHit": {
+        "value": 7400000,
+        "monsterId": 5689,
+        "monsterNameJa": "ファシル",
+        "raw": "7,400,000ダメージ+3ターン：LFダメージ上限値20億"
+      },
+      "partCount": null
+    },
+    {
+      "index": 10,
+      "label": "B10",
+      "floor": 10,
+      "maxHit": {
+        "value": 195000000,
+        "monsterId": 13061,
+        "monsterNameJa": "ロキウィルド",
+        "raw": "195,000,000ダメージの連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 11,
+      "label": "B11",
+      "floor": 11,
+      "maxHit": {
+        "value": 28835000,
+        "monsterId": 11583,
+        "monsterNameJa": "試練ラファエル",
+        "raw": "属性変化+28,835,000ダメージの連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 12,
+      "label": "B12",
+      "floor": 12,
+      "maxHit": {
+        "value": 8640000,
+        "monsterId": 10762,
+        "monsterNameJa": "試練闇メタトロン",
+        "raw": "8,640,000ダメージの連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 13,
+      "label": "B13",
+      "floor": 13,
+      "maxHit": {
+        "value": 8150000,
+        "monsterId": 8899,
+        "monsterNameJa": "水フェンリルヴィズ",
+        "raw": "8,150,000ダメージ+2ターン：アシスト無効"
+      },
+      "partCount": null
+    },
+    {
+      "index": 14,
+      "label": "B14",
+      "floor": 14,
+      "maxHit": {
+        "value": 8200000,
+        "monsterId": 10300,
+        "monsterNameJa": "ノヴァ",
+        "raw": "8,200,000ダメージ+全ドロップ変化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 15,
+      "label": "B15",
+      "floor": 15,
+      "maxHit": {
+        "value": 208750000,
+        "monsterId": 10301,
+        "monsterNameJa": "ノヴァ(変身)",
+        "raw": "208,750,000ダメージの連続攻撃"
+      },
+      "partCount": null
+    }
+  ],
   "requiredGimmicks": [
     {
       "id": "ダメジ無効",
