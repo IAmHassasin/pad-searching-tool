@@ -7,11 +7,113 @@
   "importedAt": "2026-11-04T20:04:02.095Z",
   "maxDamage": {
     "value": 128276,
-    "floor": "B22",
+    "floor": "B2",
     "monsterId": 2531,
     "monsterNameJa": "シェダル",
     "raw": "128,276ダメージの連続攻撃"
   },
+  "floorSummary": [
+    {
+      "index": 1,
+      "label": "B1",
+      "floor": 1,
+      "maxHit": {
+        "value": 56354,
+        "monsterId": 2655,
+        "monsterNameJa": "イエローガジェット",
+        "raw": "56,354ダメージ+1個生成"
+      },
+      "partCount": null
+    },
+    {
+      "index": 2,
+      "label": "B2",
+      "floor": 2,
+      "maxHit": {
+        "value": 128276,
+        "monsterId": 2531,
+        "monsterNameJa": "シェダル",
+        "raw": "128,276ダメージの連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 3,
+      "label": "B3",
+      "floor": 3,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 4,
+      "label": "B4",
+      "floor": 4,
+      "maxHit": {
+        "value": 47754,
+        "monsterId": 1458,
+        "monsterNameJa": "フォークロア",
+        "raw": "47,754ダメージ+3ターン：覚醒無効"
+      },
+      "partCount": null
+    },
+    {
+      "index": 5,
+      "label": "B5",
+      "floor": 5,
+      "maxHit": {
+        "value": 53580,
+        "monsterId": 2652,
+        "monsterNameJa": "ブルーガジェット",
+        "raw": "53,580ダメージ+3個生成"
+      },
+      "partCount": null
+    },
+    {
+      "index": 6,
+      "label": "B6",
+      "floor": 6,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 7,
+      "label": "B7",
+      "floor": 7,
+      "maxHit": {
+        "value": 69081,
+        "monsterId": 2741,
+        "monsterNameJa": "転生エンシェントドラゴンナイト",
+        "raw": "69,081ダメージの連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 8,
+      "label": "B8",
+      "floor": 8,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 9,
+      "label": "B9",
+      "floor": 9,
+      "maxHit": {
+        "value": 84330,
+        "monsterId": 2298,
+        "monsterNameJa": "クラジュマキナ",
+        "raw": "84,330ダメージ+をに変化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 10,
+      "label": "B10",
+      "floor": 10,
+      "maxHit": null,
+      "partCount": null
+    }
+  ],
   "requiredGimmicks": [
     {
       "id": "スキル遅延",
@@ -78,8 +180,8 @@
   ],
   "floors": [
     {
-      "floor": "B13",
-      "spawnNote": "13体出現",
+      "floor": "B1",
+      "spawnNote": "3体出現",
       "spawns": [
         {
           "monsterId": 2196,
@@ -146,8 +248,8 @@
       ]
     },
     {
-      "floor": "B22",
-      "spawnNote": "22体出現",
+      "floor": "B2",
+      "spawnNote": "2体出現",
       "spawns": [
         {
           "monsterId": 2531,
@@ -210,8 +312,8 @@
       ]
     },
     {
-      "floor": "B33",
-      "spawnNote": "33体出現",
+      "floor": "B3",
+      "spawnNote": "3体出現",
       "spawns": [
         {
           "monsterId": 2195,
@@ -307,8 +409,8 @@
       ]
     },
     {
-      "floor": "B53",
-      "spawnNote": "53体出現",
+      "floor": "B5",
+      "spawnNote": "3体出現",
       "spawns": [
         {
           "monsterId": 2199,

@@ -12,6 +12,79 @@
     "monsterNameJa": null,
     "raw": "31,020ダメージ+1ターン：上から2列目～下から2列目雲"
   },
+  "floorSummary": [
+    {
+      "index": 1,
+      "label": "B1",
+      "floor": 1,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 2,
+      "label": "B2",
+      "floor": 2,
+      "maxHit": {
+        "value": 21218,
+        "monsterId": 1958,
+        "monsterNameJa": null,
+        "raw": "21,218ダメージ"
+      },
+      "partCount": null
+    },
+    {
+      "index": 3,
+      "label": "B3",
+      "floor": 3,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 4,
+      "label": "B4",
+      "floor": 4,
+      "maxHit": {
+        "value": 31020,
+        "monsterId": 1514,
+        "monsterNameJa": null,
+        "raw": "31,020ダメージ+1ターン：上から2列目～下から2列目雲"
+      },
+      "partCount": null
+    },
+    {
+      "index": 5,
+      "label": "B5",
+      "floor": 5,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 6,
+      "label": "B6",
+      "floor": 6,
+      "maxHit": {
+        "value": 26894,
+        "monsterId": 656,
+        "monsterNameJa": null,
+        "raw": "※既にリダチェン済みの場合：26,894ダメージ"
+      },
+      "partCount": null
+    },
+    {
+      "index": 7,
+      "label": "B7",
+      "floor": 7,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 8,
+      "label": "B8",
+      "floor": 8,
+      "maxHit": null,
+      "partCount": null
+    }
+  ],
   "requiredGimmicks": [
     {
       "id": "根性",

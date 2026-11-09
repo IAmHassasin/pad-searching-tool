@@ -14,6 +14,8 @@ type Props = {
   settings: AwkModifierSettings;
   onChange: (next: AwkModifierSettings) => void;
   onClose: () => void;
+  /** Awakening ids the host page drives itself (not offered as manual toggles). */
+  hiddenIds?: readonly number[];
 };
 
 const EXCLUSIVE_GROUPS: number[][] = [
@@ -97,12 +99,12 @@ function MiniBtn({
   );
 }
 
-export function AwkModifierModal({ open, stat, settings, onChange, onClose }: Props) {
+export function AwkModifierModal({ open, stat, settings, onChange, onClose, hiddenIds }: Props) {
   if (!open) return null;
 
-  const modifierAwks = getModifierAwksForStat(stat);
+  const modifierAwks = getModifierAwksForStat(stat).filter((id) => !hiddenIds?.includes(id));
   const showAging = isEnabled(settings, 130);
-  const showParts = isEnabled(settings, 131);
+  const showParts = isEnabled(settings, 131) && !hiddenIds?.includes(131);
   const showCombo = isEnabled(settings, 107);
   const showBattle = isEnabled(settings, 143);
   const hasOptions = showAging || showParts || showCombo || showBattle;

@@ -2,6 +2,10 @@ import {
   parseRegularAwakenings,
   resolveSuperAwakeningIds,
 } from "./awakenings.ts";
+import {
+  PART_BREAK_AWAKENING_ID,
+  partBreakMultiplier,
+} from "./part-break.ts";
 import type { MonsterRecord } from "../types";
 
 import {
@@ -75,6 +79,13 @@ function computeStatMultiplier(
   for (const awkId of settings.enabled) {
     let copies = slots.regular.filter((id) => id === awkId).length;
     if (slots.sync === awkId) copies += 1;
+    if (awkId === PART_BREAK_AWAKENING_ID) {
+      // Copies add to the per-part rate instead of multiplying (×1.4 per part for two).
+      if (copies > 0 && isAwkEnabled(awkId, settings)) {
+        mult *= partBreakMultiplier(copies, settings.parts131);
+      }
+      continue;
+    }
     for (let i = 0; i < copies; i += 1) applyAwk(awkId);
   }
 

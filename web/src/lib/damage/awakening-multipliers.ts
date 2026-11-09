@@ -31,7 +31,7 @@ export type AwkModifierSettings = {
   atk57or58: 57 | 58 | null;
   /** Battle threshold for awk 143 ATK scaling. */
   battle143: 3 | 6 | 9 | 12 | 15;
-  /** Broken parts for awk 131 (0–10, ×1.2 each). */
+  /** Broken parts for awk 131 (0–10, ×1.2 per part per copy; copies add, see part-break.ts). */
   parts131: number;
 };
 
@@ -387,7 +387,7 @@ const DEFS: AwakeningMultiplierDef[] = [
     id: 131,
     name: "Part Break Bonus",
     kind: "stat",
-    condition: "×1.2 per broken part (0–10)",
+    condition: "×1.2 per broken part (0–10); copies add (×1.4 per part for two)",
     source: SHEET,
     resolve: (s) =>
       ALL_STATS(Math.pow(1.2, Math.max(0, Math.min(10, s.parts131)))),

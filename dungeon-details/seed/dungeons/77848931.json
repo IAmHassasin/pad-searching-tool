@@ -6,6 +6,22 @@
   "modified": "2026-10-09T19:07:00",
   "importedAt": "2026-11-04T20:05:46.781Z",
   "maxDamage": null,
+  "floorSummary": [
+    {
+      "index": 1,
+      "label": "B1",
+      "floor": 1,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 2,
+      "label": "B6",
+      "floor": 6,
+      "maxHit": null,
+      "partCount": null
+    }
+  ],
   "requiredGimmicks": [
     {
       "id": "ダメジ無効",

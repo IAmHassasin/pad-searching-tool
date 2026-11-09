@@ -3,6 +3,20 @@ export const PLUS_HP_PER_POINT = 10;
 export const PLUS_ATK_PER_POINT = 5;
 export const PLUS_RCV_PER_POINT = 3;
 
+/**
+ * Plus points per stat: +99 (+297 total) before ＋限界突破, +297 (+891 total) after it
+ * ([AppMedia 78998687](https://appmedia.jp/pazudora/78998687)). Each point keeps the
+ * same flat value.
+ */
+export const PLUS_PER_STAT_CAP = 297;
+export const PLUS_PER_STAT_BEFORE_LIMIT_BREAK = 99;
+
+/**
+ * Plus points gained through ＋限界突破 are not reflected in the assist bonus, so only
+ * the first +99 per stat counts ([GameWith 503140](https://xn--0ck4aw2h.gamewith.jp/article/show/503140)).
+ */
+export const ASSIST_BONUS_PLUS_CAP = PLUS_PER_STAT_BEFORE_LIMIT_BREAK;
+
 /** Lv.110→120 extra % ([039日記](https://diary-039.com/entry/2021/03/25/pad_status-lv120_01)). */
 export const LEVEL_120_EXTRA_PCT = {
   hp: 10,

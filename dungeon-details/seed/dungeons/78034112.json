@@ -12,6 +12,120 @@
     "monsterNameJa": "転生大喬＆小喬",
     "raw": "6,787,200ダメージ(5倍時)の連続攻撃"
   },
+  "floorSummary": [
+    {
+      "index": 1,
+      "label": "B1",
+      "floor": 1,
+      "maxHit": {
+        "value": 30450,
+        "monsterId": 4069,
+        "monsterNameJa": "リフル",
+        "raw": "30,450ダメージ+ドロップ5個トゲ"
+      },
+      "partCount": null
+    },
+    {
+      "index": 2,
+      "label": "B2",
+      "floor": 2,
+      "maxHit": {
+        "value": 6559880,
+        "monsterId": 11013,
+        "monsterNameJa": "究極アードベッグ",
+        "raw": "6,559,880ダメージ(5倍時)の連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 3,
+      "label": "B3",
+      "floor": 3,
+      "maxHit": {
+        "value": 1723680,
+        "monsterId": 7343,
+        "monsterNameJa": "シュリィ(変身)",
+        "raw": "1,723,680ダメージ+3ターン：全員ダメージ上限値20億"
+      },
+      "partCount": null
+    },
+    {
+      "index": 4,
+      "label": "B4",
+      "floor": 4,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 5,
+      "label": "B5",
+      "floor": 5,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 6,
+      "label": "B6",
+      "floor": 6,
+      "maxHit": {
+        "value": 739200,
+        "monsterId": 3216,
+        "monsterNameJa": "闇の小鬼",
+        "raw": "739,200ダメージ+5ターン：スキル封印"
+      },
+      "partCount": null
+    },
+    {
+      "index": 7,
+      "label": "B7",
+      "floor": 7,
+      "maxHit": {
+        "value": 6787200,
+        "monsterId": 3500,
+        "monsterNameJa": "転生大喬＆小喬",
+        "raw": "6,787,200ダメージ(5倍時)の連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 8,
+      "label": "B8",
+      "floor": 8,
+      "maxHit": {
+        "value": 887670,
+        "monsterId": 3766,
+        "monsterNameJa": "転生木ソニア",
+        "raw": "887,670ダメージ+全ドロップ変化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 9,
+      "label": "B9",
+      "floor": 9,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 10,
+      "label": "B10",
+      "floor": 10,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 11,
+      "label": "B11",
+      "floor": 11,
+      "maxHit": {
+        "value": 3921750,
+        "monsterId": 11203,
+        "monsterNameJa": "新クーバンシェン",
+        "raw": "3,921,750ダメージ(5倍時)+全ドロップ変化"
+      },
+      "partCount": null
+    }
+  ],
   "requiredGimmicks": [
     {
       "id": "バインド",

@@ -6,6 +6,29 @@
   "modified": "2022-03-17T07:57:03",
   "importedAt": "2026-11-04T20:03:37.076Z",
   "maxDamage": null,
+  "floorSummary": [
+    {
+      "index": 1,
+      "label": "B1",
+      "floor": 1,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 2,
+      "label": "B6",
+      "floor": 6,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 3,
+      "label": "B7",
+      "floor": 7,
+      "maxHit": null,
+      "partCount": null
+    }
+  ],
   "requiredGimmicks": [],
   "cautionGimmicks": [
     {

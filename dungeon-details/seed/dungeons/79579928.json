@@ -12,6 +12,82 @@
     "monsterNameJa": "サンタゼウスディオス",
     "raw": "2,240,000ダメージ+5ターン：10コンボ以下吸収"
   },
+  "floorSummary": [
+    {
+      "index": 1,
+      "label": "B1",
+      "floor": 1,
+      "maxHit": {
+        "value": 210000,
+        "monsterId": 4070,
+        "monsterNameJa": "パラン",
+        "raw": "210,000ダメージ+1ターン：覚醒無効"
+      },
+      "partCount": null
+    },
+    {
+      "index": 2,
+      "label": "B2",
+      "floor": 2,
+      "maxHit": {
+        "value": 2128000,
+        "monsterId": 1920,
+        "monsterNameJa": "ミラージュプレシオス",
+        "raw": "2,128,000ダメージ+99ターン：ロック目覚め"
+      },
+      "partCount": null
+    },
+    {
+      "index": 3,
+      "label": "B3",
+      "floor": 3,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 4,
+      "label": "B4",
+      "floor": 4,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 5,
+      "label": "B5",
+      "floor": 5,
+      "maxHit": {
+        "value": 1309000,
+        "monsterId": 2807,
+        "monsterNameJa": "究極ヘラベオーク",
+        "raw": "1,309,000ダメージ+5ターン：回復力激減(0.25倍)"
+      },
+      "partCount": null
+    },
+    {
+      "index": 6,
+      "label": "B6",
+      "floor": 6,
+      "maxHit": {
+        "value": 2020000,
+        "monsterId": 6158,
+        "monsterNameJa": "アルジェ",
+        "raw": "2,020,000ダメージ+全ドロップ変化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 7,
+      "label": "B7",
+      "floor": 7,
+      "maxHit": {
+        "value": 2240000,
+        "monsterId": 13066,
+        "monsterNameJa": "サンタゼウスディオス",
+        "raw": "2,240,000ダメージ+5ターン：10コンボ以下吸収"
+      },
+      "partCount": null
+    }
+  ],
   "requiredGimmicks": [
     {
       "id": "バインド",

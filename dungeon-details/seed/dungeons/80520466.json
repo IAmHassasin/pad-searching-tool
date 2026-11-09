@@ -12,6 +12,190 @@
     "monsterNameJa": "コーラリオン(変身)",
     "raw": "60,000,000ダメージ(2.5倍時)+全ドロップ変化"
   },
+  "floorSummary": [
+    {
+      "index": 1,
+      "label": "乱入",
+      "floor": null,
+      "maxHit": {
+        "value": 15000000,
+        "monsterId": 9065,
+        "monsterNameJa": "クライヴ(変身)",
+        "raw": "15,000,000ダメージ+6個ずつ生成"
+      },
+      "partCount": null
+    },
+    {
+      "index": 2,
+      "label": "B1",
+      "floor": 1,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 3,
+      "label": "B2",
+      "floor": 2,
+      "maxHit": {
+        "value": 8400000,
+        "monsterId": 974,
+        "monsterNameJa": "バーソロミュー",
+        "raw": "8,400,000ダメージ+8個生成"
+      },
+      "partCount": null
+    },
+    {
+      "index": 4,
+      "label": "B3",
+      "floor": 3,
+      "maxHit": {
+        "value": 15000000,
+        "monsterId": 3014,
+        "monsterNameJa": "リバティーガイスト(進化前)",
+        "raw": "15,000,000ダメージ(3倍時)+3個生成"
+      },
+      "partCount": null
+    },
+    {
+      "index": 5,
+      "label": "B4",
+      "floor": 4,
+      "maxHit": {
+        "value": 3330000,
+        "monsterId": 2575,
+        "monsterNameJa": "アノマロカリス(火)",
+        "raw": "3,330,000ダメージ+10ターン：ランダム1属性吸収"
+      },
+      "partCount": null
+    },
+    {
+      "index": 6,
+      "label": "B5",
+      "floor": 5,
+      "maxHit": {
+        "value": 6000000,
+        "monsterId": 2587,
+        "monsterNameJa": "イエローキーパー",
+        "raw": "6,000,000ダメージ+10ターン：吸収"
+      },
+      "partCount": null
+    },
+    {
+      "index": 7,
+      "label": "B6",
+      "floor": 6,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 8,
+      "label": "B7",
+      "floor": 7,
+      "maxHit": {
+        "value": 10500000,
+        "monsterId": 10424,
+        "monsterNameJa": "クラミィ(変身前)",
+        "raw": "10,500,000ダメージ+5個ずつ生成"
+      },
+      "partCount": null
+    },
+    {
+      "index": 9,
+      "label": "B8",
+      "floor": 8,
+      "maxHit": {
+        "value": 14000000,
+        "monsterId": 12641,
+        "monsterNameJa": "マリンスノー(変身前)",
+        "raw": "14,000,000ダメージ+全ドロップ変化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 10,
+      "label": "B9",
+      "floor": 9,
+      "maxHit": {
+        "value": 15000000,
+        "monsterId": 6086,
+        "monsterNameJa": "ニムエ(進化前)",
+        "raw": "15,000,000ダメージ+4ターン：超暗闇目覚め"
+      },
+      "partCount": null
+    },
+    {
+      "index": 11,
+      "label": "B10",
+      "floor": 10,
+      "maxHit": {
+        "value": 17000000,
+        "monsterId": 2940,
+        "monsterNameJa": "ウェルドール",
+        "raw": "17,000,000ダメージ+全ドロップ変化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 12,
+      "label": "B11",
+      "floor": 11,
+      "maxHit": {
+        "value": 54000000,
+        "monsterId": 11461,
+        "monsterNameJa": "オクトレイ",
+        "raw": "54,000,000ダメージ(3倍時)+全ドロップ変化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 13,
+      "label": "B12",
+      "floor": 12,
+      "maxHit": {
+        "value": 20200000,
+        "monsterId": 9997,
+        "monsterNameJa": "メタルアンタレス",
+        "raw": "20,200,000ダメージ+4ターン：覚醒無効"
+      },
+      "partCount": null
+    },
+    {
+      "index": 14,
+      "label": "B13",
+      "floor": 13,
+      "maxHit": {
+        "value": 22050000,
+        "monsterId": 13734,
+        "monsterNameJa": "試練キオ",
+        "raw": "22,050,000ダメージ+以外破壊"
+      },
+      "partCount": null
+    },
+    {
+      "index": 15,
+      "label": "B14",
+      "floor": 14,
+      "maxHit": {
+        "value": 22440000,
+        "monsterId": 14224,
+        "monsterNameJa": "コーラリオン",
+        "raw": "22,000,000～22,440,000ダメージ+ドロップ2個弱化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 16,
+      "label": "B15",
+      "floor": 15,
+      "maxHit": {
+        "value": 60000000,
+        "monsterId": 14225,
+        "monsterNameJa": "コーラリオン(変身)",
+        "raw": "60,000,000ダメージ(2.5倍時)+全ドロップ変化"
+      },
+      "partCount": null
+    }
+  ],
   "requiredGimmicks": [
     {
       "id": "バインド",

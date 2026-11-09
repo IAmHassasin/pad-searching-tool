@@ -28,6 +28,7 @@ import {
 } from "../lib/gimmick-master.mjs";
 import { parseGimmickPanel } from "../lib/parse-gimmick-panel.mjs";
 import { parseDungeonFloorTable } from "../lib/parse-dungeon-table.mjs";
+import { summarizeFloors } from "../lib/floor-summary.mjs";
 import { findMaxDamage } from "../lib/max-damage.mjs";
 import { writeDungeonSqlite } from "../lib/export-sqlite.mjs";
 import {
@@ -152,6 +153,7 @@ async function importOne(target, options) {
   const maxDamage = findMaxDamage(floors, (token, raw) =>
     console.warn(`  Skipped malformed damage "${token}" in "${raw}" — check the source page`)
   );
+  const floorSummary = summarizeFloors(floors);
 
   const requiredGimmicks = panelEntries
     .filter((e) => e.category === "required")
@@ -175,6 +177,7 @@ async function importOne(target, options) {
     modified: post.modified,
     importedAt: new Date().toISOString(),
     maxDamage,
+    floorSummary,
     requiredGimmicks,
     cautionGimmicks,
     floors,

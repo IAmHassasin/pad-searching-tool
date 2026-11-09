@@ -4,6 +4,11 @@ import {
 } from "../awakening-stat-modifier.ts";
 import { parseRegularAwakenings } from "../awakenings.ts";
 import {
+  countPartBreakCopies,
+  PART_BREAK_AWAKENING_ID,
+  partBreakMultiplier,
+} from "../part-break.ts";
+import {
   flatAwakeningStats,
   teamAwakeningPct,
   type StatMultipliers,
@@ -76,6 +81,7 @@ function computeMemberStat(
   leaderMult: { hp: number; rcv: number },
   dungeon: ResolvedDungeonModifiers,
   teamPct: StatMultipliers,
+  partsBroken: number,
   stat: "hp" | "atk" | "rcv"
 ): StatBreakdown {
   const breakdown = emptyBreakdown();
@@ -134,7 +140,15 @@ function computeMemberStat(
   // Dungeon / manual awakenings on top of the passives (passive ids are
   // stripped from the manual selection so they are never counted twice).
   const awkMult = computeMonsterStatMultipliers(row, awkSettings)[stat];
-  breakdown.afterAwk = Math.round(withAssist * passiveMult * saMult * awkMult);
+  // Part Break Bonus: battle-only, driven by the team's broken-part count (not the
+  // manual awakening list) and counted on every copy the card actually carries.
+  const partMult = partBreakMultiplier(
+    partBreakCopiesForSlot(row, eq, selectedSa),
+    partsBroken
+  );
+  breakdown.afterAwk = Math.round(
+    withAssist * passiveMult * saMult * awkMult * partMult
+  );
   breakdown.afterAssist = breakdown.afterAwk;
 
   const ls = stat === "atk" ? 1 : leaderMult[stat];
@@ -161,6 +175,27 @@ function computeMemberStat(
 }
 
 /**
+ * Part Break Bonus copies on a slot: regular + sync awakenings, those granted by an
+ * Awoken Assist, and the selected super awakening when it is 131.
+ */
+export function partBreakCopiesForSlot(
+  row: MonsterRecord,
+  eq: MonsterRecord | null,
+  selectedSuperAwakening: number | null
+): number {
+  const ids = [
+    ...parseRegularAwakenings(row.awakenings),
+    ...grantedAssistAwakenings(eq),
+  ];
+  const sync = Number(row.sync_awsid);
+  if (Number.isFinite(sync) && sync > 0) ids.push(sync);
+  if (selectedSuperAwakening === PART_BREAK_AWAKENING_ID && sync !== PART_BREAK_AWAKENING_ID) {
+    ids.push(PART_BREAK_AWAKENING_ID);
+  }
+  return countPartBreakCopies(ids);
+}
+
+/**
  * Per-member pipeline + team totals. `dungeon` carries the resolved dungeon
  * (stat multipliers + awakenings it activates); omit it for no dungeon.
  */
@@ -171,10 +206,12 @@ export function computeTeamStats(
 ): TeamStatSummary {
   const awkSettings = {
     ...dungeon.awkSettings,
+    // Part Break Bonus is driven by `config.partsBroken`, never by the manual list.
     enabled: dungeon.awkSettings.enabled.filter(
-      (id) => !RAW_PASSIVE_AWAKENING_IDS.includes(id)
+      (id) => !RAW_PASSIVE_AWAKENING_IDS.includes(id) && id !== PART_BREAK_AWAKENING_ID
     ),
   };
+  const partsBroken = config.partsBroken ?? 0;
   // Enhanced Team HP / RCV (46 / 47) from every member and from the
   // awakenings their assists grant (PDC: five assists with 15 × 46 → +75 %).
   const teamPct = teamAwakeningPct(
@@ -248,6 +285,7 @@ export function computeTeamStats(
             leaderMult,
             dungeon,
             teamPct,
+            partsBroken,
             "hp"
           )
         : emptyBreakdown();
@@ -263,6 +301,7 @@ export function computeTeamStats(
             leaderMult,
             dungeon,
             teamPct,
+            partsBroken,
             "atk"
           )
         : emptyBreakdown();
@@ -278,6 +317,7 @@ export function computeTeamStats(
             leaderMult,
             dungeon,
             teamPct,
+            partsBroken,
             "rcv"
           )
         : emptyBreakdown();

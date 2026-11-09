@@ -14,7 +14,7 @@ describe("maxOutMembers", () => {
     [30, record(30, { limit_mult: 10, is_transform_form: 1 })],
   ]);
 
-  it("raises level and plus points to the per-card cap", () => {
+  it("raises level to the cap, cards to +891 and assists to +297", () => {
     const low = {
       ...emptyMember("sub"),
       plusHp: 0,
@@ -42,7 +42,7 @@ describe("maxOutMembers", () => {
     for (const m of next.slice(0, 4)) {
       assert.deepEqual(
         [m.plusHp, m.plusAtk, m.plusRcv, m.eqPlusHp, m.eqPlusAtk, m.eqPlusRcv],
-        [99, 99, 99, 99, 99, 99]
+        [297, 297, 297, 99, 99, 99]
       );
     }
     assert.equal(next[4], low, "empty slot untouched");
@@ -50,7 +50,13 @@ describe("maxOutMembers", () => {
   });
 
   it("returns the same objects when nothing changes", () => {
-    const maxed = { ...emptyMember("sub"), monsterId: "10" };
+    const maxed = {
+      ...emptyMember("sub"),
+      monsterId: "10",
+      plusHp: 297,
+      plusAtk: 297,
+      plusRcv: 297,
+    };
     const next = maxOutMembers([maxed], monsters);
     assert.equal(next[0], maxed);
   });

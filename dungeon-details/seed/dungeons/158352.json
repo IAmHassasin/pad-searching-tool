@@ -12,6 +12,55 @@
     "monsterNameJa": null,
     "raw": "5,358ダメージ"
   },
+  "floorSummary": [
+    {
+      "index": 1,
+      "label": "B2",
+      "floor": 2,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 2,
+      "label": "B4",
+      "floor": 4,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 3,
+      "label": "B5",
+      "floor": 5,
+      "maxHit": {
+        "value": 5358,
+        "monsterId": null,
+        "monsterNameJa": null,
+        "raw": "5,358ダメージ"
+      },
+      "partCount": null
+    },
+    {
+      "index": 4,
+      "label": "B7",
+      "floor": 7,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 5,
+      "label": "B8",
+      "floor": 8,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 6,
+      "label": "B9",
+      "floor": 9,
+      "maxHit": null,
+      "partCount": null
+    }
+  ],
   "requiredGimmicks": [],
   "cautionGimmicks": [],
   "floors": [

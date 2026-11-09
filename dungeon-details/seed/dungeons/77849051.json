@@ -12,6 +12,39 @@
     "monsterNameJa": "ボーマ",
     "raw": "1,600,000ダメージ+1ターン：全員攻撃力激減"
   },
+  "floorSummary": [
+    {
+      "index": 1,
+      "label": "B1",
+      "floor": 1,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 2,
+      "label": "B2",
+      "floor": 2,
+      "maxHit": {
+        "value": 900000,
+        "monsterId": 7022,
+        "monsterNameJa": "潜在攻撃強化＋＋",
+        "raw": "900,000ダメージ+1ターン：2体攻撃力激減"
+      },
+      "partCount": null
+    },
+    {
+      "index": 3,
+      "label": "B5",
+      "floor": 5,
+      "maxHit": {
+        "value": 1600000,
+        "monsterId": 4352,
+        "monsterNameJa": "ボーマ",
+        "raw": "1,600,000ダメージ+1ターン：全員攻撃力激減"
+      },
+      "partCount": null
+    }
+  ],
   "requiredGimmicks": [],
   "cautionGimmicks": [
     {

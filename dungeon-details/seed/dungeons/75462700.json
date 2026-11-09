@@ -12,6 +12,77 @@
     "monsterNameJa": null,
     "raw": "※通常攻撃は8,775,000ダメージ"
   },
+  "floorSummary": [
+    {
+      "index": 1,
+      "label": "B1",
+      "floor": 1,
+      "maxHit": {
+        "value": 1618800,
+        "monsterId": 2307,
+        "monsterNameJa": null,
+        "raw": "※通常行動で1,618,800ダメージ"
+      },
+      "partCount": null
+    },
+    {
+      "index": 2,
+      "label": "B2",
+      "floor": 2,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 3,
+      "label": "B3",
+      "floor": 3,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 4,
+      "label": "B4",
+      "floor": 4,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 5,
+      "label": "B5",
+      "floor": 5,
+      "maxHit": {
+        "value": 101400,
+        "monsterId": 4274,
+        "monsterNameJa": null,
+        "raw": "101,400ダメージ+4ターン：被ダメージ95%減少"
+      },
+      "partCount": null
+    },
+    {
+      "index": 6,
+      "label": "B6",
+      "floor": 6,
+      "maxHit": {
+        "value": 143100,
+        "monsterId": 3696,
+        "monsterNameJa": null,
+        "raw": "143,100ダメージ"
+      },
+      "partCount": null
+    },
+    {
+      "index": 7,
+      "label": "B7",
+      "floor": 7,
+      "maxHit": {
+        "value": 8775000,
+        "monsterId": 8769,
+        "monsterNameJa": null,
+        "raw": "※通常攻撃は8,775,000ダメージ"
+      },
+      "partCount": null
+    }
+  ],
   "requiredGimmicks": [
     {
       "id": "ダメジ無効",

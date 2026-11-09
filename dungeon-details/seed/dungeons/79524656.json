@@ -12,6 +12,183 @@
     "monsterNameJa": "メルナ",
     "raw": "57,400,000ダメージの連続攻撃"
   },
+  "floorSummary": [
+    {
+      "index": 1,
+      "label": "乱入",
+      "floor": null,
+      "maxHit": {
+        "value": 5400000,
+        "monsterId": 6586,
+        "monsterNameJa": "闇ソフィ",
+        "raw": "5,400,000ダメージ+5ターン：チームの攻撃力激減(0.25倍)"
+      },
+      "partCount": 1
+    },
+    {
+      "index": 2,
+      "label": "B1",
+      "floor": 1,
+      "maxHit": {
+        "value": 4725000,
+        "monsterId": 10521,
+        "monsterNameJa": "デルムン",
+        "raw": "属性変化+4,725,000ダメージ(3.5倍時)の連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 3,
+      "label": "B2",
+      "floor": 2,
+      "maxHit": {
+        "value": 20000000,
+        "monsterId": 10138,
+        "monsterNameJa": "アマテラス&ツクヨミ",
+        "raw": "闇属性に変化+20,000,000ダメージ(5倍時)の連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 4,
+      "label": "B3",
+      "floor": 3,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 5,
+      "label": "B4",
+      "floor": 4,
+      "maxHit": {
+        "value": 3100000,
+        "monsterId": 7121,
+        "monsterNameJa": "イレーヌ",
+        "raw": "3,100,000ダメージ+1ターン：20億以上無効"
+      },
+      "partCount": null
+    },
+    {
+      "index": 6,
+      "label": "B5",
+      "floor": 5,
+      "maxHit": {
+        "value": 12500000,
+        "monsterId": 54,
+        "monsterNameJa": "パープルカーバンクル",
+        "raw": "12,500,000ダメージ"
+      },
+      "partCount": null
+    },
+    {
+      "index": 7,
+      "label": "B6",
+      "floor": 6,
+      "maxHit": {
+        "value": 27500000,
+        "monsterId": 2878,
+        "monsterNameJa": "フラグレム",
+        "raw": "27,500,000ダメージ(5倍時)+1ターン：被ダメージ35%軽減"
+      },
+      "partCount": null
+    },
+    {
+      "index": 8,
+      "label": "B7",
+      "floor": 7,
+      "maxHit": {
+        "value": 6300000,
+        "monsterId": 2009,
+        "monsterNameJa": "覚醒ホルス",
+        "raw": "6,300,000ダメージ+1ターン：ランダム1属性吸収"
+      },
+      "partCount": null
+    },
+    {
+      "index": 9,
+      "label": "B8",
+      "floor": 8,
+      "maxHit": {
+        "value": 6300000,
+        "monsterId": 3338,
+        "monsterNameJa": "アメン装備",
+        "raw": "6,300,000ダメージ+1ターン：20億以上無効"
+      },
+      "partCount": null
+    },
+    {
+      "index": 10,
+      "label": "B9",
+      "floor": 9,
+      "maxHit": {
+        "value": 2000000,
+        "monsterId": 12626,
+        "monsterNameJa": "ブルームーン",
+        "raw": "2,000,000ダメージ+3ターン：アシスト無効"
+      },
+      "partCount": null
+    },
+    {
+      "index": 11,
+      "label": "B10",
+      "floor": 10,
+      "maxHit": {
+        "value": 3500000,
+        "monsterId": 7607,
+        "monsterNameJa": "ノクタリア",
+        "raw": "3,500,000ダメージ+スキル効果リセット"
+      },
+      "partCount": null
+    },
+    {
+      "index": 12,
+      "label": "B11",
+      "floor": 11,
+      "maxHit": {
+        "value": 8100000,
+        "monsterId": 10661,
+        "monsterNameJa": "ベリアルドラゴン",
+        "raw": "8,100,000ダメージ+4ターン：消せない"
+      },
+      "partCount": null
+    },
+    {
+      "index": 13,
+      "label": "B12",
+      "floor": 12,
+      "maxHit": {
+        "value": 9020000,
+        "monsterId": 10113,
+        "monsterNameJa": "試練アルテミス",
+        "raw": "9,020,000ダメージ+→変化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 14,
+      "label": "B13",
+      "floor": 13,
+      "maxHit": {
+        "value": 57400000,
+        "monsterId": 13049,
+        "monsterNameJa": "メルナ",
+        "raw": "57,400,000ダメージの連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 15,
+      "label": "B14",
+      "floor": 14,
+      "maxHit": {
+        "value": 40500000,
+        "monsterId": 13050,
+        "monsterNameJa": "セレナディア",
+        "raw": "40,500,000ダメージ(4.5倍時)+1ターン：操作時間激減"
+      },
+      "partCount": 2
+    }
+  ],
   "requiredGimmicks": [
     {
       "id": "覚醒無効",

@@ -12,6 +12,166 @@
     "monsterNameJa": "ゴクレグス(変身)",
     "raw": "105,000,000ダメージの連続攻撃"
   },
+  "floorSummary": [
+    {
+      "index": 1,
+      "label": "乱入",
+      "floor": null,
+      "maxHit": {
+        "value": 6020000,
+        "monsterId": 12259,
+        "monsterNameJa": "バルドル(変身)",
+        "raw": "6,020,000ダメージ+サブ3ターンスキル遅延"
+      },
+      "partCount": 1
+    },
+    {
+      "index": 2,
+      "label": "B1",
+      "floor": 1,
+      "maxHit": {
+        "value": 25000,
+        "monsterId": 10507,
+        "monsterNameJa": "超パイロデビル",
+        "raw": "25,000ダメージ+7ターン：20億以上無効"
+      },
+      "partCount": null
+    },
+    {
+      "index": 3,
+      "label": "B2",
+      "floor": 2,
+      "maxHit": {
+        "value": 3162000,
+        "monsterId": 6829,
+        "monsterNameJa": "4連ガチャドラ",
+        "raw": "3,162,000ダメージの連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 4,
+      "label": "B3",
+      "floor": 3,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 5,
+      "label": "B4",
+      "floor": 4,
+      "maxHit": {
+        "value": 83750000,
+        "monsterId": 9798,
+        "monsterNameJa": "超転生貂蝉",
+        "raw": "属性変化+83,750,000ダメージの連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 6,
+      "label": "B5",
+      "floor": 5,
+      "maxHit": {
+        "value": 4519500,
+        "monsterId": 9719,
+        "monsterNameJa": "転生ラグドラ",
+        "raw": "4,519,500ダメージ+全ドロップ変化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 7,
+      "label": "B6",
+      "floor": 6,
+      "maxHit": {
+        "value": 765000,
+        "monsterId": 10022,
+        "monsterNameJa": "極キングルビドラ",
+        "raw": "765,000ダメージ+5ターン：全員攻撃力激減(0.25倍)"
+      },
+      "partCount": null
+    },
+    {
+      "index": 8,
+      "label": "B7",
+      "floor": 7,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 9,
+      "label": "B8",
+      "floor": 8,
+      "maxHit": {
+        "value": 580000,
+        "monsterId": 10968,
+        "monsterNameJa": "ウィスキール",
+        "raw": "580,000ダメージ+3ターン：2マスルーレット"
+      },
+      "partCount": null
+    },
+    {
+      "index": 10,
+      "label": "B9",
+      "floor": 9,
+      "maxHit": {
+        "value": 3650000,
+        "monsterId": 9295,
+        "monsterNameJa": "水マッハ",
+        "raw": "3,650,000ダメージ+上から横1・3・5列目、2・4・6列目変化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 11,
+      "label": "B10",
+      "floor": 10,
+      "maxHit": {
+        "value": 3600000,
+        "monsterId": 5419,
+        "monsterNameJa": "アキネ",
+        "raw": "3,600,000ダメージ+全ドロップロック"
+      },
+      "partCount": null
+    },
+    {
+      "index": 12,
+      "label": "B11",
+      "floor": 11,
+      "maxHit": {
+        "value": 4100000,
+        "monsterId": 10271,
+        "monsterNameJa": "光エレメイ",
+        "raw": "4,100,000ダメージ+全ドロップ変化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 13,
+      "label": "B12",
+      "floor": 12,
+      "maxHit": {
+        "value": 105000000,
+        "monsterId": 10298,
+        "monsterNameJa": "ゴクレグス(変身)",
+        "raw": "105,000,000ダメージの連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 14,
+      "label": "B13",
+      "floor": 13,
+      "maxHit": {
+        "value": 10560000,
+        "monsterId": 12252,
+        "monsterNameJa": "新ゴクレグス",
+        "raw": "8,800,000ダメージ(1.2倍時：10,560,000ダメージ)の連続攻撃"
+      },
+      "partCount": null
+    }
+  ],
   "requiredGimmicks": [
     {
       "id": "バインド",

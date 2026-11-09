@@ -4,8 +4,14 @@ import {
 } from "../awakening-stat-modifier.ts";
 import { parseRegularAwakenings } from "../awakenings.ts";
 import { AWAKENING_MULTIPLIERS } from "../damage/awakening-multipliers.ts";
+import {
+  PART_BREAK_AWAKENING_ID,
+  PART_BREAK_RATE_PER_COPY,
+  partBreakMultiplier,
+} from "../part-break.ts";
 import type { MonsterRecord } from "../../types.ts";
 import { computeAssistBonus } from "./assist-bonus.ts";
+import { partBreakCopiesForSlot } from "./compute-stats.ts";
 import { describeDungeonModifiers, type ResolvedDungeonModifiers } from "./dungeon-modifiers.ts";
 import { maxMonsterLevel, SKILL_VOICE_AWAKENING_ID } from "./level-scaling.ts";
 import {
@@ -160,6 +166,7 @@ export function describeSlotContributions(
     if (!def || def.kind !== "stat") continue;
     if (id === SKILL_VOICE_AWAKENING_ID) continue; // listed above as the base multiplier
     if (DUNGEON_CONDITIONAL_IDS.includes(id)) continue; // handled below
+    if (id === PART_BREAK_AWAKENING_ID) continue; // handled below with the parts count
     const key = `${id}:${source}`;
     const existing = seenPassive.get(key);
     if (existing) {
@@ -194,7 +201,7 @@ export function describeSlotContributions(
 
   // Selected super awakening.
   const sa = member.selectedSuperAwakening;
-  if (sa != null && sa !== sync) {
+  if (sa != null && sa !== sync && sa !== PART_BREAK_AWAKENING_ID) {
     const def = AWAKENING_MULTIPLIERS[sa];
     if (def?.kind === "stat") {
       let active = true;
@@ -240,6 +247,29 @@ export function describeSlotContributions(
       active,
       note: active ? "Enabled by the dungeon / advanced awakenings" : def.condition ?? "Needs the matching dungeon",
       copies,
+    });
+  }
+
+  // Part Break Bonus: copies add to the per-part rate, parts multiply.
+  const partCopies = partBreakCopiesForSlot(row, eq, member.selectedSuperAwakening);
+  if (partCopies > 0) {
+    const parts = config.partsBroken ?? 0;
+    const rate = Math.round((1 + PART_BREAK_RATE_PER_COPY * partCopies) * 100) / 100;
+    const total = partBreakMultiplier(partCopies, parts);
+    out.push({
+      id: PART_BREAK_AWAKENING_ID,
+      source: regular.includes(PART_BREAK_AWAKENING_ID)
+        ? "card"
+        : sync === PART_BREAK_AWAKENING_ID
+          ? "sync"
+          : granted.includes(PART_BREAK_AWAKENING_ID)
+            ? "assist"
+            : "super",
+      name: awkName(PART_BREAK_AWAKENING_ID),
+      effect: `×${rate} all stats per broken part · ${parts} broken = ×${Math.round(total * 1000) / 1000}`,
+      active: parts > 0,
+      note: parts > 0 ? undefined : "Set the broken-part count in Team settings",
+      copies: partCopies,
     });
   }
 

@@ -12,6 +12,70 @@
     "monsterNameJa": null,
     "raw": "※アシストがない場合、163,500ダメージ"
   },
+  "floorSummary": [
+    {
+      "index": 1,
+      "label": "B1",
+      "floor": 1,
+      "maxHit": {
+        "value": 20000,
+        "monsterId": 7034,
+        "monsterNameJa": null,
+        "raw": "※既に6×5なら20,000ダメージ"
+      },
+      "partCount": null
+    },
+    {
+      "index": 2,
+      "label": "B2",
+      "floor": 2,
+      "maxHit": {
+        "value": 122800,
+        "monsterId": 1114,
+        "monsterNameJa": null,
+        "raw": "122,800ダメージ+3ターン：攻撃力90%減少"
+      },
+      "partCount": null
+    },
+    {
+      "index": 3,
+      "label": "B3",
+      "floor": 3,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 4,
+      "label": "B4",
+      "floor": 4,
+      "maxHit": {
+        "value": 156250,
+        "monsterId": 3385,
+        "monsterNameJa": null,
+        "raw": "156,250ダメージ+1ターン：7コンボ以下吸収"
+      },
+      "partCount": null
+    },
+    {
+      "index": 5,
+      "label": "B5",
+      "floor": 5,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 6,
+      "label": "B6",
+      "floor": 6,
+      "maxHit": {
+        "value": 163500,
+        "monsterId": 7794,
+        "monsterNameJa": null,
+        "raw": "※アシストがない場合、163,500ダメージ"
+      },
+      "partCount": null
+    }
+  ],
   "requiredGimmicks": [
     {
       "id": "ダメジ無効",

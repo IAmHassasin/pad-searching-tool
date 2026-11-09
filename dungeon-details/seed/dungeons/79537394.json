@@ -12,6 +12,53 @@
     "monsterNameJa": "究極ナヴィ",
     "raw": "1,020,510ダメージ+全ドロップ変化"
   },
+  "floorSummary": [
+    {
+      "index": 1,
+      "label": "B1",
+      "floor": 1,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 2,
+      "label": "B2",
+      "floor": 2,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 3,
+      "label": "B3",
+      "floor": 3,
+      "maxHit": {
+        "value": 852145,
+        "monsterId": 9934,
+        "monsterNameJa": "進化ラビリル",
+        "raw": "852,145ダメージ+5ターン：操作時間半減"
+      },
+      "partCount": null
+    },
+    {
+      "index": 4,
+      "label": "B4",
+      "floor": 4,
+      "maxHit": {
+        "value": 1020510,
+        "monsterId": 3517,
+        "monsterNameJa": "究極ナヴィ",
+        "raw": "1,020,510ダメージ+全ドロップ変化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 5,
+      "label": "B5",
+      "floor": 5,
+      "maxHit": null,
+      "partCount": null
+    }
+  ],
   "requiredGimmicks": [
     {
       "id": "覚醒無効",

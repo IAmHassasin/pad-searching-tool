@@ -18,12 +18,27 @@ import { useMobileWebview } from "../hooks/useMobileWebview";
 import { useResizablePanel } from "../hooks/useResizablePanel";
 import { useTeamDraft } from "../hooks/useTeamDraft";
 import { parseRegularAwakenings } from "../lib/awakenings";
-import { computeTeamStats } from "../lib/team-build/compute-stats";
+import {
+  computeTeamStats,
+  partBreakCopiesForSlot,
+} from "../lib/team-build/compute-stats";
+import {
+  clampPartsBroken,
+  MAX_PARTS_BROKEN,
+  PART_BREAK_AWAKENING_ID,
+} from "../lib/part-break";
 import {
   describeDungeonModifiers,
   resolveDungeonModifiers,
 } from "../lib/team-build/dungeon-modifiers";
 import { maxHitForEntry, seedForEntry } from "../lib/team-build/dungeon-sources";
+import {
+  defaultPartsBroken,
+  hasUsableFloorTable,
+  teamHpAtState,
+  totalPartsBroken,
+  type FloorState,
+} from "../lib/team-build/floor-trial";
 import {
   combineLeaderMultipliers,
   leaderMultipliersForMember,
@@ -62,6 +77,9 @@ import { TeamAwakeningPanel } from "./TeamAwakeningPanel";
 import { TeamAwakeningSummary } from "./TeamAwakeningSummary";
 import { TeamCardSheet } from "./TeamCardSheet";
 import { TeamTrialPanel } from "./TeamTrialPanel";
+
+/** Part Break Bonus is driven by the Team settings parts counter, not the manual list. */
+const HIDDEN_MANUAL_AWAKENING_IDS: readonly number[] = [PART_BREAK_AWAKENING_ID];
 
 function parseId(raw: string): number | null {
   const n = Number(raw.trim());
@@ -537,10 +555,52 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
       }),
     [dungeon]
   );
+  // With a usable floor table, broken parts are chosen per floor (Trial) and the team
+  // totals use every part broken over the dungeon; otherwise the Team settings counter.
+  const floorTable = useMemo(() => trialSeed?.floorSummary ?? [], [trialSeed]);
+  const floorMode = hasUsableFloorTable(floorTable);
+  const [floorPartsState, setFloorPartsState] = useState<{
+    postId: number;
+    parts: Map<number, number>;
+  } | null>(null);
+  const floorParts = useMemo(
+    () =>
+      trialSeed && floorPartsState?.postId === trialSeed.appmediaPostId
+        ? floorPartsState.parts
+        : defaultPartsBroken(floorTable),
+    [trialSeed, floorPartsState, floorTable]
+  );
+  const setFloorParts = useCallback(
+    (parts: Map<number, number>) => {
+      if (trialSeed) setFloorPartsState({ postId: trialSeed.appmediaPostId, parts });
+    },
+    [trialSeed]
+  );
+  // Same cap as the multiplier, so the summary shows the count actually applied.
+  const floorPartsTotal = floorMode
+    ? clampPartsBroken(totalPartsBroken(floorTable, floorParts))
+    : 0;
+  /** Config the totals use: Part Break count from the floor table when it drives it. */
+  const statsConfig = useMemo(
+    () => (floorMode ? { ...config, partsBroken: floorPartsTotal } : config),
+    [config, floorMode, floorPartsTotal]
+  );
   const summary = useMemo(
-    () => computeTeamStats(config, monstersById, dungeon),
+    () => computeTeamStats(statsConfig, monstersById, dungeon),
+    [statsConfig, monstersById, dungeon]
+  );
+  /** Team HP at a floor state (Aging by floor, cumulative broken parts) for the Trial. */
+  const trialHpAt = useCallback(
+    (state: FloorState) => teamHpAtState(config, monstersById, dungeon, state),
     [config, monstersById, dungeon]
   );
+  /** Slots carrying Part Break Bonus (131): the parts control only shows when there is one. */
+  const partBreakSlots = summary.members.filter(
+    (m) =>
+      m.monster != null &&
+      partBreakCopiesForSlot(m.monster, m.eq, m.config.selectedSuperAwakening) > 0
+  ).length;
+  const partsBroken = config.partsBroken ?? 0;
   const dungeonActiveLabel =
     config.dungeonId && config.dungeonId !== "none" ? dungeon.label : null;
 
@@ -698,12 +758,12 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
       member: selectedMember,
       row: selectedMonster,
       eq: selectedEq,
-      config,
+      config: statsConfig,
       dungeon,
       teamAwakenings,
       leaderMult,
     });
-  }, [selectedMonster, selectedEq, selectedMember, config, dungeon, monstersById]);
+  }, [selectedMonster, selectedEq, selectedMember, config, statsConfig, dungeon, monstersById]);
 
   const awakeningPanel =
     selectedSlot != null && selectedMember ? (
@@ -777,9 +837,9 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
                     const levels = members
                       .map((m) => (m.monsterId ? String(m.level) : "–"))
                       .join(" · ");
-                    showActionMsg(`Max all: Lv ${levels}, +297 on every card and assist.`);
+                    showActionMsg(`Max all: Lv ${levels}, +891 on every card, +297 on every assist.`);
                   }}
-                  title="Every card to its max level (Lv.99 for transform forms) and +297, assists +297 too"
+                  title="Every card to its max level (Lv.99 for transform forms) and +891; assists +297 (limit-break plus does not raise the assist bonus)"
                 >
                   Max all
                 </button>
@@ -913,6 +973,9 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
                   config={config}
                   monstersById={monstersById}
                   teamHp={summary.teamHp}
+                  hpAt={trialHpAt}
+                  floorPartsBroken={floorParts}
+                  onFloorPartsBrokenChange={setFloorParts}
                   slotLabel={slotLabel}
                   entry={dungeon.entry}
                   dungeonLabel={dungeon.label}
@@ -929,6 +992,7 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
               <section className="ds-card mb-3 p-3">
                 <h2 className="ds-label mb-2">Team settings</h2>
                 <div className="grid gap-3 sm:grid-cols-[minmax(0,240px)_minmax(0,1fr)]">
+                  <div className="flex flex-col gap-3">
                   <label className="flex flex-col gap-1 text-sm">
                     <span className="text-xs text-[var(--color-muted)]">Badge</span>
                     <select
@@ -945,6 +1009,68 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
                       ))}
                     </select>
                   </label>
+                  {partBreakSlots > 0 && floorMode && (
+                    <div className="flex flex-col gap-1 text-sm">
+                      <span className="text-xs text-[var(--color-muted)]">
+                        Parts broken · {partBreakSlots} card{partBreakSlots === 1 ? "" : "s"} with Part Break Bonus
+                      </span>
+                      <p className="text-xs text-[var(--color-fg)]">
+                        <span className="font-mono font-semibold tabular-nums text-[var(--color-fg-strong)]">
+                          {floorPartsTotal}
+                        </span>{" "}
+                        {floorTable.some((f) => f.partCount)
+                          ? "from the floor table — set per floor in Trial ⇒"
+                          : "— this dungeon's floor table has no breakable parts"}
+                      </p>
+                    </div>
+                  )}
+                  {partBreakSlots > 0 && !floorMode && (
+                    <div className="flex flex-col gap-1 text-sm">
+                      <span
+                        className="text-xs text-[var(--color-muted)]"
+                        title="Part Break Bonus (awakening 131): ×1.2 per broken part per copy; copies add (×1.4 for two)"
+                      >
+                        Parts broken · {partBreakSlots} card{partBreakSlots === 1 ? "" : "s"} with Part Break Bonus
+                      </span>
+                      <div className="flex items-center gap-1.5">
+                        <button
+                          type="button"
+                          aria-label="One part fewer"
+                          disabled={partsBroken <= 0}
+                          onClick={() =>
+                            setConfig((c) => ({
+                              ...c,
+                              partsBroken: clampPartsBroken((c.partsBroken ?? 0) - 1),
+                            }))
+                          }
+                          className="ds-btn pressable h-8 w-8 text-sm disabled:opacity-40"
+                        >
+                          −
+                        </button>
+                        <span className="min-w-8 text-center font-mono text-sm font-semibold tabular-nums text-[var(--color-fg-strong)]">
+                          {partsBroken}
+                        </span>
+                        <button
+                          type="button"
+                          aria-label="One part more"
+                          disabled={partsBroken >= MAX_PARTS_BROKEN}
+                          onClick={() =>
+                            setConfig((c) => ({
+                              ...c,
+                              partsBroken: clampPartsBroken((c.partsBroken ?? 0) + 1),
+                            }))
+                          }
+                          className="ds-btn pressable h-8 w-8 text-sm disabled:opacity-40"
+                        >
+                          +
+                        </button>
+                        <span className="text-[10px] text-[var(--color-muted)]">
+                          ×1.2 per part per copy
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                  </div>
                   <div className="flex min-w-0 flex-col gap-1 text-sm">
                     <span className="text-xs text-[var(--color-muted)]">Dungeon</span>
                     <button
@@ -1150,6 +1276,7 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
         open={awkOpen}
         stat="hp"
         settings={config.awkSettings}
+        hiddenIds={HIDDEN_MANUAL_AWAKENING_IDS}
         onChange={(awkSettings) => setConfig((c) => ({ ...c, awkSettings }))}
         onClose={() => setAwkOpen(false)}
       />

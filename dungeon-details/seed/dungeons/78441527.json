@@ -12,6 +12,178 @@
     "monsterNameJa": null,
     "raw": "属性変化+19,800,000ダメージの連続攻撃"
   },
+  "floorSummary": [
+    {
+      "index": 1,
+      "label": "B1",
+      "floor": 1,
+      "maxHit": {
+        "value": 13200000,
+        "monsterId": 10002,
+        "monsterNameJa": null,
+        "raw": "属性変化+13,200,000ダメージ"
+      },
+      "partCount": null
+    },
+    {
+      "index": 2,
+      "label": "B2",
+      "floor": 2,
+      "maxHit": {
+        "value": 6012160,
+        "monsterId": 8459,
+        "monsterNameJa": "超転生呂布",
+        "raw": "6,012,160ダメージ+をに変化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 3,
+      "label": "B3",
+      "floor": 3,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 4,
+      "label": "B4",
+      "floor": 4,
+      "maxHit": {
+        "value": 19782000,
+        "monsterId": 7767,
+        "monsterNameJa": "超転生堕ルシ",
+        "raw": "19,782,000ダメージの連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 5,
+      "label": "B5",
+      "floor": 5,
+      "maxHit": {
+        "value": 110000,
+        "monsterId": 9059,
+        "monsterNameJa": "火パイモン",
+        "raw": "※アシストがない場合：110,000ダメージ"
+      },
+      "partCount": null
+    },
+    {
+      "index": 6,
+      "label": "B6",
+      "floor": 6,
+      "maxHit": {
+        "value": 2310000,
+        "monsterId": 6352,
+        "monsterNameJa": "超転生パンドラ",
+        "raw": "2,310,000ダメージ+全ドロップ変化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 7,
+      "label": "B7",
+      "floor": 7,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 8,
+      "label": "B8",
+      "floor": 8,
+      "maxHit": {
+        "value": 1514700,
+        "monsterId": null,
+        "monsterNameJa": null,
+        "raw": "1,514,700ダメージの連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 9,
+      "label": "B9",
+      "floor": 9,
+      "maxHit": {
+        "value": 7490560,
+        "monsterId": null,
+        "monsterNameJa": null,
+        "raw": "7,490,560ダメージの連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 10,
+      "label": "B10",
+      "floor": 10,
+      "maxHit": {
+        "value": 201960,
+        "monsterId": 9685,
+        "monsterNameJa": "火雷神",
+        "raw": "201,960ダメージ+ドロップ6個弱化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 11,
+      "label": "B11",
+      "floor": 11,
+      "maxHit": {
+        "value": 2613600,
+        "monsterId": 5131,
+        "monsterNameJa": "エキドナSARA",
+        "raw": "2,613,600ダメージ+1ターン：8コンボ以下吸収"
+      },
+      "partCount": null
+    },
+    {
+      "index": 12,
+      "label": "B12",
+      "floor": 12,
+      "maxHit": {
+        "value": 3580500,
+        "monsterId": 6047,
+        "monsterNameJa": "ドーナ",
+        "raw": "3,580,500ダメージ+3ターン：スキル封印"
+      },
+      "partCount": null
+    },
+    {
+      "index": 13,
+      "label": "B13",
+      "floor": 13,
+      "maxHit": {
+        "value": 3088800,
+        "monsterId": 5425,
+        "monsterNameJa": "レーヴェン",
+        "raw": "3,088,800ダメージ+1ターン：吸収"
+      },
+      "partCount": null
+    },
+    {
+      "index": 14,
+      "label": "B14",
+      "floor": 14,
+      "maxHit": {
+        "value": 19800000,
+        "monsterId": null,
+        "monsterNameJa": null,
+        "raw": "属性変化+19,800,000ダメージの連続攻撃"
+      },
+      "partCount": null
+    },
+    {
+      "index": 15,
+      "label": "B15",
+      "floor": 15,
+      "maxHit": {
+        "value": 4158000,
+        "monsterId": null,
+        "monsterNameJa": null,
+        "raw": "火か闇属性に変化+4,158,000ダメージの連続攻撃"
+      },
+      "partCount": null
+    }
+  ],
   "requiredGimmicks": [
     {
       "id": "スキル遅延",

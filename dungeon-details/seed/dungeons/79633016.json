@@ -12,6 +12,53 @@
     "monsterNameJa": null,
     "raw": "1,005,365ダメージ+3ターン：コンボドロップ目覚め"
   },
+  "floorSummary": [
+    {
+      "index": 1,
+      "label": "B1",
+      "floor": 1,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 2,
+      "label": "B2",
+      "floor": 2,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 3,
+      "label": "B3",
+      "floor": 3,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 4,
+      "label": "B4",
+      "floor": 4,
+      "maxHit": {
+        "value": 951165,
+        "monsterId": 2254,
+        "monsterNameJa": "ネプドラ",
+        "raw": "┗すでに減少中の場合、951,165ダメージ"
+      },
+      "partCount": null
+    },
+    {
+      "index": 5,
+      "label": "B5",
+      "floor": 5,
+      "maxHit": {
+        "value": 1005365,
+        "monsterId": 9400,
+        "monsterNameJa": null,
+        "raw": "1,005,365ダメージ+3ターン：コンボドロップ目覚め"
+      },
+      "partCount": null
+    }
+  ],
   "requiredGimmicks": [
     {
       "id": "バインド",

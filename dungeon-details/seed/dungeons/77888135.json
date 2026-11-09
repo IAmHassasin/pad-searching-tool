@@ -12,6 +12,118 @@
     "monsterNameJa": "転生降三世明王",
     "raw": "2,800,000ダメージ+6ターン：30億以上無効"
   },
+  "floorSummary": [
+    {
+      "index": 1,
+      "label": "B1",
+      "floor": 1,
+      "maxHit": {
+        "value": 23100,
+        "monsterId": 829,
+        "monsterNameJa": "ジャキ(進化前)",
+        "raw": "23,100ダメージ+5ターン：盤面5×4マス"
+      },
+      "partCount": null
+    },
+    {
+      "index": 2,
+      "label": "B2",
+      "floor": 2,
+      "maxHit": {
+        "value": 2500000,
+        "monsterId": 756,
+        "monsterNameJa": "究極闇ヒノカグツチ",
+        "raw": "2,500,000ダメージ+全ドロップ変化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 3,
+      "label": "B3",
+      "floor": 3,
+      "maxHit": {
+        "value": 2575000,
+        "monsterId": 1557,
+        "monsterNameJa": "究極火アマテラス",
+        "raw": "2,575,000ダメージ+全ドロップ変化"
+      },
+      "partCount": null
+    },
+    {
+      "index": 4,
+      "label": "B4",
+      "floor": 4,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 5,
+      "label": "B5",
+      "floor": 5,
+      "maxHit": {
+        "value": 33000,
+        "monsterId": 166,
+        "monsterNameJa": "朱色の鬼神面",
+        "raw": "33,000ダメージ+4ターン：リーダーチェンジ"
+      },
+      "partCount": null
+    },
+    {
+      "index": 6,
+      "label": "B6",
+      "floor": 6,
+      "maxHit": {
+        "value": 2800000,
+        "monsterId": 5321,
+        "monsterNameJa": "転生降三世明王",
+        "raw": "2,800,000ダメージ+6ターン：30億以上無効"
+      },
+      "partCount": null
+    },
+    {
+      "index": 7,
+      "label": "B7",
+      "floor": 7,
+      "maxHit": {
+        "value": 1450000,
+        "monsterId": 5878,
+        "monsterNameJa": "鶉月",
+        "raw": "1,450,000ダメージ+1ターン：消せない"
+      },
+      "partCount": null
+    },
+    {
+      "index": 8,
+      "label": "B8",
+      "floor": 8,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 9,
+      "label": "B9",
+      "floor": 9,
+      "maxHit": {
+        "value": 1600000,
+        "monsterId": 9228,
+        "monsterNameJa": "センキョウ",
+        "raw": "1,600,000ダメージ+10ターン：弱化目覚め(40%)"
+      },
+      "partCount": null
+    },
+    {
+      "index": 10,
+      "label": "B10",
+      "floor": 10,
+      "maxHit": {
+        "value": 1700000,
+        "monsterId": null,
+        "monsterNameJa": null,
+        "raw": "1,700,000ダメージ+5ターン：操作時間半減"
+      },
+      "partCount": null
+    }
+  ],
   "requiredGimmicks": [
     {
       "id": "バインド",

@@ -7,11 +7,103 @@
   "importedAt": "2026-11-04T20:04:19.884Z",
   "maxDamage": {
     "value": 94470,
-    "floor": "B31",
+    "floor": "B3",
     "monsterId": 150,
     "monsterNameJa": "光の番人",
     "raw": "94,470ダメージ"
   },
+  "floorSummary": [
+    {
+      "index": 1,
+      "label": "B1",
+      "floor": 1,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 2,
+      "label": "B2",
+      "floor": 2,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 3,
+      "label": "B3",
+      "floor": 3,
+      "maxHit": {
+        "value": 94470,
+        "monsterId": 150,
+        "monsterNameJa": "光の番人",
+        "raw": "94,470ダメージ"
+      },
+      "partCount": null
+    },
+    {
+      "index": 4,
+      "label": "B4",
+      "floor": 4,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 5,
+      "label": "B5",
+      "floor": 5,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 6,
+      "label": "B6",
+      "floor": 6,
+      "maxHit": {
+        "value": 32853,
+        "monsterId": 2335,
+        "monsterNameJa": "雷の機甲龍・アルビレオ",
+        "raw": "32,853ダメージ+2ターン：リーダーをバインド"
+      },
+      "partCount": null
+    },
+    {
+      "index": 7,
+      "label": "B7",
+      "floor": 7,
+      "maxHit": null,
+      "partCount": null
+    },
+    {
+      "index": 8,
+      "label": "B8",
+      "floor": 8,
+      "maxHit": {
+        "value": 66597,
+        "monsterId": 2529,
+        "monsterNameJa": "蒼地の機甲龍・カフ",
+        "raw": "┗既に目覚め状態の場合、66,597ダメージ"
+      },
+      "partCount": null
+    },
+    {
+      "index": 9,
+      "label": "B9",
+      "floor": 9,
+      "maxHit": {
+        "value": 67506,
+        "monsterId": 2189,
+        "monsterNameJa": "ディアデム",
+        "raw": "┗がない場合：67,506ダメージ"
+      },
+      "partCount": null
+    },
+    {
+      "index": 10,
+      "label": "B10",
+      "floor": 10,
+      "maxHit": null,
+      "partCount": null
+    }
+  ],
   "requiredGimmicks": [
     {
       "id": "スキル遅延",
@@ -78,8 +170,8 @@
   ],
   "floors": [
     {
-      "floor": "B11",
-      "spawnNote": "11体出現",
+      "floor": "B1",
+      "spawnNote": "1体出現",
       "spawns": [
         {
           "monsterId": 319,
@@ -146,8 +238,8 @@
       ]
     },
     {
-      "floor": "B21",
-      "spawnNote": "21体出現",
+      "floor": "B2",
+      "spawnNote": "1体出現",
       "spawns": [
         {
           "monsterId": 2582,
@@ -187,8 +279,8 @@
       ]
     },
     {
-      "floor": "B31",
-      "spawnNote": "31体出現",
+      "floor": "B3",
+      "spawnNote": "1体出現",
       "spawns": [
         {
           "monsterId": 150,
@@ -251,8 +343,8 @@
       ]
     },
     {
-      "floor": "B43",
-      "spawnNote": "43体出現",
+      "floor": "B4",
+      "spawnNote": "3体出現",
       "spawns": [
         {
           "monsterId": 2195,
@@ -293,8 +385,8 @@
       ]
     },
     {
-      "floor": "B51",
-      "spawnNote": "51体出現",
+      "floor": "B5",
+      "spawnNote": "1体出現",
       "spawns": [
         {
           "monsterId": 1206,
@@ -341,8 +433,8 @@
       ]
     },
     {
-      "floor": "B62",
-      "spawnNote": "62体出現",
+      "floor": "B6",
+      "spawnNote": "2体出現",
       "spawns": [
         {
           "monsterId": 2338,
@@ -429,8 +521,8 @@
       ]
     },
     {
-      "floor": "B81",
-      "spawnNote": "81体出現",
+      "floor": "B8",
+      "spawnNote": "1体出現",
       "spawns": [
         {
           "monsterId": 2532,
