@@ -34,4 +34,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- In-app APK updates: lets the app hand a downloaded release to the system installer. -->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <!-- Team Build: scan the QR code of a PDC team image (WebView getUserMedia). -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
 </manifest>

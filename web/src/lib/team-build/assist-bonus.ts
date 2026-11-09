@@ -9,7 +9,8 @@ import {
 } from "./stat-reference.ts";
 import { scaleStatForLevel } from "./level-scaling.ts";
 
-function sharesAssistAttribute(
+/** Assist bonus applies (main attributes match, or either side is attribute 6 "None"). */
+export function sharesAssistAttribute(
   base: MonsterRecord,
   assist: MonsterRecord
 ): boolean {

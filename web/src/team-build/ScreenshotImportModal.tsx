@@ -28,12 +28,19 @@ import {
   type ScreenshotMatch,
 } from "../lib/team-build/screenshot/match";
 import { TEAM_SIZE, type TeamMemberConfig } from "../lib/team-build/types";
+import { isNativeApp } from "../lib/app-update/platform";
+import { findPdcTeamQr } from "../lib/team-build/pdc-qr-scan";
+import type { PdcTeam } from "../lib/team-build/pdc-team-string";
 import type { MonsterRecord } from "../types";
+import { PdcCameraScanner } from "./PdcCameraScanner";
+import { PdcImportPreview } from "./PdcImportPreview";
 
 type Props = {
   open: boolean;
   members: TeamMemberConfig[];
   onApply: (members: TeamMemberConfig[]) => void;
+  /** A PDC team QR was found (image or camera) and the user pressed Apply. */
+  onApplyPdc: (team: PdcTeam) => void;
   onClose: () => void;
 };
 
@@ -151,12 +158,16 @@ function PlainChip({
  * card icon against the prebuilt icon index and lets the user confirm each slot before the
  * draft is touched.
  */
-export function ScreenshotImportModal({ open, members, onApply, onClose }: Props) {
+export function ScreenshotImportModal({ open, members, onApply, onApplyPdc, onClose }: Props) {
   const [status, setStatus] = useState<Status>({ kind: "idle" });
   const [match, setMatch] = useState<ScreenshotMatch | null>(null);
   const [thumbs, setThumbs] = useState<Thumbs[]>([]);
   const [monsterPicks, setMonsterPicks] = useState<Pick[]>(keepAll);
   const [eqPicks, setEqPicks] = useState<Pick[]>(keepAll);
+  /** Team decoded from a PDC QR code; replaces the icon-matching result when set. */
+  const [pdcTeam, setPdcTeam] = useState<PdcTeam | null>(null);
+  const [cameraOn, setCameraOn] = useState(false);
+  const canUseCamera = isNativeApp();
   /** Bumped on every new image and on reset so a stale run cannot publish its result. */
   const runRef = useRef(0);
 
@@ -167,6 +178,8 @@ export function ScreenshotImportModal({ open, members, onApply, onClose }: Props
     setThumbs([]);
     setMonsterPicks(keepAll());
     setEqPicks(keepAll());
+    setPdcTeam(null);
+    setCameraOn(false);
   }, []);
 
   useEffect(() => {
@@ -177,12 +190,26 @@ export function ScreenshotImportModal({ open, members, onApply, onClose }: Props
     const run = ++runRef.current;
     setMatch(null);
     setThumbs([]);
+    setPdcTeam(null);
+    setCameraOn(false);
     setStatus({ kind: "working", step: "Decoding image…" });
     try {
-      const [img, index] = await Promise.all([
-        decodeImageFile(file),
-        loadIconIndex(),
-      ]);
+      const indexPromise = loadIconIndex();
+      // A PDC image needs no icon index; keep a failed download from being "unhandled".
+      indexPromise.catch(() => undefined);
+      const img = await decodeImageFile(file);
+      if (run !== runRef.current) return;
+      // PDC team images carry an exact QR code: prefer it over icon matching.
+      setStatus({ kind: "working", step: "Looking for a PDC QR code…" });
+      await new Promise((resolve) => setTimeout(resolve, 0));
+      if (run !== runRef.current) return;
+      const qr = findPdcTeamQr(img);
+      if (qr?.kind === "pdc") {
+        setPdcTeam(qr.team);
+        setStatus({ kind: "ready" });
+        return;
+      }
+      const index = await indexPromise;
       if (run !== runRef.current) return;
       setStatus({ kind: "working", step: "Matching cards…" });
       // Let the status line paint before the synchronous matching pass.
@@ -271,12 +298,16 @@ export function ScreenshotImportModal({ open, members, onApply, onClose }: Props
 
   const candidateIds = useMemo(() => {
     const ids = new Set<number>();
+    for (const m of pdcTeam?.members ?? []) {
+      ids.add(m.monsterId);
+      if (m.assist) ids.add(m.assist.id);
+    }
     for (const slot of match?.slots ?? []) {
       for (const c of slot.candidates) ids.add(c.id);
       for (const c of assistSuggestions(slot.assistCandidates)) ids.add(c.id);
     }
     return [...ids].slice(0, LOOKUP_LIMIT);
-  }, [match]);
+  }, [match, pdcTeam]);
 
   const lookup = useQuery({
     queryKey: ["team-build", "screenshot-candidates", candidateIds],
@@ -303,6 +334,10 @@ export function ScreenshotImportModal({ open, members, onApply, onClose }: Props
   );
 
   const handleApply = () => {
+    if (pdcTeam) {
+      onApplyPdc(pdcTeam);
+      return;
+    }
     if (!match) return;
     const selections: SlotSelection[] = [];
     for (let i = 0; i < TEAM_SIZE; i++) {
@@ -345,11 +380,15 @@ export function ScreenshotImportModal({ open, members, onApply, onClose }: Props
           <h2 className="text-sm font-bold text-[var(--color-fg-strong)]">
             Import from screenshot
           </h2>
-          {match && (
+          {pdcTeam ? (
+            <span className="rounded-full border border-[var(--color-positive)]/40 bg-[var(--color-positive)]/10 px-1.5 py-px font-mono text-[9px] font-bold text-emerald-300">
+              PDC QR
+            </span>
+          ) : match ? (
             <span className="rounded-full border border-[var(--color-secondary)]/40 bg-[var(--color-secondary-muted)] px-1.5 py-px font-mono text-[9px] font-bold tabular-nums text-[var(--color-secondary-strong)]">
               row match {Math.round(match.score * 100)}%
             </span>
-          )}
+          ) : null}
           <button
             type="button"
             onClick={onClose}
@@ -381,10 +420,27 @@ export function ScreenshotImportModal({ open, members, onApply, onClose }: Props
                 Paste from clipboard
               </button>
             )}
+            {canUseCamera && (
+              <button
+                type="button"
+                className="ds-btn pressable min-h-9 px-3 text-xs"
+                aria-pressed={cameraOn}
+                onClick={() => {
+                  runRef.current++;
+                  setMatch(null);
+                  setPdcTeam(null);
+                  setStatus({ kind: "idle" });
+                  setCameraOn((on) => !on);
+                }}
+                title="Scan the QR code of a PDC team image with the camera"
+              >
+                {cameraOn ? "Stop camera" : "Scan PDC QR"}
+              </button>
+            )}
             <span className="text-[10px] text-[var(--color-muted)]">
-              Edit Team screen (EN client). Drop, paste (Ctrl+V) or choose a screenshot.
-              Matches below 90% blink red: double-check them. Nothing changes until you
-              press Apply.
+              Edit Team screen (EN client) or a PDC team image (its QR is read exactly).
+              Drop, paste (Ctrl+V) or choose a screenshot. Matches below 90% blink red:
+              double-check them. Nothing changes until you press Apply.
             </span>
           </div>
           {status.kind === "working" && (
@@ -398,7 +454,18 @@ export function ScreenshotImportModal({ open, members, onApply, onClose }: Props
         </div>
 
         <div className="min-h-0 flex-1 overflow-y-auto px-3 py-2">
-          {match ? (
+          {cameraOn ? (
+            <PdcCameraScanner
+              onFound={(result) => {
+                setCameraOn(false);
+                setPdcTeam(result.team);
+                setStatus({ kind: "ready" });
+              }}
+              onCancel={() => setCameraOn(false)}
+            />
+          ) : pdcTeam ? (
+            <PdcImportPreview team={pdcTeam} recordById={recordById} />
+          ) : match ? (
             <ul className="space-y-2">
               {match.slots.map((slot, i) => {
                 const current = members[i];
@@ -502,10 +569,10 @@ export function ScreenshotImportModal({ open, members, onApply, onClose }: Props
           <button
             type="button"
             onClick={handleApply}
-            disabled={!match || changedSlots === 0}
+            disabled={pdcTeam == null && (!match || changedSlots === 0)}
             className="ds-btn-primary pressable min-h-9 px-4 text-xs disabled:cursor-not-allowed"
           >
-            Apply {changedSlots > 0 ? `(${changedSlots} slots)` : ""}
+            {pdcTeam ? "Apply PDC team" : `Apply ${changedSlots > 0 ? `(${changedSlots} slots)` : ""}`}
           </button>
         </footer>
       </div>

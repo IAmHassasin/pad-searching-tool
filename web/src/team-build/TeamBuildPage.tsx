@@ -59,6 +59,9 @@ import {
   exportTeamTsubakiString,
   importTeamIdString,
 } from "../lib/team-build/team-import-export";
+import { exportTeamBuildImgString } from "../lib/team-build/buildimg-export";
+import { buildTeamImageLayout } from "../lib/team-build/team-image-layout";
+import { TeamImageExport } from "./TeamImageExport";
 import {
   listSuperAwakeningOptions,
   superAwakeningLabel,
@@ -72,7 +75,10 @@ import {
 } from "../lib/team-build/types";
 import type { MonsterRecord } from "../types";
 import { DungeonPickerModal } from "./DungeonPickerModal";
+import { SavedTeamsPanel } from "./SavedTeamsPanel";
 import { ScreenshotImportModal } from "./ScreenshotImportModal";
+import { PdcExportModal } from "./PdcExportModal";
+import { pdcTeamToPst, type PdcTeam } from "../lib/team-build/pdc-team-string";
 import { TeamAwakeningPanel } from "./TeamAwakeningPanel";
 import { TeamAwakeningSummary } from "./TeamAwakeningSummary";
 import { TeamCardSheet } from "./TeamCardSheet";
@@ -459,6 +465,12 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
   const [selectedSlot, setSelectedSlot] = useState<number | null>(null);
   const [idsOpen, setIdsOpen] = useState(false);
   const [screenshotOpen, setScreenshotOpen] = useState(false);
+  const [pdcOpen, setPdcOpen] = useState(false);
+  // Kept while the page is mounted so reopening the PDC export keeps what was typed.
+  const [pdcTitle, setPdcTitle] = useState("");
+  const [pdcMemo, setPdcMemo] = useState("");
+  /** Last team imported from a PDC QR: its latents / assist levels go back out on export. */
+  const [pdcSource, setPdcSource] = useState<PdcTeam | null>(null);
   const [importText, setImportText] = useState("");
   const [importMsg, setImportMsg] = useState<string | null>(null);
   /** Feedback line under the team actions (Max all / Transform / De-transform). */
@@ -701,6 +713,18 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
     [config.members, monstersById]
   );
 
+  const handlePdcApply = (team: PdcTeam) => {
+    const { warnings } = pdcTeamToPst(team, config);
+    setConfig((c) => pdcTeamToPst(team, c).config);
+    setPdcSource(team);
+    setScreenshotOpen(false);
+    setIdsOpen(true);
+    setImportMsg(
+      warnings.length ? `Team imported from PDC QR. ${warnings.join(" ")}` : "Team imported from PDC QR."
+    );
+    setTimeout(() => setImportMsg(null), 6000);
+  };
+
   const handleScreenshotApply = (members: TeamMemberConfig[]) => {
     setConfig((c) => ({ ...c, members }));
     setScreenshotOpen(false);
@@ -713,6 +737,11 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
   const exportedMonsters = exportTeamIdString(config);
   const exportedEquipment = exportTeamEqString(config);
   const exportedTsubaki = exportTeamTsubakiString(config);
+  const exportedBuildImg = exportTeamBuildImgString(config);
+  const teamImageLayout = useMemo(
+    () => buildTeamImageLayout(config.members, (id) => monstersById.get(id)),
+    [config.members, monstersById]
+  );
 
   const monsterOf = useCallback(
     (raw: string): MonsterRecord | null => {
@@ -794,7 +823,10 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
               type="button"
               className="pressable min-h-9 rounded-lg px-2 text-[11px] font-semibold text-[var(--color-muted)] hover:bg-[var(--color-negative)]/10 hover:text-[var(--color-negative)]"
               onClick={() => {
-                if (window.confirm("Clear all team slots?")) clearMembers();
+                if (window.confirm("Clear all team slots?")) {
+                  clearMembers();
+                  setPdcSource(null);
+                }
               }}
             >
               Reset team
@@ -877,6 +909,14 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
                     De-transform ({detransformable.length})
                   </button>
                 )}
+                <button
+                  type="button"
+                  className="ds-btn pressable min-h-10 px-4 text-xs font-semibold"
+                  onClick={() => setPdcOpen(true)}
+                  title="PDC-style team image with a QR code that PDC (パズドラダメージ計算) can scan"
+                >
+                  Export as PDC
+                </button>
               </div>
               {actionMsg && (
                 <p className="mb-2 text-center text-[10px] text-[var(--color-amber-text)]">
@@ -1107,6 +1147,12 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
                 </div>
               </section>
 
+              <SavedTeamsPanel
+                config={config}
+                monstersById={monstersById}
+                onLoad={(team) => setConfig(team.config)}
+              />
+
               {/* Team IDs — collapsed by default */}
               <section className="ds-card mb-4 p-3">
                 <button
@@ -1152,10 +1198,19 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
                       buttonLabel="Copy for Tsubaki"
                       onCopy={() => copyToClipboard(exportedTsubaki, "Tsubaki")}
                     />
+                    <CopyRow
+                      label="Build img"
+                      value={exportedBuildImg}
+                      accent="text-[var(--color-secondary-strong)]"
+                      buttonLabel="Copy ^buildimg"
+                      onCopy={() => copyToClipboard(exportedBuildImg, "Tsubaki ^buildimg")}
+                    />
+                    <TeamImageExport layout={teamImageLayout} fileName="team-build.png" />
                     <p className="text-[10px] text-[var(--color-muted)]">
                       Order: leader · 4 subs · helper. Empty slot ={" "}
                       <code className="font-mono font-bold text-[var(--color-accent-strong)]">1</code>.
-                      Import: line 1 monsters, line 2 equipment.
+                      Import: line 1 monsters, line 2 equipment. ^buildimg: empty slot = sdr, +891
+                      exports as +297 (Tsubaki has no limit-break plus).
                     </p>
                     <div className="flex flex-col gap-2 sm:flex-row">
                       <textarea
@@ -1284,7 +1339,19 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
         open={screenshotOpen}
         members={config.members}
         onApply={handleScreenshotApply}
+        onApplyPdc={handlePdcApply}
         onClose={() => setScreenshotOpen(false)}
+      />
+      <PdcExportModal
+        open={pdcOpen}
+        config={config}
+        monstersById={monstersById}
+        previous={pdcSource}
+        title={pdcTitle}
+        memo={pdcMemo}
+        onTitleChange={setPdcTitle}
+        onMemoChange={setPdcMemo}
+        onClose={() => setPdcOpen(false)}
       />
     </div>
   );

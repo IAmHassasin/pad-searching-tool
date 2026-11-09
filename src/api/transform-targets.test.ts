@@ -20,6 +20,34 @@ describe("attachTransformTargets", () => {
     assert.equal((out[0] as { monster_id: number }).monster_id, 13412, "other fields kept");
   });
 
+  it("adds the first form of the chain as transform_root_id", () => {
+    // Rosetta: 12437 → 12438 → 12439 (PDC writes 12437 for all three); 13483 has no link.
+    const edges = [
+      { from_monster_id: 12437, to_monster_id: 12438 },
+      { from_monster_id: 12438, to_monster_id: 12439 },
+    ];
+    const out = attachTransformTargets(
+      [{ monster_id: 12439 }, { monster_id: 12438 }, { monster_id: 12437 }, { monster_id: 13483 }],
+      edges
+    );
+    assert.deepEqual(
+      out.map((r) => r.transform_root_id),
+      [12437, 12437, 12437, null]
+    );
+    assert.deepEqual(out[0].transform_from_ids, [12438], "direct link only");
+  });
+
+  it("stops on a cycle", () => {
+    const out = attachTransformTargets(
+      [{ monster_id: 2 }],
+      [
+        { from_monster_id: 1, to_monster_id: 2 },
+        { from_monster_id: 2, to_monster_id: 1 },
+      ]
+    );
+    assert.equal(out[0].transform_root_id, 1);
+  });
+
   it("reads the id from monster_id or __source_pk", () => {
     assert.equal(rowMonsterId({ monster_id: "12" }), 12);
     assert.equal(rowMonsterId({ __source_pk: 7 }), 7);

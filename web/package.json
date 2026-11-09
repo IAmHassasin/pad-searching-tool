@@ -16,7 +16,9 @@
     "@capacitor/core": "^8.5.0",
     "@tanstack/react-query": "^5.62.8",
     "@tanstack/react-virtual": "^3.14.12",
+    "jsqr": "1.4.0",
     "modern-screenshot": "^4.7.0",
+    "qrcode-generator": "2.0.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tesseract.js": "^6.0.1"
