@@ -97,6 +97,20 @@ export function adminRefreshDb(token: string) {
       tablesSkipped: string[];
       tablesCreated: string[];
     };
+    vanish?:
+      | {
+          ok: true;
+          parsed: number;
+          inBase: number;
+          inserted: number;
+          updated: number;
+          pruned: number;
+          deltaTotal: number;
+          deltaPath: string;
+          skipped: number;
+          unmappedNames: string[];
+        }
+      | { ok: false; error: string };
   }>("/admin/refresh-db", {
     method: "POST",
     headers: { Authorization: `Bearer ${token}` },

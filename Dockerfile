@@ -39,6 +39,7 @@ COPY docs ./docs
 COPY exports/patterns ./exports/patterns
 COPY seed/gamewith-vanish.sqlite /seed/gamewith-vanish.sqlite
 COPY seed/void-super-gravity.sqlite /seed/void-super-gravity.sqlite
+COPY seed/vanish-awoken-name-map.json /seed/vanish-awoken-name-map.json
 COPY dungeon-details/seed ./dungeon-details/seed
 COPY dungeon-details/lib ./dungeon-details/lib
 COPY dungeon-details/scripts ./dungeon-details/scripts
@@ -59,6 +60,8 @@ ENV RUN_TRANSFORM=true
 ENV START_HTTP=true
 ENV HTTP_PORT=3000
 ENV VANISH_AWOKEN_SQLITE_PATH=/seed/gamewith-vanish.sqlite
+ENV VANISH_AWOKEN_NAME_MAP_PATH=/seed/vanish-awoken-name-map.json
+ENV VANISH_AWOKEN_DELTA_SQLITE_PATH=/data/gamewith-vanish-delta.sqlite
 ENV VOID_SUPER_GRAVITY_SQLITE_PATH=/seed/void-super-gravity.sqlite
 ENV DUNGEON_DETAILS_SEED_DIR=/app/dungeon-details/seed/dungeons
 

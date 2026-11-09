@@ -28,6 +28,17 @@ export const AWAKENING_EQUIVALENCE_RULES: AwakeningEquivalenceRule[] = [
   { composite: 113, base: 80, basePerComposite: 2 },
   { composite: 114, base: 81, basePerComposite: 2 },
   { composite: 109, base: 48, basePerComposite: 2 },
+  // "+" awakenings whose effect is exactly double the base (per awoken_skills desc_en).
+  { composite: 52, base: 10, basePerComposite: 2 },
+  { composite: 53, base: 19, basePerComposite: 2 },
+  { composite: 98, base: 9, basePerComposite: 2 },
+  { composite: 99, base: 14, basePerComposite: 2 },
+  { composite: 100, base: 15, basePerComposite: 2 },
+  { composite: 101, base: 16, basePerComposite: 2 },
+  { composite: 102, base: 17, basePerComposite: 2 },
+  { composite: 103, base: 18, basePerComposite: 2 },
+  { composite: 104, base: 29, basePerComposite: 2 },
+  { composite: 115, base: 20, basePerComposite: 2 },
 ];
 
 const rulesAsBase = new Map<number, AwakeningEquivalenceRule[]>();
@@ -55,6 +66,30 @@ export function equivalenceRulesAsComposite(
   filterId: number
 ): readonly AwakeningEquivalenceRule[] {
   return rulesAsComposite.get(filterId) ?? [];
+}
+
+/**
+ * Required minimum count per awk id for an "all" match. Selected ids that belong
+ * to the same equivalence family are folded into base units so their requirements
+ * add up (e.g. one 56 + one 21 requires 3 x 21-equivalents, not 1 + 1 separately).
+ */
+export function requiredAwakeningCounts(
+  awakeningIds: readonly number[]
+): Map<number, number> {
+  const required = new Map<number, number>();
+  for (const id of awakeningIds) {
+    const asComposite = equivalenceRulesAsComposite(id);
+    if (asComposite.length === 1) {
+      const rule = asComposite[0];
+      required.set(
+        rule.base,
+        (required.get(rule.base) ?? 0) + rule.basePerComposite
+      );
+    } else {
+      required.set(id, (required.get(id) ?? 0) + 1);
+    }
+  }
+  return required;
 }
 
 /** Awk ids whose raw count must be evaluated when filtering for `filterId`. */

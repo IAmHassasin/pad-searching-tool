@@ -127,7 +127,10 @@ export class MonsterRelationsService {
     return this.withTransformTargets(rows);
   }
 
-  /** Adds `transform_to_ids` from dadguide `transformations`; rows unchanged when absent. */
+  /**
+   * Adds `transform_to_ids` / `transform_from_ids` from dadguide `transformations`;
+   * rows unchanged when absent.
+   */
   private async withTransformTargets(
     rows: Record<string, unknown>[]
   ): Promise<Record<string, unknown>[]> {
@@ -135,11 +138,13 @@ export class MonsterRelationsService {
       .map(rowMonsterId)
       .filter((id): id is number => id != null);
     if (!ids.length) return rows;
+    const placeholders = ids.map(() => "?").join(", ");
     try {
       const edges = (await this.dataSource.query(
         `SELECT from_monster_id, to_monster_id FROM transformations
-         WHERE from_monster_id IN (${ids.map(() => "?").join(", ")})`,
-        ids
+         WHERE from_monster_id IN (${placeholders})
+            OR to_monster_id IN (${placeholders})`,
+        [...ids, ...ids]
       )) as TransformEdge[];
       return attachTransformTargets(rows, edges);
     } catch {
@@ -148,40 +153,23 @@ export class MonsterRelationsService {
     }
   }
 
+  /**
+   * Evolution line of a monster, including skill-transform forms in both directions
+   * (a pre-transform card shows its post-transform form and vice versa, even when they
+   * sit on different base_ids). Edges carry `kind` so clients can tell the two apart.
+   */
   async getEvoTree(monsterId: number): Promise<{
     monsterId: number;
     baseId: number;
     nodes: Record<string, unknown>[];
-    edges: { from: number; to: number }[];
+    edges: { from: number; to: number; kind: "evolution" | "transform" }[];
   }> {
-    if (!Number.isFinite(monsterId) || monsterId <= 0) {
-      throw new BadRequestException("Invalid monsterId.");
-    }
-
-    const { baseId } = await this.resolveIds(monsterId);
-
-    const idRows = (await this.dataSource.query(
-      `SELECT monster_id FROM monsters WHERE base_id = ? ORDER BY rarity, monster_id`,
-      [baseId]
-    )) as { monster_id: number }[];
-    const ids = idRows.map((r) => r.monster_id);
-    const nodes = await this.fetchMonstersByIds(ids);
-
-    const edgeRows =
-      ids.length > 1
-        ? ((await this.dataSource.query(
-            `SELECT from_id, to_id FROM evolutions
-             WHERE from_id IN (${ids.map(() => "?").join(", ")})
-               AND to_id IN (${ids.map(() => "?").join(", ")})`,
-            [...ids, ...ids]
-          )) as { from_id: number; to_id: number }[])
-        : [];
-
+    const family = await this.getMonsterFamily(monsterId);
     return {
-      monsterId,
-      baseId,
-      nodes,
-      edges: edgeRows.map((e) => ({ from: e.from_id, to: e.to_id })),
+      monsterId: family.monsterId,
+      baseId: family.baseId,
+      nodes: family.nodes,
+      edges: family.edges,
     };
   }
 

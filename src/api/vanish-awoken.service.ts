@@ -4,9 +4,22 @@ import {
   OnModuleDestroy,
 } from "@nestjs/common";
 import { InjectDataSource } from "@nestjs/typeorm";
-import { existsSync, statSync } from "node:fs";
-import { resolve } from "node:path";
+import Database from "better-sqlite3";
+import { existsSync, mkdirSync, readFileSync, statSync } from "node:fs";
+import { dirname, join, resolve } from "node:path";
 import { DataSource } from "typeorm";
+import {
+  buildAwokenNameIndex,
+  buildVanishRows,
+  fetchGameWithVanishMaster,
+  pruneVanishDelta,
+  syncVanishDeltaRows,
+  vanishReadSourceSql,
+  vanishTableDdl,
+  VANISH_TABLE_NAME,
+  type SqlExec,
+  type VanishDeltaSyncResult,
+} from "../vanish/gamewith-vanish-sync";
 import {
   detachSupplementDb,
   ensureSupplementDbAttached,
@@ -14,7 +27,14 @@ import {
 } from "./supplement-db-attach";
 
 const ATTACH_ALIAS = "vanish_awoken_db";
-const TABLE_NAME = "monster_vanish_awoken";
+const DELTA_ATTACH_ALIAS = "vanish_awoken_delta_db";
+const TABLE_NAME = VANISH_TABLE_NAME;
+
+export type VanishDeltaRefreshReport = VanishDeltaSyncResult & {
+  deltaPath: string;
+  skipped: number;
+  unmappedNames: string[];
+};
 
 export type VanishSearchFilters = {
   vanishOnly?: boolean;
@@ -27,11 +47,36 @@ export type VanishSearchFilters = {
 export class VanishAwokenService implements OnModuleDestroy {
   private readonly logger = new Logger(VanishAwokenService.name);
   private readonly cache: SupplementAttachCache = { attachedPath: null };
+  private readonly deltaCache: SupplementAttachCache = { attachedPath: null };
+  private baseAttached = false;
+  private deltaAttached = false;
 
   constructor(@InjectDataSource() private readonly dataSource: DataSource) {}
 
   onModuleDestroy(): void {
     void detachSupplementDb(this.dataSource, ATTACH_ALIAS, this.cache);
+    void detachSupplementDb(this.dataSource, DELTA_ATTACH_ALIAS, this.deltaCache);
+  }
+
+  /**
+   * Delta DB written by the admin refresh for assists missing from the base DB.
+   * Lives next to the working DB (DATA_DIR volume in Docker) so it survives restarts.
+   */
+  resolveDeltaPath(): string {
+    const explicit = process.env.VANISH_AWOKEN_DELTA_SQLITE_PATH?.trim();
+    if (explicit) return resolve(explicit);
+    const dataDir = process.env.DATA_DIR?.trim();
+    if (dataDir) return resolve(join(dataDir, "gamewith-vanish-delta.sqlite"));
+    return resolve(process.cwd(), "seed/gamewith-vanish-delta.sqlite");
+  }
+
+  private existingDeltaPath(): string | null {
+    const path = this.resolveDeltaPath();
+    try {
+      return existsSync(path) && statSync(path).isFile() ? path : null;
+    } catch {
+      return null;
+    }
   }
 
   resolveDbPath(): string | null {
@@ -53,24 +98,135 @@ export class VanishAwokenService implements OnModuleDestroy {
   }
 
   isAvailable(): boolean {
-    return this.resolveDbPath() != null;
+    return this.resolveDbPath() != null || this.existingDeltaPath() != null;
   }
 
   resetAttachment(): void {
     this.cache.attachedPath = null;
+    this.deltaCache.attachedPath = null;
+    this.baseAttached = false;
+    this.deltaAttached = false;
   }
 
+  /** Attaches the base DB and (when present) the delta DB. True if either is usable. */
   async ensureAttached(): Promise<boolean> {
     const path = this.resolveDbPath();
-    if (!path) return false;
-    return ensureSupplementDbAttached(this.dataSource, {
-      alias: ATTACH_ALIAS,
+    this.baseAttached = path
+      ? await ensureSupplementDbAttached(this.dataSource, {
+          alias: ATTACH_ALIAS,
+          tableName: TABLE_NAME,
+          path,
+          cache: this.cache,
+          logger: this.logger,
+          label: "vanish awoken",
+        })
+      : false;
+
+    const deltaPath = this.existingDeltaPath();
+    if (!deltaPath) {
+      this.deltaAttached = false;
+      return this.baseAttached;
+    }
+    const previousDeltaPath = this.deltaCache.attachedPath;
+    this.deltaAttached = await ensureSupplementDbAttached(this.dataSource, {
+      alias: DELTA_ATTACH_ALIAS,
       tableName: TABLE_NAME,
-      path,
-      cache: this.cache,
+      path: deltaPath,
+      cache: this.deltaCache,
       logger: this.logger,
-      label: "vanish awoken",
+      label: "vanish awoken delta",
     });
+    // Base wins: drop delta rows the (possibly redeployed) base now covers.
+    if (this.deltaAttached && this.baseAttached && previousDeltaPath !== deltaPath) {
+      await this.pruneDeltaQuietly();
+    }
+    return this.baseAttached || this.deltaAttached;
+  }
+
+  private async pruneDeltaQuietly(): Promise<void> {
+    try {
+      const removed = await pruneVanishDelta(
+        this.sqlExec(),
+        ATTACH_ALIAS,
+        DELTA_ATTACH_ALIAS
+      );
+      if (removed > 0) {
+        this.logger.log(`Pruned ${removed} vanish delta row(s) already in the base DB`);
+      }
+    } catch (err) {
+      // Reads stay correct: joinSql() still prefers base rows over delta rows.
+      const msg = err instanceof Error ? err.message : String(err);
+      this.logger.warn(`Could not prune vanish delta DB: ${msg}`);
+    }
+  }
+
+  private sqlExec(): SqlExec {
+    return async (sql, params) =>
+      ((await this.dataSource.query(sql, params ?? [])) as unknown[] | undefined) ?? [];
+  }
+
+  /**
+   * Fetch the latest GameWith assist list and store assists missing from the
+   * base DB in the delta DB. Requires the working DB to be initialized
+   * (awoken_skills is used for name → id mapping).
+   */
+  async refreshDeltaFromGameWith(): Promise<VanishDeltaRefreshReport> {
+    const deltaPath = this.resolveDeltaPath();
+    this.createDeltaDbIfMissing(deltaPath);
+
+    const { assistMonsters, awakenings } = await fetchGameWithVanishMaster();
+    const awokenTable = process.env.AWOKEN_SKILLS_TABLE?.trim() || "awoken_skills";
+    if (!/^[A-Za-z0-9_]+$/.test(awokenTable)) {
+      throw new Error(`Invalid AWOKEN_SKILLS_TABLE: "${awokenTable}"`);
+    }
+    const awokenRows = (await this.dataSource.query(
+      `SELECT awoken_skill_id, name_ja FROM "${awokenTable}"`
+    )) as { awoken_skill_id: unknown; name_ja: unknown }[];
+    const nameIndex = buildAwokenNameIndex(awokenRows, this.loadManualNameMap());
+    const built = buildVanishRows(assistMonsters, awakenings, nameIndex);
+    if (!built.rows.length) {
+      throw new Error("No vanish-grant rows parsed — GameWith format may have changed.");
+    }
+
+    if (!(await this.ensureAttached()) || !this.deltaAttached) {
+      throw new Error(`Could not attach vanish delta DB at ${deltaPath}`);
+    }
+    const result = await syncVanishDeltaRows(this.sqlExec(), {
+      baseAlias: this.baseAttached ? ATTACH_ALIAS : null,
+      deltaAlias: DELTA_ATTACH_ALIAS,
+      rows: built.rows,
+    });
+    return {
+      ...result,
+      deltaPath,
+      skipped: built.skippedIds.length,
+      unmappedNames: built.unmappedNames,
+    };
+  }
+
+  private createDeltaDbIfMissing(path: string): void {
+    mkdirSync(dirname(path), { recursive: true });
+    const db = new Database(path);
+    try {
+      db.exec(vanishTableDdl("main"));
+    } finally {
+      db.close();
+    }
+  }
+
+  private loadManualNameMap(): Record<string, unknown> {
+    const path =
+      process.env.VANISH_AWOKEN_NAME_MAP_PATH?.trim() ||
+      resolve(process.cwd(), "seed/vanish-awoken-name-map.json");
+    if (!existsSync(path)) {
+      this.logger.warn(`Vanish awoken name map not found at ${path}; using DB names only`);
+      return {};
+    }
+    const parsed = JSON.parse(readFileSync(path, "utf8")) as unknown;
+    if (parsed == null || typeof parsed !== "object" || Array.isArray(parsed)) {
+      throw new Error(`${path} must be a JSON object of name_ja → awoken_skill_id`);
+    }
+    return parsed as Record<string, unknown>;
   }
 
   monsterIdExpr(): string {
@@ -78,8 +234,13 @@ export class VanishAwokenService implements OnModuleDestroy {
   }
 
   joinSql(): string {
+    const source =
+      vanishReadSourceSql(
+        this.baseAttached ? ATTACH_ALIAS : null,
+        this.deltaAttached ? DELTA_ATTACH_ALIAS : null
+      ) ?? `${ATTACH_ALIAS}.${TABLE_NAME}`;
     return (
-      `LEFT JOIN ${ATTACH_ALIAS}.${TABLE_NAME} AS _vanish ` +
+      `LEFT JOIN ${source} AS _vanish ` +
       `ON _vanish.monster_id = ${this.monsterIdExpr()}`
     );
   }

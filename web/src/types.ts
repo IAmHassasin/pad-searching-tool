@@ -24,6 +24,8 @@ export type MonsterRecord = {
   is_transform_form?: boolean | number | null;
   /** Forms this card can transform into in a dungeon (`/monsters/lookup` only); [] = none. */
   transform_to_ids?: number[] | null;
+  /** Pre-transform forms this card comes from (`/monsters/lookup` only); [] = none. */
+  transform_from_ids?: number[] | null;
   /** Max latent slots (6 or 8). */
   latent_slots?: number | null;
   rarity?: number | null;
@@ -97,7 +99,7 @@ export type MonsterSearchResponse = {
   rows: MonsterRecord[];
 };
 
-export type EvoTreeEdge = { from: number; to: number };
+export type EvoTreeEdge = { from: number; to: number; kind?: "evolution" | "transform" };
 
 export type EvoTreeResponse = {
   monsterId: number;

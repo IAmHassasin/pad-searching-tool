@@ -149,6 +149,61 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      # Dependency install scripts run before any credential reaches this job.
+      - name: Install dependencies (for the vanish DB rebuild)
+        continue-on-error: true
+        run: npm ci
+
+      # Rebuild seed/gamewith-vanish.sqlite (baked into the image) from the latest GameWith
+      # assists so the runtime delta DB only has to cover assists added between deploys.
+      # Awoken names are mapped through the community DB's awoken_skills. Non-fatal: the new
+      # DB is built in a temp file and replaces the committed one only when it has at least
+      # as many rows; otherwise the committed base DB is deployed unchanged.
+      - name: Update GameWith vanish base DB
+        continue-on-error: true
+        env:
+          PROD_ENV_FILE: ${{ secrets.PROD_ENV_FILE }}
+        run: |
+          set -euo pipefail
+          url=""
+          for key in COMMUNITY_DB_URL EXTERNAL_DB_URL DB_DOWNLOAD_URL; do
+            line="$(printf '%s\n' "$PROD_ENV_FILE" | tr -d '\r' | grep -E "^(export[[:space:]]+)?${key}=" | tail -n 1 || true)"
+            value="${line#*=}"
+            value="${value%\"}"; value="${value#\"}"
+            value="${value%\'}"; value="${value#\'}"
+            if [ -n "$value" ]; then url="$value"; break; fi
+          done
+          unset PROD_ENV_FILE
+          if [ -z "$url" ]; then
+            echo "::warning::No community DB URL in PROD_ENV_FILE; keeping the committed vanish DB."
+            exit 1
+          fi
+          echo "::add-mask::$url"
+          curl -fsSL --retry 3 -o "$RUNNER_TEMP/community.sqlite" "$url"
+          new_db="$RUNNER_TEMP/gamewith-vanish.new.sqlite"
+          rm -f "$new_db"
+          node scripts/import-gamewith-vanish-db.mjs \
+            --dadguide "$RUNNER_TEMP/community.sqlite" --out "$new_db"
+          rm -f "$RUNNER_TEMP/community.sqlite"
+          count_rows() {
+            node -e 'const D=require("better-sqlite3");const d=new D(process.argv[1],{readonly:true});console.log(d.prepare("SELECT COUNT(*) c FROM monster_vanish_awoken").get().c);d.close()' "$1"
+          }
+          old_rows="$(count_rows seed/gamewith-vanish.sqlite)"
+          new_rows="$(count_rows "$new_db")"
+          echo "Vanish base rows: committed=${old_rows} rebuilt=${new_rows}"
+          if [ "$new_rows" -lt "$old_rows" ]; then
+            echo "::warning::Rebuilt vanish DB has fewer rows (${new_rows} < ${old_rows}); keeping the committed one."
+            exit 1
+          fi
+          cp -f "$new_db" seed/gamewith-vanish.sqlite
+          rm -f seed/gamewith-vanish.sqlite-wal seed/gamewith-vanish.sqlite-shm
+
       - name: Prepare SSH key, known_hosts and production env
         env:
           ORACLE_SSH_PRIVATE_KEY: ${{ secrets.ORACLE_SSH_PRIVATE_KEY }}
@@ -200,7 +255,7 @@ jobs:
 
       - name: Remove credentials
         if: always()
-        run: rm -f "$RUNNER_TEMP/vm_ssh.pem" "$RUNNER_TEMP/prod.env"
+        run: rm -f "$RUNNER_TEMP/vm_ssh.pem" "$RUNNER_TEMP/prod.env" "$RUNNER_TEMP/community.sqlite" "$RUNNER_TEMP/gamewith-vanish.new.sqlite"
 
   release:
     name: GitHub release

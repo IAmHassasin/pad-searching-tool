@@ -15,6 +15,8 @@ describe("attachTransformTargets", () => {
     assert.deepEqual(out[0].transform_to_ids, [13413]);
     assert.deepEqual(out[1].transform_to_ids, [8618, 8620]);
     assert.deepEqual(out[2].transform_to_ids, []);
+    assert.deepEqual(out[0].transform_from_ids, []);
+    assert.deepEqual(out[2].transform_from_ids, [99999], "post-transform form links back");
     assert.equal((out[0] as { monster_id: number }).monster_id, 13412, "other fields kept");
   });
 

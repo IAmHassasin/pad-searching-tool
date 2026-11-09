@@ -30,7 +30,12 @@ import {
 } from "../lib/team-build/leader-skill";
 import { lb110Percent, maxMonsterLevel } from "../lib/team-build/level-scaling";
 import { maxOutMembers } from "../lib/team-build/max-out";
-import { transformableSlots, transformMembers } from "../lib/team-build/transform";
+import {
+  detransformableSlots,
+  detransformMembers,
+  transformableSlots,
+  transformMembers,
+} from "../lib/team-build/transform";
 import { grantedAssistAwakenings } from "../lib/team-build/passive-awakenings";
 import { describeSlotContributions } from "../lib/team-build/stat-contributions";
 import {
@@ -438,7 +443,7 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
   const [screenshotOpen, setScreenshotOpen] = useState(false);
   const [importText, setImportText] = useState("");
   const [importMsg, setImportMsg] = useState<string | null>(null);
-  /** Feedback line under the team actions (Max all / Transform). */
+  /** Feedback line under the team actions (Max all / Transform / De-transform). */
   const [actionMsg, setActionMsg] = useState<string | null>(null);
   const [copyMsg, setCopyMsg] = useState<string | null>(null);
   const awkPanel = useResizablePanel({
@@ -631,6 +636,10 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
     () => transformableSlots(config.members, monstersById),
     [config.members, monstersById]
   );
+  const detransformable = useMemo(
+    () => detransformableSlots(config.members, monstersById),
+    [config.members, monstersById]
+  );
 
   const handleScreenshotApply = (members: TeamMemberConfig[]) => {
     setConfig((c) => ({ ...c, members }));
@@ -749,7 +758,7 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
         <div className="flex min-h-0 flex-1 overflow-hidden">
           <div className="min-h-0 min-w-0 flex-1 overflow-auto p-3 sm:p-4">
             <div className="mx-auto max-w-5xl">
-              {/* Team actions: fill the team from a screenshot, max every card, transform */}
+              {/* Team actions: fill the team from a screenshot, max every card, transform / de-transform */}
               <div className="mb-2 flex flex-wrap items-center justify-center gap-2">
                 <button
                   type="button"
@@ -789,6 +798,23 @@ function TeamBuildPageInner({ isMobile }: { isMobile: boolean }) {
                     title={`Swap ${transformable.map((i) => slotLabel(i)).join(", ")} for the post-transform form (max Lv.99)`}
                   >
                     Transform ({transformable.length})
+                  </button>
+                )}
+                {detransformable.length > 0 && (
+                  <button
+                    type="button"
+                    className="ds-btn pressable min-h-10 px-4 text-xs font-semibold"
+                    onClick={() => {
+                      const slots = detransformable.map((i) => slotLabel(i)).join(", ");
+                      setConfig((c) => ({
+                        ...c,
+                        members: detransformMembers(c.members, monstersById),
+                      }));
+                      showActionMsg(`De-transformed ${slots} back to their pre-transform form.`);
+                    }}
+                    title={`Swap ${detransformable.map((i) => slotLabel(i)).join(", ")} back to the pre-transform form`}
+                  >
+                    De-transform ({detransformable.length})
                   </button>
                 )}
               </div>
